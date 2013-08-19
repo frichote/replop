@@ -1,0 +1,49 @@
+body {
+        font-family:verdana;
+	background-color:#eee;
+	width: 800px;
+	margin: 0 auto;
+}
+
+canvas { border: 4px solid brown; background: #FFFFFF }
+
+article {
+    	border:1px #000 solid;
+	background-color:white;
+	padding:4%;
+	    border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+
+}
+
+/*
+nav {
+	list-style: none;
+	height: 30px;
+	background-color:#71B071;
+	text-color:black;
+}
+*/
+ footer {
+        background:url(../images/bg-menu.png) no-repeat left top;
+    	border:1px #000 solid;
+	position:bottom;
+	height:20px;
+	    border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+}
+
+article h1 {
+	color:black;
+}
+
+article h2 {
+	color:#E60000;
+}
+
+dt {
+	font-weight:bold;
+}
+

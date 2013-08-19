@@ -1,0 +1,83 @@
+\hypertarget{thread__bituint_8h}{\section{src/bituint/thread\-\_\-bituint.h \-File \-Reference}
+\label{thread__bituint_8h}\index{src/bituint/thread\-\_\-bituint.\-h@{src/bituint/thread\-\_\-bituint.\-h}}
+}
+
+
+general function and structure to manage multithreading for matrix multiplication with bituint matrix  
+
+
+{\ttfamily \#include \char`\"{}../bituint/bituint.\-h\char`\"{}}\*
+\subsection*{\-Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct__matrix__bituint}{\-\_\-matrix\-\_\-bituint}
+\end{DoxyCompactItemize}
+\subsection*{\-Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct__matrix__bituint}{\-\_\-matrix\-\_\-bituint} $\ast$ \hyperlink{thread__bituint_8h_ad63567d9b3d3f0738c7fddd58dde5779}{\-Matrix\-\_\-bituint}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{thread__bituint_8h_abb1c5978be41ff93bfa7ef61a335b276}{thread\-\_\-fct} (bituint $\ast$\-R, double $\ast$out, double $\ast$\-A, int nc, int \-K, int \-M, int \-Mp, int \-N, int num\-\_\-thrd, void($\ast$fct)())
+\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{thread__bituint_8h_a970ce8cac174ff4b661e8790e821761d}{struct \hyperlink{struct__matrix__bituint}{\-\_\-matrix\-\_\-bituint} {\bfseries matrix\-\_\-bituint}}\label{thread__bituint_8h_a970ce8cac174ff4b661e8790e821761d}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+general function and structure to manage multithreading for matrix multiplication with bituint matrix 
+
+\subsection{\-Typedef \-Documentation}
+\hypertarget{thread__bituint_8h_ad63567d9b3d3f0738c7fddd58dde5779}{\index{thread\-\_\-bituint.\-h@{thread\-\_\-bituint.\-h}!\-Matrix\-\_\-bituint@{\-Matrix\-\_\-bituint}}
+\index{\-Matrix\-\_\-bituint@{\-Matrix\-\_\-bituint}!thread_bituint.h@{thread\-\_\-bituint.\-h}}
+\subsubsection[{\-Matrix\-\_\-bituint}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf \-\_\-matrix\-\_\-bituint}$\ast$ {\bf \-Matrix\-\_\-bituint}}}\label{thread__bituint_8h_ad63567d9b3d3f0738c7fddd58dde5779}
+structure to manage multithreading 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{thread__bituint_8h_abb1c5978be41ff93bfa7ef61a335b276}{\index{thread\-\_\-bituint.\-h@{thread\-\_\-bituint.\-h}!thread\-\_\-fct@{thread\-\_\-fct}}
+\index{thread\-\_\-fct@{thread\-\_\-fct}!thread_bituint.h@{thread\-\_\-bituint.\-h}}
+\subsubsection[{thread\-\_\-fct}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf thread\-\_\-fct} (
+\begin{DoxyParamCaption}
+\item[{bituint $\ast$}]{\-R, }
+\item[{double $\ast$}]{out, }
+\item[{double $\ast$}]{\-A, }
+\item[{int}]{nc, }
+\item[{int}]{\-K, }
+\item[{int}]{\-M, }
+\item[{int}]{\-Mp, }
+\item[{int}]{\-N, }
+\item[{int}]{num\-\_\-thrd, }
+\item[{void($\ast$)()}]{fct}
+\end{DoxyParamCaption}
+)}}\label{thread__bituint_8h_abb1c5978be41ff93bfa7ef61a335b276}
+general multithreading function manager for bituint. \-Some parameters can be \-N\-U\-L\-L
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-R} & data matrix \\
+\hline
+{\em out} & output matrix \\
+\hline
+{\em \-A} & \-A matrix \\
+\hline
+{\em nc} & number of factors in \-R \\
+\hline
+{\em \-K} & the number of clusters \\
+\hline
+{\em \-M} & the number of loci \\
+\hline
+{\em \-Mp} & the number of column of \-R \\
+\hline
+{\em \-N} & the number of individuals \\
+\hline
+{\em num\-\_\-thrd} & the number of processes used \\
+\hline
+{\em fct} & the specific slice function \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,89 @@
+\hypertarget{sort_8h}{\section{src/nnlsm/sort.h \-File \-Reference}
+\label{sort_8h}\index{src/nnlsm/sort.\-h@{src/nnlsm/sort.\-h}}
+}
+
+
+functions to sort binary matrices  
+
+
+{\ttfamily \#include \char`\"{}blockpivot.\-h\char`\"{}}\*
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{sort_8h_a9e61bc83123f0e9eef8ad075a184fe81}{sort\-Cols} (int $\ast$breaks, int $\ast$sort\-Ix, int $\ast$\-X, int \-K, int \-N, \hyperlink{struct__memory}{\-Memory} mem)
+\begin{DoxyCompactList}\small\item\em sort boolean matrix \-X by column order. \end{DoxyCompactList}\item 
+void \hyperlink{sort_8h_ada79d0893b78c012701a141ac5a93440}{sort\-Cols\-Rec} (int $\ast$breaks, int $\ast$sort\-Ix, int $\ast$\-X, int \-K, int \-N, int start\-N, int end\-N, int k, int $\ast$temp\-Sort\-Ix)
+\begin{DoxyCompactList}\small\item\em recursive function to sort boolean matrix \-X by column order from index start\-N to index end\-N-\/1, starting to order from line k. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+functions to sort binary matrices 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{sort_8h_a9e61bc83123f0e9eef8ad075a184fe81}{\index{sort.\-h@{sort.\-h}!sort\-Cols@{sort\-Cols}}
+\index{sort\-Cols@{sort\-Cols}!sort.h@{sort.\-h}}
+\subsubsection[{sort\-Cols}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf sort\-Cols} (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{breaks, }
+\item[{int $\ast$}]{sort\-Ix, }
+\item[{int $\ast$}]{\-X, }
+\item[{int}]{\-K, }
+\item[{int}]{\-N, }
+\item[{{\bf \-Memory}}]{mem}
+\end{DoxyParamCaption}
+)}}\label{sort_8h_a9e61bc83123f0e9eef8ad075a184fe81}
+
+
+sort boolean matrix \-X by column order. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em sort\-Ix} & output column indices such as \-X is ordered (the ordered matrix is \-X(i,sort\-Ix)) (of size \-N). \\
+\hline
+{\em breaks} & output boolean vector such as if the columns are ordered (ie for \-X(i,sort\-Ix)), it equals 1 if the current column is different from the previous column, and 0 otherwise. \-Use as breaks(sort\-Ix) (of size \-N). \\
+\hline
+{\em \-X} & input boolean matrix to order (of size \-Kx\-N) \\
+\hline
+{\em \-K} & number of lines of \-X \\
+\hline
+{\em \-N} & number of columns of \-X \\
+\hline
+\end{DoxyParams}
+\hypertarget{sort_8h_ada79d0893b78c012701a141ac5a93440}{\index{sort.\-h@{sort.\-h}!sort\-Cols\-Rec@{sort\-Cols\-Rec}}
+\index{sort\-Cols\-Rec@{sort\-Cols\-Rec}!sort.h@{sort.\-h}}
+\subsubsection[{sort\-Cols\-Rec}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf sort\-Cols\-Rec} (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{breaks, }
+\item[{int $\ast$}]{sort\-Ix, }
+\item[{int $\ast$}]{\-X, }
+\item[{int}]{\-K, }
+\item[{int}]{\-N, }
+\item[{int}]{start\-N, }
+\item[{int}]{end\-N, }
+\item[{int}]{k, }
+\item[{int $\ast$}]{temp\-Sort\-Ix}
+\end{DoxyParamCaption}
+)}}\label{sort_8h_ada79d0893b78c012701a141ac5a93440}
+
+
+recursive function to sort boolean matrix \-X by column order from index start\-N to index end\-N-\/1, starting to order from line k. 
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em sort\-Ix} & input column indices such as \-X(0\-:k-\/1) is ordered. output column indices such as \-X is ordered. \\
+\hline
+{\em breaks} & if the columns are ordered (ie for \-X(i,sort\-Ix)), equals 1 if the current column is different from the previous column, and 0 otherwise. \-Use as breaks(sort\-Ix) (of size \-N) \\
+\hline
+{\em \-X} & input boolean matrix to order (of size \-Kx\-N) \\
+\hline
+{\em \-K} & number of lines of \-X \\
+\hline
+{\em \-N} & number of columns of \-X \\
+\hline
+{\em start\-N} & first column to order \\
+\hline
+{\em end\-N} & last column to order, end\-N$>$start\-N \\
+\hline
+{\em k} & first line to look at to order \\
+\hline
+\end{DoxyParams}

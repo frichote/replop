@@ -1,0 +1,76 @@
+\hypertarget{analyse_8h}{\section{src/matrix/analyse.h \-File \-Reference}
+\label{analyse_8h}\index{src/matrix/analyse.\-h@{src/matrix/analyse.\-h}}
+}
+
+
+functions to tell if a row/column is constant  
+
+
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{analyse_8h_a4f8a1ae1d3f0698afb657bdbc0c07e8b}{analyse\-\_\-col} (float $\ast$data, int \-N, int \-M, int $\ast$n\-M, int missing, int $\ast$\-I)
+\item 
+void \hyperlink{analyse_8h_ad2d86909d3fb162b977ab194e3a257ed}{analyse\-\_\-row} (float $\ast$data, int \-N, int \-M, int $\ast$row, int $\ast$n\-N)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+functions to tell if a row/column is constant 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{analyse_8h_a4f8a1ae1d3f0698afb657bdbc0c07e8b}{\index{analyse.\-h@{analyse.\-h}!analyse\-\_\-col@{analyse\-\_\-col}}
+\index{analyse\-\_\-col@{analyse\-\_\-col}!analyse.h@{analyse.\-h}}
+\subsubsection[{analyse\-\_\-col}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf analyse\-\_\-col} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{data, }
+\item[{int}]{\-N, }
+\item[{int}]{\-M, }
+\item[{int $\ast$}]{n\-M, }
+\item[{int}]{missing, }
+\item[{int $\ast$}]{\-I}
+\end{DoxyParamCaption}
+)}}\label{analyse_8h_a4f8a1ae1d3f0698afb657bdbc0c07e8b}
+compute the number of constant columns
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em data} & the data set (of size \-Nx\-M) \\
+\hline
+{\em \-N} & the number of lines \\
+\hline
+{\em \-M} & the number of columns \\
+\hline
+{\em n\-M} & the number of constant columns (output) \\
+\hline
+{\em missing} & true if missing data \\
+\hline
+{\em \-I} & matrix of missing data (of size \-Nx\-M) \\
+\hline
+\end{DoxyParams}
+\hypertarget{analyse_8h_ad2d86909d3fb162b977ab194e3a257ed}{\index{analyse.\-h@{analyse.\-h}!analyse\-\_\-row@{analyse\-\_\-row}}
+\index{analyse\-\_\-row@{analyse\-\_\-row}!analyse.h@{analyse.\-h}}
+\subsubsection[{analyse\-\_\-row}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf analyse\-\_\-row} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{data, }
+\item[{int}]{\-N, }
+\item[{int}]{\-M, }
+\item[{int $\ast$}]{row, }
+\item[{int $\ast$}]{n\-N}
+\end{DoxyParamCaption}
+)}}\label{analyse_8h_ad2d86909d3fb162b977ab194e3a257ed}
+compute the number of constant lines
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em data} & the data set (of size \-Nx\-M) \\
+\hline
+{\em \-N} & the number of lines \\
+\hline
+{\em \-M} & the number of columns \\
+\hline
+{\em row} & vector of boolean (of size \-N), true if the line is constant \\
+\hline
+{\em n\-M} & the number of constant columns (output) \\
+\hline
+\end{DoxyParams}

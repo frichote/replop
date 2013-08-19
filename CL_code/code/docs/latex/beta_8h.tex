@@ -1,0 +1,237 @@
+\hypertarget{beta_8h}{\section{src/\-L\-F\-M\-M/beta.h \-File \-Reference}
+\label{beta_8h}\index{src/\-L\-F\-M\-M/beta.\-h@{src/\-L\-F\-M\-M/beta.\-h}}
+}
+
+
+functions to update beta parameters in \-L\-F\-M\-M model. \-The code is based on a previous matlab version. \-Comments in matlab code format can be found in the code.  
+
+
+{\ttfamily \#include \char`\"{}data\-\_\-lfmm.\-h\char`\"{}}\*
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{beta_8h_a7b0599d7a9ca7d02c58e699fee9fa6ea}{create\-\_\-m\-\_\-beta} (double $\ast$\-C, float $\ast$\-R, double $\ast$\-U, double $\ast$\-V, double $\ast$m\-\_\-beta, int \-M, int \-N, int \-D, int \-K, float $\ast$datb, int num\-\_\-thrd)
+\item 
+void \hyperlink{beta_8h_a3d65dca72e0e92feed6b6b70fb32f702}{create\-\_\-\-C\-Ct} (double $\ast$cov, double $\ast$\-C, int \-D, int \-N)
+\item 
+void \hyperlink{beta_8h_adae3a2246006407ca734e0a73c0b3122}{create\-\_\-inv\-\_\-cov\-\_\-beta} (double $\ast$inv\-\_\-cov\-\_\-beta, double $\ast$alpha\-\_\-beta, double alpha\-\_\-\-R, int \-D, double $\ast$cov)
+\item 
+void \hyperlink{beta_8h_a716329ec2534bddaa0f4da46d4898787}{rand\-\_\-beta} (double $\ast$beta, double $\ast$m\-\_\-beta, double $\ast$inv\-\_\-cov\-\_\-beta, double alpha\-\_\-\-R, int \-D, int \-M, int num\-\_\-thrd)
+\item 
+void \hyperlink{beta_8h_aefc44592cb8df32ca61c3c5b5daf48b5}{update\-\_\-beta} (double $\ast$\-C, float $\ast$dat, double $\ast$\-U, double $\ast$\-V, double $\ast$beta, double $\ast$\-C\-Ct, double $\ast$m\-\_\-beta, double $\ast$inv\-\_\-cov\-\_\-beta, double $\ast$alpha\-\_\-beta, double alpha\-\_\-\-R, int \-M, int \-N, int \-K, int \-D, int num\-\_\-thrd)
+\item 
+void \hyperlink{beta_8h_a9573324fdd816ae9aafba5fc044df799}{update\-\_\-alpha\-\_\-beta} (double $\ast$beta, double $\ast$alpha\-\_\-beta, double epsilon, int \-D, int \-M)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+functions to update beta parameters in \-L\-F\-M\-M model. \-The code is based on a previous matlab version. \-Comments in matlab code format can be found in the code. 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{beta_8h_a3d65dca72e0e92feed6b6b70fb32f702}{\index{beta.\-h@{beta.\-h}!create\-\_\-\-C\-Ct@{create\-\_\-\-C\-Ct}}
+\index{create\-\_\-\-C\-Ct@{create\-\_\-\-C\-Ct}!beta.h@{beta.\-h}}
+\subsubsection[{create\-\_\-\-C\-Ct}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf create\-\_\-\-C\-Ct} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{cov, }
+\item[{double $\ast$}]{\-C, }
+\item[{int}]{\-D, }
+\item[{int}]{\-N}
+\end{DoxyParamCaption}
+)}}\label{beta_8h_a3d65dca72e0e92feed6b6b70fb32f702}
+compute the \-C'$\ast$\-C in tmp
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em cov} & the output matrix (of size \-Dx\-D) \\
+\hline
+{\em \-C} & the covariable matrix (of size \-Nx\-D) \\
+\hline
+{\em \-D} & the number of covariables \\
+\hline
+{\em \-N} & the number of individuals \\
+\hline
+\end{DoxyParams}
+\hypertarget{beta_8h_adae3a2246006407ca734e0a73c0b3122}{\index{beta.\-h@{beta.\-h}!create\-\_\-inv\-\_\-cov\-\_\-beta@{create\-\_\-inv\-\_\-cov\-\_\-beta}}
+\index{create\-\_\-inv\-\_\-cov\-\_\-beta@{create\-\_\-inv\-\_\-cov\-\_\-beta}!beta.h@{beta.\-h}}
+\subsubsection[{create\-\_\-inv\-\_\-cov\-\_\-beta}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf create\-\_\-inv\-\_\-cov\-\_\-beta} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{inv\-\_\-cov\-\_\-beta, }
+\item[{double $\ast$}]{alpha\-\_\-beta, }
+\item[{double}]{alpha\-\_\-\-R, }
+\item[{int}]{\-D, }
+\item[{double $\ast$}]{cov}
+\end{DoxyParamCaption}
+)}}\label{beta_8h_adae3a2246006407ca734e0a73c0b3122}
+compute the inverse of the conditional covariance for beta
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em inv\-\_\-cov\-\_\-beta} & the output matrix (of size \-Dx\-D) \\
+\hline
+{\em alpha\-\_\-beta} & the vector of hyperparameters for beta (of size \-D) \\
+\hline
+{\em alpha\-\_\-\-R} & the inverse of the residual variance \\
+\hline
+{\em \-D} & the number of covariables \\
+\hline
+{\em cov} & \-C'$\ast$\-C previously calculated \\
+\hline
+\end{DoxyParams}
+\hypertarget{beta_8h_a7b0599d7a9ca7d02c58e699fee9fa6ea}{\index{beta.\-h@{beta.\-h}!create\-\_\-m\-\_\-beta@{create\-\_\-m\-\_\-beta}}
+\index{create\-\_\-m\-\_\-beta@{create\-\_\-m\-\_\-beta}!beta.h@{beta.\-h}}
+\subsubsection[{create\-\_\-m\-\_\-beta}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf create\-\_\-m\-\_\-beta} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-C, }
+\item[{float $\ast$}]{\-R, }
+\item[{double $\ast$}]{\-U, }
+\item[{double $\ast$}]{\-V, }
+\item[{double $\ast$}]{m\-\_\-beta, }
+\item[{int}]{\-M, }
+\item[{int}]{\-N, }
+\item[{int}]{\-D, }
+\item[{int}]{\-K, }
+\item[{float $\ast$}]{datb, }
+\item[{int}]{num\-\_\-thrd}
+\end{DoxyParamCaption}
+)}}\label{beta_8h_a7b0599d7a9ca7d02c58e699fee9fa6ea}
+compute the conditional mean for beta
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-C} & \-The covariable matrix (of size \-Nx\-D) \\
+\hline
+{\em \-R} & the data matrix (of size \-Nx\-M) \\
+\hline
+{\em \-U} & the \-U matrix (of size \-Kx\-N) \\
+\hline
+{\em \-V} & the \-V matrix (of size \-Kx\-M) \\
+\hline
+{\em m\-\_\-beta} & the output beta mean matrix (of size \-Dx\-M) \\
+\hline
+{\em \-M} & the number of loci \\
+\hline
+{\em \-N} & the number of covariables \\
+\hline
+{\em \-D} & the number of individuals \\
+\hline
+{\em \-K} & the number of latent factors \\
+\hline
+{\em datb} & the data set \\
+\hline
+{\em num\-\_\-thrd} & the number of processes used \\
+\hline
+\end{DoxyParams}
+\hypertarget{beta_8h_a716329ec2534bddaa0f4da46d4898787}{\index{beta.\-h@{beta.\-h}!rand\-\_\-beta@{rand\-\_\-beta}}
+\index{rand\-\_\-beta@{rand\-\_\-beta}!beta.h@{beta.\-h}}
+\subsubsection[{rand\-\_\-beta}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf rand\-\_\-beta} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{beta, }
+\item[{double $\ast$}]{m\-\_\-beta, }
+\item[{double $\ast$}]{inv\-\_\-cov\-\_\-beta, }
+\item[{double}]{alpha\-\_\-\-R, }
+\item[{int}]{\-D, }
+\item[{int}]{\-M, }
+\item[{int}]{num\-\_\-thrd}
+\end{DoxyParamCaption}
+)}}\label{beta_8h_a716329ec2534bddaa0f4da46d4898787}
+compute a realization of the conditional law for beta
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em beta} & the output beta realization (of size \-Dx\-M) \\
+\hline
+{\em m\-\_\-beta} & the conditional beta mean matrix (of size \-Dx\-M) \\
+\hline
+{\em inv\-\_\-cov\-\_\-beta} & the conditional beta covariance matrix (of size \-Dx\-D) \\
+\hline
+{\em alpha\-\_\-\-R} & the inverse of the residual variance \\
+\hline
+{\em \-D} & the number of covariables \\
+\hline
+{\em \-M} & the number of loci \\
+\hline
+{\em num\-\_\-thrd} & the number of processes used \\
+\hline
+\end{DoxyParams}
+\hypertarget{beta_8h_a9573324fdd816ae9aafba5fc044df799}{\index{beta.\-h@{beta.\-h}!update\-\_\-alpha\-\_\-beta@{update\-\_\-alpha\-\_\-beta}}
+\index{update\-\_\-alpha\-\_\-beta@{update\-\_\-alpha\-\_\-beta}!beta.h@{beta.\-h}}
+\subsubsection[{update\-\_\-alpha\-\_\-beta}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf update\-\_\-alpha\-\_\-beta} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{beta, }
+\item[{double $\ast$}]{alpha\-\_\-beta, }
+\item[{double}]{epsilon, }
+\item[{int}]{\-D, }
+\item[{int}]{\-M}
+\end{DoxyParamCaption}
+)}}\label{beta_8h_a9573324fdd816ae9aafba5fc044df799}
+update alpha\-\_\-beta hyperparameters
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em beta} & the beta realization (of size \-Kx\-M) \\
+\hline
+{\em alpha\-\_\-beta} & the output vector of hyperparameters for beta (of size \-K) \\
+\hline
+{\em epsilon} & epsilon constant \\
+\hline
+{\em \-D} & the number of individuals \\
+\hline
+{\em \-M} & the number of loci \\
+\hline
+\end{DoxyParams}
+\hypertarget{beta_8h_aefc44592cb8df32ca61c3c5b5daf48b5}{\index{beta.\-h@{beta.\-h}!update\-\_\-beta@{update\-\_\-beta}}
+\index{update\-\_\-beta@{update\-\_\-beta}!beta.h@{beta.\-h}}
+\subsubsection[{update\-\_\-beta}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf update\-\_\-beta} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-C, }
+\item[{float $\ast$}]{dat, }
+\item[{double $\ast$}]{\-U, }
+\item[{double $\ast$}]{\-V, }
+\item[{double $\ast$}]{beta, }
+\item[{double $\ast$}]{\-C\-Ct, }
+\item[{double $\ast$}]{m\-\_\-beta, }
+\item[{double $\ast$}]{inv\-\_\-cov\-\_\-beta, }
+\item[{double $\ast$}]{alpha\-\_\-beta, }
+\item[{double}]{alpha\-\_\-\-R, }
+\item[{int}]{\-M, }
+\item[{int}]{\-N, }
+\item[{int}]{\-K, }
+\item[{int}]{\-D, }
+\item[{int}]{num\-\_\-thrd}
+\end{DoxyParamCaption}
+)}}\label{beta_8h_aefc44592cb8df32ca61c3c5b5daf48b5}
+update beta matrix
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-C} & the covariable matrix (of size \-Nx\-K) \\
+\hline
+{\em data} & the data matrix (of size \-Nx\-M) \\
+\hline
+{\em \-U} & the \-U matrix (of size \-Dx\-N) \\
+\hline
+{\em \-V} & the \-V matrix (of size \-Dx\-M) \\
+\hline
+{\em beta} & the output beta realization (of size \-Kx\-M) \\
+\hline
+{\em \-C\-Ct} & the constant covariance matrix for \-C \\
+\hline
+{\em m\-\_\-beta} & the conditional beta mean matrix (of size \-Kx\-M) \\
+\hline
+{\em inv\-\_\-cov\-\_\-beta} & the conditional beta covariance matrix (of size \-Kx\-K) \\
+\hline
+{\em alpha\-\_\-beta} & the vector of hyperparameters for beta (of size \-K) \\
+\hline
+{\em alpha\-\_\-\-R} & the inverse of the residual variance \\
+\hline
+{\em \-M} & the number of loci \\
+\hline
+{\em \-N} & the number of individuals \\
+\hline
+{\em \-K} & the number of latent factors \\
+\hline
+{\em \-D} & the number of covariables \\
+\hline
+{\em num\-\_\-thrd} & the number of processes used \\
+\hline
+\end{DoxyParams}

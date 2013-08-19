@@ -1,0 +1,49 @@
+\hypertarget{thread__beta_8h}{\section{src/\-L\-F\-M\-M/thread\-\_\-beta.h \-File \-Reference}
+\label{thread__beta_8h}\index{src/\-L\-F\-M\-M/thread\-\_\-beta.\-h@{src/\-L\-F\-M\-M/thread\-\_\-beta.\-h}}
+}
+
+
+multithreaded part of the functions calculate beta parameters (possibly multithreaded)  
+
+
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{thread__beta_8h_ad062f3c79a9eaad793b035b949aadfba}{slice\-\_\-mbeta\-\_\-beta} (void $\ast$\-G)
+\item 
+void \hyperlink{thread__beta_8h_abf84fa4f7b27f1c7e01638709e21e1c2}{slice\-\_\-rand\-\_\-beta} (void $\ast$\-G)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+multithreaded part of the functions calculate beta parameters (possibly multithreaded) 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{thread__beta_8h_ad062f3c79a9eaad793b035b949aadfba}{\index{thread\-\_\-beta.\-h@{thread\-\_\-beta.\-h}!slice\-\_\-mbeta\-\_\-beta@{slice\-\_\-mbeta\-\_\-beta}}
+\index{slice\-\_\-mbeta\-\_\-beta@{slice\-\_\-mbeta\-\_\-beta}!thread_beta.h@{thread\-\_\-beta.\-h}}
+\subsubsection[{slice\-\_\-mbeta\-\_\-beta}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf slice\-\_\-mbeta\-\_\-beta} (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{\-G}
+\end{DoxyParamCaption}
+)}}\label{thread__beta_8h_ad062f3c79a9eaad793b035b949aadfba}
+compute a slice of conditional mean for beta
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-G} & a specific structure for multi-\/threading \\
+\hline
+\end{DoxyParams}
+\hypertarget{thread__beta_8h_abf84fa4f7b27f1c7e01638709e21e1c2}{\index{thread\-\_\-beta.\-h@{thread\-\_\-beta.\-h}!slice\-\_\-rand\-\_\-beta@{slice\-\_\-rand\-\_\-beta}}
+\index{slice\-\_\-rand\-\_\-beta@{slice\-\_\-rand\-\_\-beta}!thread_beta.h@{thread\-\_\-beta.\-h}}
+\subsubsection[{slice\-\_\-rand\-\_\-beta}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf slice\-\_\-rand\-\_\-beta} (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{\-G}
+\end{DoxyParamCaption}
+)}}\label{thread__beta_8h_abf84fa4f7b27f1c7e01638709e21e1c2}
+compute a slice of new values for beta
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-G} & a specific structure for multi-\/threading for lfmm \\
+\hline
+\end{DoxyParams}

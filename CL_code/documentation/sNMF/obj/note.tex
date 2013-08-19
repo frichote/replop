@@ -1,0 +1,235 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{amssymb}
+\usepackage[french,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphics}
+\usepackage{lineno}
+\usepackage{cite}
+\usepackage{float}
+\usepackage{ccaption}
+\usepackage{caption}
+\usepackage{array}
+\usepackage{lscape}
+\usepackage[hmargin=2cm,vmargin=2cm]{geometry}
+\usepackage{fancyvrb}
+
+\title{\bf \Large A short manual for {\tt sNMF}\\
+\large (command-line version)
+}
+
+\author{
+        Eric Frichot\\efrichot@gmail.com\\
+}
+
+\newcommand{\bp}{\mathbf{p}}
+\newcommand{\LLL}{\mathcal{L}}
+
+%% BEGIN DOC
+\begin{document}
+
+\maketitle
+\begin{center}
+{\it Please, print this reference manual only if it is necessary.}
+\end{center}
+
+\noindent
+This short manual aims to help users to run {\tt sNMF} command-line engine on Mac and Linux. 
+
+\section{Description} 
+Inference of individual admixture coefficients, which is important for population genetic and association studies, is commonly performed using compute-intensive likelihood algorithms. With the availability of large population genomic data sets, fast versions of likelihood algorithms have attracted considerable attention. Reducing the computational burden of estimation algorithms remains, however, a major challenge. Here, we present a fast and efficient method for estimating individual admixture coefficients based on sparse non-negative matrix factorization algorithms. We implemented our method in the computer program {\tt sNMF}, and applied it to human and plant genomic data sets. The performances of {\tt sNMF} were then compared to the likelihood algorithm implemented in the computer program {\tt ADMIXTURE}.  Without loss of accuracy, {\tt sNMF} computed estimates of admixture coefficients within run-times approximately 10 to 30 times faster than those of {\tt ADMIXTURE}
+\\
+\\
+\noindent
+Eric Frichot, François Mathieu, Théo Trouillon, Guillaume Bouchard, Olivier François. {\it Fast Inference of Admixture Coefficients Using Sparse Non-negative Matrix Factorization Algorithms}, submitted. 
+
+\section{Installation} 
+
+\noindent
+To install {\tt sNMF} CL version, you just have to execute the install script (install.command) 
+in {\tt sNMF} main directory.
+To execute it in a terminal shell, go to {\tt sNMF} main directory and write "./install.command".
+If the script is not executable, type "chmod +x install.command" and then "./install.command".
+A set of binaries should be created in {\tt sNMF} main directory.
+
+\section{Data format}
+
+Input file is composed a genotype file. 
+\\
+\\
+eigenstratgeno (example.eigenstratgeno)\\
+The {\bf genotype file} contains 1 line per SNP.
+  Each line contains 1 character per individual:
+  0 means zero copies of reference allele.
+  1 means one copy of reference allele.
+  2 means two copies of reference allele.
+  9 means missing data.
+
+Below, an example of genotype file for $n=3$ individuals and $L=5$ loci.
+\begin{center}
+\footnotesize
+\begin{Verbatim}[frame=single]
+112
+010
+091
+121
+\end{Verbatim}
+\end{center}
+
+\noindent
+There are 2 {\bf output files}.
+
+\begin{itemize}
+\item The first file (with extension {\bf .Q}) contains the individual admixtures coefficients.
+It is a matrix a matrix of $n$ lines (the number of individuals) and $K$ columns (the 
+number of ancestral populations).
+\item The second file (with extension {\bf .F}) contains the ancestral allele frequencies.
+It is a matrix a matrix of $nc\times L$ lines (the number of alleles times the number of SNPs) and $K$ columns (the 
+number of ancestral populations). For each SNP, the first line contains the ancestral frequencies for allele 0, the second line for allele 1, ... .
+\end{itemize}
+
+\section{Run the programs}
+The program is executed by a command line. The format is:
+\begin{Verbatim}[frame=single]
+./sNMF -g genotype_file.geno -K number_of_ancestral_populations 
+\end{Verbatim}
+
+\noindent
+All the previous options are mandatory. There is no order for the options in the command line. 
+Here is a more precise description of the options:
+\begin{itemize}
+\item \verb|-g genotype_file.geno| is the path for the genotype file (in .geno format).
+\item \verb|-K number_of_ancestral_populations| is the number of $K$ of ancestral populations. 
+\end{itemize}
+
+\noindent
+Other options are not mandatory:
+\begin{itemize}
+\item \verb|-p p| is the number of processes that you choose to use if you run the algorithm in 
+parrallel. Be careful, the number of process has to be lower or equal than the number of physical 
+processes available on your computer (default: 1).
+\item \verb|-i iteration_number| is the max number of iterations in algorithm (default: 1000). 
+The algorithm should not go until the max number of iterations. The stopping criteria should depend on the tolerance error only.
+\item \verb|-a alpha| is the value of the regularization parameter (by default: 100). Results can depend on the value of this parameter, especially for small data sets (see the associated paper). 
+\item \verb|-e tolerance| is the tolerance error (by default: 0.0001). 
+\item \verb|-s seed| is the initialization for the random parameter (by default: random). 
+\item \verb|-m ploidy|  1 if haploid, 2 if diploid (default: 2). 
+\end{itemize}
+
+
+\noindent
+If you need a summary of the options, you can use the \verb|-h| option by typing the command line
+\footnotesize
+\begin{Verbatim}[frame=single]
+./sNMF -h
+\end{Verbatim}
+\noindent
+\normalsize
+
+\noindent
+A full example is available at the end of this note.
+
+\section{Cross-Entropy criteria}
+
+We also provide two other programs:
+\begin{itemize}
+\item the first program creates a data set with a given percentage of missing data from your original data set.
+The command line format is:
+\begin{Verbatim}[frame=single]
+./createDataSet -g genotype_file.geno
+\end{Verbatim}
+
+The mandatory option is:
+\begin{itemize}
+\item \verb|-g genotype_file.geno| is the path for the genotype file (in .geno format).
+\end{itemize}
+
+It will create by default, a file with around 5 \% of missing data with the name genotype\_file{\bf\_I}.geno with a {\bf\_I} extension to differentiate this file from the original file. 
+
+\noindent
+Other options are not mandatory:
+\begin{itemize}
+\item \verb|-r percentage| is the percentage of missing data in your data set (default: 0.05). 
+\item \verb|-e tolerance| is the tolerance error (by default: 0.0001). 
+\item \verb|-s seed| is the initialization for the random parameter (by default: random). 
+\item \verb|-m ploidy| is 1 if haploid, 2 if diploid (default: 2). 
+\end{itemize}
+
+\item the second program calculates the cross-entropy criterion for all data and for missing data from the 
+output of {\tt sNMF}. The cross-entropy criteria is useful to choose the best run for different number of 
+ancestral populations ($K$) and different values of the regularization parameter ($\alpha$). A smaller value
+of the cross-entropy with missing data means a better prediction of the data.
+The command line format is:
+\begin{Verbatim}[frame=single]
+./crossEntropy -g genotype_file.geno -K number_of_ancestral_populations
+\end{Verbatim}
+
+The mandatory option is:
+\begin{itemize}
+\item \verb|-g genotype_file.geno| is the path for the genotype file (in .geno format).
+\item \verb|-K number_of_ancestral_populations| is the number of $K$ of ancestral populations.
+\end{itemize}
+
+In this case, the output from {\tt sNMF}, the files with missing data, the original files and the results files 
+have to b  in the same directory.
+
+\noindent
+Other options are not mandatory:
+\begin{itemize}
+\item \verb|-m ploidy|  1 if haploid, 2 if diploid (default: 2). 
+\end{itemize}
+
+\end{itemize}
+
+\section{Tutorial}
+
+\subsection{Data set}
+The data set that we analyze in this tutorial is an Asian human data set of SNPs data.
+This data is a worldwide sample of genomic DNA (10757 SNPs) from 934 individuals,
+taken from the Harvard Human Genome Diversity Project - Centre
+Etude Polymorphism Humain (Harvard HGDP-CEPH)2 . 
+In those data, each marker has been ascertained in samples of Mongolian
+ancestry (referenced population HGDP01224) \cite{Patterson_2012}. 
+
+\subsection{Create a data set with missing data}
+
+In the main directory, type:
+\begin{Verbatim}[frame=single]
+./createDataSet -g examples/panel11.geno
+\end{Verbatim}
+
+\noindent
+A file with 5 \% of missing data with path \verb|examples/panel11_I.geno| has been created.
+
+\subsection{Run {\tt sNMF}}
+
+Then, run {\tt sNMF} for the data set with 5 \% of missing data (with $K=5$ for example):
+\begin{Verbatim}[frame=single]
+./sNMF -g examples/panel11_I.geno -K 5
+\end{Verbatim}
+
+\noindent
+The results files \verb|examples/panel11_I.Q| \verb|examples/panel11_I.F| have been created.
+
+\subsection{Calculate the Cross-Entropy}
+
+Finally, calculate the cross-entropy criteria:
+\begin{Verbatim}[frame=single]
+./crossEntropy -g examples/panel_11.geno -K 5
+\end{Verbatim}
+
+\noindent
+With this procedure, you can calculate a criteria for each of your analyses. It is a way to 
+choose the best run for different number of ancestral populations ($K$) and different values 
+of the regularization parameter ($\alpha$).
+
+\section{Contact}
+If you need assistance, do not hesitate to send me an email (efrichot@gmail.com or eric.frichot@imag.fr). 
+A FAQ (Frequently Asked Questions) section is available 
+on our webpage (ttp://membres-timc.imag.fr/Olivier.Francois/snmf.html). 
+{\tt sNMF} software is still under development. All your comments and feedbacks are more than welcome.
+
+\bibliography{biblio}
+\bibliographystyle{plain}
+
+\end{document}

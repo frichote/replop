@@ -1,0 +1,65 @@
+\hypertarget{thread__U_8h}{\section{src/\-L\-F\-M\-M/thread\-\_\-\-U.h \-File \-Reference}
+\label{thread__U_8h}\index{src/\-L\-F\-M\-M/thread\-\_\-\-U.\-h@{src/\-L\-F\-M\-M/thread\-\_\-\-U.\-h}}
+}
+
+
+multithreaded part of the functions to compute new values for \-U from the conditional distribution (possibly multithreaded)  
+
+
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{thread__U_8h_a276be2030815e0142a9a454e6516db3e}{slice\-\_\-m\-U\-\_\-\-U} (void $\ast$\-G)
+\item 
+void \hyperlink{thread__U_8h_a090ada858a48f5478fd6e8e1dd20df7f}{slice\-\_\-rand\-\_\-\-U} (void $\ast$\-G)
+\item 
+void \hyperlink{thread__U_8h_a98c4afd751661c96d98e0e41b896c439}{slice\-\_\-inv\-\_\-cov\-\_\-\-U} (void $\ast$\-G)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+multithreaded part of the functions to compute new values for \-U from the conditional distribution (possibly multithreaded) 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{thread__U_8h_a98c4afd751661c96d98e0e41b896c439}{\index{thread\-\_\-\-U.\-h@{thread\-\_\-\-U.\-h}!slice\-\_\-inv\-\_\-cov\-\_\-\-U@{slice\-\_\-inv\-\_\-cov\-\_\-\-U}}
+\index{slice\-\_\-inv\-\_\-cov\-\_\-\-U@{slice\-\_\-inv\-\_\-cov\-\_\-\-U}!thread_U.h@{thread\-\_\-\-U.\-h}}
+\subsubsection[{slice\-\_\-inv\-\_\-cov\-\_\-\-U}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf slice\-\_\-inv\-\_\-cov\-\_\-\-U} (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{\-G}
+\end{DoxyParamCaption}
+)}}\label{thread__U_8h_a98c4afd751661c96d98e0e41b896c439}
+compute a slice of conditional covariance for \-U
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-G} & a specific structure for multi-\/threading \\
+\hline
+\end{DoxyParams}
+\hypertarget{thread__U_8h_a276be2030815e0142a9a454e6516db3e}{\index{thread\-\_\-\-U.\-h@{thread\-\_\-\-U.\-h}!slice\-\_\-m\-U\-\_\-\-U@{slice\-\_\-m\-U\-\_\-\-U}}
+\index{slice\-\_\-m\-U\-\_\-\-U@{slice\-\_\-m\-U\-\_\-\-U}!thread_U.h@{thread\-\_\-\-U.\-h}}
+\subsubsection[{slice\-\_\-m\-U\-\_\-\-U}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf slice\-\_\-m\-U\-\_\-\-U} (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{\-G}
+\end{DoxyParamCaption}
+)}}\label{thread__U_8h_a276be2030815e0142a9a454e6516db3e}
+compute a slice of conditional mean for \-U
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-G} & a specific structure for multi-\/threading \\
+\hline
+\end{DoxyParams}
+\hypertarget{thread__U_8h_a090ada858a48f5478fd6e8e1dd20df7f}{\index{thread\-\_\-\-U.\-h@{thread\-\_\-\-U.\-h}!slice\-\_\-rand\-\_\-\-U@{slice\-\_\-rand\-\_\-\-U}}
+\index{slice\-\_\-rand\-\_\-\-U@{slice\-\_\-rand\-\_\-\-U}!thread_U.h@{thread\-\_\-\-U.\-h}}
+\subsubsection[{slice\-\_\-rand\-\_\-\-U}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf slice\-\_\-rand\-\_\-\-U} (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{\-G}
+\end{DoxyParamCaption}
+)}}\label{thread__U_8h_a090ada858a48f5478fd6e8e1dd20df7f}
+compute a slice of new values for \-U
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-G} & a specific structure for multi-\/threading \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,78 @@
+\hypertarget{data__nmf_8h}{\section{src/s\-N\-M\-F/data\-\_\-nmf.h \-File \-Reference}
+\label{data__nmf_8h}\index{src/s\-N\-M\-F/data\-\_\-nmf.\-h@{src/s\-N\-M\-F/data\-\_\-nmf.\-h}}
+}
+
+
+set of functions to impute data  
+
+
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{data__nmf_8h_ac3e8ec4ff825ad8557f668878ba54a1d}{inputation} (float $\ast$\-R, double $\ast$\-U, double $\ast$\-V, int $\ast$\-I, int \-N, int \-M, int \-K)
+\item 
+void \hyperlink{data__nmf_8h_a6866ef199f86b29a2cdfb3e49ff02825}{freq\-\_\-inputation} (float $\ast$\-X, int $\ast$\-I, int \-N, int \-M)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+set of functions to impute data 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{data__nmf_8h_a6866ef199f86b29a2cdfb3e49ff02825}{\index{data\-\_\-nmf.\-h@{data\-\_\-nmf.\-h}!freq\-\_\-inputation@{freq\-\_\-inputation}}
+\index{freq\-\_\-inputation@{freq\-\_\-inputation}!data_nmf.h@{data\-\_\-nmf.\-h}}
+\subsubsection[{freq\-\_\-inputation}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf freq\-\_\-inputation} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{\-X, }
+\item[{int $\ast$}]{\-I, }
+\item[{int}]{\-N, }
+\item[{int}]{\-M}
+\end{DoxyParamCaption}
+)}}\label{data__nmf_8h_a6866ef199f86b29a2cdfb3e49ff02825}
+input missing values with allele frequency
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-X} & the data matrix (of size \-Nx\-M) \\
+\hline
+{\em \-I} & the missing data matrix \\
+\hline
+{\em \-N} & the number of individuals \\
+\hline
+{\em \-M} & the number of loci \\
+\hline
+{\em \-K} & the number of clusters \\
+\hline
+\end{DoxyParams}
+\hypertarget{data__nmf_8h_ac3e8ec4ff825ad8557f668878ba54a1d}{\index{data\-\_\-nmf.\-h@{data\-\_\-nmf.\-h}!inputation@{inputation}}
+\index{inputation@{inputation}!data_nmf.h@{data\-\_\-nmf.\-h}}
+\subsubsection[{inputation}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf inputation} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{\-R, }
+\item[{double $\ast$}]{\-U, }
+\item[{double $\ast$}]{\-V, }
+\item[{int $\ast$}]{\-I, }
+\item[{int}]{\-N, }
+\item[{int}]{\-M, }
+\item[{int}]{\-K}
+\end{DoxyParamCaption}
+)}}\label{data__nmf_8h_ac3e8ec4ff825ad8557f668878ba54a1d}
+input missing values with \-U'$\ast$\-V
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-R} & the data matrix (of size \-Nx\-M) \\
+\hline
+{\em \-U} & the \-U matrix (of size \-Kx\-N) \\
+\hline
+{\em \-V} & the \-V matrix (of size \-Kx\-M) \\
+\hline
+{\em \-I} & the missing data matrix \\
+\hline
+{\em \-N} & the number of individuals \\
+\hline
+{\em \-M} & the number of loci \\
+\hline
+{\em \-K} & the number of clusters \\
+\hline
+\end{DoxyParams}

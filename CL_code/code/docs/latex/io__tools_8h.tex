@@ -1,0 +1,81 @@
+\hypertarget{io__tools_8h}{\section{src/io/io\-\_\-tools.h \-File \-Reference}
+\label{io__tools_8h}\index{src/io/io\-\_\-tools.\-h@{src/io/io\-\_\-tools.\-h}}
+}
+
+
+tools to read and write data files  
+
+
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{io__tools_8h_a997fd714366f8ea139d01b07464e6681}{remove\-\_\-ext} (char $\ast$mystr, char dot, char sep)
+\item 
+int \hyperlink{io__tools_8h_a6959dd61cd5231523019163edcfd64a6}{nb\-\_\-lines} (char $\ast$file, int \-N)
+\item 
+int \hyperlink{io__tools_8h_ab8bdb6df78f7a6bcaeb67dd1a07bab0c}{nb\-\_\-cols} (char $\ast$file)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+tools to read and write data files 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{io__tools_8h_ab8bdb6df78f7a6bcaeb67dd1a07bab0c}{\index{io\-\_\-tools.\-h@{io\-\_\-tools.\-h}!nb\-\_\-cols@{nb\-\_\-cols}}
+\index{nb\-\_\-cols@{nb\-\_\-cols}!io_tools.h@{io\-\_\-tools.\-h}}
+\subsubsection[{nb\-\_\-cols}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf nb\-\_\-cols} (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{file}
+\end{DoxyParamCaption}
+)}}\label{io__tools_8h_ab8bdb6df78f7a6bcaeb67dd1a07bab0c}
+count the number of elements of the first line of a file
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em file} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+number of lines 
+\end{DoxyReturn}
+\hypertarget{io__tools_8h_a6959dd61cd5231523019163edcfd64a6}{\index{io\-\_\-tools.\-h@{io\-\_\-tools.\-h}!nb\-\_\-lines@{nb\-\_\-lines}}
+\index{nb\-\_\-lines@{nb\-\_\-lines}!io_tools.h@{io\-\_\-tools.\-h}}
+\subsubsection[{nb\-\_\-lines}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf nb\-\_\-lines} (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{file, }
+\item[{int}]{\-N}
+\end{DoxyParamCaption}
+)}}\label{io__tools_8h_a6959dd61cd5231523019163edcfd64a6}
+count the number of lines of a file
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em file} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+number of lines 
+\end{DoxyReturn}
+\hypertarget{io__tools_8h_a997fd714366f8ea139d01b07464e6681}{\index{io\-\_\-tools.\-h@{io\-\_\-tools.\-h}!remove\-\_\-ext@{remove\-\_\-ext}}
+\index{remove\-\_\-ext@{remove\-\_\-ext}!io_tools.h@{io\-\_\-tools.\-h}}
+\subsubsection[{remove\-\_\-ext}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ {\bf remove\-\_\-ext} (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{mystr, }
+\item[{char}]{dot, }
+\item[{char}]{sep}
+\end{DoxyParamCaption}
+)}}\label{io__tools_8h_a997fd714366f8ea139d01b07464e6681}
+removes the \char`\"{}extension\char`\"{} from a file spec.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em mystr} & is the string to process. \\
+\hline
+{\em dot} & is the extension separator. \\
+\hline
+{\em sep} & is the path separator (0 means to ignore).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+an allocated string identical to the original but with the extension removed. \-It must be freed when you're finished with it. \-If you pass in \-N\-U\-L\-L or the new string can't be allocated, it returns \-N\-U\-L\-L. 
+\end{DoxyReturn}

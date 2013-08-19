@@ -1,0 +1,111 @@
+\hypertarget{normalize_8h}{\section{src/matrix/normalize.h \-File \-Reference}
+\label{normalize_8h}\index{src/matrix/normalize.\-h@{src/matrix/normalize.\-h}}
+}
+
+
+functions to normalize data and covariance matrices  
+
+
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{normalize_8h_a1db5e2755ae535317d3fa3c8215ab04e}{normalize\-\_\-data} (float $\ast$data, int \-N, int \-M, int $\ast$\-I, int missing\-\_\-data)
+\item 
+void \hyperlink{normalize_8h_a465cc3c1152bc31eb87f4c8c049c4eaf}{normalize\-\_\-cov} (double $\ast$\-C, int \-N, int \-K)
+\item 
+void \hyperlink{normalize_8h_a2008ae73052aacf00d33fe23fc6df248}{normalize\-\_\-lines} (double $\ast$\-A, int \-N, int \-M)
+\item 
+void \hyperlink{normalize_8h_a3502e68b5e1df7c19a524c7981cdd9f1}{normalize\-\_\-cols} (double $\ast$\-F, int \-K, int \-M)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+functions to normalize data and covariance matrices 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{normalize_8h_a3502e68b5e1df7c19a524c7981cdd9f1}{\index{normalize.\-h@{normalize.\-h}!normalize\-\_\-cols@{normalize\-\_\-cols}}
+\index{normalize\-\_\-cols@{normalize\-\_\-cols}!normalize.h@{normalize.\-h}}
+\subsubsection[{normalize\-\_\-cols}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf normalize\-\_\-cols} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-F, }
+\item[{int}]{\-K, }
+\item[{int}]{\-M}
+\end{DoxyParamCaption}
+)}}\label{normalize_8h_a3502e68b5e1df7c19a524c7981cdd9f1}
+divide each column of \-F by the sum of the elements of this line
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-F} & the matrix to normalize (of size, \-Kx\-M) \\
+\hline
+{\em \-K} & the number of lines of \-F \\
+\hline
+{\em \-M} & the number of columns of \-F \\
+\hline
+\end{DoxyParams}
+\hypertarget{normalize_8h_a465cc3c1152bc31eb87f4c8c049c4eaf}{\index{normalize.\-h@{normalize.\-h}!normalize\-\_\-cov@{normalize\-\_\-cov}}
+\index{normalize\-\_\-cov@{normalize\-\_\-cov}!normalize.h@{normalize.\-h}}
+\subsubsection[{normalize\-\_\-cov}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf normalize\-\_\-cov} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-C, }
+\item[{int}]{\-N, }
+\item[{int}]{\-K}
+\end{DoxyParamCaption}
+)}}\label{normalize_8h_a465cc3c1152bc31eb87f4c8c049c4eaf}
+normalize \-C (means equal 0)
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-C} & the covariable matrix (of size, \-Nx\-K) \\
+\hline
+{\em \-N} & the number of lines of \-C \\
+\hline
+{\em \-K} & the number of columns of \-C \\
+\hline
+\end{DoxyParams}
+\hypertarget{normalize_8h_a1db5e2755ae535317d3fa3c8215ab04e}{\index{normalize.\-h@{normalize.\-h}!normalize\-\_\-data@{normalize\-\_\-data}}
+\index{normalize\-\_\-data@{normalize\-\_\-data}!normalize.h@{normalize.\-h}}
+\subsubsection[{normalize\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf normalize\-\_\-data} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{data, }
+\item[{int}]{\-N, }
+\item[{int}]{\-M, }
+\item[{int $\ast$}]{\-I, }
+\item[{int}]{missing\-\_\-data}
+\end{DoxyParamCaption}
+)}}\label{normalize_8h_a1db5e2755ae535317d3fa3c8215ab04e}
+normalize data (means equal 0 and variances equal 1)
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em data} & the data matrix (of size, \-Nx\-M) \\
+\hline
+{\em \-N} & the number of lines of data \\
+\hline
+{\em \-M} & the number of columns of data \\
+\hline
+{\em \-I} & the missing data matrix (of size, \-Nx\-M) \\
+\hline
+{\em missing\-\_\-data} & true if data contains missing data \\
+\hline
+\end{DoxyParams}
+\hypertarget{normalize_8h_a2008ae73052aacf00d33fe23fc6df248}{\index{normalize.\-h@{normalize.\-h}!normalize\-\_\-lines@{normalize\-\_\-lines}}
+\index{normalize\-\_\-lines@{normalize\-\_\-lines}!normalize.h@{normalize.\-h}}
+\subsubsection[{normalize\-\_\-lines}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf normalize\-\_\-lines} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-A, }
+\item[{int}]{\-N, }
+\item[{int}]{\-M}
+\end{DoxyParamCaption}
+)}}\label{normalize_8h_a2008ae73052aacf00d33fe23fc6df248}
+divide each line of \-A by the sum of the elements of this line
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-A} & the matrix to normalize (of size, \-Nx\-M) \\
+\hline
+{\em \-N} & the number of lines of \-A \\
+\hline
+{\em \-M} & the number of columns of \-A \\
+\hline
+\end{DoxyParams}

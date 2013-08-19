@@ -1,0 +1,15 @@
+SOURCES=$(wildcard bituint/*.c io/*.c lapack/*.c LFMM/*.c matrix/*.c nnlsm/*.c sNMF/*.c createDataSet/*.c crossEntropy/*.c)
+
+OBJECTS = R_LFMM.o R_crossEntropy.o R_createDataSet.o R_sNMF.o $(SOURCES:.c=.o)
+
+PKG_CPPFLAGS=-I.
+
+# PKG_CXXFLAGS=-fno-omit-frame-pointer
+
+all: $(SHLIB)
+
+#$(OBJECTS): clean
+
+clean:
+	@rm -f $(OBJECTS)
+

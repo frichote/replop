@@ -1,0 +1,15 @@
+Date: 08-19-13
+by Eric Frichot (efrichot@gmail.com)
+
+Instructions:
+
+To create a new release version for sNMF, execute the following command:
+
+./create_sNMF_release.sh number_of_the_version
+
+It will automatically add the code, the example and the documentation 
+from CL_code.
+
+For example to create the release v0-1:
+
+./create_sNMF_release.sh 0-1

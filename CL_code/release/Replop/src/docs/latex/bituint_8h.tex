@@ -1,0 +1,49 @@
+\hypertarget{bituint_8h}{\section{src/bituint/bituint.h \-File \-Reference}
+\label{bituint_8h}\index{src/bituint/bituint.\-h@{src/bituint/bituint.\-h}}
+}
+
+
+set of functions to store data in bit.  
+
+
+{\ttfamily \#include $<$stdint.\-h$>$}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{bituint_8h_a95cf1ca63ff303311d342d1a53d51f38}{\#define {\bfseries \-S\-E\-P}~\char`\"{} \char`\"{}}\label{bituint_8h_a95cf1ca63ff303311d342d1a53d51f38}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{bituint_8h_af2caa499c7e78923ec01daa200e8eb89}{init\-\_\-mat\-\_\-bituint} (bituint $\ast$$\ast$dat, int \-N, int \-Mc, int $\ast$\-Mp)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+set of functions to store data in bit. 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{bituint_8h_af2caa499c7e78923ec01daa200e8eb89}{\index{bituint.\-h@{bituint.\-h}!init\-\_\-mat\-\_\-bituint@{init\-\_\-mat\-\_\-bituint}}
+\index{init\-\_\-mat\-\_\-bituint@{init\-\_\-mat\-\_\-bituint}!bituint.h@{bituint.\-h}}
+\subsubsection[{init\-\_\-mat\-\_\-bituint}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf init\-\_\-mat\-\_\-bituint} (
+\begin{DoxyParamCaption}
+\item[{bituint $\ast$$\ast$}]{dat, }
+\item[{int}]{\-N, }
+\item[{int}]{\-Mc, }
+\item[{int $\ast$}]{\-Mp}
+\end{DoxyParamCaption}
+)}}\label{bituint_8h_af2caa499c7e78923ec01daa200e8eb89}
+allocate the memory to store data of size nx\-L
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em dat} & address to the bituint data matrix \\
+\hline
+{\em \-N} & number of lines of the matrix \\
+\hline
+{\em \-Mc} & number of elements to store per lines \\
+\hline
+{\em \-Mp} & (output) number of columns of the matrix \\
+\hline
+\end{DoxyParams}

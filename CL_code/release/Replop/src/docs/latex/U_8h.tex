@@ -1,0 +1,215 @@
+\hypertarget{U_8h}{\section{src/\-L\-F\-M\-M/\-U.h \-File \-Reference}
+\label{U_8h}\index{src/\-L\-F\-M\-M/\-U.\-h@{src/\-L\-F\-M\-M/\-U.\-h}}
+}
+
+
+functions to update \-U parameters in \-L\-F\-M\-M model  
+
+
+{\ttfamily \#include \char`\"{}data\-\_\-lfmm.\-h\char`\"{}}\*
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{U_8h_aac3642967d9e409ebd572463f6437736}{create\-\_\-m\-\_\-\-U} (double $\ast$\-V, float $\ast$\-R, double $\ast$\-C, double $\ast$beta, double $\ast$m\-\_\-\-U, int \-M, int \-N, int \-D, int \-K, float $\ast$datb, int num\-\_\-thrd)
+\item 
+void \hyperlink{U_8h_aadc228f394dde02250fb6cbc1b5c0a47}{create\-\_\-inv\-\_\-cov\-\_\-\-U} (double $\ast$inv\-\_\-cov\-\_\-\-U, double alpha, double alpha\-\_\-\-R, double $\ast$\-V, int \-K, int \-M, int num\-\_\-thrd)
+\item 
+void \hyperlink{U_8h_a6230d36c5f8ef657549dfbdc515763fa}{rand\-\_\-\-U} (double $\ast$\-U, double $\ast$m\-\_\-\-U, double $\ast$inv\-\_\-cov\-\_\-\-U, double alpha\-\_\-\-R, int \-K, int \-N, int num\-\_\-thrd)
+\item 
+void \hyperlink{U_8h_a6291b5a6399042fc7f0bf14fd6694e27}{update\-\_\-\-U} (double $\ast$\-C, float $\ast$dat, double $\ast$\-U, double $\ast$\-V, double $\ast$beta, double $\ast$m\-\_\-\-U, double $\ast$inv\-\_\-cov\-\_\-\-U, double alpha\-\_\-\-U, double alpha\-\_\-\-R, int \-M, int \-N, int \-K, int \-D, int num\-\_\-thrd)
+\item 
+void \hyperlink{U_8h_acbb111bd93145f3a556ccc4050a4f981}{update\-\_\-alpha\-\_\-\-U} (double $\ast$\-U, double $\ast$alpha\-\_\-\-U, double epsilon, int \-K, int \-N)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+functions to update \-U parameters in \-L\-F\-M\-M model 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{U_8h_aadc228f394dde02250fb6cbc1b5c0a47}{\index{\-U.\-h@{\-U.\-h}!create\-\_\-inv\-\_\-cov\-\_\-\-U@{create\-\_\-inv\-\_\-cov\-\_\-\-U}}
+\index{create\-\_\-inv\-\_\-cov\-\_\-\-U@{create\-\_\-inv\-\_\-cov\-\_\-\-U}!U.h@{\-U.\-h}}
+\subsubsection[{create\-\_\-inv\-\_\-cov\-\_\-\-U}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf create\-\_\-inv\-\_\-cov\-\_\-\-U} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{inv\-\_\-cov\-\_\-\-U, }
+\item[{double}]{alpha, }
+\item[{double}]{alpha\-\_\-\-R, }
+\item[{double $\ast$}]{\-V, }
+\item[{int}]{\-K, }
+\item[{int}]{\-M, }
+\item[{int}]{num\-\_\-thrd}
+\end{DoxyParamCaption}
+)}}\label{U_8h_aadc228f394dde02250fb6cbc1b5c0a47}
+compute the inverse of the conditional covariance for \-U
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em inv\-\_\-cov\-\_\-\-U} & the output matrix (of size \-Dx\-D) \\
+\hline
+{\em alpha} & the hyperparameters for \-U \\
+\hline
+{\em alpha\-\_\-\-R} & the inverse of the residual variance \\
+\hline
+{\em \-V} & the \-V matrix (of size \-Dx\-M) \\
+\hline
+{\em \-K} & the number of latent factors \\
+\hline
+{\em \-M} & the number of loci \\
+\hline
+{\em num\-\_\-thrd} & the number of processes used \\
+\hline
+\end{DoxyParams}
+\hypertarget{U_8h_aac3642967d9e409ebd572463f6437736}{\index{\-U.\-h@{\-U.\-h}!create\-\_\-m\-\_\-\-U@{create\-\_\-m\-\_\-\-U}}
+\index{create\-\_\-m\-\_\-\-U@{create\-\_\-m\-\_\-\-U}!U.h@{\-U.\-h}}
+\subsubsection[{create\-\_\-m\-\_\-\-U}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf create\-\_\-m\-\_\-\-U} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-V, }
+\item[{float $\ast$}]{\-R, }
+\item[{double $\ast$}]{\-C, }
+\item[{double $\ast$}]{beta, }
+\item[{double $\ast$}]{m\-\_\-\-U, }
+\item[{int}]{\-M, }
+\item[{int}]{\-N, }
+\item[{int}]{\-D, }
+\item[{int}]{\-K, }
+\item[{float $\ast$}]{datb, }
+\item[{int}]{num\-\_\-thrd}
+\end{DoxyParamCaption}
+)}}\label{U_8h_aac3642967d9e409ebd572463f6437736}
+compute the conditional mean for \-U
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-V} & the \-V matrix (of size \-Dx\-M) \\
+\hline
+{\em \-R} & the data matrix (of size \-Nx\-M) \\
+\hline
+{\em \-C} & \-The covariable matrix (of size \-Nx\-K) \\
+\hline
+{\em beta} & the beta matrix (of size \-Kx\-M) \\
+\hline
+{\em m\-\_\-\-U} & the output beta mean matrix \\
+\hline
+{\em \-M} & the number of loci \\
+\hline
+{\em \-N} & the number of individuals \\
+\hline
+{\em \-D} & the number of covariables \\
+\hline
+{\em \-K} & the number of latent factors \\
+\hline
+{\em datb} & the data set \\
+\hline
+{\em num\-\_\-thrd} & the number of processes used \\
+\hline
+\end{DoxyParams}
+\hypertarget{U_8h_a6230d36c5f8ef657549dfbdc515763fa}{\index{\-U.\-h@{\-U.\-h}!rand\-\_\-\-U@{rand\-\_\-\-U}}
+\index{rand\-\_\-\-U@{rand\-\_\-\-U}!U.h@{\-U.\-h}}
+\subsubsection[{rand\-\_\-\-U}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf rand\-\_\-\-U} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-U, }
+\item[{double $\ast$}]{m\-\_\-\-U, }
+\item[{double $\ast$}]{inv\-\_\-cov\-\_\-\-U, }
+\item[{double}]{alpha\-\_\-\-R, }
+\item[{int}]{\-K, }
+\item[{int}]{\-N, }
+\item[{int}]{num\-\_\-thrd}
+\end{DoxyParamCaption}
+)}}\label{U_8h_a6230d36c5f8ef657549dfbdc515763fa}
+compute a realization of the conditional law for \-U
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-U} & the output \-U realization (of size \-Dx\-N) \\
+\hline
+{\em m\-\_\-\-U} & the conditional \-U mean matrix (of size \-Dx\-N) \\
+\hline
+{\em inv\-\_\-cov\-\_\-\-U} & the conditional \-U covariance matrix (of size \-Dx\-D) \\
+\hline
+{\em alpha\-\_\-\-R} & the inverse of the residual variance \\
+\hline
+{\em \-K} & the number of latent factors \\
+\hline
+{\em \-N} & the number of individuals \\
+\hline
+{\em num\-\_\-thrd} & the number of processes used \\
+\hline
+\end{DoxyParams}
+\hypertarget{U_8h_acbb111bd93145f3a556ccc4050a4f981}{\index{\-U.\-h@{\-U.\-h}!update\-\_\-alpha\-\_\-\-U@{update\-\_\-alpha\-\_\-\-U}}
+\index{update\-\_\-alpha\-\_\-\-U@{update\-\_\-alpha\-\_\-\-U}!U.h@{\-U.\-h}}
+\subsubsection[{update\-\_\-alpha\-\_\-\-U}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf update\-\_\-alpha\-\_\-\-U} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-U, }
+\item[{double $\ast$}]{alpha\-\_\-\-U, }
+\item[{double}]{epsilon, }
+\item[{int}]{\-K, }
+\item[{int}]{\-N}
+\end{DoxyParamCaption}
+)}}\label{U_8h_acbb111bd93145f3a556ccc4050a4f981}
+update alpha\-\_\-\-U hyperparameter
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-U} & the \-U matrix (of size \-Dx\-N) \\
+\hline
+{\em alpha\-\_\-\-U} & the output hyperparameter for \-U \\
+\hline
+{\em epsilon} & epsilon constant \\
+\hline
+{\em \-K} & the number of latent factors \\
+\hline
+{\em \-N} & the number of covariables \\
+\hline
+\end{DoxyParams}
+\hypertarget{U_8h_a6291b5a6399042fc7f0bf14fd6694e27}{\index{\-U.\-h@{\-U.\-h}!update\-\_\-\-U@{update\-\_\-\-U}}
+\index{update\-\_\-\-U@{update\-\_\-\-U}!U.h@{\-U.\-h}}
+\subsubsection[{update\-\_\-\-U}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf update\-\_\-\-U} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-C, }
+\item[{float $\ast$}]{dat, }
+\item[{double $\ast$}]{\-U, }
+\item[{double $\ast$}]{\-V, }
+\item[{double $\ast$}]{beta, }
+\item[{double $\ast$}]{m\-\_\-\-U, }
+\item[{double $\ast$}]{inv\-\_\-cov\-\_\-\-U, }
+\item[{double}]{alpha\-\_\-\-U, }
+\item[{double}]{alpha\-\_\-\-R, }
+\item[{int}]{\-M, }
+\item[{int}]{\-N, }
+\item[{int}]{\-K, }
+\item[{int}]{\-D, }
+\item[{int}]{num\-\_\-thrd}
+\end{DoxyParamCaption}
+)}}\label{U_8h_a6291b5a6399042fc7f0bf14fd6694e27}
+update \-U matrix
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-C} & the covariable matrix (of size \-Nx\-K) \\
+\hline
+{\em dat} & the data matrix (of size \-Nx\-M) \\
+\hline
+{\em \-U} & the output \-U realization (of size \-Dx\-N) \\
+\hline
+{\em \-V} & the \-V matrix (of size \-Dx\-M) \\
+\hline
+{\em beta} & the beta matrix (of size \-Kx\-M) \\
+\hline
+{\em m\-\_\-\-U} & the conditional \-U mean matrix (of size \-Dx\-N) \\
+\hline
+{\em inv\-\_\-cov\-\_\-\-U} & the conditional \-U covariance matrix (of size \-Dx\-D) \\
+\hline
+{\em alpha\-\_\-\-U} & the hyperparameter for \-U \\
+\hline
+{\em alpha\-\_\-\-R} & the inverse of the residual variance \\
+\hline
+{\em \-M} & the number of loci \\
+\hline
+{\em \-N} & the number of covariables \\
+\hline
+{\em \-K} & the number of latent factors \\
+\hline
+{\em \-D} & the number of individuals \\
+\hline
+{\em num\-\_\-thrd} & the number of processes used \\
+\hline
+\end{DoxyParams}

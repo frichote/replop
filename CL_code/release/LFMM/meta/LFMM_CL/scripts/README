@@ -1,0 +1,13 @@
+scripts 04/12/13
+by Eric Frichot (efrichot@gmail.com)
+
+We provide perl and R scripts to:
+
+- convert from ped eigenstratgeno, ancestrymap, ped
+	formats to lfmm formats.
+
+- merge zscore results with snps informations.
+
+- display manhattan plots.
+
+These scripts are described in the documentation.

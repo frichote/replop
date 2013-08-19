@@ -1,0 +1,466 @@
+\hypertarget{matrix_8h}{\section{src/matrix/matrix.h \-File \-Reference}
+\label{matrix_8h}\index{src/matrix/matrix.\-h@{src/matrix/matrix.\-h}}
+}
+
+
+set of matrix operations  
+
+
+{\ttfamily \#include $<$math.\-h$>$}\*
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{matrix_8h_a32ccb34339139a010dfa8b8be326a5af}{diff\-\_\-int} (int $\ast$\-A, int $\ast$\-B, int n)
+\item 
+double \hyperlink{matrix_8h_a3c7d6b01c421a8d11730992e7d3ca907}{diff} (double $\ast$\-A, double $\ast$\-B, int n)
+\item 
+void \hyperlink{matrix_8h_a1d4ff3c75c3c6ad8fa7b8331f53d39bf}{ones} (float $\ast$\-A, int size)
+\item 
+void \hyperlink{matrix_8h_adb6a5c5d6ef679214e87de2c3a0d8098}{dble\-\_\-sum2} (double $\ast$\-A, int \-K, int \-M, double $\ast$res, double epsilon)
+\item 
+double \hyperlink{matrix_8h_a27208a242abcf2295bd50a15e62e3242}{dble\-\_\-sum} (double $\ast$\-A, int size)
+\item 
+void \hyperlink{matrix_8h_a84c986f0c3cdeb7b21d55af0b5732195}{copy\-\_\-vect} (double $\ast$in, double $\ast$out, int size)
+\item 
+void \hyperlink{matrix_8h_acb20a064009f2d7937ea4ef0aa10605f}{basic\-\_\-prod} (float $\ast$a, float $\ast$b, float $\ast$res, int size)
+\item 
+int \hyperlink{matrix_8h_ae2cd7cd460e3c14afe0d4051da1879a9}{vect\-\_\-max} (int $\ast$v, int n, int max)
+\item 
+int \hyperlink{matrix_8h_a533fa2bdae0ee1ae41e82bb0840fb830}{vect\-\_\-min} (int $\ast$v, int n, int min)
+\item 
+int \hyperlink{matrix_8h_a7c6bb0d4bf35d284e20b2a1eb967472b}{imax} (int a, int b)
+\item 
+int \hyperlink{matrix_8h_ac83fe97fe63e0b25203b0f1f085a6c40}{imin} (int a, int b)
+\item 
+float $\ast$ \hyperlink{matrix_8h_ac27533b8d4929cc50d7627765179fcb1}{prod} (float $\ast$\-A, float $\ast$\-B, int n, float alpha)
+\item 
+float \hyperlink{matrix_8h_a298f40f90e86d0ea281279dcfc0be765}{norm\-\_\-1} (float $\ast$\-A, float $\ast$\-B, int n)
+\item 
+void \hyperlink{matrix_8h_a5eac13cea9236724db6216eb2ebfbbad}{print\-\_\-char\-\_\-optim} (unsigned char $\ast$out, int \-N, int \-M)
+\item 
+void \hyperlink{matrix_8h_ae0220158e51a95e81b3d089bb6894d5c}{print\-\_\-mat} (double $\ast$\-A, int \-N, int \-M)
+\item 
+void \hyperlink{matrix_8h_a96e678e36d87314f5218cb0a8f300e13}{optim\-\_\-mult} (double $\ast$\-A, double $\ast$\-B, double $\ast$\-C, int \-M, int \-N, int \-K)
+\item 
+void \hyperlink{matrix_8h_afec15dcd8f77254da3c2b862d30f3f6c}{transpose\-\_\-double} (double $\ast$m, int w, int h)
+\item 
+void \hyperlink{matrix_8h_a9cb6a8f58be313401334160ffb0c1feb}{transpose\-\_\-float} (float $\ast$m, int w, int h)
+\item 
+void \hyperlink{matrix_8h_a36cc1c76576f5b3bf1110c3e62843e5f}{transpose\-\_\-int} (int $\ast$m, int w, int h)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+set of matrix operations 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{matrix_8h_acb20a064009f2d7937ea4ef0aa10605f}{\index{matrix.\-h@{matrix.\-h}!basic\-\_\-prod@{basic\-\_\-prod}}
+\index{basic\-\_\-prod@{basic\-\_\-prod}!matrix.h@{matrix.\-h}}
+\subsubsection[{basic\-\_\-prod}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf basic\-\_\-prod} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{a, }
+\item[{float $\ast$}]{b, }
+\item[{float $\ast$}]{res, }
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_acb20a064009f2d7937ea4ef0aa10605f}
+compute the product a$\ast$b in res
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em a} & the first matrix (of size, sizexsize) \\
+\hline
+{\em b} & the second matrix (of size, sizexsize) \\
+\hline
+{\em res} & the output matrix (a$\ast$b) (of size, sizexsize) \\
+\hline
+{\em size} & the number of lines/columns of all matrices \\
+\hline
+\end{DoxyParams}
+\hypertarget{matrix_8h_a84c986f0c3cdeb7b21d55af0b5732195}{\index{matrix.\-h@{matrix.\-h}!copy\-\_\-vect@{copy\-\_\-vect}}
+\index{copy\-\_\-vect@{copy\-\_\-vect}!matrix.h@{matrix.\-h}}
+\subsubsection[{copy\-\_\-vect}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf copy\-\_\-vect} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{in, }
+\item[{double $\ast$}]{out, }
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_a84c986f0c3cdeb7b21d55af0b5732195}
+copy vector in into vector out
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em in} & vector to copy (of size, size) \\
+\hline
+{\em out} & vector to copy in (of size, size) \\
+\hline
+{\em size} & size of in and out \\
+\hline
+\end{DoxyParams}
+\hypertarget{matrix_8h_a27208a242abcf2295bd50a15e62e3242}{\index{matrix.\-h@{matrix.\-h}!dble\-\_\-sum@{dble\-\_\-sum}}
+\index{dble\-\_\-sum@{dble\-\_\-sum}!matrix.h@{matrix.\-h}}
+\subsubsection[{dble\-\_\-sum}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf dble\-\_\-sum} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-A, }
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_a27208a242abcf2295bd50a15e62e3242}
+calculate the squared sum of \-A
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-A} & the matrix (of size, size) \\
+\hline
+{\em size} & the size of \-A\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the squared sum 
+\end{DoxyReturn}
+\hypertarget{matrix_8h_adb6a5c5d6ef679214e87de2c3a0d8098}{\index{matrix.\-h@{matrix.\-h}!dble\-\_\-sum2@{dble\-\_\-sum2}}
+\index{dble\-\_\-sum2@{dble\-\_\-sum2}!matrix.h@{matrix.\-h}}
+\subsubsection[{dble\-\_\-sum2}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf dble\-\_\-sum2} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-A, }
+\item[{int}]{\-K, }
+\item[{int}]{\-M, }
+\item[{double $\ast$}]{res, }
+\item[{double}]{epsilon}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_adb6a5c5d6ef679214e87de2c3a0d8098}
+calculate for each line k of \-A the squared sum (divided by 2) plus epsilon
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-A} & the matrix (of size (\-Kx\-M) \\
+\hline
+{\em \-K} & the number of lines of \-A \\
+\hline
+{\em \-M} & the number of columns of \-A \\
+\hline
+{\em res} & the output vector (of size \-K) \\
+\hline
+{\em epsilon} & the value of epsilon \\
+\hline
+\end{DoxyParams}
+\hypertarget{matrix_8h_a3c7d6b01c421a8d11730992e7d3ca907}{\index{matrix.\-h@{matrix.\-h}!diff@{diff}}
+\index{diff@{diff}!matrix.h@{matrix.\-h}}
+\subsubsection[{diff}]{\setlength{\rightskip}{0pt plus 5cm}double {\bf diff} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-A, }
+\item[{double $\ast$}]{\-B, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_a3c7d6b01c421a8d11730992e7d3ca907}
+calculate the absolute difference between the two matrices \-A and \-B print the absolute difference divided by the number of elements
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-A} & the first matrix (of size n) \\
+\hline
+{\em \-B} & the second matrix (of size n) \\
+\hline
+{\em n} & the size of the matrices\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+mean of absolute differences between \-A and \-B 
+\end{DoxyReturn}
+\hypertarget{matrix_8h_a32ccb34339139a010dfa8b8be326a5af}{\index{matrix.\-h@{matrix.\-h}!diff\-\_\-int@{diff\-\_\-int}}
+\index{diff\-\_\-int@{diff\-\_\-int}!matrix.h@{matrix.\-h}}
+\subsubsection[{diff\-\_\-int}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf diff\-\_\-int} (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{\-A, }
+\item[{int $\ast$}]{\-B, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_a32ccb34339139a010dfa8b8be326a5af}
+test if the two matrices \-A \& \-B are equal (of size n)
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-A} & the first matrix (of size n) \\
+\hline
+{\em \-B} & the second matrix (of size n) \\
+\hline
+{\em n} & the size of the matrices\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+true if \-A == \-B 
+\end{DoxyReturn}
+\hypertarget{matrix_8h_a7c6bb0d4bf35d284e20b2a1eb967472b}{\index{matrix.\-h@{matrix.\-h}!imax@{imax}}
+\index{imax@{imax}!matrix.h@{matrix.\-h}}
+\subsubsection[{imax}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf imax} (
+\begin{DoxyParamCaption}
+\item[{int}]{a, }
+\item[{int}]{b}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_a7c6bb0d4bf35d284e20b2a1eb967472b}
+compute the maximum of a and b
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em a} & the first integer \\
+\hline
+{\em b} & the second integer\\
+\hline
+\end{DoxyParams}
+return the maximum \hypertarget{matrix_8h_ac83fe97fe63e0b25203b0f1f085a6c40}{\index{matrix.\-h@{matrix.\-h}!imin@{imin}}
+\index{imin@{imin}!matrix.h@{matrix.\-h}}
+\subsubsection[{imin}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf imin} (
+\begin{DoxyParamCaption}
+\item[{int}]{a, }
+\item[{int}]{b}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_ac83fe97fe63e0b25203b0f1f085a6c40}
+compute the minimum of a and b
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em a} & the first integer \\
+\hline
+{\em b} & the second integer\\
+\hline
+\end{DoxyParams}
+return the minimum \hypertarget{matrix_8h_a298f40f90e86d0ea281279dcfc0be765}{\index{matrix.\-h@{matrix.\-h}!norm\-\_\-1@{norm\-\_\-1}}
+\index{norm\-\_\-1@{norm\-\_\-1}!matrix.h@{matrix.\-h}}
+\subsubsection[{norm\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf norm\-\_\-1} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{\-A, }
+\item[{float $\ast$}]{\-B, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_a298f40f90e86d0ea281279dcfc0be765}
+compute the norm 1 of \-A minus \-B
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-A} & the first matrix (of size nxn) \\
+\hline
+{\em \-B} & the second matrix (of size nxn) \\
+\hline
+{\em n} & the number of lines/columns of all matrices\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the norm 1 
+\end{DoxyReturn}
+\hypertarget{matrix_8h_a1d4ff3c75c3c6ad8fa7b8331f53d39bf}{\index{matrix.\-h@{matrix.\-h}!ones@{ones}}
+\index{ones@{ones}!matrix.h@{matrix.\-h}}
+\subsubsection[{ones}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf ones} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{\-A, }
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_a1d4ff3c75c3c6ad8fa7b8331f53d39bf}
+set all values of matrix \-A to 1
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-A} & the matrix (of size n) \\
+\hline
+{\em n} & the size of \-A \\
+\hline
+\end{DoxyParams}
+\hypertarget{matrix_8h_a96e678e36d87314f5218cb0a8f300e13}{\index{matrix.\-h@{matrix.\-h}!optim\-\_\-mult@{optim\-\_\-mult}}
+\index{optim\-\_\-mult@{optim\-\_\-mult}!matrix.h@{matrix.\-h}}
+\subsubsection[{optim\-\_\-mult}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf optim\-\_\-mult} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-A, }
+\item[{double $\ast$}]{\-B, }
+\item[{double $\ast$}]{\-C, }
+\item[{int}]{\-M, }
+\item[{int}]{\-N, }
+\item[{int}]{\-K}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_a96e678e36d87314f5218cb0a8f300e13}
+optimized multiplication \-C = \-A$\ast$\-B (to use if tested)
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-A} & matrix (of size \-Nx\-K) \\
+\hline
+{\em \-B} & matrix (of size \-Kx\-M) \\
+\hline
+{\em \-C} & matrix (of size \-Nx\-M) \\
+\hline
+{\em \-M} & size \\
+\hline
+{\em \-N} & size \\
+\hline
+{\em \-K} & size \\
+\hline
+\end{DoxyParams}
+\hypertarget{matrix_8h_a5eac13cea9236724db6216eb2ebfbbad}{\index{matrix.\-h@{matrix.\-h}!print\-\_\-char\-\_\-optim@{print\-\_\-char\-\_\-optim}}
+\index{print\-\_\-char\-\_\-optim@{print\-\_\-char\-\_\-optim}!matrix.h@{matrix.\-h}}
+\subsubsection[{print\-\_\-char\-\_\-optim}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf print\-\_\-char\-\_\-optim} (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{out, }
+\item[{int}]{\-N, }
+\item[{int}]{\-M}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_a5eac13cea9236724db6216eb2ebfbbad}
+print the char matrix out of size (\-N/4)x\-M
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em out} & the matrix ((\-N/4)x\-M) \\
+\hline
+{\em \-N} & number of lines \\
+\hline
+{\em \-M} & number of columns \\
+\hline
+\end{DoxyParams}
+\hypertarget{matrix_8h_ae0220158e51a95e81b3d089bb6894d5c}{\index{matrix.\-h@{matrix.\-h}!print\-\_\-mat@{print\-\_\-mat}}
+\index{print\-\_\-mat@{print\-\_\-mat}!matrix.h@{matrix.\-h}}
+\subsubsection[{print\-\_\-mat}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf print\-\_\-mat} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-A, }
+\item[{int}]{\-N, }
+\item[{int}]{\-M}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_ae0220158e51a95e81b3d089bb6894d5c}
+print the double matrix \-A of size \-Nx\-M
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-A} & the matrix (\-Nx\-M) \\
+\hline
+{\em \-N} & number of lines \\
+\hline
+{\em \-M} & number of columns \\
+\hline
+\end{DoxyParams}
+\hypertarget{matrix_8h_ac27533b8d4929cc50d7627765179fcb1}{\index{matrix.\-h@{matrix.\-h}!prod@{prod}}
+\index{prod@{prod}!matrix.h@{matrix.\-h}}
+\subsubsection[{prod}]{\setlength{\rightskip}{0pt plus 5cm}float$\ast$ {\bf prod} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{\-A, }
+\item[{float $\ast$}]{\-B, }
+\item[{int}]{n, }
+\item[{float}]{alpha}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_ac27533b8d4929cc50d7627765179fcb1}
+compute the product alpha.$\ast$(\-A$\ast$\-A) (all of sizes, nxn)
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-A} & the first matrix (of size nxn) \\
+\hline
+{\em \-B} & the second matrix (of size nxn) \\
+\hline
+{\em n} & the number of lines/columns of all matrices \\
+\hline
+{\em alpha} & the multiplicative constant\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the output matrix 
+\end{DoxyReturn}
+\hypertarget{matrix_8h_afec15dcd8f77254da3c2b862d30f3f6c}{\index{matrix.\-h@{matrix.\-h}!transpose\-\_\-double@{transpose\-\_\-double}}
+\index{transpose\-\_\-double@{transpose\-\_\-double}!matrix.h@{matrix.\-h}}
+\subsubsection[{transpose\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf transpose\-\_\-double} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{m, }
+\item[{int}]{w, }
+\item[{int}]{h}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_afec15dcd8f77254da3c2b862d30f3f6c}
+transpose m (double) of size h x w (from \-Rosetta code)
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em m} & the matrix (hxw) \\
+\hline
+{\em w} & number of columns \\
+\hline
+{\em h} & number of lines \\
+\hline
+\end{DoxyParams}
+\hypertarget{matrix_8h_a9cb6a8f58be313401334160ffb0c1feb}{\index{matrix.\-h@{matrix.\-h}!transpose\-\_\-float@{transpose\-\_\-float}}
+\index{transpose\-\_\-float@{transpose\-\_\-float}!matrix.h@{matrix.\-h}}
+\subsubsection[{transpose\-\_\-float}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf transpose\-\_\-float} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{m, }
+\item[{int}]{w, }
+\item[{int}]{h}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_a9cb6a8f58be313401334160ffb0c1feb}
+transpose m (float) of size h x w (from \-Rosetta code)
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em m} & the matrix (hxw) \\
+\hline
+{\em w} & number of columns \\
+\hline
+{\em h} & number of lines \\
+\hline
+\end{DoxyParams}
+\hypertarget{matrix_8h_a36cc1c76576f5b3bf1110c3e62843e5f}{\index{matrix.\-h@{matrix.\-h}!transpose\-\_\-int@{transpose\-\_\-int}}
+\index{transpose\-\_\-int@{transpose\-\_\-int}!matrix.h@{matrix.\-h}}
+\subsubsection[{transpose\-\_\-int}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf transpose\-\_\-int} (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{m, }
+\item[{int}]{w, }
+\item[{int}]{h}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_a36cc1c76576f5b3bf1110c3e62843e5f}
+transpose m (float) of size h x w (from \-Rosetta code)
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em m} & the matrix (hxw) \\
+\hline
+{\em w} & number of columns \\
+\hline
+{\em h} & number of lines \\
+\hline
+\end{DoxyParams}
+\hypertarget{matrix_8h_ae2cd7cd460e3c14afe0d4051da1879a9}{\index{matrix.\-h@{matrix.\-h}!vect\-\_\-max@{vect\-\_\-max}}
+\index{vect\-\_\-max@{vect\-\_\-max}!matrix.h@{matrix.\-h}}
+\subsubsection[{vect\-\_\-max}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf vect\-\_\-max} (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{v, }
+\item[{int}]{n, }
+\item[{int}]{max}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_ae2cd7cd460e3c14afe0d4051da1879a9}
+compute the highest value between all values of v and max
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em v} & the vector of possible values (of size n) \\
+\hline
+{\em n} & the size of v \\
+\hline
+{\em max} & the value to compare\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the maximum value 
+\end{DoxyReturn}
+\hypertarget{matrix_8h_a533fa2bdae0ee1ae41e82bb0840fb830}{\index{matrix.\-h@{matrix.\-h}!vect\-\_\-min@{vect\-\_\-min}}
+\index{vect\-\_\-min@{vect\-\_\-min}!matrix.h@{matrix.\-h}}
+\subsubsection[{vect\-\_\-min}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf vect\-\_\-min} (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{v, }
+\item[{int}]{n, }
+\item[{int}]{min}
+\end{DoxyParamCaption}
+)}}\label{matrix_8h_a533fa2bdae0ee1ae41e82bb0840fb830}
+compute the lowest value between all values of v and min
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em v} & the vector of possible values (of size n) \\
+\hline
+{\em n} & the size of v \\
+\hline
+{\em min} & the value to compare\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the minimum value 
+\end{DoxyReturn}

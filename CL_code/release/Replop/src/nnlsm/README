@@ -1,0 +1,9 @@
+README 08/08/13
+by Eric Frichot (efrichot@gmail.com)
+
+Note: this algorithm is described in the paper of Kim and Park (2008)
+Sparse Nonnegative Matrix Factorization for Clustering.
+
+The matlab code is available in the directory nmf_bpas.
+We use the same notations in this directory as those in the matlab
+code.

@@ -1,0 +1,57 @@
+\hypertarget{generative_8h}{\section{src/\-L\-F\-M\-M/generative.h \-File \-Reference}
+\label{generative_8h}\index{src/\-L\-F\-M\-M/generative.\-h@{src/\-L\-F\-M\-M/generative.\-h}}
+}
+
+
+function to generate data from the generative model  
+
+
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{generative_8h_afb403371554e8dc0e2620e59a93b9cfc}{generate\-\_\-data} (float $\ast$data, double $\ast$beta, double $\ast$\-U, double $\ast$\-V, double $\ast$\-C, int \-N, int \-M, int \-K, int \-D)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+function to generate data from the generative model 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{generative_8h_afb403371554e8dc0e2620e59a93b9cfc}{\index{generative.\-h@{generative.\-h}!generate\-\_\-data@{generate\-\_\-data}}
+\index{generate\-\_\-data@{generate\-\_\-data}!generative.h@{generative.\-h}}
+\subsubsection[{generate\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf generate\-\_\-data} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{data, }
+\item[{double $\ast$}]{beta, }
+\item[{double $\ast$}]{\-U, }
+\item[{double $\ast$}]{\-V, }
+\item[{double $\ast$}]{\-C, }
+\item[{int}]{\-N, }
+\item[{int}]{\-M, }
+\item[{int}]{\-K, }
+\item[{int}]{\-D}
+\end{DoxyParamCaption}
+)}}\label{generative_8h_afb403371554e8dc0e2620e59a93b9cfc}
+generate data from the generative \-L\-F\-M\-M model
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em data} & the data matrix (of size \-Nx\-M) \\
+\hline
+{\em beta} & the beta matrix (of size \-Kx\-M) \\
+\hline
+{\em \-U} & the \-U matrix (of size \-Dx\-N) \\
+\hline
+{\em \-V} & the \-V matrix (of size \-Dx\-M) \\
+\hline
+{\em \-C} & the covariable matrix (of size \-Nx\-K) \\
+\hline
+{\em \-N} & the number of individuals \\
+\hline
+{\em \-M} & the number of loci \\
+\hline
+{\em \-K} & the number of latent factors \\
+\hline
+{\em \-D} & the number of covariables \\
+\hline
+\end{DoxyParams}

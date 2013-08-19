@@ -1,0 +1,100 @@
+\hypertarget{io__geno__bituint_8h}{\section{src/bituint/io\-\_\-geno\-\_\-bituint.h \-File \-Reference}
+\label{io__geno__bituint_8h}\index{src/bituint/io\-\_\-geno\-\_\-bituint.\-h@{src/bituint/io\-\_\-geno\-\_\-bituint.\-h}}
+}
+
+
+set of functions to read and print data .  
+
+
+{\ttfamily \#include $<$stdint.\-h$>$}\*
+{\ttfamily \#include \char`\"{}bituint.\-h\char`\"{}}\*
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{io__geno__bituint_8h_ac6fde7fcf9c8f03e3caba66ea156306c}{read\-\_\-geno\-\_\-bituint} (char $\ast$file\-\_\-data, int \-N, int \-M, int \-Mp, int nc, bituint $\ast$dat)
+\item 
+void \hyperlink{io__geno__bituint_8h_ab88a7e97abacc545f9293b0719ea5b5a}{fill\-\_\-line\-\_\-geno\-\_\-bituint} (bituint $\ast$dat, int \-Mp, int cmax, int j, int nc, char $\ast$file\-\_\-data, \-F\-I\-L\-E $\ast$m\-\_\-\-File, int $\ast$\-I)
+\item 
+void \hyperlink{io__geno__bituint_8h_a3c7493af40208cdb111cee139f23368b}{print\-\_\-data\-\_\-bituint} (bituint $\ast$dat, int n, int \-L, int \-Lc, int nc)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+set of functions to read and print data . 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{io__geno__bituint_8h_ab88a7e97abacc545f9293b0719ea5b5a}{\index{io\-\_\-geno\-\_\-bituint.\-h@{io\-\_\-geno\-\_\-bituint.\-h}!fill\-\_\-line\-\_\-geno\-\_\-bituint@{fill\-\_\-line\-\_\-geno\-\_\-bituint}}
+\index{fill\-\_\-line\-\_\-geno\-\_\-bituint@{fill\-\_\-line\-\_\-geno\-\_\-bituint}!io_geno_bituint.h@{io\-\_\-geno\-\_\-bituint.\-h}}
+\subsubsection[{fill\-\_\-line\-\_\-geno\-\_\-bituint}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf fill\-\_\-line\-\_\-geno\-\_\-bituint} (
+\begin{DoxyParamCaption}
+\item[{bituint $\ast$}]{dat, }
+\item[{int}]{\-Mp, }
+\item[{int}]{cmax, }
+\item[{int}]{j, }
+\item[{int}]{nc, }
+\item[{char $\ast$}]{file\-\_\-data, }
+\item[{\-F\-I\-L\-E $\ast$}]{m\-\_\-\-File, }
+\item[{int $\ast$}]{\-I}
+\end{DoxyParamCaption}
+)}}\label{io__geno__bituint_8h_ab88a7e97abacc545f9293b0719ea5b5a}
+read a line of data file with \-N elements and fill dat
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em dat} & data matrix (of size \-Nx\-Mc) \\
+\hline
+{\em \-Mc} & number of columns of dat \\
+\hline
+{\em cmax} & max number of elements of szbuff \\
+\hline
+{\em j} & current line \\
+\hline
+{\em nc} & number of different elements of the matrix \\
+\hline
+{\em file\-\_\-data} & data file name \\
+\hline
+{\em m\-\_\-file} & opened file \\
+\hline
+{\em \-I} & missing data temporary vector \\
+\hline
+\end{DoxyParams}
+\hypertarget{io__geno__bituint_8h_a3c7493af40208cdb111cee139f23368b}{\index{io\-\_\-geno\-\_\-bituint.\-h@{io\-\_\-geno\-\_\-bituint.\-h}!print\-\_\-data\-\_\-bituint@{print\-\_\-data\-\_\-bituint}}
+\index{print\-\_\-data\-\_\-bituint@{print\-\_\-data\-\_\-bituint}!io_geno_bituint.h@{io\-\_\-geno\-\_\-bituint.\-h}}
+\subsubsection[{print\-\_\-data\-\_\-bituint}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf print\-\_\-data\-\_\-bituint} (
+\begin{DoxyParamCaption}
+\item[{bituint $\ast$}]{dat, }
+\item[{int}]{n, }
+\item[{int}]{\-L, }
+\item[{int}]{\-Lc, }
+\item[{int}]{nc}
+\end{DoxyParamCaption}
+)}}\label{io__geno__bituint_8h_a3c7493af40208cdb111cee139f23368b}
+\-T\-O \-C\-H\-E\-C\-K \hypertarget{io__geno__bituint_8h_ac6fde7fcf9c8f03e3caba66ea156306c}{\index{io\-\_\-geno\-\_\-bituint.\-h@{io\-\_\-geno\-\_\-bituint.\-h}!read\-\_\-geno\-\_\-bituint@{read\-\_\-geno\-\_\-bituint}}
+\index{read\-\_\-geno\-\_\-bituint@{read\-\_\-geno\-\_\-bituint}!io_geno_bituint.h@{io\-\_\-geno\-\_\-bituint.\-h}}
+\subsubsection[{read\-\_\-geno\-\_\-bituint}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf read\-\_\-geno\-\_\-bituint} (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{file\-\_\-data, }
+\item[{int}]{\-N, }
+\item[{int}]{\-M, }
+\item[{int}]{\-Mp, }
+\item[{int}]{nc, }
+\item[{bituint $\ast$}]{dat}
+\end{DoxyParamCaption}
+)}}\label{io__geno__bituint_8h_ac6fde7fcf9c8f03e3caba66ea156306c}
+read data file with \-M lines, \-N columns and nc different elements and input missing data
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em file\-\_\-data} & data file name \\
+\hline
+{\em \-N} & number of lines of the matrix \\
+\hline
+{\em \-M} & number of elements per line in the data file \\
+\hline
+{\em \-Mp} & number of columns of the matrix \\
+\hline
+{\em nc} & number of different elements of the matrix \\
+\hline
+{\em dat} & output data matrix \\
+\hline
+\end{DoxyParams}

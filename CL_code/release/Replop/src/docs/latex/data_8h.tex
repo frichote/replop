@@ -1,0 +1,145 @@
+\hypertarget{data_8h}{\section{src/matrix/data.h \-File \-Reference}
+\label{data_8h}\index{src/matrix/data.\-h@{src/matrix/data.\-h}}
+}
+
+
+set of functions to manage data  
+
+
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{data_8h_a95cf1ca63ff303311d342d1a53d51f38}{\#define {\bfseries \-S\-E\-P}~\char`\"{} \char`\"{}}\label{data_8h_a95cf1ca63ff303311d342d1a53d51f38}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{data_8h_aca565dea206ebf06b3b255c528ee708d}{zeros} (double $\ast$\-A, int n)
+\item 
+int \hyperlink{data_8h_adb8cde2c56ae7fa01b62390f1b13bb07}{check\-\_\-mat} (double $\ast$\-A, int n, int nd, int n\-D)
+\item 
+void \hyperlink{data_8h_a4b55a34eb57a4913a2d27e78324e43ef}{update\-\_\-m} (double $\ast$beta, int n, int nb)
+\item 
+void \hyperlink{data_8h_a3e811408a9466c8bfba3d11865ab7ff7}{create\-\_\-\-I} (float $\ast$dat, int $\ast$\-I, int \-N, int \-M)
+\item 
+void \hyperlink{data_8h_a620e5fb6f821525e97ec30af2a6668d9}{clean\-\_\-data} (float $\ast$dat, int $\ast$col, int \-N, int \-M, int n)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+set of functions to manage data 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{data_8h_adb8cde2c56ae7fa01b62390f1b13bb07}{\index{data.\-h@{data.\-h}!check\-\_\-mat@{check\-\_\-mat}}
+\index{check\-\_\-mat@{check\-\_\-mat}!data.h@{data.\-h}}
+\subsubsection[{check\-\_\-mat}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf check\-\_\-mat} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-A, }
+\item[{int}]{n, }
+\item[{int}]{nd, }
+\item[{int}]{n\-D}
+\end{DoxyParamCaption}
+)}}\label{data_8h_adb8cde2c56ae7fa01b62390f1b13bb07}
+check if column nd of \-A contains \-Na\-N elements
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-A} & the matrix \-A (of size nxn\-D) \\
+\hline
+{\em n} & the number of lines of \-A \\
+\hline
+{\em nd} & the column of \-A to check \\
+\hline
+{\em n\-D} & the number of columns of \-A\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+true if the column nd of \-A contains \-Nan element 
+\end{DoxyReturn}
+\hypertarget{data_8h_a620e5fb6f821525e97ec30af2a6668d9}{\index{data.\-h@{data.\-h}!clean\-\_\-data@{clean\-\_\-data}}
+\index{clean\-\_\-data@{clean\-\_\-data}!data.h@{data.\-h}}
+\subsubsection[{clean\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf clean\-\_\-data} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{dat, }
+\item[{int $\ast$}]{col, }
+\item[{int}]{\-N, }
+\item[{int}]{\-M, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}}\label{data_8h_a620e5fb6f821525e97ec30af2a6668d9}
+remove constant columns from dat
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em dat} & the data matrix (of size \-Nx\-M) \\
+\hline
+{\em col} & the list of constant columns (of size \-M) \\
+\hline
+{\em \-N} & the number of lines of dat \\
+\hline
+{\em \-M} & the number of columns of dat \\
+\hline
+{\em n\-M} & true if dat contains missing data \\
+\hline
+\end{DoxyParams}
+\hypertarget{data_8h_a3e811408a9466c8bfba3d11865ab7ff7}{\index{data.\-h@{data.\-h}!create\-\_\-\-I@{create\-\_\-\-I}}
+\index{create\-\_\-\-I@{create\-\_\-\-I}!data.h@{data.\-h}}
+\subsubsection[{create\-\_\-\-I}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf create\-\_\-\-I} (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{dat, }
+\item[{int $\ast$}]{\-I, }
+\item[{int}]{\-N, }
+\item[{int}]{\-M}
+\end{DoxyParamCaption}
+)}}\label{data_8h_a3e811408a9466c8bfba3d11865ab7ff7}
+create \-I the missing matrix from dat
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em dat} & the data matrix (of size \-Nx\-M) \\
+\hline
+{\em \-I} & the missing matrix (of size \-Nx\-M), equals 0 if dat equals -\/9, 0 otherwise \\
+\hline
+{\em \-N} & the number of lines of dat \\
+\hline
+{\em \-M} & the number of columns of dat \\
+\hline
+\end{DoxyParams}
+\hypertarget{data_8h_a4b55a34eb57a4913a2d27e78324e43ef}{\index{data.\-h@{data.\-h}!update\-\_\-m@{update\-\_\-m}}
+\index{update\-\_\-m@{update\-\_\-m}!data.h@{data.\-h}}
+\subsubsection[{update\-\_\-m}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf update\-\_\-m} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{beta, }
+\item[{int}]{n, }
+\item[{int}]{nb}
+\end{DoxyParamCaption}
+)}}\label{data_8h_a4b55a34eb57a4913a2d27e78324e43ef}
+divide all elements of beta by nb
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em beta} & the matrix to divide (of size n) \\
+\hline
+{\em n} & the size of beta \\
+\hline
+{\em nb} & the divisor \\
+\hline
+\end{DoxyParams}
+\hypertarget{data_8h_aca565dea206ebf06b3b255c528ee708d}{\index{data.\-h@{data.\-h}!zeros@{zeros}}
+\index{zeros@{zeros}!data.h@{data.\-h}}
+\subsubsection[{zeros}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf zeros} (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\-A, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}}\label{data_8h_aca565dea206ebf06b3b255c528ee708d}
+set \-A to 0
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-A} & the matrix \-A (of size n) \\
+\hline
+{\em n} & the size of \-A \\
+\hline
+\end{DoxyParams}

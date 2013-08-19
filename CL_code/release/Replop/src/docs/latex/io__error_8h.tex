@@ -1,0 +1,73 @@
+\hypertarget{io__error_8h}{\section{src/io/io\-\_\-error.h \-File \-Reference}
+\label{io__error_8h}\index{src/io/io\-\_\-error.\-h@{src/io/io\-\_\-error.\-h}}
+}
+
+
+manage error while reading files  
+
+
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{io__error_8h_a7398067cf67b9b1237307c49f6133eeb}{test\-\_\-column} (char $\ast$file, \-F\-I\-L\-E $\ast$m\-\_\-\-File, int i, int j, int \-N, char $\ast$token)
+\item 
+void \hyperlink{io__error_8h_a123cfc0895d7ab6084783ebd7fb00454}{test\-\_\-line} (char $\ast$file, \-F\-I\-L\-E $\ast$m\-\_\-\-File, int i, int \-N)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+manage error while reading files 
+
+\subsection{\-Function \-Documentation}
+\hypertarget{io__error_8h_a7398067cf67b9b1237307c49f6133eeb}{\index{io\-\_\-error.\-h@{io\-\_\-error.\-h}!test\-\_\-column@{test\-\_\-column}}
+\index{test\-\_\-column@{test\-\_\-column}!io_error.h@{io\-\_\-error.\-h}}
+\subsubsection[{test\-\_\-column}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf test\-\_\-column} (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{file, }
+\item[{\-F\-I\-L\-E $\ast$}]{m\-\_\-\-File, }
+\item[{int}]{i, }
+\item[{int}]{j, }
+\item[{int}]{\-N, }
+\item[{char $\ast$}]{token}
+\end{DoxyParamCaption}
+)}}\label{io__error_8h_a7398067cf67b9b1237307c49f6133eeb}
+check if the number of columns is ok
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em file} & file name \\
+\hline
+{\em m\-\_\-file} & opened file \\
+\hline
+{\em i} & current column \\
+\hline
+{\em j} & current line \\
+\hline
+{\em \-N} & number of columns \\
+\hline
+{\em token} & current token \\
+\hline
+\end{DoxyParams}
+\hypertarget{io__error_8h_a123cfc0895d7ab6084783ebd7fb00454}{\index{io\-\_\-error.\-h@{io\-\_\-error.\-h}!test\-\_\-line@{test\-\_\-line}}
+\index{test\-\_\-line@{test\-\_\-line}!io_error.h@{io\-\_\-error.\-h}}
+\subsubsection[{test\-\_\-line}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf test\-\_\-line} (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{file, }
+\item[{\-F\-I\-L\-E $\ast$}]{m\-\_\-\-File, }
+\item[{int}]{i, }
+\item[{int}]{\-N}
+\end{DoxyParamCaption}
+)}}\label{io__error_8h_a123cfc0895d7ab6084783ebd7fb00454}
+check if the number of lines is ok
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em file} & file name \\
+\hline
+{\em m\-\_\-file} & opened file \\
+\hline
+{\em i} & current line \\
+\hline
+{\em \-M} & number of lines \\
+\hline
+\end{DoxyParams}

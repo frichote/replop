@@ -1,0 +1,10 @@
+scripts 04/12/13
+by Eric Frichot (efrichot@gmail.com)
+
+We provide R scripts to:
+
+- merge zscore results with snps informations.
+
+- display manhattan plots.
+
+These scripts are described in the documentation.

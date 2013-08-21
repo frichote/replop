@@ -56,8 +56,8 @@ void update_Q(double *Q, double *F, bituint *X, int N, int M, int nc, int Mp,
 		for (k1 = 0; k1 < K; k1++) {
 			for (k2 = 0; k2 < K; k2++) {
 				temp1[k1*K+k2] += F[j*K+k1] * F[j*K+k2];
+				temp1[k1*K+k2] += alpha;
 			}
-			temp1[k1*K+k2] += alpha;
 		}
 	}
 

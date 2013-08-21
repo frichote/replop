@@ -68,6 +68,8 @@ void ALS(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp, int K,
 		// update Q
 		sum2 = update_nnlsm_Q(Q, F, X, N, M, nc, Mp, K, alpha,
 				mem, num_thrd);
+		// update_Q(Q, F, X, N, M, nc, Mp, K, alpha,
+		//		mem);
 		normalize_Q(Q,N,K);
 
 		if (isnan(Q[0])) {

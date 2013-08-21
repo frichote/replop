@@ -68,20 +68,20 @@ void print_help_lfmm()
 
 	printf("\nHELP: ./LFMM options \n\n"
 	       "mandatory:\n"
-	       "	-g genotype_file   				-- genotype file\n"
-	       "        -v variable_file     				-- variable file\n"
-	       "        -n n 						-- number n of individus\n"
-	       "        -L L 						-- number L of SNPS\n"
-	       "        -K K 						-- K number of latent factors\n"
-	       "        -D D 						-- D number of covariables\n"
-	       "        -o output_file 			  		-- output file with z-scores\n"
-	       "        -i Niter             				-- number of iterations in the GS\n"
-	       "        -b burn         				-- burn parameter in the GS\n\n"
+	       "	-g genotype_file   		-- genotype file (in .lfmm format)\n"
+	       "        -v variable_file     		-- variable file (in .env format)\n"
+	     /*  "        -n n 						-- number n of individus\n"
+	       "        -L L 						-- number L of SNPS\n" */
+	       "        -K K 				-- K number of latent factors\n"
+//	       "        -D D 						-- D number of covariables\n"
 	       "optional:\n"
-	       "        -d d 						-- d, the dth covariables\n"
-	       "        -m						-- missing data\n"
-	       "        -p p						-- number of process used\n"
-	       "        -h              				-- help\n\n");
+	       "        -d d 				-- d, the dth covariables 	(default: all)\n"
+	       "        -o output_file 			-- output file with z-scores 	(default: zscore.txt)\n"
+	       "        -m				-- missing data			(default: no)\n"
+	       "        -p p				-- number of process used	(default: 1)\n"
+	       "        -i Niter             		-- number of iterations in the GS\n"
+	       "        -b burn         		-- burnin parameter in the GS\n\n"
+	       "        -h              		-- help\n\n");
 }
 
 // print_summary

@@ -31,7 +31,7 @@
 #include "data_snmf.h"
 #include "thread_F.h"
 #include "thread_Q.h"
-#include "thread.h"
+#include "thread_snmf.h"
 #include "../bituint/bituint.h"
 
 // udpate_Q (not used) TODO
@@ -69,7 +69,7 @@ void update_Q(double *Q, double *F, bituint *X, int N, int M, int nc, int Mp,
 
 	/*
 	if (num_thrd > 1) {
-		thread_fct(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_F_TX);
+		thread_fct_snmf(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_F_TX);
 	} else {
 	*/
 		for (jd = 0; jd<Md; jd++) {
@@ -138,7 +138,7 @@ double update_nnlsm_Q(double *Q, double *F, bituint *X, int N, int M, int nc,
 	zeros(temp1,K*K);
 
 	if (num_thrd > 1) {
-		thread_fct(X, temp1, NULL, F, nc, K, M, Mp, N, num_thrd, slice_F_TF);
+		thread_fct_snmf(X, temp1, NULL, F, nc, K, M, Mp, N, num_thrd, slice_F_TF);
 	} else {
 		for (j = 0; j < Mc; j++) {
 			for (k1 = 0; k1 < K; k1++) {
@@ -160,7 +160,7 @@ double update_nnlsm_Q(double *Q, double *F, bituint *X, int N, int M, int nc,
 	zeros(temp3,K*N);
 
 	if (num_thrd > 1) {
-		thread_fct(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_F_TX);
+		thread_fct_snmf(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_F_TX);
 	} else {
 		for (jd = 0; jd<Md; jd++) {
 			for (i = 0; i < N; i++) {

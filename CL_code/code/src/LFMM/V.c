@@ -26,7 +26,7 @@
 #include "../matrix/inverse.h"
 #include "../io/read.h"
 #include "../matrix/rand.h"
-#include "thread.h"
+#include "thread_lfmm.h"
 #include "thread_V.h"
 
 extern void slice_mV_V(void *G);
@@ -38,7 +38,7 @@ extern void slice_inv_cov_V(void *G);
 void create_m_V(double *U, float *R, double *C, double *beta, double *m_V,
 		int M, int N, int D, int K, float *datb, int num_thrd)
 {
-	thread_fct(R, datb, U, NULL, C, beta, m_V, NULL, NULL,
+	thread_fct_lfmm(R, datb, U, NULL, C, beta, m_V, NULL, NULL,
 		   K, D, M, N, num_thrd, slice_mV_V, 0, 0);
 }
 
@@ -50,7 +50,7 @@ void create_inv_cov_V(double *inv_cov_V, double alpha, double alpha_R,
 	double *tmp = (double *)calloc(K * K, sizeof(double));
 
 	//if (num_thrd > 1) {
-	thread_fct(NULL, NULL, U, NULL, NULL, NULL, NULL, tmp, NULL,
+	thread_fct_lfmm(NULL, NULL, U, NULL, NULL, NULL, NULL, tmp, NULL,
 		   K, 0, 0, N, num_thrd, slice_inv_cov_V, alpha, alpha_R);
 	/*
 	   } else {
@@ -88,7 +88,7 @@ void rand_V(double *V, double *m_V, double *inv_cov_V, double alpha_R, int K,
 	cholesky(inv_cov_V, K, L);
 
 	//if(num_thrd > 1) {
-	thread_fct(NULL, NULL, NULL, V, NULL, NULL, m_V, inv_cov_V, L,
+	thread_fct_lfmm(NULL, NULL, NULL, V, NULL, NULL, m_V, inv_cov_V, L,
 		   K, 0, M, 0, num_thrd, slice_rand_V, 0, alpha_R);
 	/*
 	   } else {

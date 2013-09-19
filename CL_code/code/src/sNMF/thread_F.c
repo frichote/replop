@@ -19,7 +19,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "thread.h"
+#include "thread_snmf.h"
 #include "thread_F.h"
 #include "../bituint/bituint.h"
 #include <string.h>
@@ -31,7 +31,7 @@
 
 void slice_temp3_X(void *G)
 {
-	Matrix Ma = (Matrix) G;
+	Matrix_snmf Ma = (Matrix_snmf) G;
 	bituint *X = Ma->R;
 	double *temp3 = Ma->out;
 	double *F = Ma->F;

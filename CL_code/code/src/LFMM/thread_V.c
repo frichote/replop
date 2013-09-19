@@ -19,7 +19,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "thread.h"
+#include "thread_lfmm.h"
 #include "../matrix/rand.h"
 #include "thread_beta.h"
 #include <string.h>
@@ -31,7 +31,7 @@
 
 void slice_mV_V(void *G)
 {
-	Matrix Ma = (Matrix) G;
+	Matrix_lfmm Ma = (Matrix_lfmm) G;
 	float *R = Ma->R;
 	double *U = Ma->U;
 	double *beta = Ma->beta;
@@ -76,7 +76,7 @@ void slice_mV_V(void *G)
 
 void slice_rand_V(void *G)
 {
-	Matrix Ma = (Matrix) G;
+	Matrix_lfmm Ma = (Matrix_lfmm) G;
 	double *m_V = Ma->m;
 	double *inv_cov_V = Ma->inv_cov;
 	double *V = Ma->V;
@@ -114,7 +114,7 @@ void slice_rand_V(void *G)
 
 void slice_inv_cov_V(void *G)
 {
-	Matrix Ma = (Matrix) G;
+	Matrix_lfmm Ma = (Matrix_lfmm) G;
 	double *inv_cov_V = Ma->inv_cov;
 	double *U = Ma->U;
 	int N = Ma->N;

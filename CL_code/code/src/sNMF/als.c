@@ -31,7 +31,7 @@
 #include "data_snmf.h"
 #include "thread_F.h"
 #include "thread_Q.h"
-#include "thread.h"
+#include "thread_snmf.h"
 #include "als_Q.h"
 #include "als_F.h"
 #include "../bituint/bituint.h"

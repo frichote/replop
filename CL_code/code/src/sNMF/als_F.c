@@ -31,7 +31,7 @@
 #include "data_snmf.h"
 #include "thread_F.h"
 #include "thread_Q.h"
-#include "thread.h"
+#include "thread_snmf.h"
 #include "als_Q.h"
 #include "../bituint/bituint.h"
 
@@ -77,7 +77,7 @@ void update_F(double *F, double *Q, bituint *X, int N, int M, int nc, int Mp, in
 	// F = temp3*X							(M N K)
 	zeros(F,K*Mc);
 
-	thread_fct(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_temp3_X);
+	thread_fct_snmf(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_temp3_X);
 	/*
 	for (jd = 0; jd<Md; jd++) {
 		for (i = 0; i < N; i++) {

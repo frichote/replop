@@ -19,7 +19,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "thread.h"
+#include "thread_lfmm.h"
 #include "../matrix/rand.h"
 #include "thread_beta.h"
 #include <string.h>
@@ -31,7 +31,7 @@
 
 void slice_mbeta_beta(void *G)
 {
-	Matrix Ma = (Matrix) G;
+	Matrix_lfmm Ma = (Matrix_lfmm) G;
 	float *R = Ma->R;
 	double *U = Ma->U;
 	double *V = Ma->V;
@@ -75,7 +75,7 @@ void slice_mbeta_beta(void *G)
 
 void slice_rand_beta(void *G)
 {
-	Matrix Ma = (Matrix) G;
+	Matrix_lfmm Ma = (Matrix_lfmm) G;
 	double *m_beta = Ma->m;
 	double *inv_cov_beta = Ma->inv_cov;
 	double *beta = Ma->beta;

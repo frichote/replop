@@ -25,7 +25,7 @@
 #include "beta.h"
 #include "data_lfmm.h"
 #include "error_lfmm.h"
-#include "thread.h"
+#include "thread_lfmm.h"
 #include "thread_beta.h"
 
 extern void slice_mbeta_beta(void *G);
@@ -36,7 +36,7 @@ extern void slice_rand_beta(void *G);
 void create_m_beta(double *C, float *R, double *U, double *V, double *m_beta,
 		   int M, int N, int D, int K, float *datb, int num_thrd)
 {
-	thread_fct(R, datb, U, V, C, NULL, m_beta, NULL, NULL,
+	thread_fct_lfmm(R, datb, U, V, C, NULL, m_beta, NULL, NULL,
 		   K, D, M, N, num_thrd, slice_mbeta_beta, 0, 0);
 }
 
@@ -91,7 +91,7 @@ void rand_beta(double *beta, double *m_beta, double *inv_cov_beta,
 
 	cholesky(inv_cov_beta, D, L);
 
-	thread_fct(NULL, NULL, NULL, NULL, NULL, beta, m_beta, inv_cov_beta, L,
+	thread_fct_lfmm(NULL, NULL, NULL, NULL, NULL, beta, m_beta, inv_cov_beta, L,
 		   0, D, M, 0, num_thrd, slice_rand_beta, 0, alpha_R);
 
 	free(L);

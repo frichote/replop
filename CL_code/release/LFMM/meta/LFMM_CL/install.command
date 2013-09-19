@@ -14,6 +14,7 @@ if [ ! -e "LFMM" ]; then
 	echo "$ROUGE" "\n ERROR: an error occured during the compilation of LFMM command-line program." "$NORMAL"
 	cd ../../
 	exit 1
+else
 	mv LFMM ../bin/
 fi
 cd ..

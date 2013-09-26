@@ -7,51 +7,54 @@ LDFLAGS = -g -O3 -Wall -Wextra
 CC = colorgcc
 ## CC = gcc
 
+### DIRECTORIES ####
+BIN = bin
+LIB = lib
+OBJ = obj
+SRC = src
+
 ### SOURCES FILES ####
-SOURCES_LAPACK = $(wildcard src/lapack/*.c)
-SOURCES_TOOLS = $(wildcard src/bituint/*.c) $(wildcard src/matrix/*.c) $(wildcard src/nnlsm/*.c) $(wildcard src/io/*.c)
-SOURCES_LFMM = $(wildcard src/LFMM/*.c) src/LFMM.c $(SOURCES_TOOLS)
-SOURCES_sNMF = $(wildcard src/sNMF/*.c) src/sNMF.c $(SOURCES_TOOLS)
-SOURCES_createDataSet = $(wildcard src/createDataSet/*.c) $(wildcard src/sNMF/*.c) src/createDataSet.c $(SOURCES_TOOLS) 
-SOURCES_crossEntropy = $(wildcard src/crossEntropy/*.c) $(wildcard src/sNMF/*.c) src/crossEntropy.c $(SOURCES_TOOLS)
+SRC_LAPACK = $(wildcard $(SRC)/lapack/*.c)
+SRC_TOOLS = $(wildcard $(SRC)/bituint/*.c) $(wildcard $(SRC)/matrix/*.c) $(wildcard $(SRC)/nnlsm/*.c) $(wildcard $(SRC)/io/*.c)
+SRC_LFMM = $(wildcard $(SRC)/LFMM/*.c) $(SRC)/LFMM.c $(SRC_TOOLS)
+SRC_sNMF = $(wildcard $(SRC)/sNMF/*.c) $(SRC)/sNMF.c $(SRC_TOOLS)
+SRC_createDataSet = $(wildcard $(SRC)/createDataSet/*.c) $(wildcard $(SRC)/sNMF/*.c) $(SRC)/createDataSet.c $(SRC_TOOLS) 
+SRC_crossEntropy = $(wildcard $(SRC)/crossEntropy/*.c) $(wildcard $(SRC)/sNMF/*.c) $(SRC)/crossEntropy.c $(SRC_TOOLS)
 
 ### OBJECTS FILES ###
-OBJECTS_LAPACK = $(patsubst src/%.c,obj/%.o,$(SOURCES_LAPACK)) 
-OBJECTS_LFMM = $(patsubst src/%.c,obj/%.o,$(SOURCES_LFMM)) 
-OBJECTS_sNMF = $(patsubst src/%.c,obj/%.o,$(SOURCES_sNMF)) 
-OBJECTS_createDataSet = $(patsubst src/%.c,obj/%.o,$(SOURCES_createDataSet)) 
-OBJECTS_crossEntropy = $(patsubst src/%.c,obj/%.o,$(SOURCES_crossEntropy)) 
-
-### DIRECTORIES ####
-BINDIR = bin
-LIBDIR = lib
+OBJ_LAPACK = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LAPACK)) 
+OBJ_LFMM = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LFMM)) 
+OBJ_sNMF = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_sNMF)) 
+OBJ_createDataSet = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_createDataSet)) 
+OBJ_crossEntropy = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_crossEntropy)) 
 
 
-EXECUTABLE = lib/lapack.a bin/sNMF bin/crossEntropy bin/createDataSet bin/LFMM
-all: $(SOURCES_LAPACK) $(SOURCES_LFMM) $(SOURCES_sNMF) $(SOURCES_createDataSet) $(SOURCES_crossEntropy) $(EXECUTABLE) 
 
-$(LIBDIR)/lapack.a: $(OBJECTS_LAPACK)
+EXECUTABLE = $(LIB)/lapack.a $(BIN)/sNMF $(BIN)/crossEntropy $(BIN)/createDataSet $(BIN)/LFMM
+all: $(SRC_LAPACK) $(SRC_LFMM) $(SRC_sNMF) $(SRC_createDataSet) $(SRC_crossEntropy) $(EXECUTABLE) 
+
+$(LIB)/lapack.a: $(OBJ_LAPACK)
 	ar rcs $@ $^
 
-$(BINDIR)/LFMM : $(OBJECTS_LFMM) 
-	$(CC) $(OBJECTS_LFMM) $(LIBDIR)/lapack.a -o $@ $(CFLAGS) $(LDFLAGS)
+$(BIN)/LFMM : $(OBJ_LFMM) 
+	$(CC) $(OBJ_LFMM) $(LIB)/lapack.a -o $@ $(CFLAGS) $(LDFLAGS)
 
-$(BINDIR)/sNMF : $(OBJECTS_sNMF) 
-	$(CC) $(OBJECTS_sNMF) $(LIBDIR)/lapack.a -o $@ $(CFLAGS) $(LDFLAGS)
+$(BIN)/sNMF : $(OBJ_sNMF) 
+	$(CC) $(OBJ_sNMF) $(LIB)/lapack.a -o $@ $(CFLAGS) $(LDFLAGS)
 
-$(BINDIR)/createDataSet : $(OBJECTS_createDataSet) 
-	$(CC) $(OBJECTS_createDataSet) $(LIBDIR)/lapack.a -o $@ $(CFLAGS) $(LDFLAGS)
+$(BIN)/createDataSet : $(OBJ_createDataSet) 
+	$(CC) $(OBJ_createDataSet) $(LIB)/lapack.a -o $@ $(CFLAGS) $(LDFLAGS)
 
-$(BINDIR)/crossEntropy : $(OBJECTS_crossEntropy) 
-	$(CC) $(OBJECTS_crossEntropy) $(LIBDIR)/lapack.a -o $@ $(CFLAGS) $(LDFLAGS)
+$(BIN)/crossEntropy : $(OBJ_crossEntropy) 
+	$(CC) $(OBJ_crossEntropy) $(LIB)/lapack.a -o $@ $(CFLAGS) $(LDFLAGS)
 
-obj/%.o: src/%.c  
+$(OBJ)/%.o: $(SRC)/%.c  
 	$(CC) $(LDFLAGS) -c $< -o $@
 
 
 
 clean:
-	rm -f obj/*.o obj/*/*.o bin/*
+	rm -f $(OBJ)/*.o $(OBJ)/*/*.o $(LIB)/* $
 
 doc:
 	doxygen docs/doxygen.cfg

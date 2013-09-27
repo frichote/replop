@@ -32,12 +32,21 @@ char* remove_ext(char* mystr, char dot, char sep);
 int nb_lines(char *file, int N);
 
 /**
- * count the number of elements of the first line of a file
+ * count the number of elements of the first line of a file (in geno format)
  *
  * @param file 
  *
- * @return number of lines
+ * @return number of columns of the first line
  */
-int nb_cols(char *file);
+int nb_cols_geno(char *file);
+
+/**
+ * count the number of elements of the first line of a file (in lfmm format)
+ *
+ * @param file 
+ *
+ * @return number of columns of the first line
+ */
+int nb_cols_lfmm(char *file);
 
 #endif // IO_TOOLS_H

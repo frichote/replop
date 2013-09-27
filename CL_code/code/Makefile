@@ -12,14 +12,15 @@ BIN = bin
 LIB = lib
 OBJ = obj
 SRC = src
+MAIN = main
 
 ### SOURCES FILES ####
 SRC_LAPACK = $(wildcard $(SRC)/lapack/*.c)
 SRC_TOOLS = $(wildcard $(SRC)/bituint/*.c) $(wildcard $(SRC)/matrix/*.c) $(wildcard $(SRC)/nnlsm/*.c) $(wildcard $(SRC)/io/*.c)
-SRC_LFMM = $(wildcard $(SRC)/LFMM/*.c) $(SRC)/LFMM.c $(SRC_TOOLS)
-SRC_sNMF = $(wildcard $(SRC)/sNMF/*.c) $(SRC)/sNMF.c $(SRC_TOOLS)
-SRC_createDataSet = $(wildcard $(SRC)/createDataSet/*.c) $(wildcard $(SRC)/sNMF/*.c) $(SRC)/createDataSet.c $(SRC_TOOLS) 
-SRC_crossEntropy = $(wildcard $(SRC)/crossEntropy/*.c) $(wildcard $(SRC)/sNMF/*.c) $(SRC)/crossEntropy.c $(SRC_TOOLS)
+SRC_LFMM = $(wildcard $(SRC)/LFMM/*.c) $(SRC)/$(MAIN)/main_LFMM.c $(SRC_TOOLS)
+SRC_sNMF = $(wildcard $(SRC)/sNMF/*.c) $(SRC)/$(MAIN)/main_sNMF.c $(SRC_TOOLS)
+SRC_createDataSet = $(wildcard $(SRC)/createDataSet/*.c) $(wildcard $(SRC)/sNMF/*.c) $(SRC)/$(MAIN)/main_createDataSet.c $(SRC_TOOLS) 
+SRC_crossEntropy = $(wildcard $(SRC)/crossEntropy/*.c) $(wildcard $(SRC)/sNMF/*.c) $(SRC)/$(MAIN)/main_crossEntropy.c $(SRC_TOOLS)
 
 ### OBJECTS FILES ###
 OBJ_LAPACK = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LAPACK)) 

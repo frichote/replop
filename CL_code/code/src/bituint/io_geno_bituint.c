@@ -20,7 +20,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include "io_geno_bituint.h"
 #include "../io/io_error.h"
 #include "../matrix/error.h"

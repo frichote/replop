@@ -26,49 +26,22 @@
 
 // analyse_param_lfmm
 
-void analyse_param_lfmm(int argc, char *argv[], int *D, int *d,
-		   int *N, int *M, int *K, int *Niter, int *burn,
+void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int *burn,
 		   int *m, char *output, char *input, char *cov_file, char *dev_file,
-		   int *g_data, int *g_cov, int *num_thrd)
+		   int *g_data, int *g_cov, int *num_thrd, long long *s)
 {
 	int i;
 	int out = 0;
-	int dOk = 0;
 
 	for (i = 1; i < argc; i++) {
 		if (argv[i][0] == '-') {
 			switch (argv[i][1]) {
-			case 'D':
-				i++;
-				if (argc == i || argv[i][0] == '-')
-					print_error_lfmm("cmd",
-							 "D (number of covariables)",
-							 0);
-				*D = atoi(argv[i]);
-				break;
                         case 'd':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
                                         print_error_lfmm("cmd","d (numerous of the covariable)",0);
                                 *d = atoi(argv[i]);
-				dOk = 1;
                                 break;
-			case 'n':
-				i++;
-				if (argc == i || argv[i][0] == '-')
-					print_error_lfmm("cmd",
-							 "n (number of individuals)",
-							 0);
-				*N = atoi(argv[i]);
-				break;
-			case 'L':
-				i++;
-				if (argc == i || argv[i][0] == '-')
-					print_error_lfmm("cmd",
-							 "L (number of SNPs)",
-							 0);
-				*M = atoi(argv[i]);
-				break;
 			case 'K':
 				i++;
 				if (argc == i || argv[i][0] == '-')
@@ -85,6 +58,12 @@ void analyse_param_lfmm(int argc, char *argv[], int *D, int *d,
 							 0);
 				*Niter = atoi(argv[i]);
 				break;
+                        case 's':
+                                i++;
+                                if (argc == i || argv[i][0] == '-')
+                                        print_error_lfmm("cmd","s (seed number)",0);
+                                *s = atoi(argv[i]);
+                                break;
 			case 'm':	// global
 				*m = 1;
 				break;
@@ -162,15 +141,8 @@ void analyse_param_lfmm(int argc, char *argv[], int *D, int *d,
 	if (!out)
 		print_error_lfmm("option", "-o output_file", 0);
 
-	if (*D == 0 || *K == 0 || *M == 0 || *N == 0 || *burn == 0
-	    || *Niter == 0)
+	if (*K == 0 || *burn == 0 || *Niter == 0)
 		print_error_lfmm("missing", NULL, 0);
-
-	if (dOk && (*d < 1 || *d > *D)) {
-		print_error_lfmm("specific",
-				 "(-d option). d should be between 1 and D",
-				 0);
-	}
 
 	if (*burn >= *Niter) {
 		print_error_lfmm("specific",

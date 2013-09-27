@@ -59,9 +59,9 @@ char* remove_ext (char* mystr, char dot, char sep) {
         return retstr;
 }
 
-// nb_lines
+// nb_cols_geno
 
-int nb_cols (char *file)
+int nb_cols_geno (char *file)
 {
         FILE *fp = fopen(file,"r");
         int cols = 0;
@@ -77,6 +77,33 @@ int nb_cols (char *file)
                 cols++;
                 c = fgetc(fp);
         }
+
+        fclose(fp);
+
+        return cols;
+}
+
+// nb_cols_lfmm
+
+int nb_cols_lfmm (char *file)
+{
+        FILE *fp = fopen(file,"r");
+        int cols = 0;
+        int c;
+
+        if (!fp) {
+                print_error_global("open",file,0);
+                return 0;
+        }
+
+        c = fgetc(fp);
+        while ((c != EOF) && (c != 10)) {
+		// count only columns (no space or tab)
+		if ((c == 9) && (c == 32)) 
+                	cols++;
+                c = fgetc(fp);
+        }
+	cols++;
 
         fclose(fp);
 

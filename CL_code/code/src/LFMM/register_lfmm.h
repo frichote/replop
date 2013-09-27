@@ -12,10 +12,7 @@
  * 
  * @param argc	the number of arguments
  * @param argv	the set of arguments
- * @param D	the number of covariables
  * @param d	the numerous of the considered covariable
- * @param N	the number of individuals
- * @param M	the number of loci
  * @param K	the number of latent factors
  * @param Niter	the number of iterations
  * @param burn	the number of burnin
@@ -28,9 +25,8 @@
  * @param g_cov	the generative covariable file
  * @param num_thrd	the number of processes used
  */
-void analyse_param_lfmm(int argc, char *argv[], int *D, int *d,
-		   int *N, int *M, int *K, int *Niter, int *burn,
+void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int *burn,
 		   int *m, char *output, char *input, char *cov_file, char *dev_file,
-		   int *g_data, int *g_cov, int *num_thrd);
+		   int *g_data, int *g_cov, int *num_thrd, long long *s);
 
 #endif // REGISTER_LFMM_H

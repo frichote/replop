@@ -29,11 +29,12 @@
 #include "../matrix/normalize.h"
 #include "../io/print_bar.h"
 #include "data_snmf.h"
-#include "thread_F.h"
-#include "thread_Q.h"
-#include "thread_snmf.h"
 #include "../bituint/bituint.h"
 
+#ifndef WIN32
+	#include "thread_F.h"
+	#include "thread_snmf.h"
+#endif
 // udpate_Q (not used) TODO
 
 void update_Q(double *Q, double *F, bituint *X, int N, int M, int nc, int Mp, 
@@ -159,9 +160,11 @@ double update_nnlsm_Q(double *Q, double *F, bituint *X, int N, int M, int nc,
 	// F*t(X)							(M N K)
 	zeros(temp3,K*N);
 
+#ifndef WIN32
 	if (num_thrd > 1) {
 		thread_fct_snmf(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_F_TX);
 	} else {
+#else
 		for (jd = 0; jd<Md; jd++) {
 			for (i = 0; i < N; i++) {
 				value = X[i*Mp+jd];
@@ -174,7 +177,10 @@ double update_nnlsm_Q(double *Q, double *F, bituint *X, int N, int M, int nc,
 				}
 			}
 		}
+#endif
+#ifndef WIN32
 	}
+#else
 
 	for (i = 0; i < N; i++) {
 		value = X[i*Mp+Md];

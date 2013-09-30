@@ -102,9 +102,7 @@ void read_ancestrymap (char* input_file, int N, int M, int* data)
 	char ref[512] = "";
 
         // open input file
-        File = fopen(input_file,"r");
-        if (!File)
-                printf("Error: open %s.\n",input_file);
+        File = fopen_read(input_file);
 
         token = fgets(szbuff, max_char_per_line, File);
 
@@ -149,9 +147,7 @@ int nb_ind_ancestrymap(char *input_file)
 	char tmp[512] = "";
 
         // open input file
-        File = fopen(input_file,"r");
-        if (!File)
-                printf("Error: open %s.\n",input_file);
+        File = fopen_read(input_file);
 
         token = fgets(szbuff, max_char_per_line, File);
 

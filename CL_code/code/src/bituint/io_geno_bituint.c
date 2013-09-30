@@ -22,6 +22,7 @@
 #include <string.h>
 #include "io_geno_bituint.h"
 #include "../io/io_error.h"
+#include "../io/io_tools.h"
 #include "../matrix/error.h"
 #include "../matrix/rand.h"
 
@@ -37,9 +38,7 @@ void read_geno_bituint(char *file_data, int N, int M, int Mp, int nc, bituint* d
 	int *I = (int *)calloc(N,sizeof(int));
 
 	// open file
-	m_File = fopen(file_data,"r");
-	if (!m_File)
-		print_error_global("open",file_data,0);
+	m_File = fopen_read(file_data);
 
 	// first line
 	while(!feof(m_File) & (j<M)) {

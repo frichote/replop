@@ -21,6 +21,7 @@
 #include <string.h>
 #include "io_data_float.h"
 #include "io_error.h"
+#include "io_tools.h"
 #include "../matrix/error.h"
 
 // read_data_float
@@ -35,9 +36,7 @@ void read_data_float(char *file_data, int N, int M, float *dat)
         char *token;
 
 	// open file
-        m_File = fopen(file_data, "r");
-        if (!m_File)
-                print_error_global("open", file_data, 0);
+        m_File = fopen_read(file_data);
 
         // get current line
         token = fgets(szbuff, max_char_per_line, m_File);
@@ -76,7 +75,7 @@ void write_data_float(char *file_data, int N, int M, float *dat)
         int i, j;
 
 	// open file
-        file = fopen(file_data, "w");
+        file = fopen_write(file_data, "w");
         if (!file)
                 print_error_global("open", file_data, 0);
 	// write dat

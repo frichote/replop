@@ -22,6 +22,7 @@
 #include <time.h>
 #include <math.h>
 #include "vcf2geno.h"
+#include "../io/io_tools.h"
 #define SEP	"\t"
 
 void vcf2geno (char *input_file, char* output_file, int *N, int *M, char* snp_bp_file, 
@@ -57,16 +58,14 @@ void vcf2geno (char *input_file, char* output_file, int *N, int *M, char* snp_bp
 	strcpy(output_file,"genotype.geno");
 
 	// open input file
-	vcf_File = fopen(input_file,"r");
-	if (!vcf_File)
-		printf("Error: open %s.\n",input_file);
+	vcf_File = fopen_read(input_file,"r");
 
 	// open output SNP info file
-	snp_bp_File = fopen(snp_bp_file,"w");
-	removed_bp_File = fopen(removed_bp_file,"w");
+	snp_bp_File = fopen_write(snp_bp_file);
+	removed_bp_File = fopen_write(removed_bp_file);
 
 	// open output geno file
-	genotype_File = fopen(output_file,"w");
+	genotype_File = fopen_write(output_file);
 
 	i = 0;
 	jp = 0;

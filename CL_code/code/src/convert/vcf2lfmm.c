@@ -22,6 +22,7 @@
 #include <time.h>
 #include <math.h>
 #include "vcf2lfmm.h"
+#include "../io/io_tools.h"
 #define SEP	"\t"
 
 void vcf2lfmm (char *input_file, char* output_file, int *N, int *M, char* snp_bp_file, 
@@ -60,13 +61,11 @@ void vcf2lfmm (char *input_file, char* output_file, int *N, int *M, char* snp_bp
 	strcpy(output_file,"genotype.lfmm");
 
 	// open input file
-	vcf_File = fopen(input_file,"r");
-	if (!vcf_File)
-		printf("Error: open %s.\n",input_file);
+	vcf_File = fopen_read(input_file);
 
 	// open output SNP info file
-	snp_bp_File = fopen(snp_bp_file,"w");
-	removed_bp_File = fopen(removed_bp_file,"w");
+	snp_bp_File = fopen_write(snp_bp_file);
+	removed_bp_File = fopen_write(removed_bp_file);
 
 	i = 0;
 	ir = 0;
@@ -200,7 +199,7 @@ void vcf2lfmm (char *input_file, char* output_file, int *N, int *M, char* snp_bp
 	Np = jp;
 
 	// print in LFMM format
-	genotype_File = fopen(output_file,"w");
+	genotype_File = fopen_write(output_file);
 	j = 0;
 	for (jp = 0; jp<(*M); jp++) {
 		ip = 0;

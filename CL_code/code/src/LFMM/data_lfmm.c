@@ -22,8 +22,12 @@
 #include <math.h>
 #include "data_lfmm.h"
 #include "error_lfmm.h"
-#include "thread_var.h"
 #include "../matrix/rand.h"
+#include "../io/io_tools.h"
+
+# ifndef WIN32
+	#include "thread_var.h"
+# endif
 
 // zscore_calc
 
@@ -99,9 +103,7 @@ void write_DIC(char *file_data, double deviance, double DIC)
 {
 	FILE *file = NULL;
 
-	file = fopen(file_data, "a");
-	if (!file)
-		print_error_global("open", file_data, 0);
+	file = fopen_write(file_data, "w");
 
 	fprintf(file, "Deviance DIC\n");
 	fprintf(file, "%G %G\n", deviance, DIC);
@@ -116,9 +118,7 @@ void write_zscore_double(char *file_data, int M, double *zscore)
 	int j;
 	long double pvalue;
 
-	file = fopen(file_data, "w");
-	if (!file)
-		print_error_global("open", file_data, 0);
+	file = fopen_write(file_data);
 
 	for (j = 0; j < M; j++) {
 		pvalue = zscore2pvalue((long double)fabs(zscore[j]));
@@ -140,8 +140,12 @@ double var_data(float *R, double *U, double *V, double *C, double *beta, int N,
 	   thrd_var(R,U,V,C,beta,K,D,M,N,num_thrd,slice_mean,0,&mean,0);
 	   mean /= N*M;
 	 */
+# ifndef WIN32
 	thrd_var(R, U, V, C, beta, K, D, M, N, num_thrd, slice_var, 0, &mean,
 		 &mean2);
+# else
+
+# endif
 
 	*thrd_m2 = mean2;
 

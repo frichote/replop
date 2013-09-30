@@ -29,12 +29,13 @@
 #include "../matrix/normalize.h"
 #include "../io/print_bar.h"
 #include "data_snmf.h"
-#include "thread_F.h"
-#include "thread_Q.h"
-#include "thread_snmf.h"
 #include "als_Q.h"
 #include "../bituint/bituint.h"
 
+#ifndef WIN32
+	#include "thread_F.h"
+	#include "thread_snmf.h"
+#endif
 // update_F
 
 void update_F(double *F, double *Q, bituint *X, int N, int M, int nc, int Mp, int K, 
@@ -77,7 +78,10 @@ void update_F(double *F, double *Q, bituint *X, int N, int M, int nc, int Mp, in
 	// F = temp3*X							(M N K)
 	zeros(F,K*Mc);
 
+#ifndef WIN32
 	thread_fct_snmf(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_temp3_X);
+#else 
+#endif
 	/*
 	for (jd = 0; jd<Md; jd++) {
 		for (i = 0; i < N; i++) {

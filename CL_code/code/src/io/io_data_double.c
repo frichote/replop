@@ -21,6 +21,7 @@
 #include <string.h>
 #include "io_data_double.h"
 #include "io_error.h"
+#include "io_tools.h"
 #include "../matrix/error.h"
 
 // read_data_double
@@ -35,9 +36,7 @@ void read_data_double(char *file_data, int N, int M, double *dat)
         char *token;
 
 	// open file
-        m_File = fopen(file_data, "r");
-        if (!m_File)
-                print_error_global("open", file_data, 0);
+        m_File = fopen_read(file_data);
 
         // get current line
         token = fgets(szbuff, max_char_per_line, m_File);
@@ -74,10 +73,10 @@ void write_data_double(char *file_data, int N, int M, double *dat)
 {
         FILE *file = NULL;
         int i, j;
+
 	// open file
-        file = fopen(file_data, "w");
-        if (!file)
-                print_error_global("open", file_data, 0);
+        file = fopen_write(file_data);
+
 	// write dat
         for (i = 0; i < N; i++) {
                 for (j = 0; j < M - 1; j++) {
@@ -86,6 +85,7 @@ void write_data_double(char *file_data, int N, int M, double *dat)
                 fprintf(file, "%G", dat[i * M + (M - 1)]);
                 fprintf(file, "\n");
         }
+
 	// close file
         fclose(file);
 }

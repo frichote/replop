@@ -25,19 +25,26 @@
 #include "beta.h"
 #include "data_lfmm.h"
 #include "error_lfmm.h"
-#include "thread_lfmm.h"
-#include "thread_beta.h"
 
-extern void slice_mbeta_beta(void *G);
-extern void slice_rand_beta(void *G);
+# ifndef WIN32
+	#include "thread_lfmm.h"
+	#include "thread_beta.h"
+
+	extern void slice_mbeta_beta(void *G);
+	extern void slice_rand_beta(void *G);
+# endif
 
 // create_m_beta
 
 void create_m_beta(double *C, float *R, double *U, double *V, double *m_beta,
 		   int M, int N, int D, int K, float *datb, int num_thrd)
 {
+# ifndef WIN32
 	thread_fct_lfmm(R, datb, U, V, C, NULL, m_beta, NULL, NULL,
 		   K, D, M, N, num_thrd, slice_mbeta_beta, 0, 0);
+# else
+
+# endif
 }
 
 // create_CCt
@@ -91,8 +98,12 @@ void rand_beta(double *beta, double *m_beta, double *inv_cov_beta,
 
 	cholesky(inv_cov_beta, D, L);
 
+# ifndef WIN32
 	thread_fct_lfmm(NULL, NULL, NULL, NULL, NULL, beta, m_beta, inv_cov_beta, L,
 		   0, D, M, 0, num_thrd, slice_rand_beta, 0, alpha_R);
+# else
+
+# endif
 
 	free(L);
 }

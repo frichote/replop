@@ -25,21 +25,26 @@
 #include "../matrix/inverse.h"
 #include "../io/read.h"
 #include "../matrix/rand.h"
-#include "thread_U.h"
-#include "thread_lfmm.h"
 #include "error_lfmm.h"
 
-extern void slice_mU_U(void *G);
-extern void slice_rand_U(void *G);
-extern void slice_inv_cov_U(void *G);
+#ifndef WIN32
+	#include "thread_U.h"
+	#include "thread_lfmm.h"
+	extern void slice_mU_U(void *G);
+	extern void slice_rand_U(void *G);
+	extern void slice_inv_cov_U(void *G);
+#endif
 
 // create_m_U
 
 void create_m_U(double *V, float *R, double *C, double *beta, double *m_U,
 		int M, int N, int D, int K, float *datb, int num_thrd)
 {
+#ifndef WIN32
 	thread_fct_lfmm(R, datb, NULL, V, C, beta, m_U, NULL, NULL,
 		   K, D, M, N, num_thrd, slice_mU_U, 0, 0);
+#else
+#endif
 }
 
 // create_inv_cov_U
@@ -50,8 +55,11 @@ void create_inv_cov_U(double *inv_cov_U, double alpha, double alpha_R,
 	//int d1,d2,j;
 	double *tmp2 = (double *)calloc(K * K, sizeof(double));
 
+#ifndef WIN32
 	thread_fct_lfmm(NULL, NULL, NULL, V, NULL, NULL, NULL, tmp2, NULL,
 		   K, 0, M, 0, num_thrd, slice_inv_cov_U, alpha, alpha_R);
+#else
+#endif
 
 	// inverse tmp 
 	if (K == 1) {
@@ -72,8 +80,11 @@ void rand_U(double *U, double *m_U, double *inv_cov_U, double alpha_R,
 
 	cholesky(inv_cov_U, K, L);
 
+#ifndef WIN32
 	thread_fct_lfmm(NULL, NULL, U, NULL, NULL, NULL, m_U, inv_cov_U, L,
 		   K, 0, 0, N, num_thrd, slice_rand_U, 0, alpha_R);
+#else
+#endif
 
 	free(L);
 }

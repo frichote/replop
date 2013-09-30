@@ -49,4 +49,7 @@ int nb_cols_geno(char *file);
  */
 int nb_cols_lfmm(char *file);
 
+FILE* fopen_read (char *file_data);
+
+FILE* fopen_write (char *file_data);
 #endif // IO_TOOLS_H

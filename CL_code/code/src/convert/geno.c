@@ -23,6 +23,7 @@
 #include "geno.h"
 #include "../matrix/error.h"
 #include "../io/io_error.h"
+#include "../io/io_tools.h"
 
 // read_geno
 
@@ -35,9 +36,7 @@ void read_geno(char *input_file, int *data, int N, int M)
 	int max_char_per_line = 5*N;
 
 	// open file
-	m_File = fopen(input_file, "r");
-	if (!m_File)
-		print_error_global("open",input_file,0);
+	m_File = fopen_read(input_file);
 
 	// first line
 	while(!feof(m_File) & (j<M)) {
@@ -90,9 +89,7 @@ void write_geno(char *output_file, int N, int M, int *data)
         FILE *file = NULL;
         int i, j;
         // open file
-        file = fopen(output_file, "w");
-        if (!file)
-                print_error_global("open", output_file, 0);
+        file = fopen_write(output_file);
 
         // write dat
         for (j = 0; j < M; j++) {

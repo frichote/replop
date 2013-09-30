@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.4.24)  15 AUG 2013 11:39
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.4.24)  30 SEP 2013 13:50
 entering extended mode
  %&-line parsing enabled.
 **note.tex
@@ -28,8 +28,10 @@ File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (/usr/share/texmf-texlive/tex/latex/amsfonts/amssymb.sty
+)
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2009/06/22 v3.00
+
 (/usr/share/texmf-texlive/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
 \@emptytoks=\toks14
@@ -37,10 +39,13 @@ Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
-)) (/var/lib/texmf/tex/generic/babel/babel.sty
+))
+(/var/lib/texmf/tex/generic/babel/babel.sty
 Package: babel 2008/07/06 v3.8l The Babel package
+
 (/usr/share/texmf-texlive/tex/generic/babel/frenchb.ldf
 Language: frenchb 2009/03/16 v2.3d French support from the babel system
+
 (/usr/share/texmf-texlive/tex/generic/babel/babel.def
 File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count87
@@ -54,29 +59,34 @@ Package babel Info: Making ? an active character on input line 123.
 \std@mcc=\count88
 \dec@mcc=\count89
 \parindentFFN=\dimen105
+
 *************************************
 * Local config file frenchb.cfg used
 *
-(/usr/share/texmf-texlive/tex/generic/babel/frenchb.cfg)) (/usr/share/texmf-tex
-live/tex/generic/babel/english.ldf
+(/usr/share/texmf-texlive/tex/generic/babel/frenchb.cfg))
+(/usr/share/texmf-texlive/tex/generic/babel/english.ldf
 Language: english 2005/03/30 v3.3o English support from the babel system
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
-)) (/usr/share/texmf-texlive/tex/latex/carlisle/scalefnt.sty) (/usr/share/texmf
--texlive/tex/latex/graphics/keyval.sty
+))
+(/usr/share/texmf-texlive/tex/latex/carlisle/scalefnt.sty)
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks15
-) (/usr/share/texmf-texlive/tex/latex/base/inputenc.sty
+)
+(/usr/share/texmf-texlive/tex/latex/base/inputenc.sty
 Package: inputenc 2008/03/30 v1.1d Input encoding file
 \inpenc@prehook=\toks16
 \inpenc@posthook=\toks17
+
 (/usr/share/texmf-texlive/tex/latex/base/utf8.def
 File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OML ...
 ... no UTF-8 mapping file for font encoding OML
 Now handling font encoding T1 ...
 ... processing UTF-8 mapping file for font encoding T1
+
 (/usr/share/texmf-texlive/tex/latex/base/t1enc.dfu
 File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
@@ -226,6 +236,7 @@ File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 )
 Now handling font encoding OT1 ...
 ... processing UTF-8 mapping file for font encoding OT1
+
 (/usr/share/texmf-texlive/tex/latex/base/ot1enc.dfu
 File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
@@ -256,6 +267,7 @@ File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 )
 Now handling font encoding OMS ...
 ... processing UTF-8 mapping file for font encoding OMS
+
 (/usr/share/texmf-texlive/tex/latex/base/omsenc.dfu
 File: omsenc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A7 (decimal 167)
@@ -279,18 +291,23 @@ Now handling font encoding U ...
    defining Unicode char U+2026 (decimal 8230)
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
-)) (/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+))
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
 (/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
-) (/etc/texmf/tex/latex/config/graphics.cfg
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
 File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
+
 (/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
 \Gread@gobject=\count90
-)) (/usr/share/texmf-texlive/tex/latex/lineno/lineno.sty
+))
+(/usr/share/texmf-texlive/tex/latex/lineno/lineno.sty
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
 \linenopenalty=\count91
 \output=\toks18
@@ -307,26 +324,31 @@ Package: lineno 2005/11/02 line numbers on paragraphs v4.41
 \bframesep=\dimen110
 \bframebox=\box26
 LaTeX Info: Redefining \\ on input line 3056.
-) (/usr/share/texmf-texlive/tex/latex/cite/cite.sty
+)
+(/usr/share/texmf-texlive/tex/latex/cite/cite.sty
 LaTeX Info: Redefining \cite on input line 285.
 LaTeX Info: Redefining \nocite on input line 356.
 Package: cite 2009/08/29  v 5.2
-) (/usr/share/texmf-texlive/tex/latex/float/float.sty
+)
+(/usr/share/texmf-texlive/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count98
 \float@exts=\toks19
 \float@box=\box27
 \@float@everytoks=\toks20
 \@floatcapt=\box28
-) (/usr/share/texmf-texlive/tex/latex/ccaption/ccaption.sty
+)
+(/usr/share/texmf-texlive/tex/latex/ccaption/ccaption.sty
 Package: ccaption 2009/09/02 v3.2b Extended captioning and new floats
 \@contcwidth=\skip43
 \@contindw=\skip44
 \abovelegendskip=\skip45
 \belowlegendskip=\skip46
 \c@newflo@tctr=\count99
-) (/usr/share/texmf-texlive/tex/latex/caption/caption.sty
+)
+(/usr/share/texmf-texlive/tex/latex/caption/caption.sty
 Package: caption 2009/10/09 v3.1k Customizing captions (AR)
+
 (/usr/share/texmf-texlive/tex/latex/caption/caption3.sty
 Package: caption3 2009/10/09 v3.1k caption3 kernel (AR)
 \captionmargin=\dimen111
@@ -368,14 +390,18 @@ Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
 \NC@list=\toks21
 \extratabsurround=\skip47
 \backup@length=\skip48
-) (/usr/share/texmf-texlive/tex/latex/graphics/lscape.sty
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/lscape.sty
 Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
-) (/usr/share/texmf-texlive/tex/latex/geometry/geometry.sty
+)
+(/usr/share/texmf-texlive/tex/latex/geometry/geometry.sty
 Package: geometry 2008/12/21 v4.2 Page Geometry
+
 (/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in pdf mode detected.
-) (/usr/share/texmf-texlive/tex/generic/oberdiek/ifvtex.sty
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifvtex.sty
 Package: ifvtex 2008/11/04 v1.4 Switches for detecting VTeX and its modes (HO)
 Package ifvtex Info: VTeX not detected.
 )
@@ -387,8 +413,9 @@ Package ifvtex Info: VTeX not detected.
 \Gm@odd@mp=\dimen121
 \Gm@even@mp=\dimen122
 \Gm@dimlist=\toks22
-(/usr/share/texmf-texlive/tex/xelatex/xetexconfig/geometry.cfg)) (/usr/share/te
-xmf-texlive/tex/latex/fancyvrb/fancyvrb.sty
+
+(/usr/share/texmf-texlive/tex/xelatex/xetexconfig/geometry.cfg))
+(/usr/share/texmf-texlive/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2008/02/07
 
 Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
@@ -416,6 +443,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
 LaTeX Font Info:    ... okay on input line 29.
 LaTeX Info: Redefining \degres on input line 29.
 
+
 Package frenchb.ldf Warning: The definition of \@makecaption has been changed,
 (frenchb.ldf)                frenchb will NOT customise it;
 (frenchb.ldf)                reported on input line 29.
@@ -442,6 +470,7 @@ Package frenchb.ldf Warning: OT1 encoding should not be used for French.
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
+
 *geometry auto-detecting driver*
 *geometry detected driver: pdftex*
 -------------------- Geometry parameters
@@ -488,6 +517,7 @@ LaTeX Font Info:    Try loading font information for U+msa on input line 31.
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 31.
+
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
@@ -506,15 +536,15 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 83.
-[1
+ [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Overfull \hbox (51.08199pt too wide) in paragraph at lines 227--231
+Overfull \hbox (51.08199pt too wide) in paragraph at lines 228--232
 \OT1/cmr/m/n/10 (Fre-quently Asked Ques-tions) sec-tion is avail-able on our we
 b-page (ttp://membres-timc.imag.fr/Olivier.Francois/snmf.html).
  []
 
-(./note.bbl) [3] [4] (./note.aux) ) 
+(./note.bbl [3]) [4] (./note.aux) ) 
 Here is how much of TeX's memory you used:
  4329 strings out of 493848
  61362 string characters out of 1152823
@@ -522,7 +552,7 @@ Here is how much of TeX's memory you used:
  7546 multiletter control sequences out of 15000+50000
  12830 words of font info for 51 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 36i,6n,38p,1013b,355s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 36i,6n,38p,1013b,354s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texmf-texlive/fonts/type1/public
 /amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
 m/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pf
@@ -533,7 +563,7 @@ ype1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public
 /amsfonts/cm/cmtt10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/c
 m/cmtt12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt8.pfb
 >
-Output written on note.pdf (4 pages, 134266 bytes).
+Output written on note.pdf (4 pages, 134380 bytes).
 PDF statistics:
  55 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

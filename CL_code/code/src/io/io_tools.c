@@ -63,14 +63,9 @@ char* remove_ext (char* mystr, char dot, char sep) {
 
 int nb_cols_geno (char *file)
 {
-        FILE *fp = fopen(file,"r");
+        FILE *fp = fopen_read(file);
         int cols = 0;
         int c;
-
-        if (!fp) {
-                print_error_global("open",file,0);
-                return 0;
-        }
 
         c = fgetc(fp);
         while ((c != EOF) && (c != 10)) {
@@ -87,14 +82,9 @@ int nb_cols_geno (char *file)
 
 int nb_cols_lfmm (char *file)
 {
-        FILE *fp = fopen(file,"r");
+        FILE *fp = fopen_read(file);
         int cols = 0;
         int c;
-
-        if (!fp) {
-                print_error_global("open",file,0);
-                return 0;
-        }
 
         c = fgetc(fp);
         while ((c != EOF) && (c != 10)) {
@@ -114,16 +104,11 @@ int nb_cols_lfmm (char *file)
 
 int nb_lines (char *file, int N)
 {
-        FILE *fp = fopen(file,"r");
+        FILE *fp = fopen_read(file);
         int lines = 0;
         int max_char_per_line = 10 * N;
         char* szbuff = (char *) calloc(max_char_per_line, sizeof(char));
         char* token;
-
-        if (!fp) {
-                print_error_global("open",file,0);
-                return 0;
-        }
 
         token = fgets(szbuff,max_char_per_line, fp);
         while (!feof(fp) && token) {
@@ -137,3 +122,24 @@ int nb_lines (char *file, int N)
         return lines;
 }
 
+// fopen_read
+
+FILE* fopen_read (char *file_data)
+{
+        FILE *m_File = fopen(file_data, "r");
+        if (!m_File)
+                print_error_global("open", file_data, 0);
+
+	return m_File;
+}
+
+// fopen_write
+
+FILE* fopen_write (char *file_data)
+{
+        FILE *m_File = fopen(file_data, "w");
+        if (!m_File)
+                print_error_global("open", file_data, 0);
+
+	return m_File;
+}

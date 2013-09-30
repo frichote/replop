@@ -28,3 +28,16 @@ void ped2geno (char *input_file, char* output_file, int *N, int *M)
 
 }
 
+void read_ped (char* input_file, int N, int M, int* data)
+{
+	// read ped file
+        FILE* File=NULL;
+
+        int max_char_per_line = 512 + 5 * M;  
+	char szbuff[max_char_per_line];
+
+
+	// find the reference
+
+	// fill data
+}

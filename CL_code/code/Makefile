@@ -16,7 +16,7 @@ MAIN = main
 
 ### SOURCES FILES ####
 SRC_LAPACK = $(wildcard $(SRC)/lapack/*.c)
-SRC_TOOLS = $(wildcard $(SRC)/bituint/*.c) $(wildcard $(SRC)/matrix/*.c) $(wildcard $(SRC)/nnlsm/*.c) $(wildcard $(SRC)/io/*.c)
+SRC_TOOLS = $(wildcard $(SRC)/bituint/*.c) $(wildcard $(SRC)/matrix/*.c) $(wildcard $(SRC)/nnlsm/*.c) $(wildcard $(SRC)/io/*.c) $(wildcard $(SRC)/convert/*.c)
 SRC_LFMM = $(wildcard $(SRC)/LFMM/*.c) $(SRC)/$(MAIN)/main_LFMM.c $(SRC_TOOLS)
 SRC_sNMF = $(wildcard $(SRC)/sNMF/*.c) $(SRC)/$(MAIN)/main_sNMF.c $(SRC_TOOLS)
 SRC_createDataSet = $(wildcard $(SRC)/createDataSet/*.c) $(wildcard $(SRC)/sNMF/*.c) $(SRC)/$(MAIN)/main_createDataSet.c $(SRC_TOOLS) 

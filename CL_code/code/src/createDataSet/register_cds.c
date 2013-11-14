@@ -25,16 +25,21 @@
 #include "print_cds.h"
 #include "../sNMF/print_snmf.h"
 #include "error_cds.h"
+#include "../io/io_tools.h"
 
 // analyse_param_cds
 
 void analyse_param_cds(	int argc, char *argv[], int* m, long long* s,
-			double *e, char *input) 
+			double *e, char *input, char *output_file) 
 {
-        	int i;
-		int g_data = -1;
+        int i;
+	int g_data = -1;
+	char* tmp_file;
+	int g_m = 0;
+	int g_e = 0;
+	int g_s = 0;
 
-	    for (i = 1; i < argc; i++) {
+	for (i = 1; i < argc; i++) {
                 if (argv[i][0] == '-') {
                         switch (argv[i][1]) {
                         case 's':
@@ -42,22 +47,25 @@ void analyse_param_cds(	int argc, char *argv[], int* m, long long* s,
                                 if (argc == i || argv[i][0] == '-')
 					print_error_cds("cmd","s (seed number)");
                                 *s = atoi(argv[i]);
+				g_s = 1;
                                 break;
                         case 'm':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_cds("cmd","m (number of alleles)");
                                 *m = atoi(argv[i]);
+				g_m = 1;
                                 break;
 			case 'r':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-					print_error_cds("cmd","alpha (parameter of the algorithm)");
+					print_error_cds("cmd","r (percentage of missing data)");
                                 *e = (double) atof(argv[i]);
 				if (*e < 0) 
 					*e =  0;
 				if (*e > 1) 
 					*e =  1;
+				g_e = 1;
                                 break;
                         case 'h':   // global
                                 print_help_cds();
@@ -74,6 +82,12 @@ void analyse_param_cds(	int argc, char *argv[], int* m, long long* s,
                                 g_data = 0;
                                 strcpy(input,argv[i]);
                                 break;
+                        case 'o':
+                                i++;
+                                if (argc == i || argv[i][0] == '-')
+                                        print_error_cds("cmd","o (genotype file with masked genotypes)");
+                                strcpy(output_file,argv[i]);
+                                break;
                         default:    print_error_cds("basic",NULL);
                         }
                 } else {
@@ -83,5 +97,23 @@ void analyse_param_cds(	int argc, char *argv[], int* m, long long* s,
 
         if (g_data == -1)
 		print_error_cds("option","-g genotype_file");
+
+	if (g_m && *m <= 0)
+		print_error_cds("missing","");
+
+	if (g_s && *s <= 0)
+		*s = -1;
+
+	if (g_e && (*e <= 0 || *e >= 1))
+		print_error_cds("missing","");
+
+        // write output file name
+        tmp_file = remove_ext(input,'.','/');
+	if (!strcmp(output_file,"")) {
+        	strcpy(output_file,tmp_file);
+        	strcat(output_file,"_I.geno");
+	}
+        free(tmp_file);
+
 }
 

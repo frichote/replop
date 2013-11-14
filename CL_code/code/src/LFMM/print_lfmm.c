@@ -68,63 +68,55 @@ void print_help_lfmm()
 
 	printf("\nHELP: ./LFMM options \n\n"
 	       "mandatory:\n"
-	       "	-g genotype_file   		-- genotype file (in .lfmm format)\n"
-	       "        -v variable_file     		-- variable file (in .env format)\n"
-	     /*  "        -n n 						-- number n of individus\n"
-	       "        -L L 						-- number L of SNPS\n" */
-	       "        -K K 				-- K number of latent factors\n"
-//	       "        -D D 						-- D number of covariables\n"
+	       "	-g genotype_file   	-- genotype file (in .lfmm format)\n"
+	       "        -v variable_file     	-- variable file (in .env format)\n"
+	       "        -K K 			-- K number of latent factors\n"
 	       "optional:\n"
-	       "        -d d 				-- d, the dth covariables 	(default: all)\n"
-	       "        -o output_file 			-- output file with z-scores 	(default: zscore.txt)\n"
-	       "        -m				-- missing data			(default: no)\n"
-	       "        -p p				-- number of process used	(default: 1)\n"
-	       "        -i Niter             		-- number of iterations in the GS\n"
-	       "        -b burn         		-- burnin parameter in the GS\n\n"
-	       "        -h              		-- help\n\n");
+	       "        -d d 			-- d, the dth covariables 	(default: all separately)\n"
+	       "        -a 			-- all covariables at the same time\n"
+	       "        -o output_file 		-- output file with z-scores 	(default: genotype_file.zscore)\n"
+	       "        -m			-- missing data			(default: no)\n"
+	       "        -p p			-- number of processes (CPU)	(default: 1)\n"
+	       "        -i Niter             	-- number of iterations in the GS (default: 1000)\n"
+	       "        -b burn         	-- burnin parameter in the GS   (default: 3000)\n"
+	       "        -s seed         	-- seed random init		(default: random)\n"
+	       "        -C dic_file         	-- DIC file			(default: genotype_file.dic\n"
+	       "        -h              	-- help\n\n");
 }
 
 // print_summary
 
 void print_summary_lfmm(int N, int M, int K, int D, int d, int Niter, int burn,
 		   int m, char *output, char *input, char *cov_file, char *dev_file,
-		   int num_thrd)
+		   int num_thrd, long long s, int all)
 {
 
 	printf("Summary of the options:\n\n"
-	       "        -n 	%d\n"
-	       "        -L  	%d\n"
-	       "        -K	%d\n"
-	       "        -D	%d\n"
-	       "        -o	%s\n"
-	       "        -i	%d\n"
-	       "        -b	%d\n"
-	       "        -p	%d\n"
-	       "	-g    	%s\n"
-	       "	-v	%s\n",
-	       N, M, K, D, output, Niter, burn, num_thrd, input, cov_file);
+	       "        -n (number of individuals) 	%d\n"
+	       "        -L (number of loci)     	%d\n"
+	       "        -K (number of latent factors)	%d\n"
+	       "        -o (output file)		%s\n"
+	       "        -i (number of iterations)	%d\n"
+	       "        -b (burnin)			%d\n"
+	       "	-s (seed random init)		%llu\n"
+	       "        -p (number of processes (CPU))	%d\n"
+	       "	-g (genotype file)	   	%s\n"
+	       "	-v (variable file)		%s\n"
+	       "        -D (number of covariables)	%d\n",
+	       N, M, K, output, Niter, burn, s, num_thrd, input, cov_file, D);
 
-	if (m)
-		printf("	-m 	\n");
-
+	// if missing data
 	if (d)
-		printf("	-d	%d\n",d);
+		printf("	-d (the dth covariable)		%d\n",d);
+	if (all)
+		printf("	-a (all variable at the same time)\n");
+	if (m)
+		printf("	-m (missing data)	 	\n");
 
-		printf("	-C	%s\n",dev_file);
+		printf("	-C (DIC file)			%s\n",dev_file);
 
 	printf("\n");
 }
 
-// print_options
-
-void print_options_lfmm(int argc, char *argv[]) {
-
-        int i;
-
-        for (i=0;i<argc;i++)
-                printf("%s ",argv[i]);
-
-        printf("\n");
-}
 
 

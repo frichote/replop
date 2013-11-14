@@ -1,7 +1,7 @@
 /**
  * @file error_nmf.h
  *
- * @brief function to manage error types
+ * @brief function to manage error types in sNMF
  */
 
 

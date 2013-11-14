@@ -21,45 +21,6 @@
 #include <math.h>
 #include "normalize.h"
 
-// normalize_data
-
-void normalize_data(float *data, int N, int M, int *I, int missing_data)
-{
-	float mean;
-	int i, j, sum;
-
-	if (!missing_data) {
-		for (j = 0; j < M; j++) {
-			mean = 0;
-			for (i = 0; i < N; i++) {
-				mean += data[i * M + j];
-			}
-			mean /= N;
-			for (i = 0; i < N; i++) {
-				data[i * M + j] = (data[i * M + j] - mean);
-			}
-		}
-	} else {
-		for (j = 0; j < M; j++) {
-			mean = 0;
-			sum = 0;
-			for (i = 0; i < N; i++) {
-				if (I[i * M + j]) {
-					mean += data[i * M + j];
-					sum++;
-				}
-			}
-			mean /= sum;
-			for (i = 0; i < N; i++) {
-				if (I[i * M + j]) {
-					data[i * M + j] =
-					    (data[i * M + j] - mean);
-				}
-			}
-		}
-	}
-}
-
 // normalize_cov
 
 void normalize_cov(double *C, int N, int K)
@@ -68,24 +29,66 @@ void normalize_cov(double *C, int N, int K)
 	int i, k;
 
 	for (k = 0; k < K; k++) {
+		// calculate mean
 		mean = 0;
-		for (i = 0; i < N; i++) {
+		for (i = 0; i < N; i++)
 			mean += C[i * K + k];
-		}
 		mean /= N;
+		// calculate cov
 		cov = 0;
-		for (i = 0; i < N; i++) {
+		for (i = 0; i < N; i++)
 			cov += (C[i * K + k] - mean) * (C[i * K + k] - mean);
-		}
 		cov /= (N - 1);
+		// error if constant column
 		if (!cov) {
 		        printf("Error: it seems that covariable %d is constant " 
 				"among individuals.\n\n",k+1);
 			exit(1);
 		}
-
-		for (i = 0; i < N; i++) {
+		// normalize
+		for (i = 0; i < N; i++)
 			C[i * K + k] = (C[i * K + k] - mean) / sqrt(cov);
+	}
+}
+
+// normalize_cov_I
+
+void normalize_cov_I(double *C, int N, int K)
+{
+	double mean, cov;
+	int i, k, count;
+
+	for (k = 0; k < K; k++) {
+		// calculate mean
+		mean = 0;
+		count = 0;
+		for (i = 0; i < N; i++) {
+			if (fabs(C[i * K + k]) != 9) {
+				mean += C[i * K + k];
+				count++;
+			}	
+		}
+		if (count)
+			mean /= count;
+		else 
+			printf("Error: columns '%d' contains only missing data.\n\n", k+1);
+		// calculate cov
+		cov = 0;
+		for (i = 0; i < N; i++) {
+			if (fabs(C[i * K + k]) != 9)
+				cov += (C[i * K + k] - mean) * (C[i * K + k] - mean);
+		}
+		cov /= (count - 1);
+		// error if constant column
+		if (!cov) {
+		        printf("Error: it seems that covariable %d is constant " 
+				"among individuals.\n\n",k+1);
+			exit(1);
+		}
+		// normalize
+		for (i = 0; i < N; i++) {
+			if (fabs(C[i * K + k]) != 9)
+				C[i * K + k] = (C[i * K + k] - mean) / sqrt(cov);
 		}
 	}
 }
@@ -97,10 +100,12 @@ void normalize_lines(double *A, int N, int M)
 	int i, j;
 	double sum;
 	for (i = 0; i < N; i++) {
+		// sum
 		sum = 0.0;
 		for (j = 0; j < M; j++) {
 			sum += A[i * M + j];
 		}
+		// normalize
 		for (j = 0; j < M; j++) {
 			A[i * M + j] /= sum;
 		}
@@ -108,20 +113,28 @@ void normalize_lines(double *A, int N, int M)
 
 }
 
-// normalize_cols
+// normalize_mean_I
 
-void normalize_cols(double *F, int K, int M)
+void normalize_mean_I(double *C, int N, int K)
 {
-	int i, j;
-	double freq_0;
+	double mean;
+	int i, k, count;
 
-	for (j = 0; j < M; j++) {
-		freq_0 = 0.0;
-		for (i = 0; i < K; i++) {
-			freq_0 += F[i * M + j];
+	for (k = 0; k < K; k++) {
+		// calculate mean
+		mean = 0;
+		count = 0;
+		for (i = 0; i < N; i++) {
+			if (fabs(C[i * K + k]) != 9) {
+				mean += C[i * K + k];
+				count++;
+			}	
 		}
-		for (i = 0; i < K; i++) {
-			F[i * M + j] /= freq_0;
+		mean /= count;
+		// normalize
+		for (i = 0; i < N; i++) {
+			if (fabs(C[i * K + k]) != 9)
+				C[i * K + k] -= mean;
 		}
 	}
 }

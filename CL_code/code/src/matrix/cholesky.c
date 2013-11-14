@@ -1,5 +1,5 @@
 /*
-    LFMM, file: cholesky.c
+    matrix, file: cholesky.c
     Copyright (C) 2012 Eric Frichot
 
     This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 #include <math.h>
 #include "error.h"
 
-// cholesky
+// cholesky (from the web)
 
 void cholesky(double *A, int n, double *L)
 {

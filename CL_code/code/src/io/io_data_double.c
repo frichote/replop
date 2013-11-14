@@ -1,5 +1,5 @@
 /*
-    LFMM, file: io_data_double.c
+    io, file: io_data_double.c
     Copyright (C) 2012 Eric Frichot
 
     This program is free software: you can redistribute it and/or modify
@@ -31,23 +31,24 @@ void read_data_double(char *file_data, int N, int M, double *dat)
         FILE *m_File = NULL;
         int i = 0;
         int j = 0;
-        int max_char_per_line = MAX_LENGTH_NB * M;
-        char szbuff[max_char_per_line];
+        int max_char_per_line = MAX_LENGTH_NB_DOUBLE * M + 20;
+        char *szbuff;
         char *token;
+
+	// allocate memory
+	szbuff = (char *)malloc(max_char_per_line * sizeof(char));
 
 	// open file
         m_File = fopen_read(file_data);
 
-        // get current line
-        token = fgets(szbuff, max_char_per_line, m_File);
-
         i = 0;
-        while (!feof(m_File) & (i < N)) {
+        while (fgets(szbuff, max_char_per_line, m_File) && (i < N)) {
                 j = 0;
                 // cut line with split character SEP (" ")
                 token = strtok(szbuff, SEP);
                 // read elements and register them in dat
                 while (token && j < M) {
+			//printf("%s\n",token);
                         dat[i * M + j] = (double)atof(token);
 			// next elements
                         token = strtok(NULL, SEP);
@@ -56,15 +57,16 @@ void read_data_double(char *file_data, int N, int M, double *dat)
                 i++;
 		// test the number of columns
 		test_column(file_data, m_File, j, i, M, token);
-
-                // get next line
-                token = fgets(szbuff, max_char_per_line, m_File);
         }
+
 	// check the number of lines
 	test_line(file_data, m_File, i, N);
 
 	// close file
         fclose(m_File);
+
+	// free memory
+	free(szbuff);
 }
 
 // write_data_double

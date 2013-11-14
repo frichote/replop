@@ -21,6 +21,7 @@
 #include <string.h>
 #include <math.h>
 #include "io_tools.h"
+#include "read.h"
 #include "../matrix/error.h"
 
 // remove_ext (from stackoverflow)
@@ -85,36 +86,50 @@ int nb_cols_lfmm (char *file)
         FILE *fp = fopen_read(file);
         int cols = 0;
         int c;
+        char* szbuff; 
+        char* token;
 
         c = fgetc(fp);
         while ((c != EOF) && (c != 10)) {
 		// count only columns (no space or tab)
-		if ((c == 9) && (c == 32)) 
-                	cols++;
-                c = fgetc(fp);
+        	c = fgetc(fp);
+                cols++;
         }
-	cols++;
 
         fclose(fp);
+
+	// open file
+	fp = fopen_read(file);
+        szbuff = (char *) calloc(2* cols, sizeof(char));
+	// read first line
+        token = fgets(szbuff,2 * cols, fp);
+	cols = 0;
+	// count for first line
+	token = strtok(szbuff, SEP);
+	while (token) {
+		cols++;
+		token = strtok(NULL, SEP);
+	}
+	
+	fclose(fp);
+	free(szbuff);
 
         return cols;
 }
 
 // nb_lines
 
-int nb_lines (char *file, int N)
+int nb_lines (char *file, int M)
 {
         FILE *fp = fopen_read(file);
         int lines = 0;
-        int max_char_per_line = 10 * N;
+        int max_char_per_line = 20 * M + 10;
         char* szbuff = (char *) calloc(max_char_per_line, sizeof(char));
-        char* token;
 
-        token = fgets(szbuff,max_char_per_line, fp);
-        while (!feof(fp) && token) {
-                lines++;
-                token = fgets(szbuff,max_char_per_line,fp);
-        }
+	// while not end of file
+	while (fgets(szbuff,max_char_per_line,fp))
+		// count
+		lines++;
 
         fclose(fp);
         free(szbuff);
@@ -142,4 +157,16 @@ FILE* fopen_write (char *file_data)
                 print_error_global("open", file_data, 0);
 
 	return m_File;
+}
+
+// print_options
+
+void print_options(int argc, char *argv[]) {
+
+        int i;
+
+        for (i=0;i<argc;i++)
+                printf("%s ",argv[i]);
+
+        printf("\n");
 }

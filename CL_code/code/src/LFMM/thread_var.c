@@ -129,12 +129,15 @@ void slice_mean(void *G)
 	mean = 0;
 	for (i = from; i < to; i++) {
 		for (j = 0; j < M; j++) {
+			// tmp1 = C beta
 			tmp1 = 0;
 			for (d = 0; d < D; d++)
 				tmp1 += C[i * D + d] * beta[d * M + j];
+			// tmp2 = U V
 			tmp2 = 0;
 			for (k = 0; k < K; k++)
 				tmp2 += U[k * N + i] * V[k * M + j];
+			// R - U V - C beta
 			mean += (double)(R[i * M + j]) - tmp1 - tmp2;
 		}
 	}
@@ -165,15 +168,18 @@ void slice_var(void *G)
 	var2 = 0;
 	for (i = from; i < to; i++) {
 		for (j = 0; j < M; j++) {
+			// tmp1 = C B
 			tmp1 = 0;
 			for (d = 0; d < D; d++)
 				tmp1 += C[i * D + d] * beta[d * M + j];
+			// tmp2 = U V
 			tmp2 = 0;
 			for (k = 0; k < K; k++)
 				tmp2 += U[k * N + i] * V[k * M + j];
+			// tmp = R - UV - C B
 			tmp = ((double)(R[i * M + j]) - tmp1 - tmp2);
-			var += tmp;	//((double)(R[i*M+j])-tmp1-tmp2);// - mean)*((double)(R[i*M+j])-tmp1-tmp2 - mean);
-			var2 += tmp * tmp;	//((double)(R[i*M+j])-tmp1-tmp2)*((double)(R[i*M+j])-tmp1-tmp2);
+			var += tmp;	
+			var2 += tmp * tmp;	
 		}
 	}
 	Ma->res = var;

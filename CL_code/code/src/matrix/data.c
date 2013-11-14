@@ -1,5 +1,5 @@
 /*
-    LFMM, file: data.c
+    matrix, file: data.c
     Copyright (C) 2012 Eric Frichot
 
     This program is free software: you can redistribute it and/or modify
@@ -71,27 +71,3 @@ void create_I(float *dat, int *I, int N, int M)
 	}
 }
 
-// clean_data
-
-void clean_data(float *dat, int *col, int N, int M, int nM)
-{
-	int i, j, jp, newM;
-	float *tmp, *tmp2;
-
-	if (nM) {
-		newM = M - nM;
-		tmp = (float *)malloc(N * newM * sizeof(float));
-		jp = 0;
-		for (j = 0; j < M; j++) {
-			if (!col[j]) {
-				for (i = 0; i < N; i++) {
-					tmp[i * M + jp] = dat[i * M + j];
-				}
-				jp++;
-			}
-		}
-		tmp2 = dat;
-		free(tmp2);
-		dat = tmp;
-	}
-}

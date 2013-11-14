@@ -24,4 +24,9 @@ void init_bar(int *i, int *j);
  */
 void print_bar(int *i, int *j, int Niter);
 
+/* 
+ * finalize print
+ */
+void final_bar();
+
 #endif // PRINT_BAR_H

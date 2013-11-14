@@ -1,5 +1,5 @@
 /*
-    LFMM, file: io_data_int.c
+    io, file: io_data_int.c
     Copyright (C) 2012 Eric Frichot
 
     This program is free software: you can redistribute it and/or modify
@@ -31,23 +31,24 @@ void read_data_int(char *file_data, int N, int M, int *dat)
         FILE *m_File = NULL;
         int i = 0;
         int j = 0;
-        int max_char_per_line = MAX_LENGTH_NB * M;
-        char szbuff[max_char_per_line];
+        int max_char_per_line =  MAX_LENGTH_NB_INT * M + 20;
+        char *szbuff;
         char *token;
+
+	// allocate memory
+	szbuff = (char *)malloc(sizeof(char) * max_char_per_line);
 
 	// open file
         m_File = fopen_read(file_data);
 
-        // get current line
-        token = fgets(szbuff, max_char_per_line, m_File);
-
         i = 0;
-        while (!feof(m_File) & (i < N)) {
+        while (fgets(szbuff, max_char_per_line, m_File) && (i < N)) {
                 j = 0;
                 // cut line with split character SEP (" ")
                 token = strtok(szbuff, SEP);
                 // read elements and register them in dat
                 while (token && j < M) {
+                        //printf("%s\n",token);
                         dat[i * M + j] = (int)atof(token);
 			// next elements
                         token = strtok(NULL, SEP);
@@ -57,15 +58,15 @@ void read_data_int(char *file_data, int N, int M, int *dat)
 
 		// check the number of columns
 		test_column(file_data, m_File, j, i, M, token);
-
-                // get next line
-                token = fgets(szbuff, max_char_per_line, m_File);
         }
 	// check the number of lines
 	test_line(file_data, m_File, i, N);
 
 	// close file
         fclose(m_File);
+
+	// free memory
+	free(szbuff);
 }
 
 // write_data_int
@@ -97,6 +98,7 @@ void print_data_int(int *dat, int N, int M)
 {
         int i, j;
 
+	// print dat
         for (i = 0; i < N; i++) {
                 for (j = 0; j < M - 1; j++) {
                         printf("%d ", dat[i * M + j]);

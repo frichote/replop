@@ -22,6 +22,7 @@
  * @param Mp 	number of columns of X
  * @param K	number of clusters
  * @param alpha parameter of the algorithm
+ * @param mem 	allocated memory
  */
 void update_Q(double *Q, double *F, bituint *X, int N, int M, int nc, int Mp, 
 			int K, double alpha, Memory mem);
@@ -30,13 +31,15 @@ void update_Q(double *Q, double *F, bituint *X, int N, int M, int nc, int Mp,
  *
  * @param Q 	admixture coefficients (of size NxK)
  * @param F 	ancestral frequencies (of size KxM)
- * @param X 	genome matrice (of size NxM)
+ * @param X 	genome matrice (of size NxMc)
  * @param N 	number of individuals
  * @param M 	number of loci
  * @param nc	number of different values in X
  * @param Mp 	number of columns of X
  * @param K	number of clusters
  * @param alpha parameter of the algorithm
+ * @param mem 	allocated memory
+ * @param num_thrd number of CPU used
  */
 double update_nnlsm_Q(double *Q, double *F, bituint *X, int N, int M, int nc,
 	int Mp,	int K, double alpha, Memory mem, int num_thrd);
@@ -49,12 +52,37 @@ double update_nnlsm_Q(double *Q, double *F, bituint *X, int N, int M, int nc,
  */
 void normalize_Q(double *Q, int N, int K);
 
-/** @brief mean relative difference between Q_prec and Q
+/** 
+ * compute t(F) * F + alpha
  *
- * @param Q_prec	matrix of size n
- * @param Q	matrix of size n
- * @param n	size of Q
+ * @param temp1 output matrix (of size KxK)
+ * @param F	input F matrix (of size McxK)
+ * @param nc	number of different values in X
+ * @param K	number of clusters
+ * @param M 	number of loci
+ * @param Mp 	number of columns of X
+ * @param N 	number of individuals
+ * @param num_thrd	number of CPU used 
+ * @param alpha regularization parameter of the algorithm
  */
-double diff_rel(double *Q_prec, double *Q, int n);
+void F_tF_alpha(double *temp1, double *F, int nc, int K, int M, int Mp, int N,
+        int num_thrd, double alpha);
+
+/** 
+ * compute t(F) * t(X)
+ *
+ * @param temp3 output matrix (of size KxN)
+ * @param X 	genotype matrice (of size NxMc)
+ * @param F	input F matrix (of size McxK)
+ * @param nc	number of different values in X
+ * @param K	number of clusters
+ * @param M 	number of loci
+ * @param Mp 	number of columns of X
+ * @param N 	number of individuals
+ * @param num_thrd	number of CPU used 
+ */
+void tF_tX(double *temp3, bituint *X, double *F, int nc, int K, int M, int Mp,
+        int N, int num_thrd);
+
 
 #endif // ALS_Q_H

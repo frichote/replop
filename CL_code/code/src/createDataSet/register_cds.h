@@ -16,8 +16,9 @@
  * @param s     seed
  * @param e	percentage of genotypes to remove
  * @param input	the input file
+ * @param output_file	the output file
  */
 void analyse_param_cds(	int argc, char *argv[], int *m, long long *s,
-			double *e, char *input) ;
+			double *e, char *input, char* output_file);
 
 #endif // REGISTER_CDS_H

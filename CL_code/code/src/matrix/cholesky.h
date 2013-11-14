@@ -1,14 +1,14 @@
 /**
  * @file cholesky.h
  *
- * @brief function to compute the upper cholesky decomposition of a matrix
+ * @brief function to compute the lower cholesky decomposition of a matrix
  */
 
 #ifndef CHOLESKY_H
 #define CHOLESKY_H
 
 /**
- * compute the upper cholesky decomposite L of A
+ * compute the lower cholesky decomposite L of A
  *
  * @param A	the matrix to decompose (of size nxn)
  * @param n	the size of columns/lines of A

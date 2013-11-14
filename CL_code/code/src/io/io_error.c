@@ -1,5 +1,5 @@
 /*
-   LFMM, file: io_error.c
+   io, file: io_error.c
    Copyright (C) 2012 Eric Frichot
 
    This program is free software: you can redistribute it and/or modify

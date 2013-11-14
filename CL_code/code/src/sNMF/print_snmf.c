@@ -69,38 +69,48 @@ void print_help_snmf()
 {
    printf("\nHELP: ./sNMF options \n\n"
          "mandatory:\n"
-         "        -g genotype_file              -- genotype file (in .geno format)\n"
-         "        -K K                          -- number K of ancestral populations\n\n"
+         "        -g genotype_file	-- genotype file (in .geno format)\n"
+         "        -K K                  -- number K of ancestral populations\n\n"
 
          "optional:\n"
-         "        -h                            -- help\n"
-         "        -a alpha                      -- regularization parameter       (default: 100)\n"
-         "        -e tol                        -- tolerance error                (default: 0.0001)\n"
-         "        -i iterations                 -- number max of iterations       (default: 1000)\n"
-         "        -s seed                       -- seed random init               (default: random)\n"
-         "        -m ploidy                     -- 1 if haploid, 2 if diploid     (default: 2)\n"
-         "        -p num_proc                   -- number of processes\n\n"
+         "        -h                    -- help\n"
+         "        -a alpha              -- regularization parameter       (default: 100)\n"
+         "        -q output_Q           -- individual admixture file      (default: genotype_file.K.Q)\n"
+         "        -f output_F           -- ancestral frequencies file     (default: genotype_file.K.F)\n"
+         "        -c perc               -- cross-entropy with 'perc' 			\n"
+	 "                              of masked genotypes               (default: 0.05)\n"
+         "        -e tol                -- tolerance error                (default: 0.0001)\n"
+         "        -i iterations         -- number max of iterations       (default: 200)\n"
+         "        -s seed               -- seed random init               (default: random)\n"
+         "        -m ploidy             -- 1 if haploid, 2 if diploid     (default: 2)\n"
+         "        -p num_proc           -- number of processes (CPU)      (default: 1)\n\n"
         );
 }
 
 // print_summary_snmf
 
 void print_summary_snmf (     int N, int M, int m, long long seed, int K, double alpha,
-                        double tol, int maxiter, char *input, int num_thread)
+                        double tol, int maxiter, char *input, int num_thread, double e, 
+			char *output_Q, char *output_F)
 {
 
    printf("summary of the options:\n\n"
          "        -n (number of individuals)             %d\n"
          "        -L (number of loci)                    %d\n"
          "        -K (number of ancestral pops)          %d\n"
+         "        -g (input file)                        %s\n"
+         "        -q (individual admixture file)         %s\n"
+         "        -f (ancestral frequencies file)        %s\n"
          "        -i (number max of iterations)          %d\n"
          "        -a (regularization parameter)          %G\n"
          "        -s (seed random init)                  %lu\n"
          "        -e (tolerance error)                   %G\n"
-         "        -g (input file)                        %s\n"
-         "        -p (number of processes)               %d\n", N, M, K, maxiter, alpha, 
-								(unsigned long)seed, tol, 
-                                                                input, num_thread);
+         "        -p (number of processes)               %d\n", N, M, K, input, output_Q, output_F,
+								maxiter, alpha, (unsigned long)seed, 
+								tol, num_thread);
+	
+        if (e != 0)
+                printf("        -c (cross-Entropy criterion)           %G\n", e);
         if (m == 1)
                 printf("        - haploid\n\n");
         else if (m == 2)

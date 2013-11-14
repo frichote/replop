@@ -8,8 +8,7 @@
 #define BITUINT_H
 
 #include <stdint.h>
-
-#define SEP " " // file separator
+#include "../io/read.h"
 
 #if defined(__i386__)
 // IA-32
@@ -128,7 +127,7 @@
 #endif
 
 /**
- * allocate the memory to store data of size nxL
+ * allocate the memory to store data of size nxMc
  * 
  * @param dat   address to the bituint data matrix 
  * @param N	number of lines of the matrix

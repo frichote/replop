@@ -1,5 +1,5 @@
 /*
- *     lfmm2geno, file: lfmm2geno.c
+ *     convert, file: lfmm2geno.c
  *     Copyright (C) 2013 Eric Frichot
  *
  *     This program is free software: you can redistribute it and/or modify
@@ -25,6 +25,8 @@
 #include "../io/io_tools.h"
 #include "../io/io_data_int.h"
 
+// lfmm2geno
+
 void lfmm2geno (char *input_file, char* output_file, int *N, int *M)
 {
 	int *data;
@@ -33,6 +35,7 @@ void lfmm2geno (char *input_file, char* output_file, int *N, int *M)
 	*M = nb_cols_lfmm(input_file);
 	*N = nb_lines(input_file, *M);
 
+	// memory allocation
         data = (int *)malloc((*N)*(*M)*sizeof(int));
 
 	// read in lfmm format
@@ -41,9 +44,7 @@ void lfmm2geno (char *input_file, char* output_file, int *N, int *M)
 	// write in geno format
 	write_geno(output_file, *N, *M, data);
 
+	// free memoy
 	free(data);
 }
-
-	
-
 

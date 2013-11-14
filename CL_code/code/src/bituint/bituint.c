@@ -1,5 +1,5 @@
 /*
-   NMF, file: bituint.c
+   bituint, file: bituint.c
    Copyright (C) 2013 François Mathieu, Eric Frichot
 
    This program is free software: you can redistribute it and/or modify

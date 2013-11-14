@@ -154,6 +154,7 @@ void mvn_rand(double *mu, double *L, int D, double *y)
 			y[i] += L[j * D + i] * x[j];
 		}
 	}
+
 	free(x);
 }
 

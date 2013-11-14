@@ -1,7 +1,7 @@
 /**
  * @file error_lfmm.h
  *
- * @brief function to manage error types
+ * @brief function to manage error types for lfmm code
  */
 
 #ifndef ERROR_LFMM_H

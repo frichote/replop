@@ -32,19 +32,18 @@ void read_geno(char *input_file, int *data, int N, int M)
 	FILE *m_File=NULL;
 	int j = 0;
 	char *szbuff = (char *) calloc(5*N, sizeof(char));
-	char *token;
-	int max_char_per_line = 5*N;
+	int max_char_per_line = 5*N + 20;
+	int warning = 0;
 
 	// open file
 	m_File = fopen_read(input_file);
 
 	// first line
-	while(!feof(m_File) & (j<M)) {
+	while(fgets(szbuff,max_char_per_line,m_File) && (j<M)) {
 		// fill current line
-		fill_line_geno(data, M, N, j, input_file, m_File);
+		fill_line_geno(data, M, N, j, input_file, m_File, szbuff, &warning);
 		j ++;
 	}
-	token = fgets(szbuff,max_char_per_line,m_File);
 
 	// check the number of lines
 	test_line(input_file, m_File, j, M);
@@ -54,51 +53,65 @@ void read_geno(char *input_file, int *data, int N, int M)
 
 	// free memory
 	free(szbuff);
-	free(data);
 }
 
 // fill_line_geno
 
-void fill_line_geno(int* data, int M, int N, int j, char *file_data, FILE* m_File)
+void fill_line_geno(int* data, int M, int N, int j, char *file_data, FILE* m_File, 
+	char *szbuff, int *warning)
 {
 	int i = 0;
 	char token;
 
 	// get first token
-	token = (char)fgetc(m_File);
+	token = szbuff[i];
 
 	// for all token
 	while(token != EOF && token != 10 && i<N) {
 
 		// fill current column
-		data[i*M+j] = (int)atoi(&token);
-		if (token != '9' && token != '1' && token != '2' && token != '0') {
-			printf("Warning: ligne %d, column %d is not 0, 1, 2 or 9.\n\n", j+1, i+1);
+		data[i*M+j] = (int)(token - 48);
+		// if not 9, 1, 2 or 0
+		if (!(*warning) && token != '9' && token != '1' && token != '2' && token != '0') {
+			printf("Warning: some genotypes are not 0, 1, 2 or 9.\n");
+			printf("\t First warning at ligne %d, column %d.\n\n", j+1, i+1);
+			*warning = 1;
 		}
 		i++;
 
 		// next column
-		token = (char)fgetc(m_File);
+		token = szbuff[i];
 	}
 	// check the number of columns
 	test_column(file_data, m_File, i, j+1, N, &token);
 }
 
+// write_geno
+
 void write_geno(char *output_file, int N, int M, int *data)
 {
-        FILE *file = NULL;
-        int i, j;
-        // open file
-        file = fopen_write(output_file);
+	FILE *file = NULL;
+	int i, j;
+	// open file
+	file = fopen_write(output_file);
 
-        // write dat
-        for (j = 0; j < M; j++) {
-                for (i = 0; i < N; i++) {
-                        fprintf(file, "%d", data[i * M + j]);
-                }
-                fprintf(file, "\n");
-        }
-        // close file
-        fclose(file);
+	// write dat
+	for (j = 0; j < M; j++) {
+		for (i = 0; i < N; i++) {
+			fprintf(file, "%d", data[i * M + j]);
+		}
+		fprintf(file, "\n");
+	}
+	// close file
+	fclose(file);
 }
 
+void write_geno_line(FILE* File, int* line, int N)
+{
+	int i = 0;
+
+	for (i = 0; i < N; i++)
+		fprintf(File, "%d", line[i]);
+
+	fprintf(File,"\n");
+}

@@ -1,5 +1,5 @@
 /*
-    LFMM, file: inverse.c
+    matrix, file: inverse.c
     Copyright (C) 2012 Eric Frichot
 
     This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 #include "../lapack/f2c.h"
 #include "../lapack/lpk.h"
 
-// fast_inverse
+// fast_inverse (with lapack)
 
 void fast_inverse(double *A, int D, double *inv)
 {
@@ -46,7 +46,7 @@ void fast_inverse(double *A, int D, double *inv)
 	free(pivot);
 }
 
-// detrm
+// detrm (from the web)
 
 double detrm(double *a, int k)
 {
@@ -86,7 +86,7 @@ double detrm(double *a, int k)
 	return (det);
 }
 
-// cofact
+// cofact (from the web)
 
 void cofact(double *num, int f, double *inv)
 {
@@ -123,7 +123,7 @@ void cofact(double *num, int f, double *inv)
 	free(fac);
 }
 
-// trans
+// trans (from the web)
 
 void trans(double *num, double *fac, int r, double *inv)
 {

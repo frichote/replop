@@ -37,10 +37,7 @@ void print_error_ce(char* msg, char*file)
 	        printf("ERROR: the following option is mandatory: %s.\n\n",file);
 		print_help_ce();
 	} else if (!strcmp(msg,"missing")) {
-	        printf("ERROR: one of the following options is missing or equal 0: -K \n\n");
-		print_help_ce();
-	} else if (!strcmp(msg,"missing")) {
-	        printf("ERROR: one of the following options is missing: -e / -a / -m \n\n");
+	        printf("ERROR: one of the following options is missing or not positive: -K, -m  \n\n");
 		print_help_ce();
 	} else if (!strcmp(msg,"basic")) {
 	        printf("ERROR: the command is not written correctly.\n\n");

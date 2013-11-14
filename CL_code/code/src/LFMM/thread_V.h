@@ -30,4 +30,4 @@ void slice_rand_V(void *G);
  */
 void slice_inv_cov_V(void *G);
 
-#endif // THREAD_LIKE_H
+#endif // THREAD_V_H

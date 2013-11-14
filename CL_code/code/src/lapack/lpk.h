@@ -18,5 +18,11 @@ int dtrsyl_(char *trana, char *tranb, integer *isgn, integer
         *m, integer *n, doublereal *a, integer *lda, doublereal *b, integer *
         ldb, doublereal *c__, integer *ldc, doublereal *scale, integer *info);
 
+int dsyevr_(char *jobz, char *range, char *uplo, integer *n,
+        doublereal *a, integer *lda, doublereal *vl, doublereal *vu, integer *
+        il, integer *iu, doublereal *abstol, integer *m, doublereal *w,
+        doublereal *z__, integer *ldz, integer *isuppz, doublereal *work,
+        integer *lwork, integer *iwork, integer *liwork, integer *info);
+
 #endif // INVERSE_H
 

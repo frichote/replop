@@ -7,8 +7,6 @@
 #ifndef DATA_H
 #define DATA_H
 
-#define SEP " "			// Séparateur utilisé dans le fichier
-
 /**
  * set A to 0
  *
@@ -47,16 +45,5 @@ void update_m(double *beta, int n, int nb);
  * @param M	the number of columns of dat
  */
 void create_I(float *dat, int *I, int N, int M);
-
-/**
- * remove constant columns from dat
- *
- * @param dat	the data matrix (of size NxM)
- * @param col	the list of constant columns (of size M)
- * @param N	the number of lines of dat
- * @param M	the number of columns of dat
- * @param nM	true if dat contains missing data 
- */
-void clean_data(float *dat, int *col, int N, int M, int n);
 
 #endif // DATA_H

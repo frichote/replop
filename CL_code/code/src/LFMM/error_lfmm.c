@@ -35,8 +35,8 @@ void print_error_lfmm(char *msg, char *file, int n)
 		print_help_lfmm();
 	} else if (!strcmp(msg, "missing")) {
 		printf
-		    ("ERROR: one of the following options is missing or equal 0:"
-		     " -K / -D / -L / -n / -b / -i \n\n");
+		    ("ERROR: one of the following options is missing or not positive:"
+		     " -K / -b / -i / -p / -d.\n\n");
 		print_help_lfmm();
 	} else if (!strcmp(msg, "basic")) {
 		printf("ERROR: the command is not written correctly.\n\n");

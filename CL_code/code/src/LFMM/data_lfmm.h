@@ -7,22 +7,19 @@
 #ifndef DATA_LFMM_H
 #define DATA_LFMM_H
 
-#define SEP " "			// Séparateur utilisé dans le fichier
-
 #include "../matrix/data.h"
 
 /**
  * compute zscore in the dth column of beta
  * 
- * @param beta	the output matrix of zscores (of size nxnD)
+ * @param zscore	the output matrix of zscores (of size nxnD)
  * @param sum	the sum along the GS chain along for each individual (of size 2n)
  * @param sum2	the squared sum along the GS chain along for each individual (of size 2n)
- * @param n	the number of individuals
+ * @param n	the number of loci
  * @param cur	the length of the GS chain (without burnin)
- * @param d	the column where to register the zscores
- * @param nD	the number of columns of beta
+ * @param D	number of lines of sum or sum2	
  */
-void zscore_calc(double *zscore, double *sum, double *sum2, int n, int cur);
+void zscore_calc(double *zscore, double *sum, double *sum2, int n, int cur, int D);
 
 /**
  * add beta to the sum, called sum
@@ -70,9 +67,10 @@ void update_mean(double *beta, double *mean, int n, int cur);
  * @param N	the number of individuals
  * @param nD	the number of covariables
  * @param Cpp	the output parameter (of size Nx2)
- * @param d	the column of C to copy
+ * @param d	the column of C to copy (from 0)
+ * @param all	if all, copy all columns of C into Cpp
  */
-void modify_C(double *C, int N, int nD, double *Cpp, int d);
+void modify_C(double *C, int N, int nD, double *Cpp, int d, int all);
 
 /**
  * write deviance and DIC in file_data file
@@ -88,12 +86,13 @@ void write_DIC(char *file_data, double deviance, double DIC);
  * separated by spaces
  *
  * @param file_data	the file where to write
- * @param M	the number of snps (of lines of dat) 
- * @param nD	the number of columns of dat
- * @param nd	the column of dat to write
- * @param dat	the matrix to write
+ * @param M		the number of snps (of lines of dat) 
+ * @param zscore	zscore matrix
+ * @param D		D number of environmental variables
+ * @param all		if all variables together
+ * @param nd		number of the current env variable
  */
-void write_zscore_double(char *file_data, int M, double *zscore);
+void write_zscore_double(char *output_file, int M, double *zscore, int D, int all, int nd);
 
 /**
  * compute the current residual variance
@@ -112,6 +111,26 @@ void write_zscore_double(char *file_data, int M, double *zscore);
  */
 double var_data(float *R, double *U, double *V, double *C, double *beta, int N,
 		int M, int K, int D, double *thrd_m2, int num_thrd);
+
+
+/**
+ * compute the current residual variance and input missing data
+ *
+ * @param R	the data matrix (of size NxM)
+ * @param I     the missing data matrix
+ * @param U	the U matrix (of size KxN)
+ * @param V	the V matrix (of size KxM)
+ * @param C	the C matrix (of size NxD)
+ * @param beta	the beta parameter (of size DxM)
+ * @param N	the number of individuals
+ * @param M	the number of loci
+ * @param D	the number of covariables
+ * @param K	the number of latent factors
+ * @param thrd_m2	the output value of the mean
+ * @param num_thrd	the number of thread used
+ */
+double var_data_inputation(float *R, int *I, double *U, double *V, double *C, 
+	double *beta, int N, int M, int K, int D, double *thrd_m2, int num_thrd);
 
 /**
  * input missing values with U'*V+C*beta

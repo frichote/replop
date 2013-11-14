@@ -24,7 +24,7 @@
 #include "criteria.h"
 #include "../bituint/bituint.h"
 
-// log_likelihood
+// least_square
 
 double least_square(bituint *X, double *Q, double *F, int N, int M, int nc, 
 	int Mp, int K, double alpha) 
@@ -39,7 +39,9 @@ double least_square(bituint *X, double *Q, double *F, int N, int M, int nc,
         int jd, jm;
 	double norm1 = 0.0;
 
+	// for each individual
         for(i = 0; i < N; i++) {
+		// least square part
                 for (jd = 0; jd<Md; jd++) {
                         value = X[i*Mp+jd];
                         for (jm = 0; jm<SIZEUINT; jm++) {
@@ -48,22 +50,24 @@ double least_square(bituint *X, double *Q, double *F, int N, int M, int nc,
                                 	tmp += F[(jd*SIZEUINT+jm)*K+k] * Q[i*K+k];
                                 //if (value & mask[jm]) 
                                 if (value % 2) 
-					like += (1-tmp)*(1-tmp);
+					like += (1.0-tmp)*(1.0-tmp);
                                 else
 					like += tmp*tmp;
 			value >>=1;
 			}
 		}
                 value = X[i*Mp+Md];
+		// regularization part
                 for (jm = 0; jm<Mm; jm++) {
 			tmp = 0.0;
                         for (k = 0; k < K; k++)
                               	tmp += F[(Md*SIZEUINT+jm)*K+k] * Q[i*K+k];
                         //if (value & mask[jm]) 
-                        if (value % 2) 
-				like += (1-tmp)*(1-tmp);
-                        else
+                        if (value % 2) {
+				like += (1.0-tmp)*(1.0-tmp);
+                        } else {
 				like += tmp*tmp;
+			}
 		value >>=1;
                 }
 		n1i = 0.0;
@@ -72,6 +76,7 @@ double least_square(bituint *X, double *Q, double *F, int N, int M, int nc,
 		norm1 += n1i * n1i;
 	}
 
+	// likelihood
 	like += 2*sqrt(alpha)*norm1;
 
 	return like;

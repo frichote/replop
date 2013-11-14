@@ -24,6 +24,6 @@ void print_help_cds();
  * @param input         genotype file
  */
 void print_summary_cds (int N, int M, int m, long long seed,
-                        double e, char *input);
+                        double e, char *input, char *output);
 
 #endif // PRINT_CDS_H

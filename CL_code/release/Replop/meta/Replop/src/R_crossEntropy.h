@@ -7,6 +7,7 @@
 #ifndef R_crossEntropy_H
 #define R_crossEntropy_H
 
-int main_crossEntropy(int argc, char *argv[]);
+void R_crossEntropy (char** R_genotype_file, char** R_missing_data_file, char** R_Q_file, 
+	char** R_F_file, int* R_K, int* R_ploidy);
 
 #endif // R_crossEntropy_H

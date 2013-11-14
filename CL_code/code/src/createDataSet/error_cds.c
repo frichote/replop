@@ -28,6 +28,7 @@
 void print_error_cds(char* msg, char*file) 
 {
 	printf("\n");
+	// error type
 	if (!strcmp(msg,"cmd")) {
 	        printf("ERROR: no value for %s.\n\n",file);
 		print_help_cds();
@@ -35,10 +36,7 @@ void print_error_cds(char* msg, char*file)
 	        printf("ERROR: the following option is mandatory: %s.\n\n",file);
 		print_help_cds();
 	} else if (!strcmp(msg,"missing")) {
-	        printf("ERROR: one of the following options is missing or equal 0: -K\n\n");
-		print_help_cds();
-	} else if (!strcmp(msg,"missing")) {
-	        printf("ERROR: one of the following options is missing: -e / -a / -m \n\n");
+	        printf("ERROR: one of the following options is not positive: -m, -r.\n\n");
 		print_help_cds();
 	} else if (!strcmp(msg,"basic")) {
 	        printf("ERROR: the command is not written correctly.\n\n");

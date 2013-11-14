@@ -28,117 +28,174 @@
 #include "../matrix/rand.h"
 
 #ifndef WIN32
-	#include "thread_lfmm.h"
-	#include "thread_V.h"
-
-	extern void slice_mV_V(void *G);
-	extern void slice_rand_V(void *G);
-	extern void slice_inv_cov_V(void *G);
+#include "thread_lfmm.h"
+#include "thread_V.h"
 #endif
 
 // create_m_V
 
 void create_m_V(double *U, float *R, double *C, double *beta, double *m_V,
-		int M, int N, int D, int K, float *datb, int num_thrd)
+		int M, int N, int D, int K, int num_thrd)
 {
+	int i, j, k, d;
+	double *tmp_i;
+
 #ifndef WIN32
-	thread_fct_lfmm(R, datb, U, NULL, C, beta, m_V, NULL, NULL,
-		   K, D, M, N, num_thrd, slice_mV_V, 0, 0);
-#else
+        // multi-threaded non windows version
+	if (num_thrd > 1) {
+		thread_fct_lfmm(R, NULL, U, NULL, C, beta, m_V, NULL, NULL,
+				K, D, M, N, num_thrd, slice_mV_V, 0, 0);
+        // uni-threaded or windows version
+	} else {
+#endif
+                // TODO: check time
+                // allocate memory 
+		tmp_i = (double *)malloc(M * sizeof(double));
+
+		// init m_V
+		for (k = 0; k < K; k++) {
+			for (j = 0; j < M; j++) {
+				m_V[k * M + j] = 0;
+			}
+		}
+		for (i = 0; i < N; i++) {
+			// calculate tmp_i = R - C * B
+			for (j = 0; j < M; j++)
+				tmp_i[j] = (double)(R[i * M + j]);
+			for (d = 0; d < D; d++) {
+				for (j = 0; j < M; j++)
+					tmp_i[j] -= C[i * D + d] * beta[d * M + j];
+			}
+			// calculate U * tmp_i
+			for (k = 0; k < K; k++) {
+				for (j = 0; j < M; j++)
+					m_V[k * M + j] += U[k * N + i] * tmp_i[j];
+			}
+		}
+
+		free(tmp_i);
+
+#ifndef WIN32
+	}
 #endif
 }
 
 // create_inv_cov_V
 
 void create_inv_cov_V(double *inv_cov_V, double alpha, double alpha_R,
-		      double *U, int K, int N, int num_thrd)
+		double *U, int K, int N, int num_thrd)
 {
+	int i, k1, k2;
+	// allocate memory
 	double *tmp = (double *)calloc(K * K, sizeof(double));
 
-	//if (num_thrd > 1) {
 #ifndef WIN32
-	thread_fct_lfmm(NULL, NULL, U, NULL, NULL, NULL, NULL, tmp, NULL,
-		   K, 0, 0, N, num_thrd, slice_inv_cov_V, alpha, alpha_R);
-#else
+        // multi-threaded non windows version
+	if (num_thrd > 1) {
+		thread_fct_lfmm(NULL, NULL, U, NULL, NULL, NULL, NULL, tmp, NULL,
+				K, 0, 0, N, num_thrd, slice_inv_cov_V, alpha, alpha_R);
+        // uni-threaded or windows version
+	} else {
 #endif
-	/*
-	   } else {
-	   for(d1=0; d1<D; d1++) {
-	   for(d2=0; d2<D; d2++) {
-	   tmp[d1*D+d2] = 0;
-	   for(i=0; i<N; i++)
-	   tmp[d1*D+d2] += U[d1*N+i]* U[d2*N+i];
-	   tmp[d1*D+d2] *= alpha_R;
-	   }
-	   tmp[d1*D+d1] += alpha;
-	   }    
-	   }
-	 */
-
+                // TODO: check time
+		for (k1 = 0; k1 < K; k1++) {
+			for (k2 = 0; k2 < k1; k2++) {
+				// alpha_R * U %*% t(U) - diag(alpha)
+				tmp[k1 * K + k2] = 0;
+				for (i = 0; i < N; i++)
+					tmp[k1 * K + k2] +=
+						U[k1 * N + i] * U[k2 * N + i];
+				tmp[k1 * K + k2] *= alpha_R;
+				tmp[k2 * K + k1] = tmp[k1 * K + k2];
+			}
+			tmp[k1 * (K + 1)] = 0;
+			for (i = 0; i < N; i++)
+				tmp[k1 * (K + 1)] +=
+					U[k1 * N + i] * U[k1 * N + i];
+			tmp[k1 * (K + 1)] *= alpha_R;
+			tmp[k1 * (K + 1)] += alpha;
+		}
+#ifndef WIN32
+	}
+#endif
 	// inverse
 	if (K == 1) {
-		inv_cov_V[0] = 1 / tmp[0];
+		inv_cov_V[0] = 1.0 / tmp[0];
 	} else {
 		fast_inverse(tmp, K, inv_cov_V);
 	}
-
+	// free memory
 	free(tmp);
 }
 
 // rand_V
 
 void rand_V(double *V, double *m_V, double *inv_cov_V, double alpha_R, int K,
-	    int M, int num_thrd)
+		int M, int num_thrd)
 {
+	double *mu;
+	double *y;
+	int j, k, kp;
+	// allocate memory
 	double *L = (double *)calloc(K * K, sizeof(double));
-	double *mu = (double *)calloc(K, sizeof(double));
-	double *y = (double *)calloc(K, sizeof(double));
 
+	// cholesky of inv_cov_V
 	cholesky(inv_cov_V, K, L);
 
-	//if(num_thrd > 1) {
 #ifndef WIN32
-	thread_fct_lfmm(NULL, NULL, NULL, V, NULL, NULL, m_V, inv_cov_V, L,
-		   K, 0, M, 0, num_thrd, slice_rand_V, 0, alpha_R);
-#else
+        // multithread non windows version
+	if(num_thrd > 1) {
+		thread_fct_lfmm(NULL, NULL, NULL, V, NULL, NULL, m_V, inv_cov_V, L,
+				K, 0, M, 0, num_thrd, slice_rand_V, 0, alpha_R);
+        // uni-threaded or windows version
+	} else {
 #endif
-	/*
-	   } else {
-	   for(j=0;j<M;j++) {
-	   for(d=0;d<D;d++) {
-	   mu[d] = 0;
-	   for(dp=0;dp<D;dp++) {
-	   mu[d] += inv_cov_V[d*D+dp] * m_V[dp*M+j];
-	   }
-	   mu[d] *= alpha_R;
-	   }
-	   mvn_rand(mu,L,D,y);
-	   for(d=0;d<D;d++)
-	   V[d*M+j] = y[d];
-	   }
-	   }
-	 */
+		// allocate memory
+		mu = (double *)calloc(K, sizeof(double));
+		y = (double *)calloc(K, sizeof(double));
+
+		// inv_cov_V %*% m_V
+		for (j = 0; j < M; j++) {
+			for (k = 0; k < K; k++) {
+				mu[k] = 0;
+				for (kp = 0; kp < K; kp++) {
+					mu[k] +=
+						inv_cov_V[k * K + kp] * m_V[kp * M + j];
+				}
+				// times alpha_R
+				mu[k] *= alpha_R;
+			}
+			// rand V
+			mvn_rand(mu, L, K, y);
+			for (k = 0; k < K; k++)
+				V[k * M + j] = y[k];
+		}
+		// free memory
+		free(mu);
+		free(y);
+#ifndef WIN32
+	}
+#endif
+	// free memory
 	free(L);
-	free(mu);
-	free(y);
 }
 
 // update_V
 
 void update_V(double *C, float *dat, double *U, double *V, double *beta,
-	      double *m_V, double *inv_cov_V, double alpha_V, double alpha_R,
-	      int M, int N, int K, int D, int num_thrd)
+		double *m_V, double *inv_cov_V, double alpha_V, double alpha_R,
+		int M, int N, int K, int D, int num_thrd)
 {
 	// m_V = U * (I.*(R - C*beta));                         (K,M)
-	create_m_V(U, dat, C, beta, m_V, M, N, D, K, dat, num_thrd);
+	create_m_V(U, dat, C, beta, m_V, M, N, D, K, num_thrd);
 
 	// cov_V = alpha .* eye(K) + alpha_R .* U*U';           (K,K)
 	create_inv_cov_V(inv_cov_V, alpha_V, alpha_R, U, K, N, num_thrd);
 
 	/*      mu_V = alpha_R .* inv(cov_V) * m_V;                     (K,M)
-	   for j=1:M
-	   V(:,j) = mvnrnd(mu_V(:,j),inv(cov_V));
-	   end                                                             */
+		for j=1:M
+		V(:,j) = mvnrnd(mu_V(:,j),inv(cov_V));
+		end                                                             */
 	rand_V(V, m_V, inv_cov_V, alpha_R, K, M, num_thrd);
 
 	if (isnan(V[0]))

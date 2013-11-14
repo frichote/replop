@@ -1,5 +1,5 @@
 /*
-   NMF, file: io_geno_bituint.c
+   bituint, file: io_geno_bituint.c
    Copyright (C) 2013 François Mathieu, Eric Frichot
 
    This program is free software: you can redistribute it and/or modify
@@ -21,10 +21,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "io_geno_bituint.h"
+#include "bituint.h"
 #include "../io/io_error.h"
 #include "../io/io_tools.h"
 #include "../matrix/error.h"
 #include "../matrix/rand.h"
+ #include <errno.h>
 
 // read_geno_bituint
 
@@ -34,21 +36,17 @@ void read_geno_bituint(char *file_data, int N, int M, int Mp, int nc, bituint* d
 	int j = 0;
 	int max_char_per_line = 10*N;
 	char *szbuff = (char *) calloc(max_char_per_line, sizeof(char));
-	char *token;
 	int *I = (int *)calloc(N,sizeof(int));
 
 	// open file
 	m_File = fopen_read(file_data);
 
-	// first line
-	while(!feof(m_File) & (j<M)) {
+	// for each line
+	while(fgets(szbuff, max_char_per_line, m_File) && (j<M)) {
 		// fill current line
-		fill_line_geno_bituint(dat, Mp, N, j, nc, file_data, m_File, I);
+		fill_line_geno_bituint(dat, Mp, N, j, nc, file_data, szbuff, m_File, I);
 		j ++;
-		// next line
-		//token =fgets(szbuff,max_char_per_line,m_File);
 	}
-	token = fgets(szbuff,max_char_per_line,m_File);
 
 	// check the number of lines
 	test_line(file_data, m_File, j, M);
@@ -64,19 +62,19 @@ void read_geno_bituint(char *file_data, int N, int M, int Mp, int nc, bituint* d
 // fill_line_geno_bituint
 
 void fill_line_geno_bituint(bituint* dat, int Mp, int N, 
-	int j, int nc, char *file_data, FILE* m_File, int* I)
+	int j, int nc, char *file_data, char* szbuff, FILE *m_File, int* I)
 {
 	int i = 0, value;
 	char token;
-	int jd, jm, jc, c; // jc divided by SIZEUINT, jc modulo SIZEUINT, j case, case
+	int jd, jm, jc, c; 
 	double freq = 0.0; // frequency estimation
 	int count = 0; // missing data counter
 
 	// get first token
-	token = (char)fgetc(m_File);
+	token = (char)szbuff[i];
 
 	// for all token
-	while(token != EOF && token != 10 && i<N) {
+	while(token != EOF && token != '\n' && i<N) {
 		I[i] = 0;
 
 		// fill current column
@@ -88,8 +86,8 @@ void fill_line_geno_bituint(bituint* dat, int Mp, int N,
 				count++;
 				I[i] = 1;
 			} else {
-				printf("Error: your data file contains missing"
-				" data and you did not put the -m option.\n");
+				printf("Internal Error: your data file contains missing"
+				" data.\n");
 				exit(1);
 			}
 		} else { 
@@ -102,7 +100,7 @@ void fill_line_geno_bituint(bituint* dat, int Mp, int N,
 				freq += value;
 			// if unknown element >= nc
 			} else {
-				printf("Unknown element %d in data file: %s.\n",value,file_data);
+				printf("Error: Unknown element '%d' in data file: %s.\n",value,file_data);
 				exit(1);
 			}
 			jd = jc / SIZEUINT; // column in dat
@@ -111,7 +109,7 @@ void fill_line_geno_bituint(bituint* dat, int Mp, int N,
 		}
 		i++;
 		// next column
-		token = (char)fgetc(m_File);
+		token = (char)szbuff[i];
 	}
 	// check the number of columns
 	test_column(file_data, m_File, i, j+1, N, &token);
@@ -129,46 +127,63 @@ void fill_line_geno_bituint(bituint* dat, int Mp, int N,
 				}
 				jd = jc / SIZEUINT; // column in dat
 				jm = jc % SIZEUINT; // mask element
-				dat[i*Mp+jd] |= mask[jm];
+				dat[i * Mp + jd] |= mask[jm];
 			}
 		} 
 	}
 }
 
-// print_data_bituint (TO CHECK)
+// print_data_bituint 
 
-void print_data_bituint(bituint* dat, int n, int L, int Lc, int nc)
+void print_geno_bituint(bituint* dat, int N, int nc, int Mp, int M)
 {
-	int i, j, jd, jm, jc;
+	int i, j, jd, jm, jc, c;
 
-	for (i=0;i<n;i++) {
-		for (j=0;j<L;j++) {
-			jc = nc*j;
-			jd = jc / SIZEUINT;
-			jm = jc % SIZEUINT;
-			if (dat[i*Lc+jd] & mask[jm]) {
-				printf("0 ");
-			} else {
-				jc = (nc*j+1);
-				jd = jc / SIZEUINT;
-				jm = jc % SIZEUINT;
-				if (dat[i*Lc+jd] & mask[jm]) {
-					printf("1 ");
-				} else {
-					jc = (nc*j+2);
-					jd = jc / SIZEUINT;
-					jm = jc % SIZEUINT;
-					if (dat[i*Lc+jd] & mask[jm]) {
-						printf("2 ");
-					} else {
-						printf("ERROR print_data\n");
-						printf("%d %d %d %d %d \n",j,i,jc,jd,jm);
-						exit(1);
-					}
+	// for all SNPs
+	for (j = 0; j < M; j++) {
+		// for all individuals
+		for (i = 0; i < N; i++) {
+			for (c = 0; c < nc; c++) {
+                		jc = nc * j + c;
+                		jd = jc / SIZEUINT; // column in dat
+                		jm = jc % SIZEUINT; // mask element
+				if (dat[i * Mp + jd] & mask[jm]) {
+					printf("%d",c);
 				}
 			}
 		}
 		printf("\n");
 	}
+}
+
+// write_geno_bituint 
+
+void write_geno_bituint(char *file_data, int N, int nc, int Mp, int M, bituint *dat)
+{
+	int i, j, jd, jm, jc, c;
+        FILE *file = NULL;
+
+	// open file
+	file = fopen_write(file_data);
+
+	// write data
+	// for all SNPs
+        for (j = 0; j < M; j++) {
+		// for all individuals
+                for (i = 0; i < N; i++) {
+                	for (c = 0; c < nc; c++) {
+                        	jc = nc*j + c;
+                        	jd = jc / SIZEUINT; // column in dat
+                        	jm = jc % SIZEUINT; // mask element
+                                if (dat[i * Mp + jd] & mask[jm]) {
+                                        fprintf(file, "%d", c);
+                                }
+                        }
+                }
+                fprintf(file, "\n");
+        }
+
+	// close file
+	fclose(file);
 }
 

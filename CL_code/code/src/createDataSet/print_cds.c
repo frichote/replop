@@ -27,28 +27,30 @@ void print_help_cds()
 {
    printf("\nHELP: ./createDataSet options \n\n"
          "mandatory:\n"
-         "        -g input_file                 -- genotype file (in .geno format)\n\n"
+         "        -g input_file	        -- genotype file (in .geno format)\n\n"
 
          "optional:\n"
-         "        -h                            -- help\n"
-         "        -m ploidy                     -- 1 if haploid, 2 if diploid     (default: 2)\n"
-         "        -s seed                       -- seed random init		(default: random)\n"
-         "        -r percentage                 -- percentage of missing data     (default: 0.05)\n\n"
+         "        -h                    -- help\n"
+         "        -m ploidy             -- 1 if haploid, 2 if diploid   (default: 2)\n"
+         "        -s seed               -- seed random init	      (default: random)\n"
+         "        -r percentage         -- percentage of masked data    (default: 0.05)\n\n"
+         "        -o output_file        -- output file                  (default: input_file_I.geno)\n\n"
         );
 }
 
 // print_summary
 
-void print_summary_cds (int N, int M, int m, long long seed, double e, char *input) 
+void print_summary_cds (int N, int M, int m, long long seed, double e, char *input, char *output) 
 {
 
            printf("summary of the options:\n\n"
                 "        -n (number of individuals)                 %d\n"  
                 "        -L (number of loci)                        %d\n"
                 "        -s (seed random init)                      %lu\n"
-                "        -r (percentage of missing data)            %G\n"
+                "        -r (percentage of masked data)             %G\n"
                 "        -g (genotype file)                         %s\n"
-                , N, M, (unsigned long)seed, e, input);
+                "        -o (output file)                           %s\n"
+                , N, M, (unsigned long)seed, e, input, output);
 
         if (m == 1)
                 printf("        - haploid\n\n");

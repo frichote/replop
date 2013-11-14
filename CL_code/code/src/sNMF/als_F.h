@@ -23,6 +23,7 @@
  * @param Mp 	number of columns of X
  * @param K 	number of clusters
  * @param num_thrd 	number of threads used
+ * @param mem	previously allocated memory
  */
 void update_F(double *F, double *Q, bituint *X, int N, int M, int nc, int Mp, 
 	int K, int num_thrd, Memory mem);
@@ -39,6 +40,7 @@ void update_F(double *F, double *Q, bituint *X, int N, int M, int nc, int Mp,
  * @param Mp 	number of columns of X
  * @param K 	number of clusters
  * @param num_thrd 	number of threads used
+ * @param mem	previously allocated memory
  */
 double update_nnlsm_F(double *F, double *Q, bituint *X, int N, int M, int nc, 
 	int Mp, int K, int num_thrd, Memory mem);

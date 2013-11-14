@@ -45,6 +45,7 @@ void slice_F_TF(void *G)
         int to = ((s + 1) * nb_data) / num_thrd;        // even if SIZE is not divisible by num_thrd
         int j, k1, k2;
 
+	// F t(F)	
         for (k1 = from; k1 < to; k1++) {
         	for (j = 0; j < Mc; j++) {
                         for (k2 = 0; k2 < K; k2++) {
@@ -78,6 +79,7 @@ void slice_F_TX(void *G)
         int jd, jm, i, k1;
 	bituint value;
 
+	// F t(X)
         for (i = from; i < to; i++) {
 		for (jd = 0; jd<Md; jd++) {
                         value = X[i*Mp+jd];

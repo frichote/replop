@@ -1,5 +1,12 @@
 \begin{thebibliography}{1}
 
+\bibitem{Frichot_2013}
+Eric Frichot, Fran\c{c}ois Mathieu, Th\'{e}o Trouillon, Guillaume Bouchard, and
+  Olivier Fran\c{c}ois.
+\newblock Fast inference of admixture coefficients using sparse non-negative
+  matrix factorization algorithms.
+\newblock {\em Submitted}.
+
 \bibitem{Patterson_2012}
 Nick~J. Patterson, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland,
   Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich.

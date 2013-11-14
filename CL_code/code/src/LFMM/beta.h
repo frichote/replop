@@ -22,11 +22,10 @@
  * @param N	the number of covariables
  * @param D	the number of individuals
  * @param K	the number of latent factors
- * @param datb	the data set
  * @param num_thrd	the number of processes used
  */
 void create_m_beta(double *C, float *R, double *U, double *V, double *m_beta,
-		   int M, int N, int D, int K, float *datb, int num_thrd);
+		   int M, int N, int D, int K, int num_thrd);
 
 /**
  * compute the C'*C in tmp

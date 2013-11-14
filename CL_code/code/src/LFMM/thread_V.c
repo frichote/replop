@@ -41,7 +41,6 @@ void slice_mV_V(void *G)
 	int M = Ma->M;
 	int K = Ma->K;
 	int D = Ma->D;
-	double *tmp_i = (double *)malloc(M * sizeof(double));
 	int nb_data = M;
 	int s = Ma->slice;
 	int num_thrd = Ma->num_thrd;
@@ -49,6 +48,10 @@ void slice_mV_V(void *G)
 	int to = ((s + 1) * nb_data) / num_thrd;	// even if SIZE is not divisible by num_thrd
 	int i, j, k, d;
 
+	// allocate memory
+	double *tmp_i = (double *)malloc(M * sizeof(double));
+
+	// init m_V
 	for (k = 0; k < K; k++) {
 		for (j = from; j < to; j++) {
 			m_V[k * M + j] = 0;
@@ -56,19 +59,21 @@ void slice_mV_V(void *G)
 	}
 
 	for (i = 0; i < N; i++) {
+		// calculate tmp_i = R - C * B
 		for (j = from; j < to; j++)
 			tmp_i[j] = (double)(R[i * M + j]);
 		for (d = 0; d < D; d++) {
 			for (j = from; j < to; j++)
 				tmp_i[j] -= C[i * D + d] * beta[d * M + j];
 		}
+                // calculate U * tmp_i
 		for (k = 0; k < K; k++) {
 			for (j = from; j < to; j++)
 				m_V[k * M + j] += U[k * N + i] * tmp_i[j];
 		}
 	}
 
-	//}
+	// free memory
 	free(tmp_i);
 }
 
@@ -90,9 +95,12 @@ void slice_rand_V(void *G)
 	int from = (s * nb_data) / num_thrd;	// note that this 'slicing' works fine
 	int to = ((s + 1) * nb_data) / num_thrd;	// even if SIZE is not divisible by num_thrd
 	int j, k, kp;
+
+	// allocate memory
 	double *mu = (double *)calloc(K, sizeof(double));
 	double *y = (double *)calloc(K, sizeof(double));
 
+        // inv_cov_V %*% m_V
 	for (j = from; j < to; j++) {
 		for (k = 0; k < K; k++) {
 			mu[k] = 0;
@@ -100,12 +108,16 @@ void slice_rand_V(void *G)
 				mu[k] +=
 				    inv_cov_V[k * K + kp] * m_V[kp * M + j];
 			}
+			// times alpha_R
 			mu[k] *= alpha_R;
 		}
+		// rand V
 		mvn_rand(mu, L, K, y);
 		for (k = 0; k < K; k++)
 			V[k * M + j] = y[k];
 	}
+
+	// free memory
 	free(mu);
 	free(y);
 }
@@ -130,6 +142,7 @@ void slice_inv_cov_V(void *G)
 
 	for (k1 = from; k1 < to; k1++) {
 		for (k2 = 0; k2 < K; k2++) {
+                        // alpha_R * U %*% t(U) - diag(alpha)
 			inv_cov_V[k1 * K + k2] = 0;
 			for (i = 0; i < N; i++)
 				inv_cov_V[k1 * K + k2] +=
@@ -137,6 +150,5 @@ void slice_inv_cov_V(void *G)
 			inv_cov_V[k1 * K + k2] *= alpha_R;
 		}
 		inv_cov_V[k1 * K + k1] += alpha;
-
 	}
 }

@@ -300,6 +300,7 @@ void LFMMGUI::ped2lfmm(const QString &inFile,
                 for (int i = 0; i<L; i++)
                 {
 			int tmp = 0;
+			
 			if (!QString(ref[i]).compare("0")) {
 				if (!oneRowList[6+i*2].compare("0") 
 					&& !oneRowList[6+i*2 + 1].compare("0"))
@@ -307,7 +308,7 @@ void LFMMGUI::ped2lfmm(const QString &inFile,
 				else if (oneRowList[6+i*2].compare("0") 
 					&& !oneRowList[6+i*2 + 1].compare("0")) {
 					ref[i] = oneRowList[6+i*2].at(0).toLatin1();
-					tmp = 1;
+					tmp = 9;
 				} else if (!oneRowList[6+i*2].compare("0") 
 					&& !oneRowList[6+i*2 + 1].compare("0")) {
 					ref[i] = oneRowList[6+i*2+1].at(0).toLatin1();
@@ -319,10 +320,15 @@ void LFMMGUI::ped2lfmm(const QString &inFile,
 						tmp ++;
 				}
 			} else {
-				if (!QString(ref[i]).compare(oneRowList[6+i*2]))
-					tmp ++;
-				if (!QString(ref[i]).compare(oneRowList[6+i*2+1]))
-					tmp ++;
+				if (!oneRowList[6+i*2].compare("0") 
+					|| !oneRowList[6+i*2 + 1].compare("0"))
+					tmp = 9;
+				else {	
+					if (!QString(ref[i]).compare(oneRowList[6+i*2]))
+						tmp ++;
+					if (!QString(ref[i]).compare(oneRowList[6+i*2+1]))
+						tmp ++;
+				}
 			}
    	       		res.append(tmp);
 		}

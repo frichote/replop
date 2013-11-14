@@ -3,8 +3,8 @@
 # parameters
 prog="Replop"
 dir="Replop_v$1"
-src_list="io lapack matrix LFMM bituint createDataSet crossEntropy nnlsm sNMF pca spfa thread"
-main_list="LFMM createDataSet crossEntropy sNMF"
+src_list="io lapack matrix LFMM bituint convert createDataSet crossEntropy nnlsm sNMF pca spfa thread"
+main_list="LFMM createDataSet crossEntropy sNMF ancestrymap2geno ancestrymap2lfmm geno2lfmm lfmm2geno pca ped2geno ped2lfmm vcf2geno"
 
 # color definition
 VERT="\\033[1;32m" NORMAL="\\033[0;39m" ROUGE="\\033[1;31m" JAUNE="\\033[1;33m"
@@ -29,11 +29,11 @@ for i in $src_list; do
 	cp -r ../../../code/src/$i/ src/ 
 done
 
-for i in $main_list; do 
-	echo "\t\tCopy of $i in $dir"
-	cp ../../../code/src/$i.c src/R_$i.c 
-	sed -i s/"int main"/"#include \"R_$i.h\" \n\nint main_$i"/g src/R_$i.c
-done
+#for i in $main_list; do 
+#	echo "\t\tCopy of $i in $dir"
+#	cp ../../../code/src/$i.c src/R_$i.c 
+#	sed -i s/"int main"/"#include \"R_$i.h\" \n\nint main_$i"/g src/R_$i.c
+#done
 
 # README
 echo "$JAUNE" "\tWARNING: Do not FORGET to update the README files !!!"

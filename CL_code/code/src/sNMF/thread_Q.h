@@ -2,7 +2,7 @@
  * @file thread_Q.h
  *
  * @brief multithreaded part of the functions to compute 
- * 	  new values of F
+ * 	  new values of Q
  */
 
 #ifndef THREAD_Q_H

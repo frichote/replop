@@ -21,12 +21,12 @@
  * @param input	the input file
  * @param cov_file	the covariable file
  * @param dev_file	the file with deviance and DIC
- * @param g_data	the generative data file
- * @param g_cov	the generative covariable file
  * @param num_thrd	the number of processes used
+ * @param s		seed value
+ * @param all		boolean, true if all covariables at the same time
  */
 void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int *burn,
 		   int *m, char *output, char *input, char *cov_file, char *dev_file,
-		   int *g_data, int *g_cov, int *num_thrd, long long *s);
+		   int *num_thrd, long long *s, int *all);
 
 #endif // REGISTER_LFMM_H

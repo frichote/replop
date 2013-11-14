@@ -28,7 +28,6 @@
 #include "../matrix/inverse.h"
 #include "../matrix/normalize.h"
 #include "../io/print_bar.h"
-#include "data_snmf.h"
 #include "als_Q.h"
 #include "../bituint/bituint.h"
 
@@ -49,18 +48,24 @@ void update_F(double *F, double *Q, bituint *X, int N, int M, int nc, int Mp, in
 	int Mc = nc*M;
 	int Md = Mc / SIZEUINT; 
 	int Mm = Mc % SIZEUINT;
-	int jm;
+	int jm, jd;
 	bituint value;
 
 	//computation of transpose(Q)*Q					(N K2)
 	zeros(temp1,K*K);
 	for (i = 0; i < N; i++) {
 		for (k1 = 0; k1 < K; k1++) {
-			for (k2 = 0; k2 < K; k2++) {
+			for (k2 = 0; k2 <= k1; k2++) {
 				temp1[k1*K+k2] += Q[i*K+k1] * Q[i*K+k2];
 			}
 		}
 	}
+
+	for (k1 = 0; k1 < K; k1++) 
+		for (k2 = 0; k2 < k1; k2++)
+			temp1[k2 * K + k1] = temp1[k1 * K + k2];
+
+	
 
 	//computation of inverse(transpose(Q)*Q)			()
 	fast_inverse(temp1, K, temp2);
@@ -79,23 +84,30 @@ void update_F(double *F, double *Q, bituint *X, int N, int M, int nc, int Mp, in
 	zeros(F,K*Mc);
 
 #ifndef WIN32
-	thread_fct_snmf(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_temp3_X);
-#else 
+        // multi-threaded non windows version
+	if (num_thrd > 1) {
+		thread_fct_snmf(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_temp3_X);
+	} else {
 #endif
-	/*
-	for (jd = 0; jd<Md; jd++) {
-		for (i = 0; i < N; i++) {
-			value = X[i*Mp+jd];
-			for (jm = 0; jm<SIZEUINT; jm++) {
-				if (value % 2) {
-					for (k1 = 0; k1 < K; k1++) 
-						F[(jd*SIZEUINT+jm)*K+k1] += temp3[k1*N+i];
+                // uni-threaded or windows version
+                // TODO: check time
+                // allocate memory 
+		for (jd = 0; jd<Md; jd++) {
+			for (i = 0; i < N; i++) {
+				value = X[i*Mp+jd];
+				for (jm = 0; jm<SIZEUINT; jm++) {
+					if (value % 2) {
+						for (k1 = 0; k1 < K; k1++)
+							F[(jd*SIZEUINT+jm)*K+k1] += temp3[k1*N+i];
+					}
+					value >>= 1;
 				}
-				value >>= 1;
 			}
 		}
+#ifndef WIN32
 	}
-	*/
+#endif
+	// last line
 	for (i = 0; i < N; i++) {
 		value = X[i*Mp+Md];
 		for (jm = 0; jm<Mm; jm++) {
@@ -187,8 +199,10 @@ void normalize_F(double *F, int M, int nc, int K)
 			sum = 0.0;
 			for(c = 0; c < nc; c++) 
 				sum += F[(nc*j+c)*K+k];
-			for(c = 0; c < nc; c++) 
-				F[(nc*j+c)*K+k]/= sum;
+			if (sum) {
+				for(c = 0; c < nc; c++) 
+					F[(nc*j+c)*K+k]/= sum;
+			}
 		}
 	}
 }

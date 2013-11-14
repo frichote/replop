@@ -33,17 +33,20 @@ void print_help_snmf();
  *
  * @param N     the number of individuals
  * @param M     the number of loci
- * @param K     the number of latent factors
- * @param Niter the number of iterations in the GS
- * @param epsilon	the number of burnin iterations
  * @param m     boolean param, true if missing values
- * @param num_thrd      number of processes in parallel in the GS
- * @param output        output file
+ * @param seed	seed random init
+ * @param K     the number of latent factors
+ * @param alpha	regularization parameter
+ * @param tol 	tolerance parameter
+ * @param maxiter	maximum number of iterations
  * @param input         genotype file
- * @param g_data	????
- * @param gen_data	????
+ * @param num_thread    number of processes
+ * @param e	percentage of masked genotypes
+ * @param output_Q	output individual admixture file
+ * @param output_F	output ancestral frequencies file
  */
 void print_summary_snmf (     int N, int M, int m, long long seed, int K, double alpha,
-                        double tol, int maxiter, char *input, int num_thread);
+                        double tol, int maxiter, char *input, int num_thread, double e,
+			char *output_Q, char *output_F);
 
 #endif // PRINT_SNMF_H

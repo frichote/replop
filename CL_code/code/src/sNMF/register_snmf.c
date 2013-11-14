@@ -24,17 +24,23 @@
 #include "register_snmf.h"
 #include "print_snmf.h"
 #include "error_nmf.h"
+#include "../io/io_tools.h"
 
 // analyse_param_snmf
 
 void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
-			int* K, double* alpha, double* tol,
-			int *iter, char *input, int* num_thrd) 
+			int* K, double* alpha, double* tol, double *e,
+			int *iter, char *input, int* num_thrd,
+			char* output_Q, char* output_F) 
 {
-        	int i;
-		int g_data = -1;
+      	int i;
+	int g_data = -1;
+	char *tmp_file;
+	char tmp[512];
+	int g_c = 0;
+	int g_m = 0;
 
-	    for (i = 1; i < argc; i++) {
+    	for (i = 1; i < argc; i++) {
                 if (argv[i][0] == '-') {
                         switch (argv[i][1]) {
                         case 'K':
@@ -42,6 +48,7 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
                                 if (argc == i || argv[i][0] == '-')
 					print_error_nmf("cmd","K (number of clusters)",0);
                                 *K = atoi(argv[i]);
+                                strcpy(tmp,argv[i]);
                                 break;
                         case 's':
                                 i++;
@@ -54,11 +61,12 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
                                 if (argc == i || argv[i][0] == '-')
 					print_error_nmf("cmd","m (number of alleles)",0);
                                 *m = atoi(argv[i]);
+				g_m = 1;
                                 break;
 			case 'a':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-					print_error_nmf("cmd","alpha (parameter of the algorithm)",0);
+					print_error_nmf("cmd","alpha (regularization parameter)",0);
                                 *alpha = (double) atof(argv[i]);
 				if (*alpha < 0) {
 					*alpha = 0;
@@ -81,6 +89,16 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
 					*tol = 0;
 				}
                                 break;
+			case 'c':
+                                i++;
+                                if (argc == i || argv[i][0] == '-') {
+					*e = 0.05;
+					i--;
+				} else  {
+                                	*e = (double) atof(argv[i]);
+				}
+				g_c = 1;
+                                break;
 			case 'i':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
@@ -93,6 +111,18 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
 					print_error_nmf("cmd","g (genotype file)",0);
                                 g_data = 0;
                                 strcpy(input,argv[i]);
+                                break;
+                        case 'q':
+                                i++;
+                                if (argc == i || argv[i][0] == '-')
+                                        print_error_nmf("cmd","q (individual admixture coefficients file)",0);
+                                strcpy(output_Q,argv[i]);
+                                break;
+                        case 'f':
+                                i++;
+                                if (argc == i || argv[i][0] == '-')
+                                        print_error_nmf("cmd","f (ancestral genotype frequencies file)",0);
+                                strcpy(output_F,argv[i]);
                                 break;
 			case 'p':
                                 i++;
@@ -110,8 +140,35 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
         if (g_data == -1)
 		print_error_nmf("option","-g genotype_file",0);
 
-        if (*K == 0)
+        if (*K <= 0)
 		print_error_nmf("missing",NULL,0);
 
+        if (*num_thrd <= 0)
+		print_error_nmf("missing",NULL,0);
+
+        if (g_m && *m <= 0)
+		print_error_nmf("missing",NULL,0);
+
+        if (*iter <= 0)
+		print_error_nmf("missing",NULL,0);
+
+        if (g_c && (*e <= 0 || *e >= 1))
+                print_error_nmf("missing","",0);
+
+        // write output file name
+        tmp_file = remove_ext(input,'.','/');
+	if (!strcmp(output_Q,"")) {
+                strcpy(output_Q,tmp_file);
+                strcat(output_Q,".");
+                strcat(output_Q,tmp);
+                strcat(output_Q,".Q");
+	}
+	if (!strcmp(output_F,"")) {
+                strcpy(output_F,tmp_file);
+                strcat(output_F,".");
+                strcat(output_F,tmp);
+                strcat(output_F,".F");
+	}
+        free(tmp_file);
 }
 

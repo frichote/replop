@@ -28,13 +28,13 @@
 #include "../matrix/inverse.h"
 #include "../matrix/normalize.h"
 #include "../io/print_bar.h"
-#include "data_snmf.h"
 #include "../bituint/bituint.h"
 
 #ifndef WIN32
-	#include "thread_F.h"
+	#include "thread_Q.h"
 	#include "thread_snmf.h"
 #endif
+
 // udpate_Q (not used) TODO
 
 void update_Q(double *Q, double *F, bituint *X, int N, int M, int nc, int Mp, 
@@ -52,7 +52,7 @@ void update_Q(double *Q, double *F, bituint *X, int N, int M, int nc, int Mp,
 	bituint value;
 
 	zeros(F,Mc*K);
-	//computation of F*t(F)
+	//computation of t(F)*F
 	for (j = 0; j < Mc; j++) {
 		for (k1 = 0; k1 < K; k1++) {
 			for (k2 = 0; k2 < K; k2++) {
@@ -62,10 +62,10 @@ void update_Q(double *Q, double *F, bituint *X, int N, int M, int nc, int Mp,
 		}
 	}
 
-	//inverse of F*t(F)
+	//inverse of t(F)*F
 	fast_inverse(temp1, K, temp2);
 
-	// F*t(X)							(M N K)
+	// t(F)*t(X)							(M N K)
 	zeros(temp3,K*N);
 
 	/*
@@ -121,77 +121,19 @@ void update_Q(double *Q, double *F, bituint *X, int N, int M, int nc, int Mp,
 double update_nnlsm_Q(double *Q, double *F, bituint *X, int N, int M, int nc, 
 		int Mp, int K, double alpha, Memory mem, int num_thrd) {
 
-	int i, j, k1, k2, k;
+	int i, j, k;
 
 	double* temp1 = mem->temp1;
 	double* tempQ = mem->tempQ;
 	double* temp3 = mem->temp3;
 	double* Y = mem->Y;
 	double res;
-	int Mc = nc*M;
-	int Md = Mc / SIZEUINT;
-	int Mm = Mc % SIZEUINT;
-	int jd, jm;
-	bituint value;
 
+	// compute F t(F) + alpha
+	F_tF_alpha(temp1, F, nc, K, M, Mp, N, num_thrd, alpha);
 
-	// F*t(F)							(M K2)
-	zeros(temp1,K*K);
-
-	if (num_thrd > 1) {
-		thread_fct_snmf(X, temp1, NULL, F, nc, K, M, Mp, N, num_thrd, slice_F_TF);
-	} else {
-		for (j = 0; j < Mc; j++) {
-			for (k1 = 0; k1 < K; k1++) {
-				for (k2 = 0; k2 < K; k2++) {
-					temp1[k1*K+k2] += F[j*K+k1] * F[j*K+k2];
-				}
-			}
-		}
-	}
-
-	if (alpha) {
-		for (k1 = 0; k1 < K; k1++) {
-			for (k2 = 0; k2 < K; k2++) {
-				temp1[k1*K+k2] += alpha;
-			}
-		}
-	}
-	// F*t(X)							(M N K)
-	zeros(temp3,K*N);
-
-#ifndef WIN32
-	if (num_thrd > 1) {
-		thread_fct_snmf(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_F_TX);
-	} else {
-#else
-		for (jd = 0; jd<Md; jd++) {
-			for (i = 0; i < N; i++) {
-				value = X[i*Mp+jd];
-				for (jm = 0; jm<SIZEUINT; jm++) {
-					if (value % 2) {
-						for (k1 = 0; k1 < K; k1++) 
-							temp3[k1*N+i] += F[(jd*SIZEUINT+jm)*K+k1];
-					}
-					value >>= 1;
-				}
-			}
-		}
-#endif
-#ifndef WIN32
-	}
-#else
-
-	for (i = 0; i < N; i++) {
-		value = X[i*Mp+Md];
-		for (jm = 0; jm<Mm; jm++) {
-			if (value % 2) {
-				for (k1 = 0; k1 < K; k1++) 
-					temp3[k1*N+i] += F[(Md*SIZEUINT+jm)*K+k1];
-			}
-			value >>= 1;
-		}
-	}
+	// compute t(F) X
+	tF_tX(temp3, X, F, nc, K, M, Mp, N, num_thrd);
 
 	// solve Q
 	nnlsm_blockpivot(temp1,temp3,N,K,tempQ,Y,mem);
@@ -210,24 +152,6 @@ double update_nnlsm_Q(double *Q, double *F, bituint *X, int N, int M, int nc,
 	return res;
 }
 
-// diff_rel
-
-double diff_rel(double *Q_prec, double *Q, int n)
-{
-	double mean = 0.0;
-	double max = 0.0;
-	int i;
-
-	for (i = 0; i < n; i++) {
-		if (fabs(Q_prec[i]) >= 0.000001) {
-			mean += fabs(Q_prec[i]-Q[i])/fabs(Q_prec[i]);
-			max = fmax(max,fabs(Q_prec[i]-Q[i])/fabs(Q_prec[i]));
-		}
-		Q_prec[i] = Q[i];
-	}
-
-	return mean/n;
-}
 
 // normalize_Q
 
@@ -235,3 +159,87 @@ void normalize_Q(double *Q, int N, int K)
 {
 	normalize_lines(Q, N, K);
 }
+
+// tF_F_alpha
+
+void F_tF_alpha(double *temp1, double *F, int nc, int K, int M, int Mp, int N,
+	int num_thrd, double alpha) 
+{
+	int Mc = nc*M;
+	int j, k1, k2;
+
+	// t(F)*F							(M K2)
+	zeros(temp1,K*K);
+
+#ifndef WIN32
+	if (num_thrd > 1) {
+		thread_fct_snmf(NULL, temp1, NULL, F, nc, K, M, Mp, N, num_thrd, slice_F_TF);
+	} else {
+#endif
+		for (j = 0; j < Mc; j++) {
+			for (k1 = 0; k1 < K; k1++) {
+				for (k2 = 0; k2 < K; k2++) {
+					temp1[k1*K+k2] += F[j*K+k1] * F[j*K+k2];
+				}
+			}
+		}
+#ifndef WIN32
+	}
+#endif
+
+	if (alpha) {
+		for (k1 = 0; k1 < K; k1++) {
+			for (k2 = 0; k2 < K; k2++) {
+				temp1[k1*K+k2] += alpha;
+			}
+		}
+	}
+}
+
+// tF_tX
+
+void tF_tX(double *temp3, bituint *X, double *F, int nc, int K, int M, int Mp, 
+	int N, int num_thrd)
+{
+        int Mc = nc*M;
+        int Md = Mc / SIZEUINT;
+        int Mm = Mc % SIZEUINT;
+        int i, k1, jd, jm;
+        bituint value;
+
+        // F*t(X)                                                       (M N K)
+        zeros(temp3,K*N);
+
+#ifndef WIN32
+        if (num_thrd > 1) {
+                thread_fct_snmf(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_F_TX);
+        } else {
+#endif
+                for (jd = 0; jd<Md; jd++) {
+                        for (i = 0; i < N; i++) {
+                                value = X[i*Mp+jd];
+                                for (jm = 0; jm<SIZEUINT; jm++) {
+                                        if (value % 2) {
+                                                for (k1 = 0; k1 < K; k1++)
+                                                        temp3[k1*N+i] += F[(jd*SIZEUINT+jm)*K+k1];
+                                        }
+                                        value >>= 1;
+                                }
+                        }
+                }
+#ifndef WIN32
+        }
+#endif
+
+        for (i = 0; i < N; i++) {
+                value = X[i*Mp+Md];
+                for (jm = 0; jm<Mm; jm++) {
+                        if (value % 2) {
+                                for (k1 = 0; k1 < K; k1++)
+                                        temp3[k1*N+i] += F[(Md*SIZEUINT+jm)*K+k1];
+                        }
+                        value >>= 1;
+                }
+        }
+}
+

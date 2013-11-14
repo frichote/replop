@@ -28,7 +28,6 @@
 #include "../matrix/inverse.h"
 #include "../matrix/normalize.h"
 #include "../io/print_bar.h"
-#include "data_snmf.h"
 #include "als_Q.h"
 #include "als_F.h"
 #include "../bituint/bituint.h"
@@ -56,7 +55,7 @@ void ALS(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp, int K,
 		// update F
 		update_F(F, Q, X, N, M, nc, Mp, K, num_thrd, mem);
 		normalize_F(F,M,nc, K);
-
+		// check numerical issues
 		if (isnan(F[0])) {
 			printf("ALS: Internal Error, F is NaN.\n");
 			exit(1);
@@ -68,7 +67,7 @@ void ALS(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp, int K,
 		// update_Q(Q, F, X, N, M, nc, Mp, K, alpha,
 		//		mem);
 		normalize_Q(Q,N,K);
-
+		// check numerical issues
 		if (isnan(Q[0])) {
 			printf("ALS: Internal Error, Q is NaN.\n");
 			exit(1);
@@ -80,7 +79,8 @@ void ALS(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp, int K,
 		}
 		prec2 = sum2;
 	}
-	printf("\n\nNumber of iterations: %d",k);
+	final_bar();
+	printf("\nNumber of iterations: %d",k);
 	normalize_F(F,M,nc, K);
 
 	// to avoid numerical issues
@@ -102,6 +102,7 @@ void ALS(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp, int K,
 		}
 	}
 
+	// free memory
 	free_memory(mem);
 	free(mem);
 }

@@ -41,7 +41,7 @@ void slice_temp3_X(void *G)
 	int nc = Ma->nc;
 	int Mc = nc*M;
 	int Md = Mc / SIZEUINT;
-	int nb_data = Md + 1;
+	int nb_data = Md;
 
 	int s = Ma->slice;
 	int num_thrd = Ma->num_thrd;
@@ -50,18 +50,18 @@ void slice_temp3_X(void *G)
 	int i, jd, jm, k1;
 	bituint value;
 
-        // F = temp3*X                                                  (M N K)
-        for (jd = from; jd<to; jd++) {
-                for (i = 0; i < N; i++) {
-                        value = X[i*Mp+jd];
-                        for (jm = 0; jm<SIZEUINT; jm++) {
-                                if (value % 2) {
-                                        for (k1 = 0; k1 < K; k1++)
-                                                F[(jd*SIZEUINT+jm)*K+k1] += temp3[k1*N+i];
-                                }
-                                value >>= 1;
-                        }
-                }
-        }
+	// F = temp3*X                                                  (M N K)
+	for (jd = from; jd<to; jd++) {
+		for (i = 0; i < N; i++) {
+			value = X[i*Mp+jd];
+			for (jm = 0; jm<SIZEUINT; jm++) {
+				if (value % 2) {
+					for (k1 = 0; k1 < K; k1++)
+						F[(jd*SIZEUINT+jm)*K+k1] += temp3[k1*N+i];
+				}
+				value >>= 1;
+			}
+		}
+	}
 }
 

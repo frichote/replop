@@ -1,5 +1,5 @@
 /*
-   NMF, file: io_geno_bituint.c
+   convert, file: geno2lfmm.c
    Copyright (C) 2013 François Mathieu, Eric Frichot
 
    This program is free software: you can redistribute it and/or modify
@@ -35,6 +35,7 @@ void geno2lfmm (char *input_file, char* output_file, int *N, int *M)
 	*N = nb_cols_geno(input_file);
 	*M = nb_lines(input_file, *N);
 
+	// memory allocation
 	data = (int *)malloc((*N)*(*M)*sizeof(int));
 
 	// read in geno format
@@ -43,6 +44,7 @@ void geno2lfmm (char *input_file, char* output_file, int *N, int *M)
 	// write in lfmm format
 	write_data_int(output_file, *N, *M, data);
 
+	// free memory
 	free(data);
 }
 

@@ -49,7 +49,7 @@ void slice_mbeta_beta(void *G)
 	int i, j, k, d;
 
 	// allocate memory
-	double *tmp_i = (double *)malloc(M * sizeof(double));
+	double *tmp_i = (double *) malloc(M * sizeof(double));
 	// init m_beta
 	for (d = 0; d < D; d++) {
 		for (j = from; j < to; j++) {

@@ -24,7 +24,6 @@
 #include "bituint.h"
 #include "../io/io_error.h"
 #include "../io/io_tools.h"
-#include "../matrix/error.h"
 #include "../matrix/rand.h"
  #include <errno.h>
 

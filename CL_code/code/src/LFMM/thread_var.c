@@ -39,7 +39,7 @@ void thrd_var(float *R, double *U, double *V, double *C,
 
 	/* this for loop not entered if threadd number is specified as 1 */
 	for (i = 1; i < num_thrd; i++) {
-		Ma[i] = (Mat) malloc(sizeof(mat));
+		Ma[i] = (Mat) malloc(1 * sizeof(mat));
 		Ma[i]->R = R;
 		Ma[i]->U = U;
 		Ma[i]->V = V;
@@ -59,14 +59,14 @@ void thrd_var(float *R, double *U, double *V, double *C,
 		    (&thread[i], NULL, (void *)fct, (void *)Ma[i])) {
 			perror("Can't create thread");
 			free(thread);
-			exit(-1);
+			exit(1);
 		}
 	}
 
 	/* main thread works on slice 0
 	 *          so everybody is busy
 	 *                   main thread does everything if threadd number is specified as 1*/
-	Ma[0] = (Mat) malloc(sizeof(mat));
+	Ma[0] = (Mat) malloc(1 * sizeof(mat));
 	Ma[0]->R = R;
 	Ma[0]->U = U;
 	Ma[0]->V = V;

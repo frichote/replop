@@ -1,0 +1,18 @@
+
+ERROR: the following option is mandatory: -g (genotype_file).
+
+
+HELP: ./crossEntropy options 
+
+mandatory:
+        -g genotype_file	-- genotype file (in .geno format)
+        -K K                  -- number K of ancestral populations
+
+optional:
+        -h                    -- help
+        -m ploidy             -- 1 if haploid, 2 if diploid     (default: 2)
+        -q input_file_I.Q     -- individual admixture coefficients (default: genotype_file_I.K.Q)
+        -f input_file_I.F     -- ancestral genotype frequencies (default: genotype_file_I.K.F)
+        -i input_file_I.geno  -- genotype file with masked genotypes (default: genotype_file_I.geno)
+
+

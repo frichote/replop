@@ -26,7 +26,7 @@
 
 Memory allocate_memory(int N, int K)
 {
-	Memory mem = (Memory)malloc(sizeof(memory));
+	Memory mem = (Memory) malloc(1 * sizeof(memory));
 
 	mem->P = (int *)calloc(N,sizeof(int));
 	mem->Ninf = (int *)calloc(N,sizeof(int));

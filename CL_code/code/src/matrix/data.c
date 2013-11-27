@@ -21,7 +21,7 @@
 #include <string.h>
 #include <math.h>
 #include "data.h"
-#include "error.h"
+#include "error_matrix.h"
 #include "rand.h"
 
 // zeros

@@ -1,0 +1,23 @@
+
+ERROR: no value for b (burn parameter in the GS).
+
+
+HELP: ./LFMM options 
+
+mandatory:
+	-g genotype_file   	-- genotype file (in .lfmm format)
+        -v variable_file     	-- variable file (in .env format)
+        -K K 			-- K number of latent factors
+optional:
+        -d d 			-- d, the dth covariables 	(default: all separately)
+        -a 			-- all covariables at the same time
+        -o output_file 		-- output file with z-scores 	(default: genotype_file.zscore)
+        -m			-- missing data			(default: no)
+        -p p			-- number of processes (CPU)	(default: 1)
+        -i Niter             	-- number of iterations in the GS (default: 1000)
+        -b burn         	-- burnin parameter in the GS   (default: 200)
+        -s seed         	-- seed random init		(default: random)
+        -C dic_file         	-- DIC file			(default: genotype_file.dic
+        -h              	-- help
+
+

@@ -22,7 +22,7 @@
 #include "io_data_int.h"
 #include "io_error.h"
 #include "io_tools.h"
-#include "../matrix/error.h"
+#include "../matrix/error_matrix.h"
 
 // read_data_int
 
@@ -36,7 +36,7 @@ void read_data_int(char *file_data, int N, int M, int *dat)
         char *token;
 
 	// allocate memory
-	szbuff = (char *)malloc(sizeof(char) * max_char_per_line);
+	szbuff = (char *) malloc(max_char_per_line * sizeof(char));
 
 	// open file
         m_File = fopen_read(file_data);

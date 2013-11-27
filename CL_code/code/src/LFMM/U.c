@@ -50,7 +50,7 @@ void create_m_U(double *V, float *R, double *C, double *beta, double *m_U,
                 // uni-threaded or windows version
                 // TODO: check time
                 // allocate memory 
-		tmp_i = (double *)malloc(M * sizeof(double));
+		tmp_i = (double *) malloc(M * sizeof(double));
 
 
 		for (i = 0; i < N; i++) {

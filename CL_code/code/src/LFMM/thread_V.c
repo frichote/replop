@@ -49,7 +49,7 @@ void slice_mV_V(void *G)
 	int i, j, k, d;
 
 	// allocate memory
-	double *tmp_i = (double *)malloc(M * sizeof(double));
+	double *tmp_i = (double *) malloc(M * sizeof(double));
 
 	// init m_V
 	for (k = 0; k < K; k++) {

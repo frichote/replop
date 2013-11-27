@@ -1,0 +1,47 @@
+sNMF Copyright (C) 2013 François Mathieu, Eric Frichot
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+sNMF  Copyright (C) 2013 François Mathieu, Eric Frichot
+This program comes with ABSOLUTELY NO WARRANTY; for details type './sNMF -l'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; type './sNMF -l' for details.
+
+sNMF  Copyright (C) 2013 François Mathieu, Eric Frichot
+This program comes with ABSOLUTELY NO WARRANTY; for details type './sNMF -l'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; type './sNMF -l' for details.
+
+****                      sNMF Version 0.1                                     *****
+****   E. Frichot , F. Mathieu, T. Trouillon, G. Bouchard, O. Francois         *****
+****                    Please cite our paper !                                *****
+****   Information at http://membres-timc.imag.fr/Olivier.Francois/snmf.html   *****
+
+
+HELP: ./sNMF options 
+
+mandatory:
+        -g genotype_file	-- genotype file (in .geno format)
+        -K K                  -- number K of ancestral populations
+
+optional:
+        -h                    -- help
+        -a alpha              -- regularization parameter       (default: 100)
+        -q output_Q           -- individual admixture file      (default: genotype_file.K.Q)
+        -f output_F           -- ancestral frequencies file     (default: genotype_file.K.F)
+        -c perc               -- cross-entropy with 'perc' 			
+                              of masked genotypes               (default: 0.05)
+        -e tol                -- tolerance error                (default: 0.0001)
+        -i iterations         -- number max of iterations       (default: 200)
+        -s seed               -- seed random init               (default: random)
+        -m ploidy             -- 1 if haploid, 2 if diploid     (default: 2)
+        -p num_proc           -- number of processes (CPU)      (default: 1)
+
+./test_print_snmf 

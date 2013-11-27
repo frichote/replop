@@ -1,0 +1,10 @@
+summary of the options:
+
+        -n (number of individuals)                 10
+        -L (number of loci)                        100
+        -s (seed random init)                      10
+        -r (percentage of masked data)             0.05
+        -g (genotype file)                         input_file.txt
+        -o (output file)                           input_file_I.geno
+        - diploid
+

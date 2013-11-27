@@ -22,7 +22,7 @@
 #include <math.h>
 #include "io_tools.h"
 #include "read.h"
-#include "../matrix/error.h"
+#include "../matrix/error_matrix.h"
 
 // remove_ext (from stackoverflow)
 
@@ -33,7 +33,7 @@ char* remove_ext (char* mystr, char dot, char sep) {
         if (mystr == NULL)
                 return NULL;
 
-        if ((retstr = malloc (strlen (mystr) + 1)) == NULL)
+        if ((retstr = malloc (strlen (mystr) + 1 * 1)) == NULL)
                 return NULL;
 
         // Make a copy and find the relevant characters.

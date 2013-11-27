@@ -50,7 +50,7 @@ void create_m_V(double *U, float *R, double *C, double *beta, double *m_V,
 #endif
                 // TODO: check time
                 // allocate memory 
-		tmp_i = (double *)malloc(M * sizeof(double));
+		tmp_i = (double *) malloc(M * sizeof(double));
 
 		// init m_V
 		for (k = 0; k < K; k++) {

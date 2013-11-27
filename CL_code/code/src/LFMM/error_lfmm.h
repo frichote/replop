@@ -7,8 +7,7 @@
 #ifndef ERROR_LFMM_H
 #define ERROR_LFMM_H
 
-#include "../matrix/error.h"
-
+#include "../matrix/error_matrix.h"
 /**
  * print a specific lfmm error message
  *

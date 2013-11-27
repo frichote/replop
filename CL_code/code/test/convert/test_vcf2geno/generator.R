@@ -1,0 +1,2 @@
+# generate vcf2geno
+

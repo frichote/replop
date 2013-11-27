@@ -1,0 +1,2 @@
+Error: unable to read file files/l5-6.vcf. It seems that line 5 contains 6 columns instead of 7 (number of columns of line 1).
+

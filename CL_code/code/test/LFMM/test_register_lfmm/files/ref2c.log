@@ -1,0 +1,17 @@
+Summary of the options:
+
+        -n (number of individuals) 	10
+        -L (number of loci)     	100
+        -K (number of latent factors)	10
+        -o (output file)		output
+        -i (number of iterations)	1000
+        -b (burnin)			100
+	-s (seed random init)		2
+        -p (number of processes (CPU))	1
+	-g (genotype file)	   	input_file.txt
+	-v (variable file)		cov_file.txt
+        -D (number of covariables)	2
+	-a (all variable at the same time)
+	-m (missing data)	 	
+	-C (DIC file)			dic.txt
+

@@ -1,0 +1,520 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 33.78      9.36     9.36     1001     0.01     0.01  var_data_inputation
+ 21.04     15.19     5.83     1000     0.01     0.01  create_m_V
+ 20.39     20.84     5.65     1000     0.01     0.01  create_m_U
+ 18.41     25.94     5.10     1000     0.01     0.01  create_m_beta
+  4.08     27.07     1.13 20100000     0.00     0.00  mvn_rand
+  1.08     27.37     0.30     1000     0.00     0.00  rand_V
+  0.54     27.52     0.15     1000     0.00     0.00  rand_beta
+  0.43     27.64     0.12     1000     0.00     0.00  create_inv_cov_U
+  0.07     27.66     0.02     3000     0.00     0.00  rand_gamma
+  0.07     27.68     0.02      800     0.00     0.00  update_sum2
+  0.04     27.69     0.01     3200     0.00     0.00  update_sum
+  0.04     27.70     0.01        1     0.01     0.01  create_I
+  0.04     27.71     0.01                             dtrsm_
+  0.00     27.71     0.00   100000     0.00     0.00  lsame_
+  0.00     27.71     0.00    17000     0.00     0.00  dscal_
+  0.00     27.71     0.00    10000     0.00     0.00  dtrmv_
+  0.00     27.71     0.00    10000     0.00     0.00  idamax_
+  0.00     27.71     0.00    10000     0.00     0.00  zscore2pvalue
+  0.00     27.71     0.00     9000     0.00     0.00  ilaenv_
+  0.00     27.71     0.00     7000     0.00     0.00  dgemv_
+  0.00     27.71     0.00     7000     0.00     0.00  dger_
+  0.00     27.71     0.00     3000     0.00     0.00  cholesky
+  0.00     27.71     0.00     3000     0.00     0.00  copy_vect
+  0.00     27.71     0.00     3000     0.00     0.00  dgetf2_
+  0.00     27.71     0.00     3000     0.00     0.00  dgetrf_
+  0.00     27.71     0.00     3000     0.00     0.00  dgetri_
+  0.00     27.71     0.00     3000     0.00     0.00  dlamch_
+  0.00     27.71     0.00     3000     0.00     0.00  dtrti2_
+  0.00     27.71     0.00     3000     0.00     0.00  dtrtri_
+  0.00     27.71     0.00     3000     0.00     0.00  fast_inverse
+  0.00     27.71     0.00     3000     0.00     0.00  s_cat
+  0.00     27.71     0.00     1000     0.00     0.00  create_inv_cov_V
+  0.00     27.71     0.00     1000     0.00     0.00  create_inv_cov_beta
+  0.00     27.71     0.00     1000     0.00     0.00  dble_sum
+  0.00     27.71     0.00     1000     0.00     0.00  dble_sum2
+  0.00     27.71     0.00     1000     0.00     0.00  print_bar
+  0.00     27.71     0.00     1000     0.00     0.00  rand_U
+  0.00     27.71     0.00     1000     0.00     0.01  update_U
+  0.00     27.71     0.00     1000     0.00     0.01  update_V
+  0.00     27.71     0.00     1000     0.00     0.00  update_alpha_U
+  0.00     27.71     0.00     1000     0.00     0.00  update_alpha_beta
+  0.00     27.71     0.00     1000     0.00     0.01  update_beta
+  0.00     27.71     0.00      200     0.00     0.00  test_column
+  0.00     27.71     0.00        6     0.00     0.00  dlahr2_
+  0.00     27.71     0.00        4     0.00     0.00  update_m
+  0.00     27.71     0.00        3     0.00     0.00  rand_matrix_double
+  0.00     27.71     0.00        2     0.00     0.00  fopen_read
+  0.00     27.71     0.00        2     0.00     0.00  fopen_write
+  0.00     27.71     0.00        2     0.00     0.00  nb_cols_lfmm
+  0.00     27.71     0.00        2     0.00     0.00  nb_lines
+  0.00     27.71     0.00        2     0.00     0.00  pow_di
+  0.00     27.71     0.00        2     0.00     0.00  test_line
+  0.00     27.71     0.00        1     0.00     0.00  allocate_all
+  0.00     27.71     0.00        1     0.00     0.00  check_mat
+  0.00     27.71     0.00        1     0.00     0.00  create_CCt
+  0.00     27.71     0.00        1     0.00     0.00  init_bar
+  0.00     27.71     0.00        1     0.00     0.00  init_random
+  0.00     27.71     0.00        1     0.00    27.69  lfmm_emcmc
+  0.00     27.71     0.00        1     0.00     0.00  modify_C
+  0.00     27.71     0.00        1     0.00     0.00  print_summary_lfmm
+  0.00     27.71     0.00        1     0.00     0.00  read_data_double
+  0.00     27.71     0.00        1     0.00     0.00  read_data_float
+  0.00     27.71     0.00        1     0.00     0.00  remove_ext
+  0.00     27.71     0.00        1     0.00     0.00  var_data
+  0.00     27.71     0.00        1     0.00     0.00  write_DIC
+  0.00     27.71     0.00        1     0.00     0.00  write_zscore_double
+  0.00     27.71     0.00        1     0.00     0.00  zscore_calc
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.04% of 27.71 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]    100.0    0.00   27.70                 LFMM [1]
+                0.00   27.69       1/1           lfmm_emcmc [2]
+                0.01    0.00       1/1           create_I [18]
+                0.00    0.00       2/2           nb_cols_lfmm [51]
+                0.00    0.00       2/2           nb_lines [52]
+                0.00    0.00       1/1           init_random [59]
+                0.00    0.00       1/1           print_summary_lfmm [61]
+                0.00    0.00       1/1           read_data_double [62]
+                0.00    0.00       1/1           read_data_float [63]
+                0.00    0.00       1/1           modify_C [60]
+                0.00    0.00       1/1           write_zscore_double [67]
+-----------------------------------------------
+                0.00   27.69       1/1           LFMM [1]
+[2]     99.9    0.00   27.69       1         lfmm_emcmc [2]
+                9.36    0.00    1001/1001        var_data_inputation [3]
+                0.00    6.69    1000/1000        update_V [4]
+                0.00    5.81    1000/1000        update_beta [6]
+                0.00    5.78    1000/1000        update_U [7]
+                0.02    0.00     800/800         update_sum2 [15]
+                0.00    0.01    1000/1000        update_alpha_beta [16]
+                0.01    0.00    3200/3200        update_sum [17]
+                0.00    0.01    1000/1000        update_alpha_U [20]
+                0.00    0.00    1000/1000        print_bar [44]
+                0.00    0.00       4/4           update_m [47]
+                0.00    0.00       3/3           rand_matrix_double [48]
+                0.00    0.00       1/1           allocate_all [55]
+                0.00    0.00       1/1           create_CCt [57]
+                0.00    0.00       1/1           init_bar [58]
+                0.00    0.00       1/1           zscore_calc [68]
+                0.00    0.00       1/1           check_mat [56]
+                0.00    0.00       1/1           var_data [65]
+                0.00    0.00       1/1           write_DIC [66]
+-----------------------------------------------
+                9.36    0.00    1001/1001        lfmm_emcmc [2]
+[3]     33.8    9.36    0.00    1001         var_data_inputation [3]
+-----------------------------------------------
+                0.00    6.69    1000/1000        lfmm_emcmc [2]
+[4]     24.2    0.00    6.69    1000         update_V [4]
+                5.83    0.00    1000/1000        create_m_V [5]
+                0.30    0.56    1000/1000        rand_V [11]
+                0.00    0.00    1000/1000        create_inv_cov_V [40]
+-----------------------------------------------
+                5.83    0.00    1000/1000        update_V [4]
+[5]     21.0    5.83    0.00    1000         create_m_V [5]
+-----------------------------------------------
+                0.00    5.81    1000/1000        lfmm_emcmc [2]
+[6]     21.0    0.00    5.81    1000         update_beta [6]
+                5.10    0.00    1000/1000        create_m_beta [9]
+                0.15    0.56    1000/1000        rand_beta [12]
+                0.00    0.00    1000/1000        create_inv_cov_beta [41]
+-----------------------------------------------
+                0.00    5.78    1000/1000        lfmm_emcmc [2]
+[7]     20.8    0.00    5.78    1000         update_U [7]
+                5.65    0.00    1000/1000        create_m_U [8]
+                0.12    0.00    1000/1000        create_inv_cov_U [13]
+                0.00    0.01    1000/1000        rand_U [21]
+-----------------------------------------------
+                5.65    0.00    1000/1000        update_U [7]
+[8]     20.4    5.65    0.00    1000         create_m_U [8]
+-----------------------------------------------
+                5.10    0.00    1000/1000        update_beta [6]
+[9]     18.4    5.10    0.00    1000         create_m_beta [9]
+-----------------------------------------------
+                0.01    0.00  100000/20100000     rand_U [21]
+                0.56    0.00 10000000/20100000     rand_beta [12]
+                0.56    0.00 10000000/20100000     rand_V [11]
+[10]     4.1    1.13    0.00 20100000         mvn_rand [10]
+-----------------------------------------------
+                0.30    0.56    1000/1000        update_V [4]
+[11]     3.1    0.30    0.56    1000         rand_V [11]
+                0.56    0.00 10000000/20100000     mvn_rand [10]
+                0.00    0.00    1000/3000        cholesky [30]
+-----------------------------------------------
+                0.15    0.56    1000/1000        update_beta [6]
+[12]     2.6    0.15    0.56    1000         rand_beta [12]
+                0.56    0.00 10000000/20100000     mvn_rand [10]
+                0.00    0.00    1000/3000        cholesky [30]
+-----------------------------------------------
+                0.12    0.00    1000/1000        update_U [7]
+[13]     0.4    0.12    0.00    1000         create_inv_cov_U [13]
+                0.00    0.00    1000/3000        fast_inverse [38]
+-----------------------------------------------
+                0.01    0.00    1000/3000        update_alpha_U [20]
+                0.01    0.00    2000/3000        update_alpha_beta [16]
+[14]     0.1    0.02    0.00    3000         rand_gamma [14]
+-----------------------------------------------
+                0.02    0.00     800/800         lfmm_emcmc [2]
+[15]     0.1    0.02    0.00     800         update_sum2 [15]
+-----------------------------------------------
+                0.00    0.01    1000/1000        lfmm_emcmc [2]
+[16]     0.0    0.00    0.01    1000         update_alpha_beta [16]
+                0.01    0.00    2000/3000        rand_gamma [14]
+                0.00    0.00    1000/1000        dble_sum2 [43]
+-----------------------------------------------
+                0.01    0.00    3200/3200        lfmm_emcmc [2]
+[17]     0.0    0.01    0.00    3200         update_sum [17]
+-----------------------------------------------
+                0.01    0.00       1/1           LFMM [1]
+[18]     0.0    0.01    0.00       1         create_I [18]
+-----------------------------------------------
+                                                 <spontaneous>
+[19]     0.0    0.01    0.00                 dtrsm_ [19]
+-----------------------------------------------
+                0.00    0.01    1000/1000        lfmm_emcmc [2]
+[20]     0.0    0.00    0.01    1000         update_alpha_U [20]
+                0.01    0.00    1000/3000        rand_gamma [14]
+                0.00    0.00    1000/1000        dble_sum [42]
+-----------------------------------------------
+                0.00    0.01    1000/1000        update_U [7]
+[21]     0.0    0.00    0.01    1000         rand_U [21]
+                0.01    0.00  100000/20100000     mvn_rand [10]
+                0.00    0.00    1000/3000        cholesky [30]
+-----------------------------------------------
+                0.00    0.00    6000/100000      dlamch_ [35]
+                0.00    0.00    6000/100000      dtrtri_ [37]
+                0.00    0.00    6000/100000      dtrti2_ [36]
+                0.00    0.00   21000/100000      dgemv_ [28]
+                0.00    0.00   61000/100000      dtrmv_ [24]
+[22]     0.0    0.00    0.00  100000         lsame_ [22]
+-----------------------------------------------
+                0.00    0.00    7000/17000       dgetf2_ [32]
+                0.00    0.00   10000/17000       dtrti2_ [36]
+[23]     0.0    0.00    0.00   17000         dscal_ [23]
+-----------------------------------------------
+                0.00    0.00   10000/10000       dtrti2_ [36]
+[24]     0.0    0.00    0.00   10000         dtrmv_ [24]
+                0.00    0.00   61000/100000      lsame_ [22]
+-----------------------------------------------
+                0.00    0.00   10000/10000       dgetf2_ [32]
+[25]     0.0    0.00    0.00   10000         idamax_ [25]
+-----------------------------------------------
+                0.00    0.00   10000/10000       write_zscore_double [67]
+[26]     0.0    0.00    0.00   10000         zscore2pvalue [26]
+-----------------------------------------------
+                0.00    0.00    3000/9000        dgetrf_ [33]
+                0.00    0.00    3000/9000        dgetri_ [34]
+                0.00    0.00    3000/9000        dtrtri_ [37]
+[27]     0.0    0.00    0.00    9000         ilaenv_ [27]
+-----------------------------------------------
+                0.00    0.00    7000/7000        dgetri_ [34]
+[28]     0.0    0.00    0.00    7000         dgemv_ [28]
+                0.00    0.00   21000/100000      lsame_ [22]
+-----------------------------------------------
+                0.00    0.00    7000/7000        dgetf2_ [32]
+[29]     0.0    0.00    0.00    7000         dger_ [29]
+-----------------------------------------------
+                0.00    0.00    1000/3000        rand_beta [12]
+                0.00    0.00    1000/3000        rand_U [21]
+                0.00    0.00    1000/3000        rand_V [11]
+[30]     0.0    0.00    0.00    3000         cholesky [30]
+-----------------------------------------------
+                0.00    0.00    3000/3000        fast_inverse [38]
+[31]     0.0    0.00    0.00    3000         copy_vect [31]
+-----------------------------------------------
+                0.00    0.00    3000/3000        dgetrf_ [33]
+[32]     0.0    0.00    0.00    3000         dgetf2_ [32]
+                0.00    0.00   10000/10000       idamax_ [25]
+                0.00    0.00    7000/7000        dger_ [29]
+                0.00    0.00    7000/17000       dscal_ [23]
+                0.00    0.00    3000/3000        dlamch_ [35]
+-----------------------------------------------
+                0.00    0.00    3000/3000        fast_inverse [38]
+[33]     0.0    0.00    0.00    3000         dgetrf_ [33]
+                0.00    0.00    3000/9000        ilaenv_ [27]
+                0.00    0.00    3000/3000        dgetf2_ [32]
+-----------------------------------------------
+                0.00    0.00    3000/3000        fast_inverse [38]
+[34]     0.0    0.00    0.00    3000         dgetri_ [34]
+                0.00    0.00    7000/7000        dgemv_ [28]
+                0.00    0.00    3000/9000        ilaenv_ [27]
+                0.00    0.00    3000/3000        dtrtri_ [37]
+-----------------------------------------------
+                0.00    0.00    3000/3000        dgetf2_ [32]
+[35]     0.0    0.00    0.00    3000         dlamch_ [35]
+                0.00    0.00    6000/100000      lsame_ [22]
+                0.00    0.00       6/6           dlahr2_ [46]
+                0.00    0.00       2/2           pow_di [53]
+-----------------------------------------------
+                0.00    0.00    3000/3000        dtrtri_ [37]
+[36]     0.0    0.00    0.00    3000         dtrti2_ [36]
+                0.00    0.00   10000/10000       dtrmv_ [24]
+                0.00    0.00   10000/17000       dscal_ [23]
+                0.00    0.00    6000/100000      lsame_ [22]
+-----------------------------------------------
+                0.00    0.00    3000/3000        dgetri_ [34]
+[37]     0.0    0.00    0.00    3000         dtrtri_ [37]
+                0.00    0.00    6000/100000      lsame_ [22]
+                0.00    0.00    3000/3000        s_cat [39]
+                0.00    0.00    3000/9000        ilaenv_ [27]
+                0.00    0.00    3000/3000        dtrti2_ [36]
+-----------------------------------------------
+                0.00    0.00    1000/3000        create_inv_cov_beta [41]
+                0.00    0.00    1000/3000        create_inv_cov_U [13]
+                0.00    0.00    1000/3000        create_inv_cov_V [40]
+[38]     0.0    0.00    0.00    3000         fast_inverse [38]
+                0.00    0.00    3000/3000        copy_vect [31]
+                0.00    0.00    3000/3000        dgetrf_ [33]
+                0.00    0.00    3000/3000        dgetri_ [34]
+-----------------------------------------------
+                0.00    0.00    3000/3000        dtrtri_ [37]
+[39]     0.0    0.00    0.00    3000         s_cat [39]
+-----------------------------------------------
+                0.00    0.00    1000/1000        update_V [4]
+[40]     0.0    0.00    0.00    1000         create_inv_cov_V [40]
+                0.00    0.00    1000/3000        fast_inverse [38]
+-----------------------------------------------
+                0.00    0.00    1000/1000        update_beta [6]
+[41]     0.0    0.00    0.00    1000         create_inv_cov_beta [41]
+                0.00    0.00    1000/3000        fast_inverse [38]
+-----------------------------------------------
+                0.00    0.00    1000/1000        update_alpha_U [20]
+[42]     0.0    0.00    0.00    1000         dble_sum [42]
+-----------------------------------------------
+                0.00    0.00    1000/1000        update_alpha_beta [16]
+[43]     0.0    0.00    0.00    1000         dble_sum2 [43]
+-----------------------------------------------
+                0.00    0.00    1000/1000        lfmm_emcmc [2]
+[44]     0.0    0.00    0.00    1000         print_bar [44]
+-----------------------------------------------
+                0.00    0.00     100/200         read_data_double [62]
+                0.00    0.00     100/200         read_data_float [63]
+[45]     0.0    0.00    0.00     200         test_column [45]
+-----------------------------------------------
+                0.00    0.00       6/6           dlamch_ [35]
+[46]     0.0    0.00    0.00       6         dlahr2_ [46]
+-----------------------------------------------
+                0.00    0.00       4/4           lfmm_emcmc [2]
+[47]     0.0    0.00    0.00       4         update_m [47]
+-----------------------------------------------
+                0.00    0.00       3/3           lfmm_emcmc [2]
+[48]     0.0    0.00    0.00       3         rand_matrix_double [48]
+-----------------------------------------------
+                0.00    0.00       1/2           read_data_double [62]
+                0.00    0.00       1/2           read_data_float [63]
+[49]     0.0    0.00    0.00       2         fopen_read [49]
+-----------------------------------------------
+                0.00    0.00       1/2           write_DIC [66]
+                0.00    0.00       1/2           write_zscore_double [67]
+[50]     0.0    0.00    0.00       2         fopen_write [50]
+-----------------------------------------------
+                0.00    0.00       2/2           LFMM [1]
+[51]     0.0    0.00    0.00       2         nb_cols_lfmm [51]
+-----------------------------------------------
+                0.00    0.00       2/2           LFMM [1]
+[52]     0.0    0.00    0.00       2         nb_lines [52]
+-----------------------------------------------
+                0.00    0.00       2/2           dlamch_ [35]
+[53]     0.0    0.00    0.00       2         pow_di [53]
+-----------------------------------------------
+                0.00    0.00       1/2           read_data_double [62]
+                0.00    0.00       1/2           read_data_float [63]
+[54]     0.0    0.00    0.00       2         test_line [54]
+-----------------------------------------------
+                0.00    0.00       1/1           lfmm_emcmc [2]
+[55]     0.0    0.00    0.00       1         allocate_all [55]
+-----------------------------------------------
+                0.00    0.00       1/1           lfmm_emcmc [2]
+[56]     0.0    0.00    0.00       1         check_mat [56]
+-----------------------------------------------
+                0.00    0.00       1/1           lfmm_emcmc [2]
+[57]     0.0    0.00    0.00       1         create_CCt [57]
+-----------------------------------------------
+                0.00    0.00       1/1           lfmm_emcmc [2]
+[58]     0.0    0.00    0.00       1         init_bar [58]
+-----------------------------------------------
+                0.00    0.00       1/1           LFMM [1]
+[59]     0.0    0.00    0.00       1         init_random [59]
+-----------------------------------------------
+                0.00    0.00       1/1           LFMM [1]
+[60]     0.0    0.00    0.00       1         modify_C [60]
+-----------------------------------------------
+                0.00    0.00       1/1           LFMM [1]
+[61]     0.0    0.00    0.00       1         print_summary_lfmm [61]
+-----------------------------------------------
+                0.00    0.00       1/1           LFMM [1]
+[62]     0.0    0.00    0.00       1         read_data_double [62]
+                0.00    0.00     100/200         test_column [45]
+                0.00    0.00       1/2           fopen_read [49]
+                0.00    0.00       1/2           test_line [54]
+-----------------------------------------------
+                0.00    0.00       1/1           LFMM [1]
+[63]     0.0    0.00    0.00       1         read_data_float [63]
+                0.00    0.00     100/200         test_column [45]
+                0.00    0.00       1/2           fopen_read [49]
+                0.00    0.00       1/2           test_line [54]
+-----------------------------------------------
+                0.00    0.00       1/1           analyse_param_lfmm [73]
+[64]     0.0    0.00    0.00       1         remove_ext [64]
+-----------------------------------------------
+                0.00    0.00       1/1           lfmm_emcmc [2]
+[65]     0.0    0.00    0.00       1         var_data [65]
+-----------------------------------------------
+                0.00    0.00       1/1           lfmm_emcmc [2]
+[66]     0.0    0.00    0.00       1         write_DIC [66]
+                0.00    0.00       1/2           fopen_write [50]
+-----------------------------------------------
+                0.00    0.00       1/1           LFMM [1]
+[67]     0.0    0.00    0.00       1         write_zscore_double [67]
+                0.00    0.00   10000/10000       zscore2pvalue [26]
+                0.00    0.00       1/2           fopen_write [50]
+-----------------------------------------------
+                0.00    0.00       1/1           lfmm_emcmc [2]
+[68]     0.0    0.00    0.00       1         zscore_calc [68]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+
+Index by function name
+
+  [55] allocate_all           [19] dtrsm_                 [48] rand_matrix_double
+  [56] check_mat              [36] dtrti2_                [62] read_data_double
+  [30] cholesky               [37] dtrtri_                [63] read_data_float
+  [31] copy_vect              [38] fast_inverse           [64] remove_ext
+  [57] create_CCt             [49] fopen_read             [39] s_cat
+  [18] create_I               [50] fopen_write            [45] test_column
+  [13] create_inv_cov_U       [25] idamax_                [54] test_line
+  [40] create_inv_cov_V       [27] ilaenv_                 [7] update_U
+  [41] create_inv_cov_beta    [58] init_bar                [4] update_V
+   [8] create_m_U             [59] init_random            [20] update_alpha_U
+   [5] create_m_V              [2] lfmm_emcmc             [16] update_alpha_beta
+   [9] create_m_beta          [22] lsame_                  [6] update_beta
+  [42] dble_sum               [60] modify_C               [47] update_m
+  [43] dble_sum2              [10] mvn_rand               [17] update_sum
+  [28] dgemv_                 [51] nb_cols_lfmm           [15] update_sum2
+  [29] dger_                  [52] nb_lines               [65] var_data
+  [32] dgetf2_                [53] pow_di                  [3] var_data_inputation
+  [33] dgetrf_                [44] print_bar              [66] write_DIC
+  [34] dgetri_                [61] print_summary_lfmm     [67] write_zscore_double
+  [46] dlahr2_                [21] rand_U                 [26] zscore2pvalue
+  [35] dlamch_                [11] rand_V                 [68] zscore_calc
+  [23] dscal_                 [12] rand_beta
+  [24] dtrmv_                 [14] rand_gamma

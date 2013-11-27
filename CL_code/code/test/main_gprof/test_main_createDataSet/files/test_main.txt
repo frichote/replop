@@ -1,0 +1,22 @@
+sNMF  Copyright (C) 2013 François Mathieu, Eric Frichot
+This program comes with ABSOLUTELY NO WARRANTY; for details type './sNMF -l'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; type './sNMF -l' for details.
+
+****                      sNMF Version 0.1                                     *****
+****   E. Frichot , F. Mathieu, T. Trouillon, G. Bouchard, O. Francois         *****
+****                    Please cite our paper !                                *****
+****   Information at http://membres-timc.imag.fr/Olivier.Francois/snmf.html   *****
+
+summary of the options:
+
+        -n (number of individuals)                 100
+        -L (number of loci)                        10000
+        -s (seed random init)                      9322269330161290985
+        -r (percentage of masked data)             0.05
+        -g (genotype file)                         files/N100_M10000.geno
+        -o (output file)                           files/N100_M10000_I.geno
+        - diploid
+
+Write genotype file with masked data files/N100_M10000_I.geno:		OK.
+

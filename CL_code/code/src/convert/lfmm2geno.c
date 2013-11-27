@@ -36,7 +36,7 @@ void lfmm2geno (char *input_file, char* output_file, int *N, int *M)
 	*N = nb_lines(input_file, *M);
 
 	// memory allocation
-        data = (int *)malloc((*N)*(*M)*sizeof(int));
+        data = (int *) malloc((*N)*(*M) * sizeof(int));
 
 	// read in lfmm format
 	read_data_int(input_file, *N, *M, data);

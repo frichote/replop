@@ -1,0 +1,3 @@
+ERROR: commmand line format incorrect.
+
+HELP: ./test_register_convert input_file [output_file]

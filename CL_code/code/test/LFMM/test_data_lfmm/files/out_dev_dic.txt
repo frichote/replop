@@ -1,0 +1,17 @@
+	The zscores for variable 1 were registered in:
+ 		files/out_zscore1.txt_all_1.res.
+	The columns are: zscore, -log10(p-value), p-value.
+
+
+	The zscores for variable 2 were registered in:
+ 		files/out_zscore1.txt_all_2.res.
+	The columns are: zscore, -log10(p-value), p-value.
+
+
+	The zscores for variable 1 were registered in:
+ 		files/out_zscore2.txt_1.res.
+	The columns are: zscore, -log10(p-value), p-value.
+
+
+0.405468 1431.44
+0.405468 1431.44

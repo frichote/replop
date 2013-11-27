@@ -13,6 +13,7 @@
 \usepackage{lscape}
 \usepackage[hmargin=2cm,vmargin=2cm]{geometry}
 \usepackage{fancyvrb}
+\usepackage{hyperref}
 
 \title{\bf \Large A short manual for {\tt sNMF}\\
 \large (command-line version)
@@ -28,10 +29,13 @@
 %% BEGIN DOC
 \begin{document}
 
+
 \maketitle
 \begin{center}
 {\it Please, print this reference manual only if it is necessary.}
 \end{center}
+
+\tableofcontents
 
 \noindent
 This short manual aims to help users to run {\tt sNMF} command-line engine on Mac and Linux. 
@@ -54,18 +58,19 @@ A set of binaries should be created in {\tt sNMF} directory.
 
 \section{Data format}
 
-The {\tt sNMF} input file consists of a single genotype file. 
-\\
-\\
-geno (example.geno)\\
-The {\bf genotype file} format has one row for each SNP.
+\subsection{input file}
+The {\tt sNMF} input file consists of a single genotype file in {\bf geno} format. 
+\begin{itemize}
+\item {\bf geno} (example.geno)
+
+The {\bf geno} format has one row for each SNP.
   Each row contains 1 character per individual:
   0 means zero copies of reference allele.
   1 means one copy of reference allele.
   2 means two copies of reference allele.
   9 means missing data.
 
-Below, an example of genotype file for $n=3$ individuals and $L=5$ loci.
+Below, an example of geno file for $n=3$ individuals and $L=5$ loci.
 \begin{center}
 \footnotesize
 \begin{Verbatim}[frame=single]
@@ -75,7 +80,134 @@ Below, an example of genotype file for $n=3$ individuals and $L=5$ loci.
 121
 \end{Verbatim}
 \end{center}
+\end{itemize}
 
+\noindent
+We also maintain C functions to convert from the following formats to geno format.
+\begin{itemize}
+\item {\bf ped} (example.ped)
+
+The {\bf ped} format has one row for each individual. Each row contains 6 columns of information about the individual, plus two genotype columns for each SNP. Each column can be separated by spaces or tabulations. Genotype format must be either 0ACGT or 01234, where 0 means missing data. The first 6 columns of the genotype file are: 1st column is family ID, 2nd column is sample ID, 3rd and 4th column are sample IDs of parents, 5th column is gender (male is 1, female is 2), 6th column is case/control status (1 is control, 2 is case), quantitative trait value or population group label. 
+The ped format is also described \href{http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml#ped}{here}.
+
+Below, an example of ped file for $n=3$ individuals and $L=5$ loci.
+\begin{center}
+\footnotesize
+\begin{Verbatim}[frame=single]
+1	SAMPLE0 0 0 2 2	1 2 3 3	1 1 2 1
+2	SAMPLE1 0 0 1 2 2 1 1 3 0 4 1 1
+3	SAMPLE2 0 0 2 1 2 2 3 3	1 4 1 2
+\end{Verbatim}
+\end{center}
+
+The format of the command line is:
+\begin{Verbatim}[frame=single]
+./ped2geno  input_file [output_file]
+\end{Verbatim}
+where 
+\begin{itemize}
+\item \verb|input_file| is the path for the input file (in ped format).
+\item \verb|output_file| is the path for the output\_file (in geno format). 
+By default, the name of the output file is the name of the input\_file with extension .geno.
+
+\end{itemize}
+
+\item {\bf ancestrymap} (example.ancestrymap)\\
+The {\bf ancestrymap} format has one row for each genotype. Each row has 3 columns: 1st column is SNP name, 2nd column is sample ID, 3rd column is number of alleles. It is assumed that the genotypes for a given SNP name are written in consecutive line. It is also assumed that the genotypes for a set of individuals are given in the same order of lines. The number of alleles can be the number of reference alleles or the number of derived alleles as long as it is the same choice for an entire SNP. It is assumed that Missing genotypes are encoded by the value 9.
+
+Below, an example of ancestrymap file for $n=3$ individuals and $L=5$ loci.
+\begin{center}
+\footnotesize
+\begin{Verbatim}[frame=single]
+rs0000  SAMPLE0 1
+rs0000  SAMPLE1 1
+rs0000  SAMPLE2 2
+rs1111  SAMPLE0 0
+rs1111  SAMPLE1 1
+rs1111  SAMPLE2 0
+rs2222  SAMPLE0 0
+rs2222  SAMPLE1 9
+rs2222  SAMPLE2 1
+rs3333  SAMPLE0 1
+rs3333  SAMPLE1 2
+rs3333  SAMPLE3 1
+\end{Verbatim}
+\end{center}
+
+The format of the command line is:
+\begin{Verbatim}[frame=single]
+./ancestrymap2geno  input_file [output_file]
+\end{Verbatim}
+where 
+\begin{itemize}
+\item \verb|input_file| is the path for the input file (in ancestrymap format).
+\item \verb|output_file| is the path for the output\_file (in geno format). 
+By default, the name of the output file is the name of the input\_file with extension .geno.
+\end{itemize}
+
+\item {\bf vcf} (example.vcf)\\
+The {\bf vcf} format is described \href{http://www.1000genomes.org/wiki/Analysis/Variant\%20Call\%20Format/vcf-variant-call-format-version-41}{here}.
+
+Below, an example of vcf file for $n=3$ individuals and $L=5$ loci.
+\begin{center}
+\footnotesize
+\begin{Verbatim}[frame=single]
+##fileformat=VCFv4.1 
+##FORMAT=<ID=GM,Number=1,Type=Integer,Description="Genotype meta"> 
+##INFO=<ID=VM,Number=1,Type=Integer,Description="Variant meta"> 
+##INFO=<ID=SM,Number=1,Type=Integer,Description="SampleVariant meta"> 
+#CHROM POS ID REF ALT QUAL FILTER INFO FORMAT SAMPLE0 SAMPLE1 SAMPLE2 
+1 1001 rs0000 T C 999 . VM=1;SM=100 GT:GM 1/0:1 0/1:2 1/1:3 
+1 1002 rs1111 G A 999 . VM=2;SM=101 GT:GM 0/0:6 0/1:7 0/0:8 
+1 1003 notres G AA 999 . VM=3;SM=102 GT:GM 0/0:11 ./.:12 0/1:13 
+1 1004 rs2222 G A 999 . VM=3;SM=102 GT:GM 0/0:11 . 1/0:13
+1 1003 notres GA A 999 . VM=3;SM=102 GT:GM 0/0:11 ./.:12 0/1:13 
+1 1005 rs3333 G A 999 . VM=3;SM=102 GT:GM 1/0:11 1/1:12 0/1:13 
+\end{Verbatim}
+\end{center}
+
+The format of the command line is:
+\begin{Verbatim}[frame=single]
+./vcf2geno  input_file [output_file]
+\end{Verbatim}
+where 
+\begin{itemize}
+\item \verb|input_file| is the path for the input file (in vcf format).
+\item \verb|output_file| is the path for the output\_file (in geno format). 
+By default, the name of the output file is the name of the input\_file with extension .geno.
+\end{itemize}
+
+\item {\bf lfmm} (example.lfmm)\\
+The {\bf lfmm} format has one row for each individual. Each row contains one value per SNP (separated by spaces or tabulations): the number of alleles. The number of alleles can be the number of reference alleles or the number of derived alleles as long as it is the same choice for an entire SNP. Missing genotypes are encoded by the value 9 or -9. 
+
+
+Below, an example of ancestrymap file for $n=3$ individuals and $L=5$ loci.
+\begin{center}
+\footnotesize
+\begin{Verbatim}[frame=single]
+1 0 0 1
+1 1 -9 2
+2 0 1 1
+\end{Verbatim}
+\end{center}
+
+The format of the command line is:
+\begin{Verbatim}[frame=single]
+./lfmm2geno  input_file [output_file]
+\end{Verbatim}
+where 
+\begin{itemize}
+\item \verb|input_file| is the path for the input file (in lfmm format).
+\item \verb|output_file| is the path for the output\_file (in geno format). 
+By default, the name of the output file is the name of the input\_file with extension .geno.
+\end{itemize}
+
+\end{itemize}
+
+
+
+
+\subsection{output files}
 \noindent
 There are 2 {\bf output files}.
 
@@ -95,7 +227,7 @@ The program is executed from a command line. The format is:
 \end{Verbatim}
 
 \noindent
-All options are mandatory. There is no order for the options in the command line. 
+All these options are mandatory. There is no order for the options in the command line. 
 Here is a description of the options:
 \begin{itemize}
 \item \verb|-g genotype_file.geno| is the path for the genotype file (in .geno format).

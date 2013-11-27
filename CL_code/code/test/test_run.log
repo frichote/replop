@@ -1,0 +1,100 @@
+rm: cannot remove `files/out*': No such file or directory
+rm: cannot remove `files/out*': No such file or directory
+rm: cannot remove `files/out*': No such file or directory
+test_ped.c: In function ‘main’:
+test_ped.c:18:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+rm: cannot remove `files/out*': No such file or directory
+test_register_convert.c: In function ‘main’:
+test_register_convert.c:21:2: error: too few arguments to function ‘analyse_param_convert’
+../../../src/convert/register_convert.h:19:6: note: declared here
+make: *** [test_register_convert.o] Error 1
+description.sh: 1: eval: ./test_register_convert: not found
+description.sh: 1: eval: ./test_register_convert: not found
+description.sh: 1: eval: ./test_register_convert: not found
+description.sh: 1: eval: ./test_register_convert: not found
+test_error_cds.c: In function ‘main’:
+test_error_cds.c:14:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_error_ce.c: In function ‘main’:
+test_error_ce.c:14:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_io_data_double.c: In function ‘main’:
+test_io_data_double.c:16:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_io_data_float.c: In function ‘main’:
+test_io_data_float.c:16:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_io_data_int.c: In function ‘main’:
+test_io_data_int.c:16:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_io_tools.c: In function ‘main’:
+test_io_tools.c:19:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_beta.c: In function ‘main’:
+test_beta.c:19:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_error_lfmm.c: In function ‘main’:
+test_error_lfmm.c:14:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_U.c: In function ‘main’:
+test_U.c:18:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_V.c: In function ‘main’:
+test_V.c:18:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_data_lfmm.c: In function ‘main’:
+test_data_lfmm.c:92:2: error: too few arguments to function ‘zscore_calc’
+../../../src/LFMM/data_lfmm.h:22:6: note: declared here
+test_data_lfmm.c:93:2: error: too few arguments to function ‘write_zscore_double’
+../../../src/LFMM/data_lfmm.h:95:6: note: declared here
+test_data_lfmm.c:108:2: error: too few arguments to function ‘modify_C’
+../../../src/LFMM/data_lfmm.h:73:6: note: declared here
+test_data_lfmm.c:25:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+make: *** [test_data_lfmm.o] Error 1
+description.sh: 34: description.sh: ./test_data_lfmm: not found
+Error in file(file, "rt") : cannot open the connection
+Calls: as.matrix -> read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'files/out_sum.txt': No such file or directory
+Execution halted
+Error in file(file, "rt") : cannot open the connection
+Calls: as.matrix -> read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'files/out_sum2.txt': No such file or directory
+Execution halted
+Error in file(file, "rt") : cannot open the connection
+Calls: as.matrix -> read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'files/out_R.txt': No such file or directory
+Execution halted
+Error in file(file, "rt") : cannot open the connection
+Calls: as.matrix -> read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'files/out_mean.txt': No such file or directory
+Execution halted
+Error in file(file, "rt") : cannot open the connection
+Calls: as.matrix -> read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'files/out_zscore.txt': No such file or directory
+Execution halted
+Error in file(file, "rt") : cannot open the connection
+Calls: as.matrix -> read.table -> file
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'files/out_dev_dic.txt': No such file or directory
+Execution halted
+test_lfmm.c: In function ‘main’:
+test_lfmm.c:15:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_lfmm.c:15:27: warning: unused parameter ‘argv’ [-Wunused-parameter]
+valgrind: ../../bin/: is a directory
+test_cholesky.c: In function ‘main’:
+test_cholesky.c:15:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_data.c: In function ‘main’:
+test_data.c:56:18: warning: division by zero [-Wdiv-by-zero]
+test_data.c:21:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_error.c: In function ‘main’:
+test_error.c:14:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_inverse.c: In function ‘main’:
+test_inverse.c:18:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_matrix.c: In function ‘main’:
+test_matrix.c:22:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_normalize.c: In function ‘main’:
+test_normalize.c:16:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_sort.c: In function ‘main’:
+test_sort.c:70:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+test_sort.c:70:27: warning: unused parameter ‘argv’ [-Wunused-parameter]

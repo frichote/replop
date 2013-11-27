@@ -1,0 +1,8 @@
+Summary of the options:
+
+        -input file      files/N10_M1000.geno
+        -output file     files/N10_M1000.lfmm
+
+	- number of individuals detected:	10
+	- number of loci detected:		1000
+

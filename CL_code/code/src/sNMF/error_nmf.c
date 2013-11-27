@@ -17,7 +17,6 @@
 */
 
 
-#include "error.h"
 #include "print_snmf.h"
 #include <stdio.h>
 #include <stdlib.h>

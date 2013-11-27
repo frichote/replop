@@ -8,7 +8,7 @@
 #ifndef ERROR_CE_H
 #define ERROR_CE_H
 
-#include "../matrix/error.h"
+#include "../matrix/error_matrix.h"
 
 /**
  * print a specific lfmm error message

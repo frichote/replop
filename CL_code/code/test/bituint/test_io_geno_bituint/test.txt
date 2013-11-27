@@ -1,0 +1,13 @@
+#!/bin/sh
+
+. ../meta.sh
+
+# parameters
+dir="io_geno_bituint"
+
+for i in $dir
+do
+	cd test_$i
+	sh test.sh
+	cd ..
+done

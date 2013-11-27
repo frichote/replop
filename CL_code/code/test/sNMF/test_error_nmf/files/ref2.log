@@ -1,0 +1,24 @@
+
+ERROR: the following option is mandatory: -g (...).
+
+
+HELP: ./sNMF options 
+
+mandatory:
+        -g genotype_file	-- genotype file (in .geno format)
+        -K K                  -- number K of ancestral populations
+
+optional:
+        -h                    -- help
+        -a alpha              -- regularization parameter       (default: 100)
+        -q output_Q           -- individual admixture file      (default: genotype_file.K.Q)
+        -f output_F           -- ancestral frequencies file     (default: genotype_file.K.F)
+        -c perc               -- cross-entropy with 'perc' 			
+                              of masked genotypes               (default: 0.05)
+        -e tol                -- tolerance error                (default: 0.0001)
+        -i iterations         -- number max of iterations       (default: 200)
+        -s seed               -- seed random init               (default: random)
+        -m ploidy             -- 1 if haploid, 2 if diploid     (default: 2)
+        -p num_proc           -- number of processes (CPU)      (default: 1)
+
+

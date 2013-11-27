@@ -7,7 +7,7 @@
 #ifndef RAND_H
 #define RAND_H
 
-#define PI (3.141592653589793)
+#define LFMM_PI (3.141592653589793)
 
 /**
  * initialise random 

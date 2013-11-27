@@ -89,7 +89,7 @@ void vcf2geno(char* input_file, char *output_file, int *N, int *M,
 {
 	// temporary variables
 	int i, j, jp, jt;
-	char **infos = (char **)malloc(9*sizeof(char *));
+	char **infos = (char **) malloc(9 * sizeof(char *));
 
 	// file management
 	FILE* input_File=NULL;
@@ -113,11 +113,11 @@ void vcf2geno(char* input_file, char *output_file, int *N, int *M,
 	
 	// init tmp mem
 	for (i = 0; i < 9; i++)
-		infos[i] = (char *)calloc(512,sizeof(char));
+		infos[i] = (char *) calloc(512, sizeof(char));
 
 	max_char_per_line = 50 * (*N) + 20;
-	szbuff = (char*)calloc(max_char_per_line,sizeof(char));
-	allele = (int *)calloc(*N,sizeof(int));
+	szbuff = (char*) calloc(max_char_per_line, sizeof(char));
+	allele = (int *) calloc(*N,sizeof(int));
 
 	// open files
 	input_File = fopen_read(input_file);

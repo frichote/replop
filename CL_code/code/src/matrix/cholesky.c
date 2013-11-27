@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "error.h"
+#include "error_matrix.h"
 
 // cholesky (from the web)
 

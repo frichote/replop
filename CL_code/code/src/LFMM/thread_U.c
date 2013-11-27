@@ -49,7 +49,7 @@ void slice_mU_U(void *G)
 	int i, j, k, d;
 
 	// allocate memory
-	double *tmp_i = (double *)malloc(M * sizeof(double));
+	double *tmp_i = (double *) malloc(M * sizeof(double));
 
 	for (i = from; i < to; i++) {
                 // calculate tmp_i = R - X B

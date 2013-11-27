@@ -1,0 +1,36 @@
+==16223== Memcheck, a memory error detector
+==16223== Copyright (C) 2002-2011, and GNU GPL'd, by Julian Seward et al.
+==16223== Using Valgrind-3.7.0 and LibVEX; rerun with -h for copyright info
+==16223== Command: ../../../bin/crossEntropy -g files/N10_M1000.geno -K 4
+==16223== 
+sNMF  Copyright (C) 2013 François Mathieu, Eric Frichot
+This program comes with ABSOLUTELY NO WARRANTY; for details type './sNMF -l'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; type './sNMF -l' for details.
+
+****                      sNMF Version 0.1                                     *****
+****   E. Frichot , F. Mathieu, T. Trouillon, G. Bouchard, O. Francois         *****
+****                    Please cite our paper !                                *****
+****   Information at http://membres-timc.imag.fr/Olivier.Francois/snmf.html   *****
+
+summary of the options:
+
+        -n (number of individuals)         10
+        -L (number of loci)                1000
+        -K (number of ancestral pops)      4
+        -g (genotype file)                 files/N10_M1000.geno
+        -q (individual admixture)          files/N10_M1000_I.4.Q
+        -f (ancestral frequencies)         files/N10_M1000_I.4.F
+        -i (with masked genotypes)         files/N10_M1000_I.geno
+        - diploid
+
+Cross-Entropy (masked data):	 3.2502
+==16223== 
+==16223== HEAP SUMMARY:
+==16223==     in use at exit: 0 bytes in 0 blocks
+==16223==   total heap usage: 17 allocs, 17 frees, 100,411 bytes allocated
+==16223== 
+==16223== All heap blocks were freed -- no leaks are possible
+==16223== 
+==16223== For counts of detected and suppressed errors, rerun with: -v
+==16223== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)

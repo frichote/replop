@@ -3,8 +3,8 @@
 # parameters
 prog="sNMF"
 dir="sNMF_CL_v$1"
-src_list="bituint createDataSet crossEntropy io lapack matrix nnlsm sNMF"
-main_list="sNMF createDataSet crossEntropy"
+src_list="bituint createDataSet crossEntropy io lapack matrix nnlsm sNMF convert"
+main_list="main_sNMF main_createDataSet main_crossEntropy main_geno2lfmm main_lfmm2geno main_ped2geno main_ped2lfmm main_vcf2geno"
 
 # color definition
 VERT="\\033[1;32m" NORMAL="\\033[0;39m" ROUGE="\\033[1;31m" JAUNE="\\033[1;33m"
@@ -25,6 +25,10 @@ cd $dir
 echo "\tAdd src files"
 
 rm -r code/obj/*/ 
+
+mkdir code/obj/main/
+mkdir code/src/main/
+
 for i in $src_list; do 
 	echo "\t\tCopy of $i in $dir"
 	cp -r ../../../code/src/$i/ code/src/ 
@@ -33,7 +37,7 @@ done
 
 for i in $main_list; do 
 	echo "\t\tCopy of $i in $dir"
-	cp ../../../code/src/$i.c code/src/ 
+	cp ../../../code/src/main/$i.c code/src/main/
 done
 
 # README

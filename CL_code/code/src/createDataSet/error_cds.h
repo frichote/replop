@@ -8,7 +8,7 @@
 #ifndef ERROR_CDS_H
 #define ERROR_CDS_H
 
-#include "../matrix/error.h"
+#include "../matrix/error_matrix.h"
 
 /**
  * print a specific createDataSet error message

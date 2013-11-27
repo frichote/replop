@@ -49,7 +49,7 @@ void create_m_beta(double *C, float *R, double *U, double *V, double *m_beta,
 		// uni-threaded or windows version
 		// TODO: check time
 		// allocate memory 
-		tmp_i = (double *)malloc(M * sizeof(double));
+		tmp_i = (double *) malloc(M * sizeof(double));
 
 		// init m_beta
 		for (d = 0; d < D; d++) {

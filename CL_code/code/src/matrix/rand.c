@@ -126,7 +126,7 @@ void rand_matrix_double(double *A, int M, int N)
 
 double rand_normal(double mean, double var)
 {
-	return sqrt(var) * sqrt(-2 * log(drand())) * cos(2 * PI * drand()) +
+	return sqrt(var) * sqrt(-2 * log(drand())) * cos(2 * LFMM_PI * drand()) +
 	    mean;
 }
 
@@ -134,7 +134,7 @@ double rand_normal(double mean, double var)
 
 double rand_normal_r()
 {
-	return sqrt(-2 * log(drand())) * cos(2 * PI * drand());
+	return sqrt(-2 * log(drand())) * cos(2 * LFMM_PI * drand());
 }
 
 // mvn_rand
@@ -143,7 +143,7 @@ void mvn_rand(double *mu, double *L, int D, double *y)
 {
 
 	int i, j;
-	double *x = (double *)malloc(D * sizeof(double));
+	double *x = (double *) malloc(D * sizeof(double));
 
 	for (i = 0; i < D; i++)
 		x[i] = rand_normal_r();

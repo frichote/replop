@@ -3,7 +3,7 @@
 # parameters
 prog="Replop"
 dir="Replop_v$1"
-src_list="io lapack matrix LFMM bituint convert createDataSet crossEntropy nnlsm sNMF pca spfa thread"
+src_list="io matrix LFMM bituint convert createDataSet crossEntropy nnlsm sNMF pca spfa thread"
 main_list="LFMM createDataSet crossEntropy sNMF ancestrymap2geno ancestrymap2lfmm geno2lfmm lfmm2geno pca ped2geno ped2lfmm vcf2geno"
 
 # color definition
@@ -28,6 +28,33 @@ for i in $src_list; do
 	echo "\t\tCopy of $i in $dir"
 	cp -r ../../../code/src/$i/ src/ 
 done
+
+echo "$VERT" "\tReplace malloc"
+#sed -i '1icolumn1, column2, column3' testfile.csv
+files=`egrep -rl 'fflush|printf|malloc|calloc|realloc|free|exit\(1\)|warning|printf' src/*/*.c` 
+for f in $files; do
+	echo "$NORMAL" "$f"
+	sed -i '18 i\#include <R.h>' $f
+	# malloc
+	sed -i 's/calloc\(.*\),\s*sizeof(\(.*\)));/Calloc\1 * sizeof(\2), \2);/g' $f
+	sed -i 's/malloc\(.*\)\s*sizeof(\(.*\)));/Calloc\1 sizeof(\2), \2);/g' $f
+#	sed -i 's/malloc\(.* \)\*\(\s*sizeof\)/R_alloc\1, \2/g' $f
+	sed -i 's/realloc\(.*\),\s*sizeof(\(.*\)));/Realloc\1 * sizeof(\2), \2);/g' $f
+	sed -i 's/free(/Free(/g' $f
+	sed -i 's/\([^fn]\)printf(/\1Rprintf(/g' $f
+	sed -i 's/exit(1)/error(NULL)/g' $f
+	sed -i 's/fflush(stdout)//g' $f
+done
+
+files=`egrep -rl 'lapack' src/*/*.c` 
+for f in $files; do
+	echo $f
+	sed -i 's/^.*lapack.*$//g' $f
+	sed -i '19 i\#include <R_ext/Lapack.h>' $f
+	sed -i 's/integer/int/g' $f
+	sed -i 's/doublereal/double/g' $f
+done
+
 
 #for i in $main_list; do 
 #	echo "\t\tCopy of $i in $dir"

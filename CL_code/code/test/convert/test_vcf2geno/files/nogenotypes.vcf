@@ -1,0 +1,12 @@
+##fileformat=VCFv4.1 
+##FORMAT=<ID=GM,Number=1,Type=Integer,Description="Genotype meta"> 
+##INFO=<ID=VM,Number=1,Type=Integer,Description="Variant meta"> 
+##INFO=<ID=SM,Number=1,Type=Integer,Description="SampleVariant meta"> 
+#CHROM POS ID REF ALT QUAL FILTER INFO FORMAT
+1 1001 rs1001 T C 999 . VM=1;SM=100 GT:GM 
+1 1002 rs1002 G A 999 . VM=2;SM=101 GT:GM 
+1 1003 notres G AA 999 . VM=3;SM=102 GT:GM
+1 1004 rs1003 G A 999 . VM=3;SM=102 GT:GM
+1 1003 notres GA A 999 . VM=3;SM=102 GT:GM
+1 1005 rs1004 G A 999 . VM=3;SM=102 GT:GM
+1 1006 rs1005 G A 999 . VM=3;SM=102 GT:GM

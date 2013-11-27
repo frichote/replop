@@ -22,7 +22,7 @@
 #include "io_data_double.h"
 #include "io_error.h"
 #include "io_tools.h"
-#include "../matrix/error.h"
+#include "../matrix/error_matrix.h"
 
 // read_data_double
 
@@ -36,7 +36,7 @@ void read_data_double(char *file_data, int N, int M, double *dat)
         char *token;
 
 	// allocate memory
-	szbuff = (char *)malloc(max_char_per_line * sizeof(char));
+	szbuff = (char *) malloc(max_char_per_line * sizeof(char));
 
 	// open file
         m_File = fopen_read(file_data);
@@ -48,7 +48,7 @@ void read_data_double(char *file_data, int N, int M, double *dat)
                 token = strtok(szbuff, SEP);
                 // read elements and register them in dat
                 while (token && j < M) {
-			//printf("%s\n",token);
+			// printf("%s\n",token);
                         dat[i * M + j] = (double)atof(token);
 			// next elements
                         token = strtok(NULL, SEP);

@@ -1,0 +1,18 @@
+
+ERROR: specific message \!.
+
+
+HELP: ./createDataSet options 
+
+mandatory:
+        -g input_file	        -- genotype file (in .geno format)
+
+optional:
+        -h                    -- help
+        -m ploidy             -- 1 if haploid, 2 if diploid   (default: 2)
+        -s seed               -- seed random init	      (default: random)
+        -r percentage         -- percentage of masked data    (default: 0.05)
+
+        -o output_file        -- output file                  (default: input_file_I.geno)
+
+

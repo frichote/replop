@@ -1,0 +1,8 @@
+Summary of the options:
+
+        -input file      files/N5_M7.ped
+        -output file     files/N5_M7.geno
+
+	- number of individuals detected:	5
+	- number of loci detected:		7
+

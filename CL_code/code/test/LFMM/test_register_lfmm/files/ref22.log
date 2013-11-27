@@ -1,0 +1,17 @@
+Warning: '-D' option is not necessary (from LFMM v1.3). The number of environmental variables is automatically computed.
+
+Summary of the options:
+
+        -n (number of individuals) 	10
+        -L (number of loci)     	100
+        -K (number of latent factors)	3
+        -o (output file)		input_file.zscore
+        -i (number of iterations)	1000
+        -b (burnin)			200
+	-s (seed random init)		1
+        -p (number of processes (CPU))	1
+	-g (genotype file)	   	input_file.txt
+	-v (variable file)		cov_file.txt
+        -D (number of covariables)	2
+	-C (DIC file)			input_file.dic
+

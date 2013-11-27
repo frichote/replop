@@ -1,0 +1,8 @@
+Summary of the options:
+
+        -input file      files/N100_M10000.ancestrymap
+        -output file     files/N100_M10000.lfmm
+
+	- number of individuals detected:	100
+	- number of loci detected:		10000
+

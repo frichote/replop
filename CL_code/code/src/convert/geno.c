@@ -21,7 +21,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "geno.h"
-#include "../matrix/error.h"
 #include "../io/io_error.h"
 #include "../io/io_tools.h"
 
@@ -32,7 +31,7 @@ void read_geno(char *input_file, int *data, int N, int M)
 	FILE *m_File=NULL;
 	int j = 0;
 	char *szbuff = (char *) calloc(5*N, sizeof(char));
-	int max_char_per_line = 5*N + 20;
+	int max_char_per_line = 5*N;
 	int warning = 0;
 
 	// open file

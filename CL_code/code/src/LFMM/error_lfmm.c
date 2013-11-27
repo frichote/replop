@@ -34,8 +34,7 @@ void print_error_lfmm(char *msg, char *file, int n)
 		       file);
 		print_help_lfmm();
 	} else if (!strcmp(msg, "missing")) {
-		printf
-		    ("ERROR: one of the following options is missing or not positive:"
+		printf("ERROR: one of the following options is missing or not positive:"
 		     " -K / -b / -i / -p / -d.\n\n");
 		print_help_lfmm();
 	} else if (!strcmp(msg, "basic")) {

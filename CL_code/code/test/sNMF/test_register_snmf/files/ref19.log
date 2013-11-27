@@ -1,0 +1,15 @@
+summary of the options:
+
+        -n (number of individuals)             10
+        -L (number of loci)                    100
+        -K (number of ancestral pops)          10
+        -g (input file)                        input_file.txt
+        -q (individual admixture file)         input_file.10.Q
+        -f (ancestral frequencies file)        
+        -i (number max of iterations)          1000
+        -a (regularization parameter)          100
+        -s (seed random init)                  1
+        -e (tolerance error)                   0
+        -p (number of processes)               1
+        - diploid
+

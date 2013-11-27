@@ -1,0 +1,44 @@
+LFMM Copyright (C) 2012 Eric Frichot
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+LFMM  Copyright (C) 2012 Eric Frichot
+This program comes with ABSOLUTELY NO WARRANTY; for details type './LFMM -l'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; type './LFMM -l' for details.
+
+LFMM  Copyright (C) 2012 Eric Frichot
+This program comes with ABSOLUTELY NO WARRANTY; for details type './LFMM -l'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; type './LFMM -l' for details.
+
+****                      LFMM Version 1.1                     			*****
+****   E. Frichot, S. Schoville, G. Bouchard, O. Francois       		*****
+****         	        Please cite our paper !                 	     	*****
+****   Information at http://membres-timc.imag.fr/Olivier.Francois/lfmm/	*****
+
+
+HELP: ./LFMM options 
+
+mandatory:
+	-g genotype_file   		-- genotype file (in .lfmm format)
+        -v variable_file     		-- variable file (in .env format)
+        -K K 				-- K number of latent factors
+optional:
+        -d d 				-- d, the dth covariables 	(default: all)
+        -o output_file 			-- output file with z-scores 	(default: zscore.txt)
+        -m				-- missing data			(default: no)
+        -p p				-- number of process used	(default: 1)
+        -i Niter             		-- number of iterations in the GS
+        -b burn         		-- burnin parameter in the GS
+
+        -h              		-- help
+
+./test_print_lfmm 

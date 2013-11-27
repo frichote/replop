@@ -1,0 +1,495 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 43.57      0.44     0.44       38    11.58    11.71  update_F
+ 40.60      0.85     0.41       38    10.79    10.86  tF_tX
+  2.97      0.88     0.03       38     0.79     0.86  F_tF_alpha
+  2.97      0.91     0.03        1    30.00    30.00  crossEntropy
+  1.98      0.93     0.02    10000     0.00     0.00  fill_line_geno_bituint
+  1.98      0.95     0.02       39     0.51     0.51  normalize_F
+  1.98      0.97     0.02        1    20.00    20.00  least_square
+  0.99      0.98     0.01  1575758     0.00     0.00  frand
+  0.99      0.99     0.01      152     0.07     0.07  zeros
+  0.99      1.00     0.01      140     0.07     0.07  sortColsRec
+  0.99      1.01     0.01        1    10.00    16.35  createDataSet
+  0.00      1.01     0.00    70100     0.00     0.00  test_column
+  0.00      1.01     0.00    47710     0.00     0.00  lsame_
+  0.00      1.01     0.00     7962     0.00     0.00  dscal_
+  0.00      1.01     0.00     4771     0.00     0.00  dtrmv_
+  0.00      1.01     0.00     4771     0.00     0.00  idamax_
+  0.00      1.01     0.00     4740     0.00     0.00  ilaenv_
+  0.00      1.01     0.00     3191     0.00     0.00  dgemv_
+  0.00      1.01     0.00     3191     0.00     0.00  dger_
+  0.00      1.01     0.00     1705     0.00     0.00  solveRegression
+  0.00      1.01     0.00     1580     0.00     0.00  copy_vect
+  0.00      1.01     0.00     1580     0.00     0.00  dgetf2_
+  0.00      1.01     0.00     1580     0.00     0.00  dgetrf_
+  0.00      1.01     0.00     1580     0.00     0.00  dgetri_
+  0.00      1.01     0.00     1580     0.00     0.00  dlamch_
+  0.00      1.01     0.00     1580     0.00     0.00  dtrti2_
+  0.00      1.01     0.00     1580     0.00     0.00  dtrtri_
+  0.00      1.01     0.00     1580     0.00     0.00  fast_inverse
+  0.00      1.01     0.00     1580     0.00     0.00  s_cat
+  0.00      1.01     0.00      149     0.00     0.07  XY_update
+  0.00      1.01     0.00      149     0.00     0.00  opt_param_update
+  0.00      1.01     0.00      149     0.00     0.07  solveNormalEqComb
+  0.00      1.01     0.00      140     0.00     0.07  sortCols
+  0.00      1.01     0.00       39     0.00     0.00  normalize_lines
+  0.00      1.01     0.00       38     0.00     0.26  nnlsm_blockpivot
+  0.00      1.01     0.00       38     0.00     0.00  normalize_Q
+  0.00      1.01     0.00       38     0.00     0.00  parameter_init
+  0.00      1.01     0.00       38     0.00     0.00  print_bar
+  0.00      1.01     0.00       38     0.00    11.97  update_nnlsm_Q
+  0.00      1.01     0.00        6     0.00     0.00  dlahr2_
+  0.00      1.01     0.00        5     0.00     0.00  test_line
+  0.00      1.01     0.00        3     0.00     0.00  fopen_read
+  0.00      1.01     0.00        3     0.00     0.00  nb_cols_geno
+  0.00      1.01     0.00        3     0.00     0.00  nb_lines
+  0.00      1.01     0.00        2     0.00     0.00  fopen_write
+  0.00      1.01     0.00        2     0.00     0.00  init_random
+  0.00      1.01     0.00        2     0.00     0.00  pow_di
+  0.00      1.01     0.00        2     0.00     0.00  read_data_double
+  0.00      1.01     0.00        2     0.00     0.00  remove_ext
+  0.00      1.01     0.00        2     0.00     0.00  write_data_double
+  0.00      1.01     0.00        1     0.00   920.02  ALS
+  0.00      1.01     0.00        1     0.00     0.00  allocate_memory
+  0.00      1.01     0.00        1     0.00     0.00  free_memory
+  0.00      1.01     0.00        1     0.00     0.00  init_bar
+  0.00      1.01     0.00        1     0.00     0.00  init_mat_bituint
+  0.00      1.01     0.00        1     0.00     0.00  print_summary_cds
+  0.00      1.01     0.00        1     0.00     0.00  print_summary_ce
+  0.00      1.01     0.00        1     0.00     0.00  print_summary_snmf
+  0.00      1.01     0.00        1     0.00     0.00  rand_matrix_double
+  0.00      1.01     0.00        1     0.00    23.65  read_geno_bituint
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.99% of 1.01 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]    100.0    0.00    1.01                 sNMF [1]
+                0.00    0.92       1/1           ALS [2]
+                0.03    0.00       1/1           crossEntropy [7]
+                0.00    0.02       1/1           read_geno_bituint [9]
+                0.02    0.00       1/1           least_square [11]
+                0.01    0.01       1/1           createDataSet [12]
+                0.00    0.00       2/2           write_data_double [53]
+                0.00    0.00       1/2           init_random [49]
+                0.00    0.00       1/3           nb_cols_geno [46]
+                0.00    0.00       1/3           nb_lines [47]
+                0.00    0.00       1/1           print_summary_snmf [60]
+                0.00    0.00       1/1           init_mat_bituint [57]
+                0.00    0.00       1/2           remove_ext [52]
+-----------------------------------------------
+                0.00    0.92       1/1           sNMF [1]
+[2]     91.1    0.00    0.92       1         ALS [2]
+                0.00    0.46      38/38          update_nnlsm_Q [3]
+                0.44    0.01      38/38          update_F [4]
+                0.02    0.00      39/39          normalize_F [10]
+                0.00    0.00      39/39          normalize_lines [39]
+                0.00    0.00      38/38          print_bar [42]
+                0.00    0.00      38/38          normalize_Q [40]
+                0.00    0.00       1/1           rand_matrix_double [61]
+                0.00    0.00       1/1           allocate_memory [54]
+                0.00    0.00       1/1           init_bar [56]
+                0.00    0.00       1/1           free_memory [55]
+-----------------------------------------------
+                0.00    0.46      38/38          ALS [2]
+[3]     45.0    0.00    0.46      38         update_nnlsm_Q [3]
+                0.41    0.00      38/38          tF_tX [5]
+                0.03    0.00      38/38          F_tF_alpha [6]
+                0.00    0.01      38/38          nnlsm_blockpivot [19]
+-----------------------------------------------
+                0.44    0.01      38/38          ALS [2]
+[4]     44.1    0.44    0.01      38         update_F [4]
+                0.01    0.00      76/152         zeros [14]
+                0.00    0.00      38/1580        fast_inverse [36]
+-----------------------------------------------
+                0.41    0.00      38/38          update_nnlsm_Q [3]
+[5]     40.8    0.41    0.00      38         tF_tX [5]
+                0.00    0.00      38/152         zeros [14]
+-----------------------------------------------
+                0.03    0.00      38/38          update_nnlsm_Q [3]
+[6]      3.2    0.03    0.00      38         F_tF_alpha [6]
+                0.00    0.00      38/152         zeros [14]
+-----------------------------------------------
+                0.03    0.00       1/1           sNMF [1]
+[7]      3.0    0.03    0.00       1         crossEntropy [7]
+                0.00    0.00   20000/70100       test_column [20]
+                0.00    0.00       2/2           read_data_double [51]
+                0.00    0.00       2/5           test_line [44]
+                0.00    0.00       1/3           nb_cols_geno [46]
+                0.00    0.00       1/3           nb_lines [47]
+                0.00    0.00       1/1           print_summary_ce [59]
+-----------------------------------------------
+                0.02    0.00   10000/10000       read_geno_bituint [9]
+[8]      2.3    0.02    0.00   10000         fill_line_geno_bituint [8]
+                0.00    0.00  575758/1575758     frand [13]
+                0.00    0.00   10000/70100       test_column [20]
+-----------------------------------------------
+                0.00    0.02       1/1           sNMF [1]
+[9]      2.3    0.00    0.02       1         read_geno_bituint [9]
+                0.02    0.00   10000/10000       fill_line_geno_bituint [8]
+                0.00    0.00       1/3           fopen_read [45]
+                0.00    0.00       1/5           test_line [44]
+-----------------------------------------------
+                0.02    0.00      39/39          ALS [2]
+[10]     2.0    0.02    0.00      39         normalize_F [10]
+-----------------------------------------------
+                0.02    0.00       1/1           sNMF [1]
+[11]     2.0    0.02    0.00       1         least_square [11]
+-----------------------------------------------
+                0.01    0.01       1/1           sNMF [1]
+[12]     1.6    0.01    0.01       1         createDataSet [12]
+                0.01    0.00 1000000/1575758     frand [13]
+                0.00    0.00   10000/70100       test_column [20]
+                0.00    0.00       1/2           init_random [49]
+                0.00    0.00       1/3           nb_cols_geno [46]
+                0.00    0.00       1/3           nb_lines [47]
+                0.00    0.00       1/1           print_summary_cds [58]
+-----------------------------------------------
+                0.00    0.00  575758/1575758     fill_line_geno_bituint [8]
+                0.01    0.00 1000000/1575758     createDataSet [12]
+[13]     1.0    0.01    0.00 1575758         frand [13]
+-----------------------------------------------
+                0.00    0.00      38/152         F_tF_alpha [6]
+                0.00    0.00      38/152         tF_tX [5]
+                0.01    0.00      76/152         update_F [4]
+[14]     1.0    0.01    0.00     152         zeros [14]
+-----------------------------------------------
+                0.00    0.01     149/149         nnlsm_blockpivot [19]
+[15]     1.0    0.00    0.01     149         XY_update [15]
+                0.00    0.01     149/149         solveNormalEqComb [16]
+-----------------------------------------------
+                0.00    0.01     149/149         XY_update [15]
+[16]     1.0    0.00    0.01     149         solveNormalEqComb [16]
+                0.00    0.01     140/140         sortCols [17]
+                0.00    0.00    1705/1705        solveRegression [28]
+-----------------------------------------------
+                0.00    0.01     140/140         solveNormalEqComb [16]
+[17]     1.0    0.00    0.01     140         sortCols [17]
+                0.01    0.00     140/140         sortColsRec [18]
+-----------------------------------------------
+                                1377             sortColsRec [18]
+                0.01    0.00     140/140         sortCols [17]
+[18]     1.0    0.01    0.00     140+1377    sortColsRec [18]
+                                1377             sortColsRec [18]
+-----------------------------------------------
+                0.00    0.01      38/38          update_nnlsm_Q [3]
+[19]     1.0    0.00    0.01      38         nnlsm_blockpivot [19]
+                0.00    0.01     149/149         XY_update [15]
+                0.00    0.00     149/149         opt_param_update [38]
+                0.00    0.00      38/38          parameter_init [41]
+-----------------------------------------------
+                0.00    0.00   10000/70100       createDataSet [12]
+                0.00    0.00   10000/70100       fill_line_geno_bituint [8]
+                0.00    0.00   20000/70100       crossEntropy [7]
+                0.00    0.00   30100/70100       read_data_double [51]
+[20]     0.0    0.00    0.00   70100         test_column [20]
+-----------------------------------------------
+                0.00    0.00    3160/47710       dlamch_ [33]
+                0.00    0.00    3160/47710       dtrtri_ [35]
+                0.00    0.00    3160/47710       dtrti2_ [34]
+                0.00    0.00    9573/47710       dgemv_ [26]
+                0.00    0.00   28657/47710       dtrmv_ [23]
+[21]     0.0    0.00    0.00   47710         lsame_ [21]
+-----------------------------------------------
+                0.00    0.00    3191/7962        dgetf2_ [30]
+                0.00    0.00    4771/7962        dtrti2_ [34]
+[22]     0.0    0.00    0.00    7962         dscal_ [22]
+-----------------------------------------------
+                0.00    0.00    4771/4771        dtrti2_ [34]
+[23]     0.0    0.00    0.00    4771         dtrmv_ [23]
+                0.00    0.00   28657/47710       lsame_ [21]
+-----------------------------------------------
+                0.00    0.00    4771/4771        dgetf2_ [30]
+[24]     0.0    0.00    0.00    4771         idamax_ [24]
+-----------------------------------------------
+                0.00    0.00    1580/4740        dgetrf_ [31]
+                0.00    0.00    1580/4740        dgetri_ [32]
+                0.00    0.00    1580/4740        dtrtri_ [35]
+[25]     0.0    0.00    0.00    4740         ilaenv_ [25]
+-----------------------------------------------
+                0.00    0.00    3191/3191        dgetri_ [32]
+[26]     0.0    0.00    0.00    3191         dgemv_ [26]
+                0.00    0.00    9573/47710       lsame_ [21]
+-----------------------------------------------
+                0.00    0.00    3191/3191        dgetf2_ [30]
+[27]     0.0    0.00    0.00    3191         dger_ [27]
+-----------------------------------------------
+                0.00    0.00    1705/1705        solveNormalEqComb [16]
+[28]     0.0    0.00    0.00    1705         solveRegression [28]
+                0.00    0.00    1542/1580        fast_inverse [36]
+-----------------------------------------------
+                0.00    0.00    1580/1580        fast_inverse [36]
+[29]     0.0    0.00    0.00    1580         copy_vect [29]
+-----------------------------------------------
+                0.00    0.00    1580/1580        dgetrf_ [31]
+[30]     0.0    0.00    0.00    1580         dgetf2_ [30]
+                0.00    0.00    4771/4771        idamax_ [24]
+                0.00    0.00    3191/3191        dger_ [27]
+                0.00    0.00    3191/7962        dscal_ [22]
+                0.00    0.00    1580/1580        dlamch_ [33]
+-----------------------------------------------
+                0.00    0.00    1580/1580        fast_inverse [36]
+[31]     0.0    0.00    0.00    1580         dgetrf_ [31]
+                0.00    0.00    1580/4740        ilaenv_ [25]
+                0.00    0.00    1580/1580        dgetf2_ [30]
+-----------------------------------------------
+                0.00    0.00    1580/1580        fast_inverse [36]
+[32]     0.0    0.00    0.00    1580         dgetri_ [32]
+                0.00    0.00    3191/3191        dgemv_ [26]
+                0.00    0.00    1580/4740        ilaenv_ [25]
+                0.00    0.00    1580/1580        dtrtri_ [35]
+-----------------------------------------------
+                0.00    0.00    1580/1580        dgetf2_ [30]
+[33]     0.0    0.00    0.00    1580         dlamch_ [33]
+                0.00    0.00    3160/47710       lsame_ [21]
+                0.00    0.00       6/6           dlahr2_ [43]
+                0.00    0.00       2/2           pow_di [50]
+-----------------------------------------------
+                0.00    0.00    1580/1580        dtrtri_ [35]
+[34]     0.0    0.00    0.00    1580         dtrti2_ [34]
+                0.00    0.00    4771/4771        dtrmv_ [23]
+                0.00    0.00    4771/7962        dscal_ [22]
+                0.00    0.00    3160/47710       lsame_ [21]
+-----------------------------------------------
+                0.00    0.00    1580/1580        dgetri_ [32]
+[35]     0.0    0.00    0.00    1580         dtrtri_ [35]
+                0.00    0.00    3160/47710       lsame_ [21]
+                0.00    0.00    1580/1580        s_cat [37]
+                0.00    0.00    1580/4740        ilaenv_ [25]
+                0.00    0.00    1580/1580        dtrti2_ [34]
+-----------------------------------------------
+                0.00    0.00      38/1580        update_F [4]
+                0.00    0.00    1542/1580        solveRegression [28]
+[36]     0.0    0.00    0.00    1580         fast_inverse [36]
+                0.00    0.00    1580/1580        copy_vect [29]
+                0.00    0.00    1580/1580        dgetrf_ [31]
+                0.00    0.00    1580/1580        dgetri_ [32]
+-----------------------------------------------
+                0.00    0.00    1580/1580        dtrtri_ [35]
+[37]     0.0    0.00    0.00    1580         s_cat [37]
+-----------------------------------------------
+                0.00    0.00     149/149         nnlsm_blockpivot [19]
+[38]     0.0    0.00    0.00     149         opt_param_update [38]
+-----------------------------------------------
+                0.00    0.00      39/39          ALS [2]
+[39]     0.0    0.00    0.00      39         normalize_lines [39]
+-----------------------------------------------
+                0.00    0.00      38/38          ALS [2]
+[40]     0.0    0.00    0.00      38         normalize_Q [40]
+-----------------------------------------------
+                0.00    0.00      38/38          nnlsm_blockpivot [19]
+[41]     0.0    0.00    0.00      38         parameter_init [41]
+-----------------------------------------------
+                0.00    0.00      38/38          ALS [2]
+[42]     0.0    0.00    0.00      38         print_bar [42]
+-----------------------------------------------
+                0.00    0.00       6/6           dlamch_ [33]
+[43]     0.0    0.00    0.00       6         dlahr2_ [43]
+-----------------------------------------------
+                0.00    0.00       1/5           read_geno_bituint [9]
+                0.00    0.00       2/5           crossEntropy [7]
+                0.00    0.00       2/5           read_data_double [51]
+[44]     0.0    0.00    0.00       5         test_line [44]
+-----------------------------------------------
+                0.00    0.00       1/3           read_geno_bituint [9]
+                0.00    0.00       2/3           read_data_double [51]
+[45]     0.0    0.00    0.00       3         fopen_read [45]
+-----------------------------------------------
+                0.00    0.00       1/3           crossEntropy [7]
+                0.00    0.00       1/3           createDataSet [12]
+                0.00    0.00       1/3           sNMF [1]
+[46]     0.0    0.00    0.00       3         nb_cols_geno [46]
+-----------------------------------------------
+                0.00    0.00       1/3           crossEntropy [7]
+                0.00    0.00       1/3           createDataSet [12]
+                0.00    0.00       1/3           sNMF [1]
+[47]     0.0    0.00    0.00       3         nb_lines [47]
+-----------------------------------------------
+                0.00    0.00       2/2           write_data_double [53]
+[48]     0.0    0.00    0.00       2         fopen_write [48]
+-----------------------------------------------
+                0.00    0.00       1/2           createDataSet [12]
+                0.00    0.00       1/2           sNMF [1]
+[49]     0.0    0.00    0.00       2         init_random [49]
+-----------------------------------------------
+                0.00    0.00       2/2           dlamch_ [33]
+[50]     0.0    0.00    0.00       2         pow_di [50]
+-----------------------------------------------
+                0.00    0.00       2/2           crossEntropy [7]
+[51]     0.0    0.00    0.00       2         read_data_double [51]
+                0.00    0.00   30100/70100       test_column [20]
+                0.00    0.00       2/3           fopen_read [45]
+                0.00    0.00       2/5           test_line [44]
+-----------------------------------------------
+                0.00    0.00       1/2           analyse_param_snmf [67]
+                0.00    0.00       1/2           sNMF [1]
+[52]     0.0    0.00    0.00       2         remove_ext [52]
+-----------------------------------------------
+                0.00    0.00       2/2           sNMF [1]
+[53]     0.0    0.00    0.00       2         write_data_double [53]
+                0.00    0.00       2/2           fopen_write [48]
+-----------------------------------------------
+                0.00    0.00       1/1           ALS [2]
+[54]     0.0    0.00    0.00       1         allocate_memory [54]
+-----------------------------------------------
+                0.00    0.00       1/1           ALS [2]
+[55]     0.0    0.00    0.00       1         free_memory [55]
+-----------------------------------------------
+                0.00    0.00       1/1           ALS [2]
+[56]     0.0    0.00    0.00       1         init_bar [56]
+-----------------------------------------------
+                0.00    0.00       1/1           sNMF [1]
+[57]     0.0    0.00    0.00       1         init_mat_bituint [57]
+-----------------------------------------------
+                0.00    0.00       1/1           createDataSet [12]
+[58]     0.0    0.00    0.00       1         print_summary_cds [58]
+-----------------------------------------------
+                0.00    0.00       1/1           crossEntropy [7]
+[59]     0.0    0.00    0.00       1         print_summary_ce [59]
+-----------------------------------------------
+                0.00    0.00       1/1           sNMF [1]
+[60]     0.0    0.00    0.00       1         print_summary_snmf [60]
+-----------------------------------------------
+                0.00    0.00       1/1           ALS [2]
+[61]     0.0    0.00    0.00       1         rand_matrix_double [61]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+
+Index by function name
+
+   [2] ALS                    [45] fopen_read             [42] print_bar
+   [6] F_tF_alpha             [48] fopen_write            [58] print_summary_cds
+  [15] XY_update              [13] frand                  [59] print_summary_ce
+  [54] allocate_memory        [55] free_memory            [60] print_summary_snmf
+  [29] copy_vect              [24] idamax_                [61] rand_matrix_double
+  [12] createDataSet          [25] ilaenv_                [51] read_data_double
+   [7] crossEntropy           [56] init_bar                [9] read_geno_bituint
+  [26] dgemv_                 [57] init_mat_bituint       [52] remove_ext
+  [27] dger_                  [49] init_random            [37] s_cat
+  [30] dgetf2_                [11] least_square           [16] solveNormalEqComb
+  [31] dgetrf_                [21] lsame_                 [28] solveRegression
+  [32] dgetri_                [46] nb_cols_geno           [17] sortCols
+  [43] dlahr2_                [47] nb_lines               [18] sortColsRec
+  [33] dlamch_                [19] nnlsm_blockpivot        [5] tF_tX
+  [22] dscal_                 [10] normalize_F            [20] test_column
+  [23] dtrmv_                 [40] normalize_Q            [44] test_line
+  [34] dtrti2_                [39] normalize_lines         [4] update_F
+  [35] dtrtri_                [38] opt_param_update        [3] update_nnlsm_Q
+  [36] fast_inverse           [41] parameter_init         [53] write_data_double
+   [8] fill_line_geno_bituint [50] pow_di                 [14] zeros

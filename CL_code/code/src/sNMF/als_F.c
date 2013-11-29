@@ -205,5 +205,15 @@ void normalize_F(double *F, int M, int nc, int K)
 			}
 		}
 	}
+
+	for(j = 0; j < nc*M; j++) {
+		sum = 0.0;
+		for(k = 0; k < K; k++)
+		 	sum += F[j*K+k];
+		if (sum) {
+			for(k = 0; k < K; k++)
+		 		F[j*K+k] /= sum;
+		}
+	}
 }
 

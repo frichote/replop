@@ -121,7 +121,7 @@ void update_Q(double *Q, double *F, bituint *X, int N, int M, int nc, int Mp,
 double update_nnlsm_Q(double *Q, double *F, bituint *X, int N, int M, int nc, 
 		int Mp, int K, double alpha, Memory mem, int num_thrd) {
 
-	int i, j, k;
+	int i, k;
 
 	double* temp1 = mem->temp1;
 	double* tempQ = mem->tempQ;
@@ -144,12 +144,20 @@ double update_nnlsm_Q(double *Q, double *F, bituint *X, int N, int M, int nc,
 			Q[i*K+k] = tempQ[k*N+i];
 
 	// ouptput criteria
+	/*
 	res = 0.0;
 	for (j = 0; j < N*K; j++) {
 		res += fabs(Y[j]);
-	}
+	}*/
+	
+	// new output criteria
+	res = 0.0; 
+	for(i = 0; i < N; i++)
+		for(k = 0; k < K; k++)
+			if (Q[i * K + k] > 0 || Y[k * N + i] < 0)
+				res += Y[k * N + i] * Y[k * N + i];
 
-	return res;
+	return sqrt(res);
 }
 
 

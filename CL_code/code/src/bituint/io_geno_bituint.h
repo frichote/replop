@@ -65,4 +65,19 @@ void print_geno_bituint(bituint* dat, int N, int nc, int Mp, int M);
  */
 void write_geno_bituint(char *file_data, int N, int nc, int Mp, int M, bituint *dat);
 
+/**
+ * select from X a subset of Mi columns and copy them into Xi
+ *
+ * @param X	X matrix we copy from
+ * @param Xi	Xi matrix we copy to
+ * @prama N	number of lines
+ * @param M	number of elements per line in X
+ * @param Mi	number of elements per line in Xi
+ * @param nc	number of different elements of the matrix
+ * @param Mp	number of columns of X
+ * @param Mpi	number of columns of Xi
+*/
+void select_geno_bituint(bituint *X, bituint *Xi, int N, int M, int Mi,
+	int nc, int Mpi, int Mp);
+
 #endif // IO_GENO_BITUINT_H

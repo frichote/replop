@@ -43,10 +43,11 @@ void print_help_snmf();
  * @param num_thread    number of processes
  * @param e	percentage of masked genotypes
  * @param output_Q	output individual admixture file
- * @param output_F	output ancestral frequencies file
+ * @param output_F	output ancestral frequencies file 
+ * @param I		number of SNPs to init Q
  */
 void print_summary_snmf (     int N, int M, int m, long long seed, int K, double alpha,
                         double tol, int maxiter, char *input, int num_thread, double e,
-			char *output_Q, char *output_F);
+			char *output_Q, char *output_F, int I);
 
 #endif // PRINT_SNMF_H

@@ -31,7 +31,7 @@
 void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
 			int* K, double* alpha, double* tol, double *e,
 			int *iter, char *input, int* num_thrd,
-			char* output_Q, char* output_F) 
+			char* output_Q, char* output_F, int* I) 
 {
       	int i;
 	int g_data = -1;
@@ -105,6 +105,14 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
 					print_error_nmf("cmd","i (number of iterations)",0);
                                 *iter = atoi(argv[i]);
                                 break;
+			case 'I':
+                                i++;
+                                if (argc == i || argv[i][0] == '-') {
+					*I = -1;	
+					i--;
+				} else
+                                	*I = (int) atoi(argv[i]);
+				break;
                         case 'g':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')

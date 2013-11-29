@@ -80,12 +80,41 @@ int rand_int(int size)
 	float sum = 0;
 
 	for (i = 0; i < size; i++) {
-		sum += 1.0;
+		sum += 1.0/size;
 		if (r <= sum) {
 			return i;
 		}
 	}
 	return -1;
+}
+
+// rand_k_among_n
+
+void rand_k_among_n(int* vect, int k, int n)
+{
+	int i, ip, new;
+
+	if (k < 0 || k > n) {
+		printf("Error in rand_k_among_n, %d (k) %d (n)\n", k, n);
+		exit(1);
+	}
+
+	// for each element to sample
+        for (i = 0; i < k; i++) {
+                new = -1;
+                while (new == -1) {
+			// sample new element
+                        new = rand_int(n);
+                        ip = 0;
+			// check that the element is not already selected
+                        while (ip < i && new  != -1) {
+                                if (new == vect[ip])
+                                        new = -1;
+				ip++;
+                	}
+		}
+		vect[i] = new;
+        }
 }
 
 // rand_float

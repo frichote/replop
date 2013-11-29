@@ -2,7 +2,7 @@
 
 ### OPTIONS ####
 CFLAGS = -lm -lpthread
-LDFLAGS += -g -O3 -Wall -Wextra
+LDFLAGS += -g -O4 -Wall -Wextra
 
 CC = colorgcc
 ## CC = gcc

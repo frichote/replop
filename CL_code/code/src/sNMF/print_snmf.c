@@ -74,13 +74,14 @@ void print_help_snmf()
 
          "optional:\n"
          "        -h                    -- help\n"
-         "        -a alpha              -- regularization parameter       (default: 100)\n"
+         "        -a alpha              -- regularization parameter       (default: 0)\n"
          "        -q output_Q           -- individual admixture file      (default: genotype_file.K.Q)\n"
          "        -f output_F           -- ancestral frequencies file     (default: genotype_file.K.F)\n"
          "        -c perc               -- cross-entropy with 'perc' 			\n"
 	 "                              of masked genotypes               (default: 0.05)\n"
          "        -e tol                -- tolerance error                (default: 0.0001)\n"
          "        -i iterations         -- number max of iterations       (default: 200)\n"
+         "        -I SNPs               -- number of SNPs used to init Q  (default: min(L/10,1000))\n"
          "        -s seed               -- seed random init               (default: random)\n"
          "        -m ploidy             -- 1 if haploid, 2 if diploid     (default: 2)\n"
          "        -p num_proc           -- number of processes (CPU)      (default: 1)\n\n"
@@ -91,7 +92,7 @@ void print_help_snmf()
 
 void print_summary_snmf (     int N, int M, int m, long long seed, int K, double alpha,
                         double tol, int maxiter, char *input, int num_thread, double e, 
-			char *output_Q, char *output_F)
+			char *output_Q, char *output_F, int I)
 {
 
    printf("summary of the options:\n\n"
@@ -102,11 +103,12 @@ void print_summary_snmf (     int N, int M, int m, long long seed, int K, double
          "        -q (individual admixture file)         %s\n"
          "        -f (ancestral frequencies file)        %s\n"
          "        -i (number max of iterations)          %d\n"
+         "        -I (number of SNPs to init Q)          %d\n"
          "        -a (regularization parameter)          %G\n"
          "        -s (seed random init)                  %lu\n"
          "        -e (tolerance error)                   %G\n"
          "        -p (number of processes)               %d\n", N, M, K, input, output_Q, output_F,
-								maxiter, alpha, (unsigned long)seed, 
+								maxiter, I, alpha, (unsigned long)seed, 
 								tol, num_thread);
 	
         if (e != 0)

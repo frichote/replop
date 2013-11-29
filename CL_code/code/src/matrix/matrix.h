@@ -9,6 +9,26 @@
 #include <math.h>
 
 /**
+ * comput min(a, b)
+ * 
+ * @param a 	first int
+ * @param b	second int
+ * 
+ * @return min(a, b)
+ */
+int imin(int a, int b);
+
+/**
+ * comput max(a, b)
+ * 
+ * @param a 	first int
+ * @param b	second int
+ * 
+ * @return max(a, b)
+ */
+int imax(int a, int b);
+
+/**
  * calculate for each line k of A the squared sum (divided by 2) plus epsilon
  * 
  * @param A	the matrix (of size (KxM)

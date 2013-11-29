@@ -40,6 +40,16 @@ float frand();
 int rand_int(int size);
 
 /**
+ * sample k int among [0,n-1] with replacement
+ * (not optimal)
+ *
+ * @param col	vector of sampled values
+ * @param k	number of integer to sample
+ * @param n	size of the interval
+ */
+void rand_k_among_n(int* vect, int k, int n);
+
+/**
  * compute a uniform random float, (min,max]
  *
  * @param min	left-bound of possible values

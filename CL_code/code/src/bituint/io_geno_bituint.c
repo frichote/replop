@@ -186,3 +186,39 @@ void write_geno_bituint(char *file_data, int N, int nc, int Mp, int M, bituint *
 	fclose(file);
 }
 
+// select_geno_bituint 
+
+void select_geno_bituint(bituint *X, bituint *Xi, int N, int M, int Mi,
+	int nc, int Mpi, int Mp)
+{
+	int i, ji, j, jd, jm, jc, c, jdi, jmi, jci;
+
+	// select Mi columns among 
+	int *col = (int *) calloc(Mi, sizeof(int));
+	rand_k_among_n(col, Mi, M);
+
+	// for all in the select values
+        for (ji = 0; ji < Mi; ji++) {
+		j = col[ji];
+		// for all individuals
+                for (i = 0; i < N; i++) {
+                	for (c = 0; c < nc; c++) {
+				// elements for X
+                        	jc = nc*j + c;
+                        	jd = jc / SIZEUINT; // column in X
+                        	jm = jc % SIZEUINT; // mask element
+                                if (X[i * Mp + jd] & mask[jm]) {
+					// elements for X
+                        		jci = nc*ji + c;
+                        		jdi = jci / SIZEUINT; // column in Xi
+                        		jmi = jci % SIZEUINT; // mask element
+	                                Xi[i * Mpi + jdi] |= mask[jmi];
+                                }
+                        }
+                }
+        }
+
+	// free memory
+	free(col);
+}
+

@@ -22,6 +22,22 @@
 #include <math.h>
 #include "matrix.h"
 
+// imin
+
+int imin(int a, int b)
+{
+	return (a < b ? a : b);
+}
+
+// imax
+
+int imax(int a, int b)
+{
+	return (a > b ? a : b);
+}
+
+// dble_sum2
+
 void dble_sum2(double *A, int K, int M, double *res, double epsilon)
 {
 	int k, j;

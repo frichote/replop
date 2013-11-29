@@ -1,0 +1,297 @@
+sNMF  Copyright (C) 2013 François Mathieu, Eric Frichot
+This program comes with ABSOLUTELY NO WARRANTY; for details type './sNMF -l'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; type './sNMF -l' for details.
+
+****                      sNMF Version 0.1                                     *****
+****   E. Frichot , F. Mathieu, T. Trouillon, G. Bouchard, O. Francois         *****
+****                    Please cite our paper !                                *****
+****   Information at http://membres-timc.imag.fr/Olivier.Francois/snmf.html   *****
+
+./bin/sNMF -g ../panel7.geno -K 3 
+summary of the options:
+
+        -n (number of individuals)             942
+        -L (number of loci)                    2635
+        -K (number of ancestral pops)          3
+        -g (input file)                        ../panel7.geno
+        -q (individual admixture file)         ../panel7.3.Q
+        -f (ancestral frequencies file)        ../panel7.3.F
+        -i (number max of iterations)          200
+        -I (number of SNPs to init Q)          1000
+        -a (regularization parameter)          100
+        -s (seed random init)                  11035032219857780852
+        -e (tolerance error)                   0.0001
+        -p (number of processes)               1
+        - diploid
+
+Read genotype file ../panel7.geno:		OK.
+
+plop
+start
+end 0 
+end 1 
+end 2 
+end 3 
+end 4 
+end 5 
+end 6 
+end 7 
+end 8 
+end 9 
+end 10 
+end 11 
+end 12 
+end 13 
+end 14 
+end 15 
+end 16 
+end 17 
+end 18 
+end 19 
+end 20 
+end 21 
+end 22 
+end 23 
+end 24 
+end 25 
+end 26 
+end 27 
+end 28 
+end 29 
+end 30 
+end 31 
+end 32 
+end 33 
+end 34 
+end 35 
+end 36 
+end 37 
+end 38 
+end 39 
+end 40 
+end 41 
+end 42 
+end 43 
+end 44 
+end 45 
+end 46 
+end 47 
+end 48 
+end 49 
+end 50 
+end 51 
+end 52 
+end 53 
+end 54 
+end 55 
+end 56 
+end 57 
+end 58 
+end 59 
+end 60 
+end 61 
+end 62 
+end 63 
+end 64 
+end 65 
+end 66 
+end 67 
+end 68 
+end 69 
+end 70 
+end 71 
+end 72 
+end 73 
+end 74 
+end 75 
+end 76 
+end 77 
+end 78 
+end 79 
+end 80 
+end 81 
+end 82 
+end 83 
+end 84 
+end 85 
+end 86 
+end 87 
+end 88 
+end 89 
+end 90 
+end 91 
+end 92 
+end 93 
+end 94 
+end 95 
+end 96 
+end 97 
+end 98 
+end 99 
+end 100 
+end 101 
+end 102 
+end 103 
+end 104 
+end 105 
+end 106 
+end 107 
+end 108 
+end 109 
+end 110 
+end 111 
+end 112 
+end 113 
+end 114 
+end 115 
+end 116 
+end 117 
+end 118 
+end 119 
+end 120 
+end 121 
+end 122 
+end 123 
+end 124 
+end 125 
+end 126 
+end 127 
+end 128 
+end 129 
+end 130 
+end 131 
+end 132 
+end 133 
+end 134 
+end 135 
+end 136 
+end 137 
+end 138 
+end 139 
+end 140 
+end 141 
+end 142 
+end 143 
+end 144 
+end 145 
+end 146 
+end 147 
+end 148 
+end 149 
+end 150 
+end 151 
+end 152 
+end 153 
+end 154 
+end 155 
+end 156 
+end 157 
+end 158 
+end 159 
+end 160 
+end 161 
+end 162 
+end 163 
+end 164 
+end 165 
+end 166 
+end 167 
+end 168 
+end 169 
+end 170 
+end 171 
+end 172 
+end 173 
+end 174 
+end 175 
+end 176 
+end 177 
+end 178 
+end 179 
+end 180 
+end 181 
+end 182 
+end 183 
+end 184 
+end 185 
+end 186 
+end 187 
+end 188 
+end 189 
+end 190 
+end 191 
+end 192 
+end 193 
+end 194 
+end 195 
+end 196 
+end 197 
+end 198 
+end 199 
+end 200 
+end 201 
+end 202 
+end 203 
+end 204 
+end 205 
+end 206 
+end 207 
+end 208 
+end 209 
+end 210 
+end 211 
+end 212 
+end 213 
+end 214 
+end 215 
+end 216 
+end 217 
+end 218 
+end 219 
+end 220 
+end 221 
+end 222 
+end 223 
+end 224 
+end 225 
+end 226 
+end 227 
+end 228 
+end 229 
+end 230 
+end 231 
+end 232 
+end 233 
+end 234 
+end 235 
+end 236 
+end 237 
+end 238 
+end 239 
+end 240 
+end 241 
+end 242 
+end 243 
+end 244 
+end 245 
+end 246 
+end 247 
+end 248 
+end 249 
+end 250 
+end 251 
+end 252 
+end 253 
+end 254 
+end 255 
+end 256 
+end 257 
+end 258 
+end 259 
+end 260 
+end 261 
+end 262 
+end
+[                                                                           ]
+[

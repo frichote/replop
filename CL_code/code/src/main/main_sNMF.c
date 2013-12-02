@@ -39,7 +39,7 @@ int main (int argc, char *argv[]) {
 	long long seed = -1;			// random seed
 	int m = 2; 
 	double e = 0.0;
-	int I = -1;
+	int I = 0;
 
 	print_head_snmf();
 

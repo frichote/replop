@@ -37,7 +37,7 @@
 void ALS(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp, int K,
 		int maxiter, double tol, int num_thrd, double alpha) 
 {
-	double prec2, sum2;
+	double prec2 = 1.0, sum2 = 0.0;
 	int k, i, j, l, c;
 	Memory mem;
 
@@ -72,13 +72,13 @@ void ALS(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp, int K,
 		normalize_Q(Q,N,K);
 
 		// stopping criteria
-		if (!k)
-			prec2 = sum2;
-		if (k > 15 && (prec2 < sum2 || fabs(sum2-prec2)/fabs(prec2) < tol)) { 
-			break;
-		}
+                if (k > 15 && fabs(prec2-sum2)/fabs(prec2) < tol) {
+                        break;
+                }
+                prec2 = sum2;
+
 		
-		prec2 = sum2;
+		//prec2 = sum2;
 
 	}
 	final_bar();

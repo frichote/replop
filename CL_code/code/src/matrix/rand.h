@@ -145,7 +145,7 @@ int rand_exp_int(float mean);
  * 
  * @return	the random integer (-1, if error)
  */
-int rand_vector(float *Pi, int size);
+int rand_vector(double *Pi, int size);
 
 /**
  * compute a random double from a gamma distribution

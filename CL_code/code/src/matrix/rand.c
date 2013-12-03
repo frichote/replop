@@ -206,11 +206,11 @@ int rand_exp_int(float mean)
 
 // rand_vector
 
-int rand_vector(float *Pi, int size)
+int rand_vector(double *Pi, int size)
 {
 	int i;
-	float r = frand();
-	float sum = 0;
+	double r = (double)frand();
+	double sum = 0;
 
 	for (i = 0; i < size; i++) {
 		sum += Pi[i];

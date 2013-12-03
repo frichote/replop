@@ -37,10 +37,11 @@ void read_geno_bituint(char *file_data, int N, int M, int Mp, int nc,
  * @param szbuff	line to read
  * @param m_file	opened file
  * @param I	missing data temporary vector
+ * @param nb	vector to count the number of occurences of each genotype
  */
 void fill_line_geno_bituint(bituint* dat, int Mp, 
 			int cmax, int j, int nc, char *file_data,  
-			char* szbuff, FILE* m_File, int* I);
+			char* szbuff, FILE* m_File, int* I, double *nb);
 
 /**
  * print data from bituint format in geno format

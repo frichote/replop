@@ -25,7 +25,7 @@
 #include "../io/io_error.h"
 #include "../io/io_tools.h"
 #include "../matrix/rand.h"
- #include <errno.h>
+#include <errno.h>
 
 // read_geno_bituint
 
@@ -36,6 +36,7 @@ void read_geno_bituint(char *file_data, int N, int M, int Mp, int nc, bituint* d
 	int max_char_per_line = 10*N;
 	char *szbuff = (char *) calloc(max_char_per_line, sizeof(char));
 	int *I = (int *)calloc(N,sizeof(int));
+	double *nb = (double *)calloc(nc,sizeof(double));
 
 	// open file
 	m_File = fopen_read(file_data);
@@ -43,7 +44,7 @@ void read_geno_bituint(char *file_data, int N, int M, int Mp, int nc, bituint* d
 	// for each line
 	while(fgets(szbuff, max_char_per_line, m_File) && (j<M)) {
 		// fill current line
-		fill_line_geno_bituint(dat, Mp, N, j, nc, file_data, szbuff, m_File, I);
+		fill_line_geno_bituint(dat, Mp, N, j, nc, file_data, szbuff, m_File, I, nb);
 		j ++;
 	}
 
@@ -61,13 +62,16 @@ void read_geno_bituint(char *file_data, int N, int M, int Mp, int nc, bituint* d
 // fill_line_geno_bituint
 
 void fill_line_geno_bituint(bituint* dat, int Mp, int N, 
-	int j, int nc, char *file_data, char* szbuff, FILE *m_File, int* I)
+		int j, int nc, char *file_data, char* szbuff, FILE *m_File, int* I, double *nb)
 {
-	int i = 0, value;
+	int i = 0, value, n, total;
 	char token;
 	int jd, jm, jc, c; 
 	double freq = 0.0; // frequency estimation
 	int count = 0; // missing data counter
+
+	for (n = 0; n < nc; n++)
+		nb[n] = 0.0;
 
 	// get first token
 	token = (char)szbuff[i];
@@ -86,7 +90,7 @@ void fill_line_geno_bituint(bituint* dat, int Mp, int N,
 				I[i] = 1;
 			} else {
 				printf("Internal Error: your data file contains missing"
-				" data.\n");
+						" data.\n");
 				exit(1);
 			}
 		} else { 
@@ -96,8 +100,9 @@ void fill_line_geno_bituint(bituint* dat, int Mp, int N,
 			// if known element (in 0,..,nc-1)
 			if (c < nc) {
 				jc = nc * j + c;
-				freq += value;
-			// if unknown element >= nc
+				//freq += value;
+				nb[c] ++ ;
+				// if unknown element >= nc
 			} else {
 				printf("Error: Unknown element '%d' in data file: %s.\n",value,file_data);
 				exit(1);
@@ -115,15 +120,22 @@ void fill_line_geno_bituint(bituint* dat, int Mp, int N,
 
 	// missing data inputation
 	if (count) {
-		freq /= (nc-1)*(N-count); 	// estimated frequency
+		//freq /= (nc-1)*(N-count); 	// estimated frequency
+		total = N - count;
+		for (n = 0; n < nc; n++)
+			nb[n] /= total;
 		for (i = 0; i < N; i++) {
 			if(I[i]) {
 				I[i] = 0;
 				jc = nc*j;
+				jc += rand_vector(nb, nc);	
+				/*
+				freq = nb[0];
 				for (c = 1; c < nc; c++) {
 					if (frand() > freq)
 						jc++; 
 				}
+				*/
 				jd = jc / SIZEUINT; // column in dat
 				jm = jc % SIZEUINT; // mask element
 				dat[i * Mp + jd] |= mask[jm];

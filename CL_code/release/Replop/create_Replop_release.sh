@@ -3,8 +3,8 @@
 # parameters
 prog="Replop"
 dir="Replop_v$1"
-src_list="io matrix LFMM bituint convert createDataSet crossEntropy nnlsm sNMF pca spfa thread"
-main_list="LFMM createDataSet crossEntropy sNMF ancestrymap2geno ancestrymap2lfmm geno2lfmm lfmm2geno pca ped2geno ped2lfmm vcf2geno"
+src_list="io matrix LFMM bituint convert createDataSet crossEntropy nnlsm sNMF pca spfa thread tracyWidom student"
+main_list="LFMM createDataSet crossEntropy sNMF ancestrymap2geno ancestrymap2lfmm geno2lfmm lfmm2geno pca ped2geno ped2lfmm vcf2geno tracyWidom"
 
 # color definition
 VERT="\\033[1;32m" NORMAL="\\033[0;39m" ROUGE="\\033[1;31m" JAUNE="\\033[1;33m"

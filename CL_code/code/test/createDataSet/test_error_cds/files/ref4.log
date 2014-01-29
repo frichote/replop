@@ -5,7 +5,7 @@ ERROR: the command is not written correctly.
 HELP: ./createDataSet options 
 
 mandatory:
-        -g input_file	        -- genotype file (in .geno format)
+        -x input_file	        -- genotype file (in .geno format)
 
 optional:
         -h                    -- help

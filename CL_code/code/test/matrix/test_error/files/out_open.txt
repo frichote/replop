@@ -1,3 +1,0 @@
-
-ERROR: unable to open file test.txt. Please, check that the name of the file you provided is correct.
-

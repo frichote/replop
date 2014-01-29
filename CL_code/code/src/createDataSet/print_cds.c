@@ -27,12 +27,12 @@ void print_help_cds()
 {
    printf("\nHELP: ./createDataSet options \n\n"
          "mandatory:\n"
-         "        -g input_file	        -- genotype file (in .geno format)\n\n"
+         "        -x input_file         -- genotype file (in .geno format)\n\n"
 
          "optional:\n"
          "        -h                    -- help\n"
          "        -m ploidy             -- 1 if haploid, 2 if diploid   (default: 2)\n"
-         "        -s seed               -- seed random init	      (default: random)\n"
+         "        -s seed               -- seed random init             (default: random)\n"
          "        -r percentage         -- percentage of masked data    (default: 0.05)\n\n"
          "        -o output_file        -- output file                  (default: input_file_I.geno)\n\n"
         );
@@ -48,7 +48,7 @@ void print_summary_cds (int N, int M, int m, long long seed, double e, char *inp
                 "        -L (number of loci)                        %d\n"
                 "        -s (seed random init)                      %lu\n"
                 "        -r (percentage of masked data)             %G\n"
-                "        -g (genotype file)                         %s\n"
+                "        -x (genotype file)                         %s\n"
                 "        -o (output file)                           %s\n"
                 , N, M, (unsigned long)seed, e, input, output);
 

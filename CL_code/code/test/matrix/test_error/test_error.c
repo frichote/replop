@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../../src/matrix/error.h"
+#include "../../../src/matrix/error_matrix.h"
 
 int main (int argc, char *argv[])
 {

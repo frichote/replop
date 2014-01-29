@@ -105,6 +105,8 @@ void ALS(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp, int K,
 		}
 	}
 
+	normalize_Q(Q,N,K);
+
 	// free memory
 	free_memory(mem);
 	free(mem);

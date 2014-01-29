@@ -13,7 +13,7 @@
  */
 typedef struct _mat *Mat;
 
-struct _mat {
+typedef struct _mat {
 	float *R;
 	double *U;
 	double *V;

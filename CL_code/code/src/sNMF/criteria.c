@@ -31,13 +31,12 @@ double least_square(bituint *X, double *Q, double *F, int N, int M, int nc,
 {
 	int i, k;
 	double like = 0.0;
-	double tmp, n1i;
+	double tmp;
 	int Mc = nc*M;
 	bituint value;
         int Md = Mc / SIZEUINT;
         int Mm = Mc % SIZEUINT;
         int jd, jm;
-	double norm1 = 0.0;
 
 	// for each individual
         for(i = 0; i < N; i++) {
@@ -57,7 +56,6 @@ double least_square(bituint *X, double *Q, double *F, int N, int M, int nc,
 			}
 		}
                 value = X[i*Mp+Md];
-		// regularization part
                 for (jm = 0; jm<Mm; jm++) {
 			tmp = 0.0;
                         for (k = 0; k < K; k++)
@@ -70,14 +68,17 @@ double least_square(bituint *X, double *Q, double *F, int N, int M, int nc,
 			}
 		value >>=1;
                 }
+		/*
+		// regularization part
 		n1i = 0.0;
 		for (k = 0; k < K; k++)
                         n1i += fabs(Q[i*K+k]);
 		norm1 += n1i * n1i;
+		*/
 	}
 
 	// likelihood
-	like += 2*sqrt(alpha)*norm1;
+	// like += 2*sqrt(alpha)*norm1;
 
 	return like;
 }

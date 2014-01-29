@@ -29,7 +29,7 @@
 // analyse_param
 
 void analyse_param_pca(	int argc, char *argv[], char *input, char* output_eva, 
-			char* output_eve, int *K, int *s) 
+			char* output_eve, int *K, int *c, int *s) 
 {
         int i;
 	char *tmp_file;
@@ -50,10 +50,10 @@ void analyse_param_pca(	int argc, char *argv[], char *input, char* output_eva,
                                 print_help_pca();
                                 exit(1);
                                 break;
-                        case 'g':
+                        case 'x':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-					print_error_pca("cmd","g (genotype file)");
+					print_error_pca("cmd","x (genotype file)");
                                 g_data = 0;
                                 strcpy(input,argv[i]);
                                 break;
@@ -69,6 +69,9 @@ void analyse_param_pca(	int argc, char *argv[], char *input, char* output_eva,
 					print_error_pca("cmd","a (output eigenvalues file)");
                                 strcpy(input,argv[i]);
                                 break;
+                        case 'c':
+				*c = 1;
+				break;
                         case 's':
 				*s = 1;
 				break;
@@ -80,7 +83,7 @@ void analyse_param_pca(	int argc, char *argv[], char *input, char* output_eva,
         }
 
         if (g_data == -1)
-		print_error_pca("option","-g genotype_file");
+		print_error_pca("option","-x genotype_file");
 
         if (*K <= 0)
 		*K = 0;

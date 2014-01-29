@@ -3,7 +3,7 @@
 \bibitem{Frichot_2013}
 Eric Frichot, Fran\c{c}ois Mathieu, Th\'{e}o Trouillon, Guillaume Bouchard, and
   Olivier Fran\c{c}ois.
-\newblock Fast inference of admixture coefficients using sparse non-negative
+\newblock Fast inference of individual ancestry coefficients using non-negative
   matrix factorization algorithms.
 \newblock {\em Submitted}.
 

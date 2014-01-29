@@ -3,7 +3,7 @@
 \usepackage{amssymb}
 \usepackage[french,english]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{graphics}
+\usepackage{graphicx}
 \usepackage{lineno}
 \usepackage{cite}
 \usepackage{float}
@@ -35,39 +35,37 @@
 {\it Please, print this reference manual only if it is necessary.}
 \end{center}
 
-\tableofcontents
-
 \noindent
 This short manual aims to help users to run {\tt sNMF} command-line engine on Mac and Linux. 
 
 \section{Description} 
-Inference of individual admixture coefficients, which is important for population genetic and association studies, is commonly performed using compute-intensive likelihood algorithms. With the availability of large population genomic data sets, fast versions of likelihood algorithms have attracted considerable attention. Reducing the computational burden of estimation algorithms remains, however, a major challenge. Here, we present a fast and efficient method for estimating individual admixture coefficients based on sparse non-negative matrix factorization algorithms. We implemented our method in the computer program {\tt sNMF}, and applied it to human and plant genomic data sets. The performances of {\tt sNMF} were then compared to the likelihood algorithm implemented in the computer program {\tt ADMIXTURE}.  Without loss of accuracy, {\tt sNMF} computed estimates of admixture coefficients within run-times approximately 10 to 30 times faster than those of {\tt ADMIXTURE}
+Inference of individual ancestry coefficients, which is important for population genetic and association studies, is commonly performed using computer-intensive likelihood algorithms. With the availability of large population genomic data sets, fast versions of likelihood algorithms have attracted considerable attention. Reducing the computational burden of estimation algorithms remains, however, a major challenge. Here, we present a fast and efficient method for estimating individual ancestry coefficients based on sparse non-negative matrix factorization algorithms. We implemented our method in the computer program {\tt sNMF}, and applied it to human and plant data sets. The performances of {\tt sNMF} were then compared to the likelihood algorithm implemented in the computer program {\tt ADMIXTURE}.  Without loss of accuracy, {\tt sNMF} computed estimates of ancestry coefficients with run-times approximately 10 to 30 times shorter than those of {\tt ADMIXTURE}.
 \\
 \\
 \noindent
-\cite{Frichot_2013} Eric Frichot, François Mathieu, Théo Trouillon, Guillaume Bouchard, Olivier François. {\it Fast Inference of Admixture Coefficients Using Sparse Non-negative Matrix Factorization Algorithms}, submitted. 
+\cite{Frichot_2013} Eric Frichot, François Mathieu, Théo Trouillon, Guillaume Bouchard, Olivier François. {\it Fast Inference of Individual Ancestry Coefficients Using Non-negative Matrix Factorization Algorithms}, submitted. 
 
 \section{Installation} 
 
 \noindent
 To install {\tt sNMF} command-line version, unzip the sNMF\_CL.zip file, and run the 
 install script (install.command) from the {\tt sNMF} directory.
-From a terminal shell, go to {\tt sNMF} main directory and type "./install.command".
+From a terminal shell, go to the {\tt sNMF} main directory and type "./install.command".
 If the script is not executable, type "chmod +x install.command" and then "./install.command".
-A set of binaries should be created in {\tt sNMF} directory.
+A set of binaries should be created in the {\tt sNMF} directory.
 
 \section{Data format}
 
 \subsection{input file}
-The {\tt sNMF} input file consists of a single genotype file in {\bf geno} format. 
+The {\tt sNMF} input file consists of a single genotype file in the {\bf geno} format. 
 \begin{itemize}
 \item {\bf geno} (example.geno)
 
 The {\bf geno} format has one row for each SNP.
   Each row contains 1 character per individual:
-  0 means zero copies of reference allele.
-  1 means one copy of reference allele.
-  2 means two copies of reference allele.
+  0 means zero copies of the reference allele.
+  1 means one copy of the reference allele.
+  2 means two copies of the reference allele.
   9 means missing data.
 
 Below, an example of geno file for $n=3$ individuals and $L=5$ loci.
@@ -83,37 +81,37 @@ Below, an example of geno file for $n=3$ individuals and $L=5$ loci.
 \end{itemize}
 
 \noindent
-We also maintain C functions to convert from the following formats to geno format.
+{\tt sNMF} also propose C functions to convert from the following formats to the geno format.
 \begin{itemize}
 \item {\bf ped} (example.ped)
 
-The {\bf ped} format has one row for each individual. Each row contains 6 columns of information about the individual, plus two genotype columns for each SNP. Each column can be separated by spaces or tabulations. Genotype format must be either 0ACGT or 01234, where 0 means missing data. The first 6 columns of the genotype file are: 1st column is family ID, 2nd column is sample ID, 3rd and 4th column are sample IDs of parents, 5th column is gender (male is 1, female is 2), 6th column is case/control status (1 is control, 2 is case), quantitative trait value or population group label. 
+The {\bf ped} format has one row for each individual. Each row contains 6 columns of information for each individual, plus two genotype columns for each SNP. Each column must be separated by spaces or tabulations. Genotype format must be either 0ACGT or 01234, where 0 means missing data. The first 6 columns of the genotype file are: 1st column is family ID, 2nd column is sample ID, 3rd and 4th columns are sample IDs of parents, 5th column is gender (male is 1, female is 2), 6th column is case/control status (1 is control, 2 is case), quantitative trait value or population group label. 
 The ped format is also described \href{http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml#ped}{here}.
 
 Below, an example of ped file for $n=3$ individuals and $L=5$ loci.
 \begin{center}
 \footnotesize
 \begin{Verbatim}[frame=single]
-1	SAMPLE0 0 0 2 2	1 2 3 3	1 1 2 1
-2	SAMPLE1 0 0 1 2 2 1 1 3 0 4 1 1
-3	SAMPLE2 0 0 2 1 2 2 3 3	1 4 1 2
+1 SAMPLE0 0 0 2 2 1 2 3 3 1 1 2 1
+2 SAMPLE1 0 0 1 2 2 1 1 3 0 4 1 1
+3 SAMPLE2 0 0 2 1 2 2 3 3 1 4 1 2
 \end{Verbatim}
 \end{center}
 
 The format of the command line is:
 \begin{Verbatim}[frame=single]
-./ped2geno  input_file [output_file]
+./bin/ped2geno  input_file [output_file]
 \end{Verbatim}
 where 
 \begin{itemize}
 \item \verb|input_file| is the path for the input file (in ped format).
 \item \verb|output_file| is the path for the output\_file (in geno format). 
-By default, the name of the output file is the name of the input\_file with extension .geno.
+By default, the name of the output file is the name of the input\_file with .geno extension.
 
 \end{itemize}
 
 \item {\bf ancestrymap} (example.ancestrymap)\\
-The {\bf ancestrymap} format has one row for each genotype. Each row has 3 columns: 1st column is SNP name, 2nd column is sample ID, 3rd column is number of alleles. It is assumed that the genotypes for a given SNP name are written in consecutive line. It is also assumed that the genotypes for a set of individuals are given in the same order of lines. The number of alleles can be the number of reference alleles or the number of derived alleles as long as it is the same choice for an entire SNP. It is assumed that Missing genotypes are encoded by the value 9.
+The {\bf ancestrymap} format has one row for each genotype. Each row has 3 columns: 1st column is SNP name, 2nd column is sample ID, 3rd column is number of alleles. It is assumed that the genotypes for a given SNP name are written in consecutive lines. It is also assumed that the genotypes for a set of individuals are given in the same order as lines. The number of alleles can be the number of reference alleles or the number of derived alleles as long as it is the same choice for an entire SNP. It is assumed that missing genotypes are encoded by the value 9.
 
 Below, an example of ancestrymap file for $n=3$ individuals and $L=5$ loci.
 \begin{center}
@@ -136,13 +134,13 @@ rs3333  SAMPLE3 1
 
 The format of the command line is:
 \begin{Verbatim}[frame=single]
-./ancestrymap2geno  input_file [output_file]
+./bin/ancestrymap2geno  input_file [output_file]
 \end{Verbatim}
 where 
 \begin{itemize}
 \item \verb|input_file| is the path for the input file (in ancestrymap format).
 \item \verb|output_file| is the path for the output\_file (in geno format). 
-By default, the name of the output file is the name of the input\_file with extension .geno.
+By default, the name of the output file is the name of the input\_file with .geno extension.
 \end{itemize}
 
 \item {\bf vcf} (example.vcf)\\
@@ -168,7 +166,7 @@ Below, an example of vcf file for $n=3$ individuals and $L=5$ loci.
 
 The format of the command line is:
 \begin{Verbatim}[frame=single]
-./vcf2geno  input_file [output_file]
+./bin/vcf2geno  input_file [output_file]
 \end{Verbatim}
 where 
 \begin{itemize}
@@ -181,7 +179,7 @@ By default, the name of the output file is the name of the input\_file with exte
 The {\bf lfmm} format has one row for each individual. Each row contains one value per SNP (separated by spaces or tabulations): the number of alleles. The number of alleles can be the number of reference alleles or the number of derived alleles as long as it is the same choice for an entire SNP. Missing genotypes are encoded by the value 9 or -9. 
 
 
-Below, an example of ancestrymap file for $n=3$ individuals and $L=5$ loci.
+Below, an example of lfmm file for $n=3$ individuals and $L=5$ loci.
 \begin{center}
 \footnotesize
 \begin{Verbatim}[frame=single]
@@ -193,7 +191,7 @@ Below, an example of ancestrymap file for $n=3$ individuals and $L=5$ loci.
 
 The format of the command line is:
 \begin{Verbatim}[frame=single]
-./lfmm2geno  input_file [output_file]
+./bin/lfmm2geno  input_file [output_file]
 \end{Verbatim}
 where 
 \begin{itemize}
@@ -215,46 +213,49 @@ There are 2 {\bf output files}.
 \item The first file (with extension {\bf .Q}) contains individual admixture coefficients.
 It is a matrix with $n$ rows (the number of individuals) and $K$ columns (the 
 number of ancestral populations).
-\item The second file (with extension {\bf .F}) contains the ancestral genotype frequencies.
-It is a matrix with $nc\times L$ lines (the number of alleles times the number of SNPs) and $K$ columns (the 
-number of ancestral populations). For each SNP, the first line contains the ancestral frequencies for allele 0, the second line for allele 1, ... .
+\item The second file (with extension {\bf .G}) contains the ancestral genotype frequencies.
+It is a matrix with $n_a\times L$ lines (the number of alleles times the number of SNPs) and $K$ columns (the 
+number of ancestral populations). For each SNP, the first row contains the ancestral frequencies for allele 0, the second line for allele 1, ... .
 \end{itemize}
 
-\section{Run the programs}
-The program is executed from a command line. The format is:
+\section{Run the program}
+The program can be executed from a command line. The format is:
 \begin{Verbatim}[frame=single]
-./sNMF -g genotype_file.geno -K number_of_ancestral_populations 
+./bin/sNMF -x genotype_file.geno -K number_of_ancestral_populations 
 \end{Verbatim}
 
 \noindent
-All these options are mandatory. There is no order for the options in the command line. 
-Here is a description of the options:
+All the options are mandatory. There is no order for options in the command line. 
+Here is a description of options:
 \begin{itemize}
-\item \verb|-g genotype_file.geno| is the path for the genotype file (in .geno format).
+\item \verb|-x genotype_file.geno| is the path for the genotype file (in .geno format).
 \item \verb|-K number_of_ancestral_populations| is the number of ancestral populations. 
 \end{itemize}
 
 \noindent
 Additional options are available:
 \begin{itemize}
-\item \verb|-p p| is the number of processes that you choose to use if you run the algorithm in 
-a parrallel computer. Be aware that the number of process has to be lower or equal than the number 
-of physical processes available on your computer (default: 1).
-\item \verb|-i iteration_number| is the max number of iterations in algorithm (default: 200). 
-The algorithm should not go until the max number of iterations. The stopping criterion should 
-depend on the tolerance error only.
-\item \verb|-a alpha| is the value of the regularization parameter (by default: 101). Results can depend on the value of this parameter, especially for small data sets. 
+\item \verb|-a alpha| is the value of the regularization parameter (by default: 0). Results can depend on the value of this parameter, especially for small data sets. 
+\item \verb|-q output_Q| is the path for the output file with ancestry coefficients. By default, the name of the output file is the name of the input file with extension .K.Q.
+\item \verb|-g output_G| is the path for the output file with ancestral genotype frequencies. By default, the name of the output file is the name of the input file with extension .K.G.
+\item \verb|-c perc| percentage of masked genotypes. If this option is set, the cross-entropy criterion is calculated (see section Cross-Entropy criterion). If the option is set without percentage, the default percentage is 0.05.
 \item \verb|-e tolerance| is the tolerance error (by default: 0.0001). 
+\item \verb|-i iteration_number| is the max number of iterations of the algorithm (default: 200). 
+\item \verb|-I nb_SNPs| starts the algorithm with a run of sNMF using a subset of nb\_SNPs random SNPs. If this option is set with nb\_SNPs, the number of randomly chosen SNPs is the minimum between 10000 and 10 \% of all SNPs. The option can considerably speeds up sNMF estimation for very large data sets.
+\item \verb|-Q input_Q| is the path for an initialisation file for Q, the individual admixture coefficients. If both \verb|-I| and \verb|-Q| are set, \verb|-Q| is chosen.
 \item \verb|-s seed| is the initialization for the random parameter (by default: random). 
 \item \verb|-m ploidy|  1 if haploid, 2 if diploid (default: 2). 
+\item \verb|-p p| is the number of CPU that you choose to use if you run the algorithm in 
+a parallel computer. Be aware that the number of processes has to be lower or equal than the number 
+of physical processes (CPU units) available on your computer (default: 1).
 \end{itemize}
 
 
 \noindent
-If you need a summary of the options, you can use the \verb|-h| option by typing the command line
+If you need a summary of options, you can use the \verb|-h| option by typing the command line
 \footnotesize
 \begin{Verbatim}[frame=single]
-./sNMF -h
+./bin/sNMF -h
 \end{Verbatim}
 \noindent
 \normalsize
@@ -264,20 +265,28 @@ A full example is available at the end of this note.
 
 \section{Cross-Entropy criterion}
 
-We provide two programs that compute a cross entropy score for the data.
+\paragraph{Goal}
+The cross-entropy criterion is a technique based on the prediction of masked genotypes to evaluate
+the error of ancestry estimation. This criterion will help to choose the 
+best number of ancestral population ($K$) and the best run among a set of runs. A smaller value
+of cross-entropy means a better run. An example is displayed in the tutorial section.
+
+\paragraph{programs}
+The cross-Entropy criterion of a single {\tt sMNF} run can be calculated using the \verb|-c| option in {\tt sNMF}. 
+We also provide two programs that compute the cross-entropy criterion for the data separately. 
 \begin{itemize}
-\item A first program creates a data set with a given percentage of missing data from your original data set.
+\item A first program creates a data set with a given percentage of masked data from your original data set.
 The command line format is:
 \begin{Verbatim}[frame=single]
-./createDataSet -g genotype_file.geno
+./bin/createDataSet -x genotype_file.geno
 \end{Verbatim}
 
 The mandatory option is:
 \begin{itemize}
-\item \verb|-g genotype_file.geno| is the path for the genotype file (in .geno format).
+\item \verb|-x genotype_file.geno| is the path for the genotype file (in .geno format).
 \end{itemize}
 
-It will create a file with around 5 \% of masked data with the name genotype\_file{\bf\_I}.geno with a {\bf\_I} extension to differentiate this file from the original file. 
+It will create a file with around 5 \% of masked data with the name genotype\_file{\bf\_I}.geno. {\bf\_I} extension differentiates this file from the original file. 
 
 \noindent
 Other options (not mandatory):
@@ -291,73 +300,171 @@ Other options (not mandatory):
 \item A second program calculates the cross-entropy criterion for all data and for the masked data from the 
 output of {\tt sNMF}. The cross-entropy criterion is useful to choose the best run for numbers of 
 ancestral distinct populations ($K$) and different values of the regularization parameter ($\alpha$). 
-A smaller value of cross-entropy with missing data means a better prediction of the data.
+A smaller value of cross-entropy with missing data means a better prediction of the masked data.
 The command line format is:
 \begin{Verbatim}[frame=single]
-./crossEntropy -g genotype_file.geno -K number_of_ancestral_populations
+./bin/crossEntropy -x genotype_file.geno -K number_of_ancestral_populations
 \end{Verbatim}
 
 The mandatory options are:
 \begin{itemize}
-\item \verb|-g genotype_file.geno| is the path for the genotype file (in .geno format).
-\item \verb|-K number_of_ancestral_populations| is the number of $K$ of ancestral populations.
+\item \verb|-x genotype_file.geno| is the path for the genotype file (in .geno format).
+\item \verb|-K number_of_ancestral_populations| is the number of ancestral populations.
 \end{itemize}
 
 In this case, the output from {\tt sNMF}, the files with masked data, the original files and the results files 
 are stored in the same directory.
 
 \noindent
-Other option (are not mandatory):
+Other option (not mandatory):
 \begin{itemize}
 \item \verb|-m ploidy|  1 if haploid, 2 if diploid (default: 2). 
 \end{itemize}
 
 \end{itemize}
 
+To summarize, the two following sets of command-lines will both calculate the cross-entropy criterion. 
+\begin{Verbatim}[frame=single]
+./bin/sNMF -x genotype_file.geno -K K -c
+\end{Verbatim}
+
+\begin{Verbatim}[frame=single]
+./bin/createDataSet -x genotype_file.geno 
+./bin/sNMF -x genotype_file_I.geno -K K
+./bin/crossEntropy -x genotype_file.geno -K K
+\end{Verbatim}
+
 \section{Tutorial}
 
 \subsection{Data set}
-The data set that we analyze in this tutorial is an Asian human data set of SNPs data.
+The data set that we analyze in this tutorial is an Asian human data set.
 This data is a worldwide sample of genomic DNA (10757 SNPs) from 934 individuals,
 taken from the Harvard Human Genome Diversity Project - Centre
-Etude Polymorphism Humain (Harvard HGDP-CEPH)2 . 
+Etude Polymorphism Humain (Harvard HGDP-CEPH). 
 In those data, each marker has been ascertained in samples of Mongolian
 ancestry (referenced population HGDP01224) \cite{Patterson_2012}. 
 
-\subsection{Create a data set with masked data}
+\subsection{Example}
+\paragraph{Create a data set with masked data}
 
 In the main directory, type:
 \begin{Verbatim}[frame=single]
-./createDataSet -g examples/panel11.geno
+./bin/createDataSet -x examples/panel11.geno
 \end{Verbatim}
+\noindent
+output for createDataSet
+\begin{Verbatim}[frame=single]
+summary of the options:
 
+        -n (number of individuals)                 934
+        -L (number of loci)                        10757
+        -s (seed random init)                      11162993670188721480
+        -r (percentage of masked data)             0.05
+        -x (genotype file)                         examples/panel11.geno
+        -o (output file)                           examples/panel11_I.geno
+        - diploid
+
+Write genotype file with masked data examples/panel11_I.geno:		OK.
+\end{Verbatim}
 \noindent
 A file with 5 \% of masked data with path \verb|examples/panel11_I.geno| has been created.
 
-\subsection{Run {\tt sNMF}}
+\paragraph{Run {\tt sNMF}}
 
 Then, run {\tt sNMF} for the data set with 5 \% of masked data (with $K=5$ for example):
 \begin{Verbatim}[frame=single]
-./sNMF -g examples/panel11_I.geno -K 5
+./bin/sNMF -x examples/panel11_I.geno -K 5
+\end{Verbatim}
+\noindent
+output for sNMF
+\begin{Verbatim}[frame=single]
+./bin/sNMF -x examples/panel11_I.geno -K 5 
+summary of the options:
+
+        -n (number of individuals)             934
+        -L (number of loci)                    10757
+        -K (number of ancestral pops)          5
+        -x (input file)                        examples/panel11_I.geno
+        -q (individual admixture file)         examples/panel11_I.5.Q
+        -g (ancestral frequencies file)        examples/panel11_I.5.G
+        -i (number max of iterations)          200
+        -a (regularization parameter)          0
+        -s (seed random init)                  11162857829069388553
+        -e (tolerance error)                   0.0001
+        -p (number of processes)               1
+        - diploid
+
+Read genotype file examples/panel11_I.geno:		OK.
+
+Main algorithm:
+[                                                                           ]
+[===============================================]
+Number of iterations: 142
+
+Least-square error: 4597146.245722
+Write individual ancestry coefficient file examples/panel11_I.5.Q:		OK.
+Write ancestral allele frequency coefficient file examples/panel11_I.5.G:	OK.
 \end{Verbatim}
 
 \noindent
-The results files \verb|examples/panel11_I.Q| \verb|examples/panel11_I.F| have been created.
+The results files \verb|examples/panel11_I.Q| \verb|examples/panel11_I.G| have been created.
+{\tt sNMF} also dislpays the number of iterations and the least-squares error: $||X - QG||_F^2$.
 
-\subsection{Compute the Cross-Entropy criterion}
+\paragraph{Compute the Cross-Entropy criterion}
 
 Finally, calculate the cross-entropy criterion:
 \begin{Verbatim}[frame=single]
-./crossEntropy -g examples/panel_11.geno -K 5
+./bin/crossEntropy -x examples/panel11.geno -K 5
+\end{Verbatim}
+\noindent
+log for crossEntropy:
+\begin{Verbatim}[frame=single]
+summary of the options:
+
+        -n (number of individuals)         934
+        -L (number of loci)                10757
+        -K (number of ancestral pops)      5
+        -x (genotype file)                 examples/panel11.geno
+        -q (individual admixture)          examples/panel11_I.5.Q
+        -g (ancestral frequencies)         examples/panel11_I.5.G
+        -i (with masked genotypes)         examples/panel11_I.geno
+        - diploid
+
+Cross-Entropy (all data):	 0.746568
+Cross-Entropy (masked data):	 0.756867
+\end{Verbatim}
+\noindent
+The {\tt crossEntropy} program displays the cross-entropy calculated on all data and on masked data.
+The cross-entropy for all data is always lower than the cross-entropy for masked data. The cross-entropy value 
+useful to compare runs is the {\bf cross-entropy for masked data}.
+
+
+\paragraph{All in once}
+We can also run all three programs in once using the \verb|-c| option:
+\begin{Verbatim}[frame=single]
+./bin/sNMF -x examples/panel11.geno -K 5 -c
 \end{Verbatim}
 
-\noindent
-With this procedure, we can compute a value for the cross-entropy criterion for each of your analysis. 
-It is a way to  choose the best run for different number of ancestral populations ($K$) and for 
-different values of the regularization parameter ($\alpha$).
+\subsection{How to choose $K$}
+
+To choose the best value for $K$, we launch {\tt sNMF} for each value of $K$ from 2 to 10. The figure below displays the cross-entropy value obtained for each value of $K$. It seems that $K=6$ is the best value according to the cross-entropy criterion because the cross-entropy does not seem to decrease for $K$ greater than 6. This analysis has for sure to be completed by displaying the admixture barplots associated with each result. 
+\begin{Verbatim}[frame=single]
+for K in `seq 2 10` 
+do 
+	echo K=$K; ./bin/sNMF -x examples/panel11.geno -K $K -c > examples/panel11.$K.log
+done
+\end{Verbatim}
+
+\centerline{\includegraphics[width=15cm]{ce.pdf}}
+\noindent{\bf Figure.}  {\bf Values of the cross-entropy criterion for {\tt sNMF} runs (HGDP01224).} Values of the cross-entropy criterion for the number of clusters ranging from 2 to 10.
+\\
+\\
+\noindent {\it Tips:} It is clearly useful to perform several runs of {\tt sNMF} for the same value of $K$ and to choose the run with the smallest value of the cross-entropy criterion.
+
+
 
 \section{Contact}
-If you need assistance, do not hesitate to send me an email (efrichot@gmail.com or eric.frichot@imag.fr). 
+If you need assistance, do not hesitate to send us an email (efrichot@gmail.com or eric.frichot@imag.fr or olivier.francois@imag.fr). 
 A FAQ (Frequently Asked Questions) section is available 
 on our webpage (ttp://membres-timc.imag.fr/Olivier.Francois/snmf.html). 
 {\tt sNMF} software is still under development. All your comments and feedbacks are more than welcome.

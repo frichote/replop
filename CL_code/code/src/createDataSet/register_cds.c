@@ -59,7 +59,7 @@ void analyse_param_cds(	int argc, char *argv[], int* m, long long* s,
 			case 'r':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-					print_error_cds("cmd","r (percentage of missing data)");
+					print_error_cds("cmd","r (percentage of masked data)");
                                 *e = (double) atof(argv[i]);
 				if (*e < 0) 
 					*e =  0;
@@ -75,10 +75,10 @@ void analyse_param_cds(	int argc, char *argv[], int* m, long long* s,
                                 print_licence_snmf();
                                 exit(1);
                                 break;
-                        case 'g':
+                        case 'x':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-					print_error_cds("cmd","g (genotype file)");
+					print_error_cds("cmd","x (genotype file)");
                                 g_data = 0;
                                 strcpy(input,argv[i]);
                                 break;
@@ -96,7 +96,7 @@ void analyse_param_cds(	int argc, char *argv[], int* m, long long* s,
         }
 
         if (g_data == -1)
-		print_error_cds("option","-g genotype_file");
+		print_error_cds("option","-x genotype_file");
 
 	if (g_m && *m <= 0)
 		print_error_cds("missing","");

@@ -91,8 +91,10 @@ void write_DIC(char *file_data, double deviance, double DIC);
  * @param D		D number of environmental variables
  * @param all		if all variables together
  * @param nd		number of the current env variable
+ * @param K		number of latent factors
  */
-void write_zscore_double(char *output_file, int M, double *zscore, int D, int all, int nd);
+void write_zscore_double(char *output_file, int M, double *zscore, int D, int all, 
+	int nd, int K);
 
 /**
  * compute the current residual variance

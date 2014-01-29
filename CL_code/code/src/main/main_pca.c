@@ -29,16 +29,17 @@ int main (int argc, char *argv[])
 {
 	int K = 0;			// number of individuals
 	int s = 0;			// scale parameter
+	int c = 0;			// center parameter
 	char input_file[512];		// input file
 	char output_eva_file[512] = "";	// output eigenvalues file
 	char output_eve_file[512] = "";	// output eigenvectors file
 
 	// analyze command-line
 	analyse_param_pca(argc, argv, input_file, output_eva_file, 
-		output_eve_file, &K, &s);
+		output_eve_file, &K, &c, &s);
 
 	// run function
-	pca(input_file, output_eva_file, output_eve_file, K, s);
+	pca(input_file, output_eva_file, output_eve_file, K, c, s);
 
 	return 0;
 }

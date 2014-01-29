@@ -37,7 +37,7 @@ test_criteria.c:18:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
 colorgcc test_criteria.o -o test_criteria ../../../obj/bituint/*.o ../../../obj/convert/*.o ../../../obj/createDataSet/*.o ../../../obj/crossEntropy/*.o ../../../obj/io/*.o ../../../obj/lapack/*.o ../../../obj/LFMM/*.o ../../../obj/matrix/*.o ../../../obj/nnlsm/*.o ../../../obj/sNMF/*.o -lm -lpthread -Wall -Wextra -g -O3 -Wall -Wextra
 [1;36m # Tests [0;39m
 [1;32m [OK] [0;39m ok_cl() ./test_criteria files/R.txt files/Q.txt files/F.txt 10 100 files/K.txt 3 files/alpha.txt files/out_LS.txt
-[1;32m [OK] [0;39m ok_matrix() ./test_criteria
+[1;31m [FAILED] [0;39m ok_matrix() ./test_criteria
 
 [1;34m ###### file: test_error_nmf ######
 [1;36m # Test files creation
@@ -62,38 +62,40 @@ rm -f *.o test_register_snmf
 colorgcc -lm -lpthread -Wall -Wextra   -c -o test_register_snmf.o test_register_snmf.c
 colorgcc test_register_snmf.o -o test_register_snmf ../../../obj/bituint/*.o ../../../obj/convert/*.o ../../../obj/createDataSet/*.o ../../../obj/crossEntropy/*.o ../../../obj/io/*.o ../../../obj/lapack/*.o ../../../obj/LFMM/*.o ../../../obj/matrix/*.o ../../../obj/nnlsm/*.o ../../../obj/sNMF/*.o -lm -lpthread -Wall -Wextra -g -O3 -Wall -Wextra
 [1;36m # Tests [0;39m
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10
 [1;32m [OK] [0;39m ok_log() ./test_register_snmf -h
 [1;32m [OK] [0;39m ok_log() ./test_register_snmf -l
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -a 100 -c 0.01 -e 0.1 -i 100 -s 2 -m 2 -p 2 -q output.Q -f output.F
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -a 100 -c -e 0.1 -i 100 -s 2 -m 2 -p 2 -q output.Q -f output.F
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -m 1
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -m 2
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -m 3
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -a 100 -c 0.01 -e 0.1 -i 100 -s 2 -m 2 -p 2 -q output.Q -g output.G -I 
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -a 100 -c 0.01 -e 0.1 -i 100 -s 2 -m 2 -p 2 -q output.Q -Q inputQ -I 1000
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -a 100 -c -e 0.1 -i 100 -s 2 -m 2 -p 2 -q output.Q -g output.G -Q input.Q
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -m 1
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -m 2
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -m 3
 [1;32m [OK] [0;39m ok_log() ./test_register_snmf -
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -a 
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -a -1
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -c -1
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -c 0
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -c 
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -c 1
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -e 
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -e 0
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -e -1
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -i 0
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -i 
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -i -1
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -s
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -s -1
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -m
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -m 0
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -p
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -p 0
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -q 
-[1;32m [OK] [0;39m ok_log() ./test_register_snmf -g input_file.txt -K 10 -f 
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -a 
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -a -1
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -c -1
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -c 0
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -c 
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -c 1
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -e 
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -e 0
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -e -1
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -i 0
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -i 
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -i -1
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -s
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -s -1
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -m
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -m 0
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -p
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -p 0
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -q 
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -g 
+[1;32m [OK] [0;39m ok_log() ./test_register_snmf -x input_file.txt -K 10 -Q 
 
 [1;34m ###### file: test_print_snmf ######
 [1;36m # Test files creation

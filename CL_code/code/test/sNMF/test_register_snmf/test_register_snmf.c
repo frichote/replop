@@ -15,23 +15,25 @@
 int main (int argc, char *argv[])
 {
 	// parameters
-	int m = 2, K, iter = 1000, num_thrd = 1;
+	int m = 2, K = 0, iter = 1000, num_thrd = 1;
 	double alpha = 100, tol = 0.0001, e = 0.0;
 	long long s = 1;
 	char input[512];
-	char output_Q[512];
-	char output_F[512];
+	char input_Q[512] = "";
+	char output_Q[512] = "";
+	char output_F[512] = "";
 	int N = 10, M = 100;
+	int I = 0;
 
 	// command line args configuration
 	
 	// test analyze_param_snmf
 	analyse_param_snmf(argc, argv, &m, &s, &K, &alpha, &tol, &e,
-		&iter, input, &num_thrd, output_Q, output_F);
+		&iter, input, &num_thrd, input_Q, output_Q, output_F, &I);
 
 	// test print_help_snmf
 	print_summary_snmf(N, M, m, s, K, alpha, tol, iter, 
-		input, num_thrd, e, output_Q, output_F);	
+		input, num_thrd, e, input_Q, output_Q, output_F, I);	
 
 	return 0;
 }

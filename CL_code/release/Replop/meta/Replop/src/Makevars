@@ -1,6 +1,6 @@
-SOURCES=$(wildcard bituint/*.c io/*.c lapack/*.c LFMM/*.c matrix/*.c nnlsm/*.c sNMF/*.c createDataSet/*.c crossEntropy/*.c pca/*.c convert/*.c )
+SOURCES=$(wildcard bituint/*.c io/*.c lapack/*.c LFMM/*.c matrix/*.c nnlsm/*.c sNMF/*.c createDataSet/*.c crossEntropy/*.c pca/*.c convert/*.c tracyWidom/*.c)
 
-OBJECTS = R_LFMM.o R_crossEntropy.o R_createDataSet.o R_sNMF.o R_ancestrymap2geno.o R_ancestrymap2lfmm.o R_geno2lfmm.o R_lfmm2geno.o R_pca.o R_ped2geno.o R_ped2lfmm.o R_vcf2geno.o $(SOURCES:.c=.o)
+OBJECTS = R_LFMM.o R_crossEntropy.o R_createDataSet.o R_sNMF.o R_ancestrymap2geno.o R_ancestrymap2lfmm.o R_geno2lfmm.o R_lfmm2geno.o R_pca.o R_ped2geno.o R_ped2lfmm.o R_vcf2geno.o R_tracyWidom.o $(SOURCES:.c=.o)
 
 PKG_CPPFLAGS=-I.
 

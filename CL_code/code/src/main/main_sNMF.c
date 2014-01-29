@@ -35,11 +35,13 @@ int main (int argc, char *argv[]) {
 	double tol = 0.0001;		// tolerance criterion
 	char output_file_F[512] = "";	// output file for ancestral allele frequencies
 	char output_file_Q[512] = "";	// output file for ancestral admixture coefficents
+	char input_file_Q[512] = "";	// input file for ancestral admixture coefficents
 	char input_file[512];		// input file
 	long long seed = -1;			// random seed
 	int m = 2; 
 	double e = 0.0;
 	int I = 0;
+	double all_ce = 0, masked_ce = 0;
 
 	print_head_snmf();
 
@@ -48,12 +50,13 @@ int main (int argc, char *argv[]) {
 	// analyse of the command line
 	analyse_param_snmf(argc,argv, &m, &seed,
                        	&K, &alpha, &tol, &e, &maxiter,
-                        input_file, &num_thrd,
+                        input_file, &num_thrd, input_file_Q,
 			output_file_Q, output_file_F, &I);
 
 	// run function
 	sNMF(input_file, K, alpha, tol, e, maxiter, seed, m, num_thrd, 
-		output_file_Q, output_file_F, I);
+		input_file_Q, output_file_Q, output_file_F, I,
+		&all_ce, &masked_ce);
 
 	return 0;
 }

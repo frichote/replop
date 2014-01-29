@@ -62,7 +62,7 @@ void calc_cov(double *data,  int N, int M, double *vect)
 		}
 		if (!nb) {
 			printf("Error: It seems that individuals %d has"
-				" too many misisng data.\n", i1+1);
+				" too many missing data.\n", i1+1);
 			exit(1);
 		}
 		tmp /= nb;

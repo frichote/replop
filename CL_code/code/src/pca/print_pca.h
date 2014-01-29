@@ -20,12 +20,13 @@ void print_help_pca();
  * @param N     the number of individuals
  * @param M     the number of loci
  * @param K     the number of latent factors
+ * @param c	data centered (boolean)
  * @param s	data scaled (boolean)
  * @param input         genotype file
  * @param input_values  eigenvalues file
  * @param input_vectors eigenvectors file
  */
-void print_summary_pca( int N, int M, int K, int s,
+void print_summary_pca( int N, int M, int K, int c, int s,
                         char *input, char *output_values,
                         char *output_vectors);    
 

@@ -2,40 +2,15 @@
 [1;36m # Test files creation
 [1;36m # Make [0;39m
 rm -f *.o test_beta
-colorgcc -lm -lpthread -Wall -Wextra   -c -o test_beta.o test_beta.c
+colorgcc -lm -lpthread -Wall -Wextra -g   -c -o test_beta.o test_beta.c
 test_beta.c: In function ‘main’:
 test_beta.c:19:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
-colorgcc test_beta.o -o test_beta ../../../obj/bituint/*.o ../../../obj/convert/*.o ../../../obj/createDataSet/*.o ../../../obj/crossEntropy/*.o ../../../obj/io/*.o ../../../obj/lapack/*.o ../../../obj/LFMM/*.o ../../../obj/matrix/*.o ../../../obj/nnlsm/*.o ../../../obj/sNMF/*.o -lm -lpthread -Wall -Wextra -g -O3 -Wall -Wextra
+colorgcc test_beta.o -o test_beta ../../../obj/bituint/*.o ../../../obj/convert/*.o ../../../obj/createDataSet/*.o ../../../obj/crossEntropy/*.o ../../../obj/io/*.o ../../../obj/lapack/*.o ../../../obj/LFMM/*.o ../../../obj/matrix/*.o ../../../obj/nnlsm/*.o ../../../obj/sNMF/*.o -lm -lpthread -Wall -Wextra -g -g -O3 -Wall -Wextra
 [1;36m # Tests [0;39m
-Segmentation fault (core dumped)
-Error in file(file, "rt") : cannot open the connection
-Calls: as.matrix -> read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file 'files/out_m_beta1.txt': No such file or directory
-Execution halted
-[1;31m [FAILED] [0;39m ok_matrix() ./test_beta m_beta p 1
-Error in file(file, "rt") : cannot open the connection
-Calls: as.matrix -> read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file 'files/out_m_beta2.txt': No such file or directory
-Execution halted
-[1;31m [FAILED] [0;39m ok_matrix() ./test_beta m_beta p 2
-Error in file(file, "rt") : cannot open the connection
-Calls: as.matrix -> read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file 'files/out_CCt.txt': No such file or directory
-Execution halted
-[1;31m [FAILED] [0;39m ok_matrix() ./test_beta CCt
-Error in file(file, "rt") : cannot open the connection
-Calls: as.matrix -> read.table -> file
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file 'files/out_inv_cov_beta.txt': No such file or directory
-Execution halted
-[1;31m [FAILED] [0;39m ok_matrix() ./test_beta inv_cov_beta
+[1;32m [OK] [0;39m ok_matrix() ./test_beta m_beta p 1
+[1;32m [OK] [0;39m ok_matrix() ./test_beta m_beta p 2
+[1;32m [OK] [0;39m ok_matrix() ./test_beta CCt
+[1;32m [OK] [0;39m ok_matrix() ./test_beta inv_cov_beta
 
 [1;34m ###### file: test_error_lfmm ######
 [1;36m # Test files creation

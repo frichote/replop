@@ -69,7 +69,6 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 
 	// check the number of lines and columns
 	if (N2 != N) {
-		printf("M %d nD %d \n",M,nD);
 		printf("The number of individuals of %s (%d) is different from the number"
 			" of individuals of %s (%d)\n",input_file, N, cov_file, N2);
 		exit(1);
@@ -94,8 +93,6 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 	// read of covariable file
 	nC = (double *)calloc(N * nD, sizeof(double));	
 	read_data_double(cov_file, N, nD, nC);
-	//printf("Warning: (from LFMM v1.3) the environmental variable is not automatically normalized.\n"
-	//	" You can choose to normalize the variable or not.\n\n");
 	normalize_cov(nC, N, nD);
 	printf("Read variable file:\n \t%s\t\tOK.\n\n", cov_file);
 
@@ -139,7 +136,7 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 			   missing_data, num_thrd, dev_file);
 
 		// write zscore
-	        write_zscore_double(output_file, M, zscore, D-1, 1, 0);
+	        write_zscore_double(output_file, M, zscore, D-1, 1, 0, K);
 		printf("\tThe execution for all covariables worked without error.\n>>>>\n\n");
 
 	// only with covariable nd
@@ -159,7 +156,7 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 			   missing_data, num_thrd, dev_file);
 
 		// write zscore
-	        write_zscore_double(output_file, M, zscore, 1, 0, 0);
+	        write_zscore_double(output_file, M, zscore, 1, 0, 0, K);
 		printf("\tThe execution for covariable %d worked without error."
 			"\n>>>>\n\n", nd + 1);
 
@@ -180,7 +177,7 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 				   missing_data, num_thrd, dev_file);
 	
 			// write zscore
-	        	write_zscore_double(output_file, M, zscore, 1, 0, nd);
+	        	write_zscore_double(output_file, M, zscore, 1, 0, nd, K);
 			printf("\tThe execution for covariable %d worked without error."
 				"\n>>>>\n\n", nd + 1);
 		}

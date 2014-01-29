@@ -14,7 +14,7 @@
  */
 typedef struct _matrix_snmf *Matrix_snmf;
 
-struct _matrix_snmf {
+typedef struct _matrix_snmf {
 	bituint *R;
 	double *out;
 	double *Q;

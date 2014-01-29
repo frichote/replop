@@ -1,11 +1,11 @@
 
-ERROR: no value for g (genotype file).
+ERROR: no value for x (genotype file).
 
 
 HELP: ./createDataSet options 
 
 mandatory:
-        -g input_file	        -- genotype file (in .geno format)
+        -x input_file	        -- genotype file (in .geno format)
 
 optional:
         -h                    -- help

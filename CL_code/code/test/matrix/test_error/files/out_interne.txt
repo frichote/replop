@@ -1,3 +1,0 @@
-
-ERROR: internal error. Please run the program again. If the error is repeated, contact us.
-

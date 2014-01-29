@@ -27,14 +27,14 @@ void print_help_ce()
 {
    printf("\nHELP: ./crossEntropy options \n\n"
          "mandatory:\n"
-         "        -g genotype_file	-- genotype file (in .geno format)\n"
+         "        -x genotype_file      -- genotype file (in .geno format)\n"
          "        -K K                  -- number K of ancestral populations\n\n"
 
          "optional:\n"
          "        -h                    -- help\n"
          "        -m ploidy             -- 1 if haploid, 2 if diploid     (default: 2)\n"
          "        -q input_file_I.Q     -- individual admixture coefficients (default: genotype_file_I.K.Q)\n"
-         "        -f input_file_I.F     -- ancestral genotype frequencies (default: genotype_file_I.K.F)\n"
+         "        -g input_file_I.F     -- ancestral genotype frequencies (default: genotype_file_I.K.G)\n"
          "        -i input_file_I.geno  -- genotype file with masked genotypes (default: genotype_file_I.geno)\n\n"
         );
 }
@@ -43,16 +43,16 @@ void print_help_ce()
 
 void print_summary_ce ( int N, int M, int K, 
                         int m, char *input, char *input_Q, 
-			char *input_F, char *input_I) 
+                        char *input_F, char *input_I) 
 {
 
            printf("summary of the options:\n\n"
                 "        -n (number of individuals)         %d\n"  
                 "        -L (number of loci)                %d\n"
                 "        -K (number of ancestral pops)      %d\n"
-                "        -g (genotype file)                 %s\n"
+                "        -x (genotype file)                 %s\n"
                 "        -q (individual admixture)          %s\n"
-                "        -f (ancestral frequencies)         %s\n"
+                "        -g (ancestral frequencies)         %s\n"
                 "        -i (with masked genotypes)         %s\n"
                 , N, M, K, input, input_Q, input_F, input_I);
 

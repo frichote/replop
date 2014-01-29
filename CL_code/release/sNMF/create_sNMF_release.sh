@@ -4,7 +4,7 @@
 prog="sNMF"
 dir="sNMF_CL_v$1"
 src_list="bituint createDataSet crossEntropy io lapack matrix nnlsm sNMF convert"
-main_list="main_sNMF main_createDataSet main_crossEntropy main_geno2lfmm main_lfmm2geno main_ped2geno main_ped2lfmm main_vcf2geno"
+main_list="main_sNMF main_createDataSet main_crossEntropy main_geno2lfmm main_lfmm2geno main_ped2geno main_vcf2geno main_ancestrymap2geno"
 
 # color definition
 VERT="\\033[1;32m" NORMAL="\\033[0;39m" ROUGE="\\033[1;31m" JAUNE="\\033[1;33m"
@@ -56,7 +56,7 @@ cd  ../../../release/$prog/$dir/
 
 # example
 echo "$VERT" "\tAdd examples files" "$NORMAL"
-cp -r ../../../examples/$prog/* examples/
+cp ../../../examples/$prog/panel11.geno ../../../examples/$prog/README examples/
 
 echo "$VERT" "Leaving $dir" "$NORMAL"
 cd ..

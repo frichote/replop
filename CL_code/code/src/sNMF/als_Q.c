@@ -121,7 +121,7 @@ void update_Q(double *Q, double *F, bituint *X, int N, int M, int nc, int Mp,
 double update_nnlsm_Q(double *Q, double *F, bituint *X, int N, int M, int nc, 
 		int Mp, int K, double alpha, Memory mem, int num_thrd) {
 
-	int i, j, k;
+	int i, k;
 
 	double* temp1 = mem->temp1;
 	double* tempQ = mem->tempQ;

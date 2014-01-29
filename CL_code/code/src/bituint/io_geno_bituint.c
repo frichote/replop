@@ -55,6 +55,7 @@ void read_geno_bituint(char *file_data, int N, int M, int Mp, int nc, bituint* d
 	fclose(m_File);
 
 	// free memory
+	free(nb);
 	free(szbuff);
 	free(I);
 }
@@ -67,7 +68,6 @@ void fill_line_geno_bituint(bituint* dat, int Mp, int N,
 	int i = 0, value, n, total;
 	char token;
 	int jd, jm, jc, c; 
-	double freq = 0.0; // frequency estimation
 	int count = 0; // missing data counter
 
 	for (n = 0; n < nc; n++)

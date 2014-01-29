@@ -1,3 +1,0 @@
-
-ERROR: unable to read file test.txt. Please, check that the format is correct (refer to the documentation).
-

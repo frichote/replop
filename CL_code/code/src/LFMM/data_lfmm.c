@@ -120,7 +120,7 @@ void write_DIC(char *file_data, double deviance, double DIC)
 
 // write_zscore_double
 
-void write_zscore_double(char *output_file, int M, double *zscore, int D, int all, int nd)
+void write_zscore_double(char *output_file, int M, double *zscore, int D, int all, int nd, int K)
 {
 	FILE *file = NULL;
 	int j;
@@ -131,7 +131,7 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 	if (all) {
 		for (d = 0; d < D; d++) {
 			// write file name 
-                	snprintf(zscore_file, 512, "%s_all_%d.res", output_file,d+1);
+                	snprintf(zscore_file, 512, "%s_a%d.%d.zscore", output_file,d+1,K);
 			// and write 
 			file = fopen_write(zscore_file);
 			for (j = 0; j < M; j++) {
@@ -147,7 +147,7 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 		}
 	} else {
 		// write file name
-                snprintf(zscore_file, 512, "%s_%d.res", output_file,nd+1);
+                snprintf(zscore_file, 512, "%s_s%d.%d.zscore", output_file,nd+1,K);
 		// and write it
 		file = fopen_write(zscore_file);
 		for (j = 0; j < M; j++) {

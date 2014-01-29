@@ -5,7 +5,7 @@ ERROR: no value for m (number of alleles).
 HELP: ./createDataSet options 
 
 mandatory:
-        -g input_file	        -- genotype file (in .geno format)
+        -x input_file	        -- genotype file (in .geno format)
 
 optional:
         -h                    -- help

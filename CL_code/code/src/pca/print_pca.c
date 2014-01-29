@@ -27,36 +27,39 @@ void print_help_pca()
 {
    printf("\nHELP: ./pca options \n\n"
          "mandatory:\n"
-         "        -g genotype_file	-- genotype file (in .lfmm format)\n\n"
+         "        -x genotype_file      -- genotype file (in .lfmm format)\n\n"
 
          "optional:\n"
          "        -h                    -- help\n"
          "        -K K                  -- number of principal components (default: n, the number of individuals)\n"
-         "        -a eigenvalue_file 	-- output eigenvalues file (default: genotype_file.eigenvalues)\n"
+         "        -a eigenvalue_file    -- output eigenvalues file (default: genotype_file.eigenvalues)\n"
          "        -e eigenvector_file   -- output eigenvectors file (default: genotype_file.eigenvectors)\n"
-         "        -s   			-- data centered and scaled (default: data centered and not scaled)\n\n"
+         "        -c                    -- data centered (default: FALSE)\n"
+         "        -s                    -- data centered and scaled (default: FALSE)\n\n"
         );
 }
 
 // print_summary
 
-void print_summary_pca( int N, int M, int K, int s, 
+void print_summary_pca( int N, int M, int K, int c, int s, 
                         char *input, char *output_values, 
-			char *output_vectors) 
+                        char *output_vectors) 
 {
 
            printf("summary of the options:\n\n"
-                "        -n (number of individuals)         	%d\n"  
-                "        -L (number of loci)                	%d\n"
-                "        -K (number of principal components)    %d\n"
-                "        -g (genotype file)                 	%s\n"
-                "        -a (eigenvalues file)          	%s\n"
-                "        -e (eigenvectors file)         	%s\n"
+                "        -n (number of individuals)          %d\n"  
+                "        -L (number of loci)                 %d\n"
+                "        -K (number of principal components) %d\n"
+                "        -x (genotype file)                  %s\n"
+                "        -a (eigenvalues file)               %s\n"
+                "        -e (eigenvectors file)              %s\n"
                 , N, M, K, input, output_values, output_vectors);
 
         if (s)
-                printf("        -s data centered scaled \n\n");
-        else 
-                printf("\n");
+                printf("        -s data centered and scaled \n\n");
+        else if (c)
+                printf("        -c data centered\n\n");
+	else
+               printf("\n");
 }
 

@@ -64,10 +64,10 @@ void analyse_param_ce(	int argc, char *argv[], int* m,
                                 print_licence_snmf();
                                 exit(1);
                                 break;
-                        case 'g':
+                        case 'x':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-					print_error_ce("cmd","g (genotype file)");
+					print_error_ce("cmd","x (genotype file)");
                                 g_data = 0;
                                 strcpy(input,argv[i]);
                                 break;
@@ -77,10 +77,10 @@ void analyse_param_ce(	int argc, char *argv[], int* m,
 					print_error_ce("cmd","q (individual admixture coefficients file)");
                                 strcpy(input_file_Q,argv[i]);
                                 break;
-                        case 'f':
+                        case 'g':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-                                        print_error_ce("cmd","f (ancestral genotype frequencies file)");
+                                        print_error_ce("cmd","g (ancestral genotype frequencies file)");
                                 strcpy(input_file_F,argv[i]);
                                 break;
                         case 'i':
@@ -97,7 +97,7 @@ void analyse_param_ce(	int argc, char *argv[], int* m,
         }
 
         if (g_data == -1)
-		print_error_ce("option","-g genotype_file");
+		print_error_ce("option","-x genotype_file");
 
         if (g_m && *m <= 0)
                 print_error_ce("missing", NULL);
@@ -112,7 +112,7 @@ void analyse_param_ce(	int argc, char *argv[], int* m,
 		strcpy(input_file_F,tmp_file);
 		strcat(input_file_F,"_I.");
 		strcat(input_file_F,tmp);
-		strcat(input_file_F,".F");
+		strcat(input_file_F,".G");
 	}
 	if (!strcmp(input_file_Q,"")) {
 		strcpy(input_file_Q,tmp_file);

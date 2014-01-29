@@ -1,11 +1,11 @@
 
-ERROR: no value for r (percentage of missing data).
+ERROR: no value for r (percentage of masked data).
 
 
 HELP: ./createDataSet options 
 
 mandatory:
-        -g input_file	        -- genotype file (in .geno format)
+        -x input_file	        -- genotype file (in .geno format)
 
 optional:
         -h                    -- help

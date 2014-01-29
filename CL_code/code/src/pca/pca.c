@@ -30,22 +30,26 @@
 #include "../matrix/diagonalize.h"
 
 void pca(char* input_file, char *output_eva_file, char *output_eve_file, 
-	int K, int s)
+	int K, int c, int s)
 {
         double *data;
 	double *cov, *val, *vect;
-	int N, M;
+	int N, M, tmp;
 
         // number of lines and columns
         M = nb_cols_lfmm(input_file);
         N = nb_lines(input_file, M);
 
 	// correct K
-	if (!K)
-		K = N;
+	if (N < M)
+		tmp = N;
+	else 
+		tmp = M;
+	if (!K || K > tmp)
+		K = tmp;
 
         // print command line summary
-	print_summary_pca(N, M, K, s, input_file, output_eva_file, 
+	print_summary_pca(N, M, K, c, s, input_file, output_eva_file, 
 		output_eve_file);
 
 	// allocate memory 
@@ -60,7 +64,7 @@ void pca(char* input_file, char *output_eva_file, char *output_eve_file,
 	// scale
 	if (s)
 		normalize_cov_I(data, N, M);
-	else
+	else if (c)
 		normalize_mean_I(data, N, M);
 
 	// calculate covariance matrix
@@ -72,8 +76,6 @@ void pca(char* input_file, char *output_eva_file, char *output_eve_file,
 	// write output
 	write_data_double(output_eva_file, K, 1, val);
 	write_data_double(output_eve_file, N, K, vect);
-
-
 
 	// free memory
 	free(data);

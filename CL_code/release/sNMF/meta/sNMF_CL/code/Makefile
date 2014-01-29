@@ -2,13 +2,13 @@
 
 ### OPTIONS ####
 CFLAGS = -lm -lpthread
-LDFLAGS += -g -O3 -Wall -Wextra
+LDFLAGS += -O3 
 
-CC = colorgcc
-## CC = gcc
+##CC = colorgcc
+CC = gcc
 
 ### DIRECTORIES ####
-BIN = bin
+BIN = ../bin
 LIB = lib
 OBJ = obj
 SRC = src
@@ -41,7 +41,7 @@ HEADER_crossEntropy = $(patsubst $(SRC)/%.c,$(SRC)/%.h,$(SRC_crossEntropy))
 
 
 # EXECUTABLE
-EXECUTABLE = $(LIB)/lapack.a $(BIN)/sNMF $(BIN)/crossEntropy $(BIN)/createDataSet $(BIN)/vcf2geno $(BIN)/ancestrymap2geno $(BIN)/ancestrymap2lfmm $(BIN)/ped2geno $(BIN)/ped2lfmm $(BIN)/lfmm2geno $(BIN)/geno2lfmm $(BIN)/pca
+EXECUTABLE = $(LIB)/lapack.a $(BIN)/sNMF $(BIN)/crossEntropy $(BIN)/createDataSet $(BIN)/vcf2geno $(BIN)/ancestrymap2geno $(BIN)/ped2geno $(BIN)/lfmm2geno $(BIN)/geno2lfmm
 all: $(SRC_LAPACK) $(SRC_LFMM) $(SRC_sNMF) $(SRC_createDataSet) $(SRC_crossEntropy) $(SRC_convert) $(SRC_pca) $(SRC_main) $(EXECUTABLE) 
 
 $(LIB)/lapack.a: $(OBJ_LAPACK)

@@ -84,8 +84,7 @@ void write_data_double(char *file_data, int N, int M, double *dat)
                 for (j = 0; j < M - 1; j++) {
                         fprintf(file, "%G ", dat[i * M + j]);
                 }
-                fprintf(file, "%G", dat[i * M + (M - 1)]);
-                fprintf(file, "\n");
+                fprintf(file, "%G\n", dat[i * M + (M - 1)]);
         }
 
 	// close file

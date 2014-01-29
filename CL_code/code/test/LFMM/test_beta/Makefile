@@ -1,5 +1,5 @@
 ## OPTIONS ####
-CFLAGS = -lm -lpthread -Wall -Wextra
+CFLAGS = -lm -lpthread -Wall -Wextra -g
 LDFLAGS = -g -O3 -Wall -Wextra
 
 CC = colorgcc

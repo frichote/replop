@@ -1,22 +1,24 @@
 
-ERROR: no value for g (genotype file).
+ERROR: no value for x (genotype file).
 
 
-HELP: ./sNMF options 
+HELP: ./sNMF options 
 
 mandatory:
-        -g genotype_file	-- genotype file (in .geno format)
+        -x genotype_file      -- genotype file (in .geno format)
         -K K                  -- number K of ancestral populations
 
 optional:
         -h                    -- help
-        -a alpha              -- regularization parameter       (default: 100)
+        -a alpha              -- regularization parameter       (default: 0)
         -q output_Q           -- individual admixture file      (default: genotype_file.K.Q)
-        -f output_F           -- ancestral frequencies file     (default: genotype_file.K.F)
+        -g output_G           -- ancestral frequencies file     (default: genotype_file.K.G)
         -c perc               -- cross-entropy with 'perc' 			
                               of masked genotypes               (default: 0.05)
         -e tol                -- tolerance error                (default: 0.0001)
         -i iterations         -- number max of iterations       (default: 200)
+        -I nb_SNPs            -- number of SNPs used to init Q  (default: min(10000,L/10)
+        -Q input_Q            -- individual admixture initialisation file
         -s seed               -- seed random init               (default: random)
         -m ploidy             -- 1 if haploid, 2 if diploid     (default: 2)
         -p num_proc           -- number of processes (CPU)      (default: 1)

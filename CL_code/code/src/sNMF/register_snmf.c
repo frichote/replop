@@ -31,7 +31,8 @@
 void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
 			int* K, double* alpha, double* tol, double *e,
 			int *iter, char *input, int* num_thrd,
-			char* output_Q, char* output_F, int* I) 
+			char* input_Q, char* output_Q, char* output_F, 
+			int* I) 
 {
       	int i;
 	int g_data = -1;
@@ -113,10 +114,10 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
 				} else
                                 	*I = (int) atoi(argv[i]);
 				break;
-                        case 'g':
+                        case 'x':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-					print_error_nmf("cmd","g (genotype file)",0);
+					print_error_nmf("cmd","x (genotype file)",0);
                                 g_data = 0;
                                 strcpy(input,argv[i]);
                                 break;
@@ -126,10 +127,16 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
                                         print_error_nmf("cmd","q (individual admixture coefficients file)",0);
                                 strcpy(output_Q,argv[i]);
                                 break;
-                        case 'f':
+                        case 'Q':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-                                        print_error_nmf("cmd","f (ancestral genotype frequencies file)",0);
+                                        print_error_nmf("cmd","Q (admixture coefficients initialization file)",0);
+                                strcpy(input_Q,argv[i]);
+                                break;
+                        case 'g':
+                                i++;
+                                if (argc == i || argv[i][0] == '-')
+                                        print_error_nmf("cmd","g (ancestral genotype frequencies file)",0);
                                 strcpy(output_F,argv[i]);
                                 break;
 			case 'p':
@@ -146,7 +153,7 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
         }
 
         if (g_data == -1)
-		print_error_nmf("option","-g genotype_file",0);
+		print_error_nmf("option","-x genotype_file",0);
 
         if (*K <= 0)
 		print_error_nmf("missing",NULL,0);
@@ -161,7 +168,7 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
 		print_error_nmf("missing",NULL,0);
 
         if (g_c && (*e <= 0 || *e >= 1))
-                print_error_nmf("missing","",0);
+                print_error_nmf("missing",NULL,0);
 
         // write output file name
         tmp_file = remove_ext(input,'.','/');
@@ -175,7 +182,7 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
                 strcpy(output_F,tmp_file);
                 strcat(output_F,".");
                 strcat(output_F,tmp);
-                strcat(output_F,".F");
+                strcat(output_F,".G");
 	}
         free(tmp_file);
 }

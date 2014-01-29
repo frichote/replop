@@ -29,16 +29,22 @@ colorgcc test_data.o -o test_data ../../../obj/bituint/*.o ../../../obj/convert/
 [1;36m # Make [0;39m
 rm -f *.o test_error
 colorgcc -lm -lpthread -Wall -Wextra   -c -o test_error.o test_error.c
-test_error.c: In function ‘main’:
-test_error.c:14:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
-colorgcc test_error.o -o test_error ../../../obj/bituint/*.o ../../../obj/convert/*.o ../../../obj/createDataSet/*.o ../../../obj/crossEntropy/*.o ../../../obj/io/*.o ../../../obj/lapack/*.o ../../../obj/LFMM/*.o ../../../obj/matrix/*.o ../../../obj/nnlsm/*.o ../../../obj/sNMF/*.o -lm -lpthread -Wall -Wextra -g -O3 -Wall -Wextra
+test_error.c:12:39: fatal error: ../../../src/matrix/error.h: No such file or directory
+compilation terminated.
+make: *** [test_error.o] Error 1
 [1;36m # Tests [0;39m
-[1;32m [OK] [0;39m log() ./test_error open test.txt 10 > files/out_open.txt
-[1;32m [OK] [0;39m log() ./test_error read test.txt 10 > files/out_read.txt
-[1;32m [OK] [0;39m log() ./test_error interne test.txt 10 > files/out_interne.txt
-[1;32m [OK] [0;39m log() ./test_error constant test.txt 10 > files/out_constant.txt
-[1;32m [OK] [0;39m log() ./test_error nan test.txt 10 > files/out_nan.txt
-[1;32m [OK] [0;39m log() ./test_error autre test.txt 10 > files/out_autre.txt
+description.sh: 18: description.sh: ./test_error: not found
+[1;31m [FAILED] [0;39m log() ./test_error open test.txt 10 > files/out_open.txt
+description.sh: 20: description.sh: ./test_error: not found
+[1;31m [FAILED] [0;39m log() ./test_error read test.txt 10 > files/out_read.txt
+description.sh: 22: description.sh: ./test_error: not found
+[1;31m [FAILED] [0;39m log() ./test_error interne test.txt 10 > files/out_interne.txt
+description.sh: 24: description.sh: ./test_error: not found
+[1;31m [FAILED] [0;39m log() ./test_error constant test.txt 10 > files/out_constant.txt
+description.sh: 26: description.sh: ./test_error: not found
+[1;31m [FAILED] [0;39m log() ./test_error nan test.txt 10 > files/out_nan.txt
+description.sh: 28: description.sh: ./test_error: not found
+[1;31m [FAILED] [0;39m log() ./test_error autre test.txt 10 > files/out_autre.txt
 
 [1;34m ###### file: test_inverse ######
 [1;36m # Test files creation

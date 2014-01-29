@@ -126,11 +126,11 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 							 0);
 				strcpy(output, argv[i]);
 				break;
-			case 'g':
+			case 'x':
 				i++;
 				if (argc == i || argv[i][0] == '-')
 					print_error_lfmm("cmd",
-							 "g (genotype file)",
+							 "x (genotype file)",
 							 0);
 				g_data = 1;
 				strcpy(input, argv[i]);
@@ -160,7 +160,7 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 
 	// checks 
 	if (!g_data)
-		print_error_lfmm("option", "-g genotype_file", 0);
+		print_error_lfmm("option", "-x genotype_file", 0);
 
 	if (!g_cov)
 		print_error_lfmm("option", "-v variable_file", 0);
@@ -189,10 +189,8 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 
         // write output file name
         tmp_file = remove_ext(input,'.','/');
-        if (!strcmp(output,"")) {
-                strcpy(output, tmp_file);
-                strcat(output, ".zscore");
-        }
+        if (!strcmp(output,""))
+        	strcpy(output, tmp_file);
         // write dev file name
         if (!strcmp(dev_file,"")) {
                 strcpy(dev_file,tmp_file);

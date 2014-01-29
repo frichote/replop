@@ -1,3 +1,0 @@
-
-ERROR: 10 SNPs are invariant. Please, remove these SNPs before the analysis.
-

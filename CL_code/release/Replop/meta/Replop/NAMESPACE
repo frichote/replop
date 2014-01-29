@@ -5,8 +5,7 @@ export(write.geno)
 export(read.lfmm)
 export(write.lfmm)
 export(read.env)
-export(read.env)
-export(read.dic)
+export(write.env)
 export(read.zscore)
 
 export(geno2lfmm)
@@ -22,6 +21,7 @@ export(sNMF)
 export(crossEntropy)
 
 export(pca)
+export(tracyWidom)
 
 export(LFMM)
 

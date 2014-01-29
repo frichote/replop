@@ -41,7 +41,7 @@ void normalize_cov(double *C, int N, int K)
 		cov /= (N - 1);
 		// error if constant column
 		if (!cov) {
-		        printf("Error: it seems that covariable %d is constant " 
+		        printf("Error: it seems that variable %d is constant " 
 				"among individuals.\n\n",k+1);
 			exit(1);
 		}

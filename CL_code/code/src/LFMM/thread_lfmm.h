@@ -12,7 +12,7 @@
  */
 typedef struct _matrix_lfmm *Matrix_lfmm;
 
-struct _matrix_lfmm {
+typedef struct _matrix_lfmm {
 	float *R;
 	float *datb;
 	double *U;

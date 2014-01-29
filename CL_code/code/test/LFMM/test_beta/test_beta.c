@@ -53,8 +53,8 @@ int main (int argc, char *argv[])
 	R = (float *) malloc(N * M * sizeof(float));
 	U = (double *) malloc(N * K * sizeof(double));
 	V = (double *) malloc(M * K * sizeof(double));
-	m_beta1 = (double *) malloc(M * K * sizeof(double));
-	m_beta2 = (double *) malloc(M * K * sizeof(double));
+	m_beta1 = (double *) malloc(M * D * sizeof(double));
+	m_beta2 = (double *) malloc(M * D * sizeof(double));
 	CCt = (double *) malloc(D * D * sizeof(double));
 	inv_cov_beta = (double *) malloc(D * D * sizeof(double));
 	alpha_beta = (double *) malloc(D * sizeof(double));

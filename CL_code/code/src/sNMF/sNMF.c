@@ -36,7 +36,8 @@
 #include "../crossEntropy/crossEntropy.h"
 
 void sNMF(char* input_file, int K, double alpha, double tol, double e, int maxiter, 
-	long long seed, int m, int num_thrd, char* output_file_Q, char* output_file_F, int I) {
+	long long seed, int m, int num_thrd, char* input_file_Q, char* output_file_Q, 
+	char* output_file_F, int I, double *all_ce, double *masked_ce) {
 	
 	//parameters initialization
 
@@ -53,7 +54,6 @@ void sNMF(char* input_file, int K, double alpha, double tol, double e, int maxit
 	double like = 0.0;
 	char *tmp_file; 
 	char data_file[512];
-	double all_ce, missing_ce;
 
 	//  random init
 	init_random(&seed);
@@ -68,9 +68,12 @@ void sNMF(char* input_file, int K, double alpha, double tol, double e, int maxit
 	N = nb_cols_geno(input_file);
 	M = nb_lines(input_file, N);
 
+	if (I == -1) 
+		I = imin(10000, M/10);
 	// write command line summary
         print_summary_snmf(N, M, m, seed, K, alpha, tol, maxiter, 
-		input_file, num_thrd, e, output_file_Q, output_file_F, I);
+		input_file, num_thrd, e, input_file_Q, output_file_Q, 
+		output_file_F, I);
 
         // write input file name
 	if (e) {
@@ -96,27 +99,30 @@ void sNMF(char* input_file, int K, double alpha, double tol, double e, int maxit
         printf("Read genotype file %s:\t\tOK.\n\n",input_file);
 
 	
+	// init with a given matrix Q
+	if (strcmp(input_file_Q,"")) {
+		read_data_double(input_file_Q, N, K, Q_res);	
 	// init of Q with a smaller data set
-	rand_matrix_double(Q_res, N, K);
-	if (I && K > 1 && M >= 1000) {
-		// init subset matrices
-		if (I == -1)
-			Mi = imin(1000, M/10);
-		printf("Initialization of Q with a random subset of SNPs:\n",Mi);
-		Mci = nc * Mi;
-		init_mat_bituint(&Xi, N, Mci, &Mpi);
-        	F_I = (double *) calloc(K * Mci, sizeof(double));     // of size McxK
-		// select a subset of SNPs
-		select_geno_bituint(X, Xi, N, M, Mi, nc, Mpi, Mp);
-		// calc init of Q_res
-		ALS(Xi, Q_res, F_I, N, Mi, nc, Mpi, K, maxiter, tol, num_thrd, alpha);
-		// free memory
-		free(F_I);
-		free(Xi);
+	} else {
+		rand_matrix_double(Q_res, N, K);
+		if (I && K > 1) {
+			// init subset matrices
+			printf("Initialization of Q with a random subset of SNPs:\n");
+			Mci = nc * Mi;
+			init_mat_bituint(&Xi, N, Mci, &Mpi);
+        		F_I = (double *) calloc(K * Mci, sizeof(double));     // of size McxK
+			// select a subset of SNPs
+			select_geno_bituint(X, Xi, N, M, Mi, nc, Mpi, Mp);
+			// calc init of Q_res
+			ALS(Xi, Q_res, F_I, N, Mi, nc, Mpi, K, maxiter, tol, num_thrd, alpha);
+			// free memory
+			free(F_I);
+			free(Xi);
+		}
 	} 
 
 	// parameter estimation
-	printf("\nMain algorithm:\n",Mi);
+	printf("\nMain algorithm:\n");
 	if (K == 1) 
 		ALS_k1(X, Q_res, F_res, N, M, nc, Mp);
 	else
@@ -137,7 +143,7 @@ void sNMF(char* input_file, int K, double alpha, double tol, double e, int maxit
 	if (e) {
 		printf("\n <<<<<< crossEntropy program\n\n");
 		crossEntropy(input_file, data_file, output_file_Q, 
-			output_file_F, K, m, &all_ce, &missing_ce);	
+			output_file_F, K, m, all_ce, masked_ce);	
 		printf("\n >>>>>>\n\n");
 	}
 

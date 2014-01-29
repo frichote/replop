@@ -3,9 +3,9 @@ summary of the options:
         -n (number of individuals)         10
         -L (number of loci)                100
         -K (number of ancestral pops)      3
-        -g (genotype file)                 input_file.txt
+        -x (genotype file)                 input_file.txt
         -q (individual admixture)          input_file_I.3.Q
-        -f (ancestral frequencies)         input_file_I.3.F
+        -g (ancestral frequencies)         input_file_I.3.G
         -i (with masked genotypes)         input_file_I.geno
         - diploid
 

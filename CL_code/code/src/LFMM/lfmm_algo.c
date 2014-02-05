@@ -41,7 +41,7 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 	int i, j, n;
 	double deviance = 0;
 	double dp = 0;
-	double thrd_m2;
+	double thrd_m2 = 0;
 
 	// allocate memory
 	allocate_all(&m_beta, &inv_cov_beta, &m_U, &inv_cov_U, &m_V, &inv_cov_V,
@@ -57,6 +57,7 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 	rand_matrix_double(U, K, N);
 	rand_matrix_double(V, K, M);
 
+	/*
 	if(missing_data)
 		*alpha_R = 1.0 / 
 			var_data_inputation(dat, I, U, V, C, beta, N, M, K, D, 
@@ -64,6 +65,8 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 	else 
 		*alpha_R = 1.0 / 
 			var_data(dat, U, V, C, beta, N, M, K, D, &thrd_m2, num_thrd);
+	*/
+	*alpha_R = 3.45;
 
 	// shell print
 	init_bar(&i, &j);
@@ -92,6 +95,7 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 			 *alpha_R, M, N, K, D, num_thrd);
 
 		// update alpha_R
+		/*
 		if(missing_data)
 			*alpha_R = 1.0 / 
 				var_data_inputation(dat, I, U, V, C, beta, N, M, K, D, 
@@ -100,6 +104,8 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 			*alpha_R = 1.0 / 
 				var_data(dat, U, V, C, beta, N, M, K, D, 
 					&thrd_m2, num_thrd);
+		*/
+		*alpha_R = 3.45;
 
 		// update sums
 		if (n >= burn) {

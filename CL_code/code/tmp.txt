@@ -1,37 +1,575 @@
-sNMF  Copyright (C) 2013 François Mathieu, Eric Frichot
-This program comes with ABSOLUTELY NO WARRANTY; for details type './sNMF -l'.
-This is free software, and you are welcome to redistribute it
-under certain conditions; type './sNMF -l' for details.
-
-****                      sNMF Version 0.1                                     *****
-****   E. Frichot , F. Mathieu, T. Trouillon, G. Bouchard, O. Francois         *****
-****                    Please cite our paper !                                *****
-****   Information at http://membres-timc.imag.fr/Olivier.Francois/snmf.html   *****
-
-./bin/sNMF -g ../panel7.geno -K 3 
-summary of the options:
-
-        -n (number of individuals)             942
-        -L (number of loci)                    2635
-        -K (number of ancestral pops)          3
-        -g (input file)                        ../panel7.geno
-        -q (individual admixture file)         ../panel7.3.Q
-        -f (ancestral frequencies file)        ../panel7.3.F
-        -i (number max of iterations)          200
-        -I (number of SNPs to init Q)          1000
-        -a (regularization parameter)          100
-        -s (seed random init)                  11034976806909734457
-        -e (tolerance error)                   0.0001
-        -p (number of processes)               1
-        - diploid
-
-Read genotype file ../panel7.geno:		OK.
-
-149
-1103
-942 2 6 3 1 3 
-942 2635 7905 3 124 3 
-221122211112212221122112122122222122120122221211122122222122212211222222211221121122211102211100212121212212222222112122221121122221121112120212222222212102121212212222111122111222221122222222222122222222221222202222221222122212112212112122112222222222222222222222122122212210122222121121222022211221221112122211102221211120101122002222111121122212222222221022202222212112222222212112112212122202212222222122222221212102122212222212212212121212222212222222212222212222122221211212222221222221222222222222121211222222122212221212221212221222122221211221222102121221222222211121121212222222222222222122222221222222222222222221111221112221222222212202221212112212022222212222122221211212222222222111122222212122112222212222222222121222122222222222222222222221222222222222222222222212222212122212221221222222212222221212222222122221222212222222222222222222222122222122222122122222221122221222222102122122222122212221212221122122210212212222222222
-222222222222222222222222222222222222222222222222212221222201221122222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222220222222222222222222221202212222021222222222211221222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222122222222222222222222222222222222222222222121222122222222222222222222222222221211102222222222222222121212212022222221222222222222222222222222211010101111222212112222211221222222202222222222222222222222222222222222222222222222222221222222222222222222222222122222222111222222122222222222222222222222222211222221221222222222222222222222222222221222222222222222222222222222222222212222221222222212221222222211222222122122222222222212221212222222222222222222222222222222222202121222222222212222122222122222222222222222121222212221212222122222222222222222222222222222222222222222222222222222220000
-[                                                                           ]
-[
+colorgcc -g -O3 -Wall -Wextra -c src/LFMM3/lfmm_algo.c -o obj/LFMM3/lfmm_algo.o
+In file included from /usr/include/stdio.h:34:0,
+                 from src/LFMM3/lfmm_algo.c:28:
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h: In function ‘update_sums’:
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:212:23: error: storage class specified for parameter ‘size_t’
+In file included from /usr/include/stdio.h:36:0,
+                 from src/LFMM3/lfmm_algo.c:28:
+/usr/include/x86_64-linux-gnu/bits/types.h:31:23: error: storage class specified for parameter ‘__u_char’
+/usr/include/x86_64-linux-gnu/bits/types.h:32:28: error: storage class specified for parameter ‘__u_short’
+/usr/include/x86_64-linux-gnu/bits/types.h:33:22: error: storage class specified for parameter ‘__u_int’
+/usr/include/x86_64-linux-gnu/bits/types.h:34:27: error: storage class specified for parameter ‘__u_long’
+/usr/include/x86_64-linux-gnu/bits/types.h:37:21: error: storage class specified for parameter ‘__int8_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:38:23: error: storage class specified for parameter ‘__uint8_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:39:26: error: storage class specified for parameter ‘__int16_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:40:28: error: storage class specified for parameter ‘__uint16_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:41:20: error: storage class specified for parameter ‘__int32_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:42:22: error: storage class specified for parameter ‘__uint32_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:44:25: error: storage class specified for parameter ‘__int64_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:45:27: error: storage class specified for parameter ‘__uint64_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:53:18: error: storage class specified for parameter ‘__quad_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:54:27: error: storage class specified for parameter ‘__u_quad_t’
+In file included from /usr/include/stdio.h:36:0,
+                 from src/LFMM3/lfmm_algo.c:28:
+/usr/include/x86_64-linux-gnu/bits/types.h:134:25: error: storage class specified for parameter ‘__dev_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:135:25: error: storage class specified for parameter ‘__uid_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:136:25: error: storage class specified for parameter ‘__gid_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:137:25: error: storage class specified for parameter ‘__ino_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:138:27: error: storage class specified for parameter ‘__ino64_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:139:26: error: storage class specified for parameter ‘__mode_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:140:27: error: storage class specified for parameter ‘__nlink_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:141:25: error: storage class specified for parameter ‘__off_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:142:27: error: storage class specified for parameter ‘__off64_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:143:25: error: storage class specified for parameter ‘__pid_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:144:26: error: storage class specified for parameter ‘__fsid_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:145:27: error: storage class specified for parameter ‘__clock_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:146:26: error: storage class specified for parameter ‘__rlim_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:147:28: error: storage class specified for parameter ‘__rlim64_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:148:24: error: storage class specified for parameter ‘__id_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:149:26: error: storage class specified for parameter ‘__time_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:150:30: error: storage class specified for parameter ‘__useconds_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:151:31: error: storage class specified for parameter ‘__suseconds_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:153:27: error: storage class specified for parameter ‘__daddr_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:154:27: error: storage class specified for parameter ‘__swblk_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:155:25: error: storage class specified for parameter ‘__key_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:158:29: error: storage class specified for parameter ‘__clockid_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:161:27: error: storage class specified for parameter ‘__timer_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:164:29: error: storage class specified for parameter ‘__blksize_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:169:28: error: storage class specified for parameter ‘__blkcnt_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:170:30: error: storage class specified for parameter ‘__blkcnt64_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:173:30: error: storage class specified for parameter ‘__fsblkcnt_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:174:32: error: storage class specified for parameter ‘__fsblkcnt64_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:177:30: error: storage class specified for parameter ‘__fsfilcnt_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:178:32: error: storage class specified for parameter ‘__fsfilcnt64_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:180:27: error: storage class specified for parameter ‘__ssize_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:184:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__loff_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:185:18: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘*’ token
+/usr/include/x86_64-linux-gnu/bits/types.h:186:15: error: storage class specified for parameter ‘__caddr_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:189:25: error: storage class specified for parameter ‘__intptr_t’
+/usr/include/x86_64-linux-gnu/bits/types.h:192:23: error: storage class specified for parameter ‘__socklen_t’
+In file included from src/LFMM3/lfmm_algo.c:28:0:
+/usr/include/stdio.h:49:25: error: storage class specified for parameter ‘FILE’
+/usr/include/stdio.h:65:25: error: storage class specified for parameter ‘__FILE’
+In file included from /usr/include/_G_config.h:20:0,
+                 from /usr/include/libio.h:32,
+                 from /usr/include/stdio.h:75,
+                 from src/LFMM3/lfmm_algo.c:28:
+/usr/include/wchar.h:95:3: error: storage class specified for parameter ‘__mbstate_t’
+In file included from /usr/include/libio.h:32:0,
+                 from /usr/include/stdio.h:75,
+                 from src/LFMM3/lfmm_algo.c:28:
+/usr/include/_G_config.h:24:3: error: expected specifier-qualifier-list before ‘__off_t’
+/usr/include/_G_config.h:26:3: error: storage class specified for parameter ‘_G_fpos_t’
+/usr/include/_G_config.h:29:3: error: expected specifier-qualifier-list before ‘__off64_t’
+/usr/include/_G_config.h:31:3: error: storage class specified for parameter ‘_G_fpos64_t’
+/usr/include/_G_config.h:53:13: error: storage class specified for parameter ‘_G_int16_t’
+/usr/include/_G_config.h:54:13: error: storage class specified for parameter ‘_G_int32_t’
+/usr/include/_G_config.h:55:22: error: storage class specified for parameter ‘_G_uint16_t’
+/usr/include/_G_config.h:56:22: error: storage class specified for parameter ‘_G_uint32_t’
+In file included from /usr/include/libio.h:53:0,
+                 from /usr/include/stdio.h:75,
+                 from src/LFMM3/lfmm_algo.c:28:
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdarg.h:40:27: error: storage class specified for parameter ‘__gnuc_va_list’
+In file included from /usr/include/stdio.h:75:0,
+                 from src/LFMM3/lfmm_algo.c:28:
+/usr/include/libio.h:182:14: error: storage class specified for parameter ‘_IO_lock_t’
+/usr/include/libio.h:302:3: error: expected specifier-qualifier-list before ‘__off_t’
+/usr/include/libio.h:343:25: error: storage class specified for parameter ‘_IO_FILE’
+/usr/include/libio.h:348:29: error: storage class specified for parameter ‘_IO_2_1_stdin_’
+/usr/include/libio.h:349:29: error: storage class specified for parameter ‘_IO_2_1_stdout_’
+/usr/include/libio.h:350:29: error: storage class specified for parameter ‘_IO_2_1_stderr_’
+/usr/include/libio.h:366:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__io_read_fn’
+/usr/include/libio.h:374:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__io_write_fn’
+/usr/include/libio.h:383:43: error: expected declaration specifiers or ‘...’ before ‘__off64_t’
+/usr/include/libio.h:386:13: error: storage class specified for parameter ‘__io_close_fn’
+/usr/include/libio.h:418:25: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:419:21: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:420:24: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:462:22: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:463:31: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:464:22: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:465:24: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:467:30: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:473:28: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:474:30: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:475:30: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:492:25: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:493:4: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/libio.h:494:26: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+/usr/include/libio.h:495:5: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/libio.h:496:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘_IO_padn’
+/usr/include/libio.h:497:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘_IO_sgetn’
+/usr/include/libio.h:499:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘_IO_seekoff’
+/usr/include/libio.h:500:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘_IO_seekpos’
+/usr/include/libio.h:502:35: error: expected declaration specifiers or ‘...’ before ‘_IO_FILE’
+In file included from src/LFMM3/lfmm_algo.c:28:0:
+/usr/include/stdio.h:80:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘va_list’
+/usr/include/stdio.h:91:17: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘off_t’
+/usr/include/stdio.h:103:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘ssize_t’
+/usr/include/stdio.h:111:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘fpos_t’
+In file included from src/LFMM3/lfmm_algo.c:28:0:
+/usr/include/stdio.h:169:25: error: storage class specified for parameter ‘stdin’
+/usr/include/stdio.h:170:25: error: storage class specified for parameter ‘stdout’
+/usr/include/stdio.h:171:25: error: storage class specified for parameter ‘stderr’
+/usr/include/stdio.h:179:12: error: storage class specified for parameter ‘remove’
+/usr/include/stdio.h:181:12: error: storage class specified for parameter ‘rename’
+/usr/include/stdio.h:186:12: error: storage class specified for parameter ‘renameat’
+/usr/include/stdio.h:196:13: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘*’ token
+/usr/include/stdio.h:210:14: error: storage class specified for parameter ‘tmpnam’
+/usr/include/stdio.h:216:14: error: storage class specified for parameter ‘tmpnam_r’
+/usr/include/stdio.h:228:14: error: storage class specified for parameter ‘tempnam’
+/usr/include/stdio.h:238:20: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:243:20: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:253:29: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:273:13: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘*’ token
+/usr/include/stdio.h:279:13: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘*’ token
+/usr/include/stdio.h:307:13: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘*’ token
+/usr/include/stdio.h:320:13: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘*’ token
+/usr/include/stdio.h:326:13: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘*’ token
+/usr/include/stdio.h:333:21: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:337:21: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:338:20: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdio.h:344:24: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:345:10: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdio.h:348:25: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:357:21: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:363:12: error: storage class specified for parameter ‘printf’
+/usr/include/stdio.h:365:12: error: storage class specified for parameter ‘sprintf’
+/usr/include/stdio.h:372:22: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:373:8: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/stdio.h:378:56: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/stdio.h:381:8: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/stdio.h:387:44: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdio.h:391:45: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdio.h:392:44: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/stdio.h:419:8: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/stdio.h:421:12: error: storage class specified for parameter ‘dprintf’
+/usr/include/stdio.h:431:20: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:437:12: error: storage class specified for parameter ‘scanf’
+/usr/include/stdio.h:439:12: error: storage class specified for parameter ‘sscanf’
+/usr/include/stdio.h:449:12: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:452:12: error: storage class specified for parameter ‘scanf’
+/usr/include/stdio.h:452:12: error: redefinition of parameter ‘scanf’
+/usr/include/stdio.h:437:12: note: previous definition of ‘scanf’ was here
+/usr/include/stdio.h:454:12: error: storage class specified for parameter ‘sscanf’
+/usr/include/stdio.h:454:12: error: redefinition of parameter ‘sscanf’
+/usr/include/stdio.h:439:12: note: previous definition of ‘sscanf’ was here
+/usr/include/stdio.h:477:21: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:478:7: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/stdio.h:485:55: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/stdio.h:490:42: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/stdio.h:500:12: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:500:12: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/stdio.h:505:12: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/stdio.h:508:12: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/stdio.h:537:19: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:538:18: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:544:12: error: storage class specified for parameter ‘getchar’
+/usr/include/stdio.h:556:27: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:557:12: error: storage class specified for parameter ‘getchar_unlocked’
+/usr/include/stdio.h:567:28: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:579:28: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:580:27: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:586:12: error: storage class specified for parameter ‘putchar’
+/usr/include/stdio.h:600:37: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:608:36: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:609:12: error: storage class specified for parameter ‘putchar_unlocked’
+/usr/include/stdio.h:616:18: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:619:27: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:628:52: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:636:14: error: storage class specified for parameter ‘gets’
+/usr/include/stdio.h:662:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__getdelim’
+/usr/include/stdio.h:665:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘getdelim’
+/usr/include/stdio.h:675:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘getline’
+/usr/include/stdio.h:686:49: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:692:12: error: storage class specified for parameter ‘puts’
+/usr/include/stdio.h:699:29: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:706:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘fread’
+/usr/include/stdio.h:712:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘fwrite’
+/usr/include/stdio.h:734:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘fread_unlocked’
+/usr/include/stdio.h:736:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘fwrite_unlocked’
+/usr/include/stdio.h:746:19: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:751:24: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:756:21: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:770:20: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:770:36: error: expected declaration specifiers or ‘...’ before ‘__off_t’
+/usr/include/stdio.h:775:16: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘ftello’
+/usr/include/stdio.h:795:21: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:795:48: error: unknown type name ‘fpos_t’
+/usr/include/stdio.h:800:21: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:800:21: error: unknown type name ‘fpos_t’
+/usr/include/stdio.h:823:23: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:825:18: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:827:20: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:832:32: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:833:27: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:834:29: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:843:13: error: storage class specified for parameter ‘perror’
+In file included from /usr/include/stdio.h:850:0,
+                 from src/LFMM3/lfmm_algo.c:28:
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h:27:12: error: storage class specified for parameter ‘sys_nerr’
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h:28:30: error: storage class specified for parameter ‘sys_errlist’
+In file included from src/LFMM3/lfmm_algo.c:28:0:
+/usr/include/stdio.h:855:20: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:860:29: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:870:13: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘*’ token
+/usr/include/stdio.h:876:20: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:882:14: error: storage class specified for parameter ‘ctermid’
+/usr/include/stdio.h:910:24: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:914:26: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/stdio.h:917:26: error: expected declaration specifiers or ‘...’ before ‘FILE’
+In file included from /usr/include/stdio.h:931:0,
+                 from src/LFMM3/lfmm_algo.c:28:
+/usr/include/x86_64-linux-gnu/bits/stdio.h:46:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+/usr/include/x86_64-linux-gnu/bits/stdio.h:54:17: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio.h:64:16: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio.h:72:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+/usr/include/x86_64-linux-gnu/bits/stdio.h:81:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+/usr/include/x86_64-linux-gnu/bits/stdio.h:89:26: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio.h:99:25: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio.h:107:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+/usr/include/x86_64-linux-gnu/bits/stdio.h:126:1: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio.h:133:1: error: expected declaration specifiers or ‘...’ before ‘FILE’
+In file included from /usr/include/stdio.h:934:0,
+                 from src/LFMM3/lfmm_algo.c:28:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:24:61: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:26:62: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:28:7: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:33:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:44:1: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:53:50: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:54:7: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:56:51: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:57:8: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:58:8: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:62:1: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:75:1: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:75:1: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:86:27: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:88:12: error: storage class specified for parameter ‘__printf_chk’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:89:28: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:90:42: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:92:6: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:96:10: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:104:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:115:42: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:125:11: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:126:36: error: expected declaration specifiers or ‘...’ before ‘__gnuc_va_list’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:220:39: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:221:14: error: storage class specified for parameter ‘__gets_warn’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:227:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:233:49: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:234:6: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:235:14: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:238:14: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:238:14: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:245:39: error: expected declaration specifiers or ‘...’ before ‘FILE’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:258:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__fread_chk’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:261:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__fread_alias’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:265:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__fread_chk_warn’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:274:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘fread’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:319:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__fread_unlocked_chk’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:322:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__fread_unlocked_alias’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:326:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__fread_unlocked_chk_warn’
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:335:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘fread_unlocked’
+In file included from /usr/include/stdlib.h:33:0,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:324:24: error: storage class specified for parameter ‘wchar_t’
+In file included from src/LFMM3/lfmm_algo.c:29:0:
+/usr/include/stdlib.h:72:5: error: storage class specified for parameter ‘__WAIT_STATUS’
+/usr/include/stdlib.h:102:5: error: storage class specified for parameter ‘div_t’
+/usr/include/stdlib.h:110:5: error: storage class specified for parameter ‘ldiv_t’
+/usr/include/stdlib.h:118:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/stdlib.h:122:5: error: expected declaration specifiers before ‘lldiv_t’
+/usr/include/stdlib.h:140:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__ctype_get_mb_cur_max’
+/usr/include/stdlib.h:145:15: error: storage class specified for parameter ‘atof’
+/usr/include/stdlib.h:148:12: error: storage class specified for parameter ‘atoi’
+/usr/include/stdlib.h:151:17: error: storage class specified for parameter ‘atol’
+/usr/include/stdlib.h:158:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/stdlib.h:165:15: error: storage class specified for parameter ‘strtod’
+/usr/include/stdlib.h:173:14: error: storage class specified for parameter ‘strtof’
+/usr/include/stdlib.h:176:20: error: storage class specified for parameter ‘strtold’
+/usr/include/stdlib.h:184:17: error: storage class specified for parameter ‘strtol’
+/usr/include/stdlib.h:188:26: error: storage class specified for parameter ‘strtoul’
+/usr/include/stdlib.h:195:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/stdlib.h:200:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/stdlib.h:209:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/stdlib.h:214:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/stdlib.h:280:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+/usr/include/stdlib.h:285:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+/usr/include/stdlib.h:290:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+/usr/include/stdlib.h:297:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/stdlib.h:311:14: error: storage class specified for parameter ‘l64a’
+/usr/include/stdlib.h:314:17: error: storage class specified for parameter ‘a64l’
+In file included from /usr/include/stdlib.h:320:0,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/x86_64-linux-gnu/sys/types.h:34:18: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘u_char’
+/usr/include/x86_64-linux-gnu/sys/types.h:35:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘u_short’
+/usr/include/x86_64-linux-gnu/sys/types.h:36:17: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘u_int’
+/usr/include/x86_64-linux-gnu/sys/types.h:37:18: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘u_long’
+/usr/include/x86_64-linux-gnu/sys/types.h:38:18: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘quad_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:39:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘u_quad_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:40:18: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘fsid_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:45:1: error: unknown type name ‘__loff_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:45:18: error: storage class specified for parameter ‘loff_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:49:17: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘ino_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:61:17: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘dev_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:66:17: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘gid_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:71:18: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘mode_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:76:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘nlink_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:81:17: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘uid_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:99:17: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘pid_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:105:16: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘id_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:116:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘daddr_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:117:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘caddr_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:123:17: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘key_t’
+In file included from /usr/include/x86_64-linux-gnu/sys/types.h:133:0,
+                 from /usr/include/stdlib.h:320,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/time.h:60:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘clock_t’
+/usr/include/time.h:76:18: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘time_t’
+/usr/include/time.h:92:21: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘clockid_t’
+/usr/include/time.h:104:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘timer_t’
+In file included from /usr/include/stdlib.h:320:0,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/x86_64-linux-gnu/sys/types.h:151:27: error: storage class specified for parameter ‘ulong’
+/usr/include/x86_64-linux-gnu/sys/types.h:152:28: error: storage class specified for parameter ‘ushort’
+/usr/include/x86_64-linux-gnu/sys/types.h:153:22: error: storage class specified for parameter ‘uint’
+/usr/include/x86_64-linux-gnu/sys/types.h:195:1: error: storage class specified for parameter ‘int8_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:196:1: error: storage class specified for parameter ‘int16_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:197:1: error: storage class specified for parameter ‘int32_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:198:1: error: storage class specified for parameter ‘int64_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:201:1: error: storage class specified for parameter ‘u_int8_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:202:1: error: storage class specified for parameter ‘u_int16_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:203:1: error: storage class specified for parameter ‘u_int32_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:204:1: error: storage class specified for parameter ‘u_int64_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:206:13: error: storage class specified for parameter ‘register_t’
+In file included from /usr/include/x86_64-linux-gnu/sys/select.h:34:0,
+                 from /usr/include/x86_64-linux-gnu/sys/types.h:220,
+                 from /usr/include/stdlib.h:320,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/x86_64-linux-gnu/bits/sigset.h:24:13: error: storage class specified for parameter ‘__sig_atomic_t’
+/usr/include/x86_64-linux-gnu/bits/sigset.h:32:5: error: storage class specified for parameter ‘__sigset_t’
+In file included from /usr/include/x86_64-linux-gnu/sys/types.h:220:0,
+                 from /usr/include/stdlib.h:320,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/x86_64-linux-gnu/sys/select.h:38:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘sigset_t’
+In file included from /usr/include/x86_64-linux-gnu/sys/select.h:44:0,
+                 from /usr/include/x86_64-linux-gnu/sys/types.h:220,
+                 from /usr/include/stdlib.h:320,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/time.h:122:5: error: expected specifier-qualifier-list before ‘__time_t’
+In file included from /usr/include/x86_64-linux-gnu/sys/select.h:46:0,
+                 from /usr/include/x86_64-linux-gnu/sys/types.h:220,
+                 from /usr/include/stdlib.h:320,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/x86_64-linux-gnu/bits/time.h:33:5: error: expected specifier-qualifier-list before ‘__time_t’
+In file included from /usr/include/x86_64-linux-gnu/sys/types.h:220:0,
+                 from /usr/include/stdlib.h:320,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/x86_64-linux-gnu/sys/select.h:49:23: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘suseconds_t’
+/usr/include/x86_64-linux-gnu/sys/select.h:55:18: error: storage class specified for parameter ‘__fd_mask’
+/usr/include/x86_64-linux-gnu/sys/select.h:73:5: error: expected specifier-qualifier-list before ‘__fd_mask’
+/usr/include/x86_64-linux-gnu/sys/select.h:76:5: error: storage class specified for parameter ‘fd_set’
+/usr/include/x86_64-linux-gnu/sys/select.h:83:19: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘fd_mask’
+/usr/include/x86_64-linux-gnu/sys/select.h:107:32: error: expected declaration specifiers or ‘...’ before ‘fd_set’
+/usr/include/x86_64-linux-gnu/sys/select.h:108:6: error: expected declaration specifiers or ‘...’ before ‘fd_set’
+/usr/include/x86_64-linux-gnu/sys/select.h:109:6: error: expected declaration specifiers or ‘...’ before ‘fd_set’
+/usr/include/x86_64-linux-gnu/sys/select.h:119:33: error: expected declaration specifiers or ‘...’ before ‘fd_set’
+/usr/include/x86_64-linux-gnu/sys/select.h:120:7: error: expected declaration specifiers or ‘...’ before ‘fd_set’
+/usr/include/x86_64-linux-gnu/sys/select.h:121:7: error: expected declaration specifiers or ‘...’ before ‘fd_set’
+/usr/include/x86_64-linux-gnu/sys/select.h:123:24: error: expected ‘;’, ‘,’ or ‘)’ before ‘*’ token
+In file included from /usr/include/x86_64-linux-gnu/sys/select.h:129:0,
+                 from /usr/include/x86_64-linux-gnu/sys/types.h:220,
+                 from /usr/include/stdlib.h:320,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/x86_64-linux-gnu/bits/select2.h:25:26: error: storage class specified for parameter ‘__fdelt_chk’
+/usr/include/x86_64-linux-gnu/bits/select2.h:26:26: error: storage class specified for parameter ‘__fdelt_warn’
+In file included from /usr/include/x86_64-linux-gnu/sys/types.h:223:0,
+                 from /usr/include/stdlib.h:320,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/x86_64-linux-gnu/sys/sysmacros.h:32:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/x86_64-linux-gnu/sys/sysmacros.h:35:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/x86_64-linux-gnu/sys/sysmacros.h:38:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/x86_64-linux-gnu/sys/sysmacros.h:44:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/x86_64-linux-gnu/sys/sysmacros.h:50:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/x86_64-linux-gnu/sys/sysmacros.h:56:1: error: expected declaration specifiers before ‘__extension__’
+In file included from /usr/include/stdlib.h:320:0,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/x86_64-linux-gnu/sys/types.h:229:21: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘blksize_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:236:20: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘blkcnt_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:240:22: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘fsblkcnt_t’
+/usr/include/x86_64-linux-gnu/sys/types.h:244:22: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘fsfilcnt_t’
+In file included from /usr/include/x86_64-linux-gnu/sys/types.h:271:0,
+                 from /usr/include/stdlib.h:320,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:50:27: error: storage class specified for parameter ‘pthread_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:57:3: error: storage class specified for parameter ‘pthread_attr_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:65:3: error: storage class specified for parameter ‘__pthread_list_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:91:5: error: expected specifier-qualifier-list before ‘__pthread_list_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:104:3: error: storage class specified for parameter ‘pthread_mutex_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:110:3: error: storage class specified for parameter ‘pthread_mutexattr_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:130:3: error: storage class specified for parameter ‘pthread_cond_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:136:3: error: storage class specified for parameter ‘pthread_condattr_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:140:22: error: storage class specified for parameter ‘pthread_key_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:144:13: error: storage class specified for parameter ‘pthread_once_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:189:3: error: storage class specified for parameter ‘pthread_rwlock_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:195:3: error: storage class specified for parameter ‘pthread_rwlockattr_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:201:22: error: storage class specified for parameter ‘pthread_spinlock_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:210:3: error: storage class specified for parameter ‘pthread_barrier_t’
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:216:3: error: storage class specified for parameter ‘pthread_barrierattr_t’
+In file included from src/LFMM3/lfmm_algo.c:29:0:
+/usr/include/stdlib.h:327:17: error: storage class specified for parameter ‘random’
+/usr/include/stdlib.h:330:13: error: storage class specified for parameter ‘srandom’
+/usr/include/stdlib.h:337:4: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:341:14: error: storage class specified for parameter ‘setstate’
+/usr/include/stdlib.h:351:5: error: expected specifier-qualifier-list before ‘int32_t’
+/usr/include/stdlib.h:361:8: error: expected declaration specifiers or ‘...’ before ‘int32_t’
+/usr/include/stdlib.h:363:12: error: storage class specified for parameter ‘srandom_r’
+/usr/include/stdlib.h:367:4: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:371:12: error: storage class specified for parameter ‘setstate_r’
+/usr/include/stdlib.h:380:12: error: storage class specified for parameter ‘rand’
+/usr/include/stdlib.h:382:13: error: storage class specified for parameter ‘srand’
+/usr/include/stdlib.h:387:12: error: storage class specified for parameter ‘rand_r’
+/usr/include/stdlib.h:395:15: error: storage class specified for parameter ‘drand48’
+/usr/include/stdlib.h:396:15: error: storage class specified for parameter ‘erand48’
+/usr/include/stdlib.h:399:17: error: storage class specified for parameter ‘lrand48’
+/usr/include/stdlib.h:400:17: error: storage class specified for parameter ‘nrand48’
+/usr/include/stdlib.h:404:17: error: storage class specified for parameter ‘mrand48’
+/usr/include/stdlib.h:405:17: error: storage class specified for parameter ‘jrand48’
+/usr/include/stdlib.h:409:13: error: storage class specified for parameter ‘srand48’
+/usr/include/stdlib.h:410:28: error: storage class specified for parameter ‘seed48’
+/usr/include/stdlib.h:412:13: error: storage class specified for parameter ‘lcong48’
+/usr/include/stdlib.h:428:12: error: storage class specified for parameter ‘drand48_r’
+/usr/include/stdlib.h:430:12: error: storage class specified for parameter ‘erand48_r’
+/usr/include/stdlib.h:435:12: error: storage class specified for parameter ‘lrand48_r’
+/usr/include/stdlib.h:438:12: error: storage class specified for parameter ‘nrand48_r’
+/usr/include/stdlib.h:444:12: error: storage class specified for parameter ‘mrand48_r’
+/usr/include/stdlib.h:447:12: error: storage class specified for parameter ‘jrand48_r’
+/usr/include/stdlib.h:453:12: error: storage class specified for parameter ‘srand48_r’
+/usr/include/stdlib.h:456:12: error: storage class specified for parameter ‘seed48_r’
+/usr/include/stdlib.h:459:12: error: storage class specified for parameter ‘lcong48_r’
+/usr/include/stdlib.h:471:22: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:473:22: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:473:38: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:485:36: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:488:13: error: storage class specified for parameter ‘free’
+/usr/include/stdlib.h:493:13: error: storage class specified for parameter ‘cfree’
+In file included from /usr/include/stdlib.h:497:0,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/alloca.h:33:22: error: expected declaration specifiers or ‘...’ before ‘size_t’
+In file included from src/LFMM3/lfmm_algo.c:29:0:
+/usr/include/stdlib.h:503:22: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:508:45: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:508:65: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:514:13: error: storage class specified for parameter ‘abort’
+/usr/include/stdlib.h:518:12: error: storage class specified for parameter ‘atexit’
+/usr/include/stdlib.h:536:12: error: storage class specified for parameter ‘on_exit’
+/usr/include/stdlib.h:544:13: error: storage class specified for parameter ‘exit’
+/usr/include/stdlib.h:560:13: error: storage class specified for parameter ‘_Exit’
+/usr/include/stdlib.h:567:14: error: storage class specified for parameter ‘getenv’
+/usr/include/stdlib.h:572:14: error: storage class specified for parameter ‘__secure_getenv’
+/usr/include/stdlib.h:579:12: error: storage class specified for parameter ‘putenv’
+/usr/include/stdlib.h:585:12: error: storage class specified for parameter ‘setenv’
+/usr/include/stdlib.h:589:12: error: storage class specified for parameter ‘unsetenv’
+/usr/include/stdlib.h:596:12: error: storage class specified for parameter ‘clearenv’
+/usr/include/stdlib.h:606:14: error: storage class specified for parameter ‘mktemp’
+/usr/include/stdlib.h:620:12: error: storage class specified for parameter ‘mkstemp’
+/usr/include/stdlib.h:642:12: error: storage class specified for parameter ‘mkstemps’
+/usr/include/stdlib.h:663:14: error: storage class specified for parameter ‘mkdtemp’
+/usr/include/stdlib.h:717:12: error: storage class specified for parameter ‘system’
+/usr/include/stdlib.h:734:14: error: storage class specified for parameter ‘realpath’
+/usr/include/stdlib.h:742:15: error: storage class specified for parameter ‘__compar_fn_t’
+/usr/include/stdlib.h:756:9: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:756:25: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:756:40: error: expected declaration specifiers or ‘...’ before ‘__compar_fn_t’
+/usr/include/stdlib.h:761:34: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:761:50: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:762:6: error: expected declaration specifiers or ‘...’ before ‘__compar_fn_t’
+/usr/include/stdlib.h:771:12: error: storage class specified for parameter ‘abs’
+/usr/include/stdlib.h:772:17: error: storage class specified for parameter ‘labs’
+/usr/include/stdlib.h:776:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/stdlib.h:785:14: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘div’
+/usr/include/stdlib.h:787:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘ldiv’
+/usr/include/stdlib.h:793:1: error: expected declaration specifiers before ‘__extension__’
+/usr/include/stdlib.h:808:14: error: storage class specified for parameter ‘ecvt’
+/usr/include/stdlib.h:814:14: error: storage class specified for parameter ‘fcvt’
+/usr/include/stdlib.h:820:14: error: storage class specified for parameter ‘gcvt’
+/usr/include/stdlib.h:826:14: error: storage class specified for parameter ‘qecvt’
+/usr/include/stdlib.h:829:14: error: storage class specified for parameter ‘qfcvt’
+/usr/include/stdlib.h:832:14: error: storage class specified for parameter ‘qgcvt’
+/usr/include/stdlib.h:840:6: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:843:6: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:847:31: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:851:31: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:860:38: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:863:20: error: expected declaration specifiers or ‘...’ before ‘wchar_t’
+/usr/include/stdlib.h:864:36: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/stdlib.h:867:31: error: expected declaration specifiers or ‘...’ before ‘wchar_t’
+/usr/include/stdlib.h:871:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘mbstowcs’
+/usr/include/stdlib.h:874:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘wcstombs’
+/usr/include/stdlib.h:885:12: error: storage class specified for parameter ‘rpmatch’
+/usr/include/stdlib.h:896:12: error: storage class specified for parameter ‘getsubopt’
+/usr/include/stdlib.h:948:12: error: storage class specified for parameter ‘getloadavg’
+In file included from /usr/include/stdlib.h:955:0,
+                 from src/LFMM3/lfmm_algo.c:29:
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:26:9: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:27:14: error: storage class specified for parameter ‘__realpath_alias’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:30:14: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:39:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:53:52: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:54:8: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:55:12: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:58:12: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:58:12: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:65:1: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:78:37: error: expected declaration specifiers or ‘...’ before ‘wchar_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:78:54: error: expected declaration specifiers or ‘...’ before ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:80:12: error: expected declaration specifiers or ‘...’ before ‘wchar_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:84:1: error: expected declaration specifiers or ‘...’ before ‘wchar_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:99:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__mbstowcs_chk’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:102:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__mbstowcs_alias’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:106:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__mbstowcs_chk_warn’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:113:24: error: storage class specified for parameter ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:113:24: error: conflicting types for ‘size_t’
+/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h:212:23: note: previous definition of ‘size_t’ was here
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:114:1: error: expected ‘,’ or ‘;’ before ‘mbstowcs’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:131:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__wcstombs_chk’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:134:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__wcstombs_alias’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:138:15: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘__wcstombs_chk_warn’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:144:24: error: storage class specified for parameter ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:144:24: error: redefinition of parameter ‘size_t’
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:113:24: note: previous definition of ‘size_t’ was here
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:145:1: error: expected ‘,’ or ‘;’ before ‘wcstombs’
+src/LFMM3/lfmm_algo.c:38:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+src/LFMM3/lfmm_algo.c:126:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+src/LFMM3/lfmm_algo.c:141:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+src/LFMM3/lfmm_algo.c:155:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+src/LFMM3/lfmm_algo.c:174:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+src/LFMM3/lfmm_algo.c:194:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+src/LFMM3/lfmm_algo.h:55:6: error: old-style parameter declarations in prototyped function definition
+src/LFMM3/lfmm_algo.c:205:1: error: expected ‘{’ at end of input
+src/LFMM3/lfmm_algo.h:55:26: warning: unused parameter ‘U’ [-Wunused-parameter]
+src/LFMM3/lfmm_algo.h:55:37: warning: unused parameter ‘V’ [-Wunused-parameter]
+src/LFMM3/lfmm_algo.h:55:48: warning: unused parameter ‘sum’ [-Wunused-parameter]
+src/LFMM3/lfmm_algo.h:55:61: warning: unused parameter ‘sum2’ [-Wunused-parameter]
+src/LFMM3/lfmm_algo.h:56:26: warning: unused parameter ‘mean_U’ [-Wunused-parameter]
+src/LFMM3/lfmm_algo.h:56:42: warning: unused parameter ‘mean_V’ [-Wunused-parameter]
+src/LFMM3/lfmm_algo.h:56:58: warning: unused parameter ‘deviance’ [-Wunused-parameter]
+src/LFMM3/lfmm_algo.h:57:25: warning: unused parameter ‘thrd_m2’ [-Wunused-parameter]
+src/LFMM3/lfmm_algo.h:57:38: warning: unused parameter ‘N’ [-Wunused-parameter]
+src/LFMM3/lfmm_algo.h:57:45: warning: unused parameter ‘M’ [-Wunused-parameter]
+src/LFMM3/lfmm_algo.h:57:52: warning: unused parameter ‘K’ [-Wunused-parameter]
+src/LFMM3/lfmm_algo.h:57:59: warning: unused parameter ‘D’ [-Wunused-parameter]
+src/LFMM3/lfmm_algo.h:57:69: warning: unused parameter ‘alpha_R’ [-Wunused-parameter]
+make: *** [obj/LFMM3/lfmm_algo.o] Error 1

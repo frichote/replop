@@ -32,7 +32,7 @@ SRC_main = $(wildcard $(SRC)/main/*.c)
 ### OBJECTS FILES ###
 OBJ_LAPACK = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LAPACK)) 
 OBJ_LFMM = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LFMM)) 
-OBJ_LFMM3 = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LFMM)) 
+OBJ_LFMM3 = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LFMM3)) 
 OBJ_LFMM2 = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LFMM2)) 
 OBJ_sNMF = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_sNMF)) 
 OBJ_convert = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_convert)) 
@@ -64,7 +64,7 @@ $(BIN)/LFMM : $(OBJ_LFMM) $(LIB)/lapack.a $(OBJ)/main/main_LFMM.o
 $(BIN)/LFMM2 : $(OBJ_LFMM2) $(LIB)/lapack.a $(OBJ)/main/main_LFMM2.o
 	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS)
 
-$(BIN)/LFMM3 : $(OBJ_LFMM2) $(LIB)/lapack.a $(OBJ)/main/main_LFMM3.o
+$(BIN)/LFMM3 : $(OBJ_LFMM3) $(LIB)/lapack.a $(OBJ)/main/main_LFMM3.o
 	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS)
 
 $(BIN)/pca : $(OBJ_pca) $(LIB)/lapack.a $(OBJ)/main/main_pca.o

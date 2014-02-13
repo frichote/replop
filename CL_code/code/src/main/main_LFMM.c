@@ -23,6 +23,7 @@
 #include "../LFMM/register_lfmm.h"
 #include "../LFMM/print_lfmm.h"
 #include "../io/io_tools.h"
+#include "../matrix/matrix.h"
 
 int main(int argc, char *argv[])
 {

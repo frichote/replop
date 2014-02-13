@@ -449,10 +449,11 @@ We can also run all three programs in once using the \verb|-c| option:
 
 To choose the best value for $K$, we launch {\tt sNMF} for each value of $K$ from 2 to 10. The figure below displays the cross-entropy value obtained for each value of $K$. It seems that $K=6$ is the best value according to the cross-entropy criterion because the cross-entropy does not seem to decrease for $K$ greater than 6. This analysis has for sure to be completed by displaying the admixture barplots associated with each result. 
 \begin{Verbatim}[frame=single]
-for K in `seq 2 10` 
+for K in 1 2 3 4 5 6 7 8 9 10 
 do 
 	echo K=$K; ./bin/sNMF -x examples/panel11.geno -K $K -c > examples/panel11.$K.log
 done
+grep "Cross-Entropy (masked data):" examples/panel11.*.log
 \end{Verbatim}
 
 \centerline{\includegraphics[width=15cm]{ce.pdf}}

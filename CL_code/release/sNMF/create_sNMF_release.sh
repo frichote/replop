@@ -56,7 +56,7 @@ cd  ../../../release/$prog/$dir/
 
 # example
 echo "$VERT" "\tAdd examples files" "$NORMAL"
-cp ../../../examples/$prog/panel11.geno ../../../examples/$prog/README examples/
+cp -r ../../../examples/$prog/panel11.geno ../../../examples/LFMM/format_example/ ../../../examples/$prog/README examples/
 
 echo "$VERT" "Leaving $dir" "$NORMAL"
 cd ..

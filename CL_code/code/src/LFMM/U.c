@@ -202,10 +202,10 @@ void update_U(double *C, float *dat, double *U, double *V, double *beta,
 
 void update_alpha_U(double *U, double *alpha_U, double epsilon, int K, int N)
 {
-	epsilon = 0.1;
 	int a = (int)(epsilon) + N * K / 2;
 	// b = 1/2*sum(sum(U.^2)) + 1/2*sum(sum(V.^2));
-	int b = 0.5 * dble_sum(U, N * K) + epsilon;	// U(D,N) V(D,M)
+	double b = 0.5 * dble_sum(U, N * K) + epsilon;	// U(D,N) V(D,M)
 
 	// update alpha_U
-	*alpha_U = rand_gamma(a, 1.0 / b);}
+	*alpha_U = rand_gamma(a, 1.0 / b);
+}

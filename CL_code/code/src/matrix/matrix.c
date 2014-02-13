@@ -22,6 +22,41 @@
 #include <math.h>
 #include "matrix.h"
 
+// compare
+
+int compare (const void* a, const void* b) 
+{
+	// headack pointer style
+	long double *pa = *(long double**)a;	
+	long double *pb = *(long double **)b;	
+
+	if (*pa < *pb) return -1;
+	if (*pa == *pb) return 0;
+	if (*pa > *pb) return 1;
+}
+// sort_index
+
+void sort_index(long double *data, int* index, int n)
+{
+
+	long double** pointers = (long double **) calloc(n, sizeof(long double *));
+	int i;
+
+	// create a table of pointers 
+	for (i = 0; i < n; i++)
+		pointers[i] = &(data[i]);
+
+	// sort
+	qsort(pointers, n, sizeof(pointers[0]), compare);
+
+	// save index
+	for (i = 0; i < n; i++)
+		index[i] = pointers[i] - data;
+
+	free(pointers);
+}
+
+
 // imin
 
 int imin(int a, int b)

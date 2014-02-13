@@ -34,7 +34,7 @@ void print_help_cds()
          "        -m ploidy             -- 1 if haploid, 2 if diploid   (default: 2)\n"
          "        -s seed               -- seed random init             (default: random)\n"
          "        -r percentage         -- percentage of masked data    (default: 0.05)\n\n"
-         "        -o output_file        -- output file                  (default: input_file_I.geno)\n\n"
+         "        -o output_file        -- output file (in .geno format)(default: input_file_I.geno)\n\n"
         );
 }
 
@@ -48,8 +48,8 @@ void print_summary_cds (int N, int M, int m, long long seed, double e, char *inp
                 "        -L (number of loci)                        %d\n"
                 "        -s (seed random init)                      %lu\n"
                 "        -r (percentage of masked data)             %G\n"
-                "        -x (genotype file)                         %s\n"
-                "        -o (output file)                           %s\n"
+                "        -x (genotype file in .geno format)         %s\n"
+                "        -o (output file in .geno format)           %s\n"
                 , N, M, (unsigned long)seed, e, input, output);
 
         if (m == 1)

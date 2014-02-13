@@ -23,11 +23,30 @@
 #include "data_lfmm.h"
 #include "error_lfmm.h"
 #include "../matrix/rand.h"
+#include "../matrix/matrix.h"
 #include "../io/io_tools.h"
 
 # ifndef WIN32
 #include "thread_var.h"
 # endif
+
+// pvalue_qvalue
+
+void pvalue_qvalue(long double *pvalues, long double *qvalues, int n)
+{
+	int *index = (int *)calloc(n, sizeof(int));
+	int i;
+
+	// sort pvalue table
+	sort_index(pvalues, index, n);
+
+	for (i = 0; i < n; i++)
+		qvalues[index[i]] = pvalues[index[i]] 
+				  * (long double)(n) / (long double) (i+1);	
+	
+
+	free(index);
+}
 
 // zscore_calc
 
@@ -35,11 +54,13 @@ void zscore_calc(double *zscore, double *sum, double *sum2, int n, int cur, int 
 {
 	int i;
 	double var;
-
+	
 	for (i = n; i < D * n; i++) {
+		// calculate var beta
 		var =
 			((sum2[i] - sum[i] * sum[i] / (double)cur) / (double)(cur -
 				1));
+		// calculate zscore beta
 		zscore[(i - n)] = (sum[i]) / (sqrt(var) * (double)cur);
 	}
 
@@ -124,43 +145,59 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 {
 	FILE *file = NULL;
 	int j;
-	long double pvalue;
 	int d;
 	char zscore_file[512]; 
+	long double* pvalues = (long double *)calloc(M, sizeof(long double));
+	long double* qvalues = (long double *)calloc(M, sizeof(long double));
 
 	if (all) {
 		for (d = 0; d < D; d++) {
+			// calculate pvalues
+			for (j = 0; j < M; j++)
+				pvalues[j] = zscore2pvalue((long double)fabs(zscore[d*M+j]));
+			// calculate qvalues
+			pvalue_qvalue(pvalues, qvalues, M);
+			
 			// write file name 
                 	snprintf(zscore_file, 512, "%s_a%d.%d.zscore", output_file,d+1,K);
 			// and write 
 			file = fopen_write(zscore_file);
 			for (j = 0; j < M; j++) {
-				pvalue = zscore2pvalue((long double)fabs(zscore[d*M+j]));
-				fprintf(file, "%Lg %Lg %Lg ", (long double)fabs(zscore[d*M+j]),
-						(long double)(-log10(pvalue)), pvalue);
+				fprintf(file, "%Lg %Lg %Lg %Lg %Lg", (long double)fabs(zscore[d*M+j]),
+						(long double)(-log10(pvalues[j])), pvalues[j],
+						(long double)(-log10(qvalues[j])), qvalues[j]);
 				fprintf(file, "\n");
 			}
 			fclose(file);
                         printf("\tThe zscores for variable %d were registered in:\n \t\t%s.\n"
-				"\tThe columns are: zscore, -log10(p-value), p-value.\n"
+				"\tThe columns are: zscore, -log10(p-value), p-value, -log10(q-value), q-value.\n"
 				"\n\n", d+1, zscore_file);
 		}
 	} else {
+		// calculate pvalues
+		for (j = 0; j < M; j++)
+			pvalues[j] = zscore2pvalue((long double)fabs(zscore[j]));
+		// calculate qvalues
+		pvalue_qvalue(pvalues, qvalues, M);
+
 		// write file name
                 snprintf(zscore_file, 512, "%s_s%d.%d.zscore", output_file,nd+1,K);
 		// and write it
 		file = fopen_write(zscore_file);
 		for (j = 0; j < M; j++) {
-			pvalue = zscore2pvalue((long double)fabs(zscore[j]));
-			fprintf(file, "%Lg %Lg %Lg ", (long double)fabs(zscore[j]),
-					(long double)(-log10(pvalue)), pvalue);
+			fprintf(file, "%Lg %Lg %Lg %Lg %Lg", (long double)fabs(zscore[j]),
+					(long double)(-log10(pvalues[j])), pvalues[j],
+					(long double)(-log10(qvalues[j])), qvalues[j]);
 			fprintf(file, "\n");
 		}
 		fclose(file);
                 printf("\tThe zscores for variable %d were registered in:\n \t\t%s.\n"
-			"\tThe columns are: zscore, -log10(p-value), p-value.\n"
+			"\tThe columns are: zscore, -log10(p-value), p-value, -log10(q-value), q-value.\n"
 			"\n\n", nd+1, zscore_file);
 	}
+
+	free(pvalues);
+	free(qvalues);
 }
 
 // var_data

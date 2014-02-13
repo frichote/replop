@@ -35,20 +35,50 @@
 	<dl>
 	<br/>
 
-		<dt> Can I analyse AFLP data with LFMM ? </dt>
+		<dt> Can I analyse large microsattelite dataset with LFMM ? </dt>
+	<br/>
+		<dd> Yes (if you consider that you have enough microsattelites to both infer for population structure and test for association with the environment). <br/>
+		There are two possible ways to analyze microsattelite dataset:
+		<ul>
+		<li> you can test for correlations between the environmental 
+		variable and the microsattelite markers. In this case, there is
+		one row per individual. Each 
+		row contains one value per microsattelite (separated by spaces 
+		or tabulations): the number of alleles. 
+		An example of LFMM format for 3 individuals and 4 microsattelite 
+		markers is available:
+                <a href="files/microsatellite_1.lfmm">microsatellite_1.lfmm<a/>.	
+		<li> you can test for correlations between the environmental 
+		variable and the microsattelite alleles. In this case, there is
+		one row per individual. For microsattelite marker is coded 
+		on A columns if it is composed of A differents alleles.
+		Then, for each column, there is a 1 if this individual
+		has this microsattelite allele for this marker and 0 otherwise 
+		(separated by spaces or tabulations). 
+		An example of LFMM format for 3 individuals and 4 microsattelite 
+		markers is available:
+                <a href="files/microsatellite_2.lfmm">microsatellite_2.lfmm<a/>.	
+		It is the same dataset as microsattelite_1.lfmm but for this purpose.
+		<ul/>
+		</dd> 
+	<br/>
+
+		<dt> Can I analyse AFLP data with LFMM ? </dt>
 	<br/>
 		<dd> Yes. In this case, LFMM tests the correlation between 
 		the environmental variable and the presence of the
 		dominant marker. You just need to format to LFMM format with 0 
 		for minor marker and 1 for dominant marker, separated by one
 		or several spaces. There should be no space at the end of a line. 
-		One line per individual. 9 or -9 value for missing value.
+		One line per individual. 9 or -9 value for missing value. An example
+		of LFMM format for 3 individuals and 4 AFLP markers is available: 
+		<a href="files/aflp.lfmm">aflp.lfmm<a/>.
 		</dd> 
 	</dl>	
 
 	<h2> Other questions </h2>
 	<dl>
-	<dt> No answer for your question ? </dt> 
+	<dt> No answer for your question ? </dt> 
 	<br/>
 	<dd> Please send me an email (eric.frichot@imag.fr). </dd>
 	</dl>

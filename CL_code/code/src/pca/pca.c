@@ -61,6 +61,7 @@ void pca(char* input_file, char *output_eva_file, char *output_eve_file,
 	// read input_file
 	read_data_double(input_file, N, M, data);
 
+	printf("%d %d\n",c,s);
 	// scale
 	if (s)
 		normalize_cov_I(data, N, M);
@@ -69,6 +70,8 @@ void pca(char* input_file, char *output_eva_file, char *output_eve_file,
 
 	// calculate covariance matrix
 	calc_cov(data, N, M, cov); 
+
+	write_data_double("cov.txt",N, N, cov);
 
 	// calculate eva and eve
 	diagonalize(cov, N, K, val, vect);

@@ -9,6 +9,25 @@
 #include <math.h>
 
 /**
+ * comparaison function of two elements (for qsort)
+ *
+ * @param a	first element
+ * @param b	second element
+ *
+ * return a - b;
+ */
+int compare (const void* a, const void* b);
+
+/**
+ * return the indexes of data sorted (increasing order) (using qsort) 
+ *
+ * @param data	matrix to sort
+ * @param index	indices 
+ * @param n	size of data, index
+ */
+ void sort_index(long double *data, int *index, int n);
+
+/**
  * comput min(a, b)
  * 
  * @param a 	first int

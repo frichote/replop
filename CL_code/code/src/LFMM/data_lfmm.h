@@ -10,6 +10,15 @@
 #include "../matrix/data.h"
 
 /**
+ * convert pvalues into qvalues with Benjaminy-Hosberg approximation
+ *
+ * @param pvalues	pvalues table
+ * @param qvalues	output qvalues table
+ * @param n		size of the tables
+ */
+void pvalue_qvalue(long double *pvalues, long double *qvalues, int n);
+
+/**
  * compute zscore in the dth column of beta
  * 
  * @param zscore	the output matrix of zscores (of size nxnD)

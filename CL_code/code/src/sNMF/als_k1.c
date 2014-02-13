@@ -53,14 +53,7 @@ void ALS_k1(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp)
                 }
 		// frequencies
                 for (c = 0; c < nc; c++)
-			F[j*nc+c] = (double)count_nc[c] / (double) (nc*M);
-        }
-
-        for(i = 0; i < N; i++) {
-                if (fabs(Q[i]) < 0.0001)
-                        Q[i] = 0.0001;
-                if (fabs(1-Q[i]) < 0.0001)
-                        Q[i] = 1-0.0001;
+			F[j*nc+c] = (double)count_nc[c] / (double) (N);
         }
 
         for(j = 0; j < M; j++) {

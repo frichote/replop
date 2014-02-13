@@ -3,8 +3,8 @@
 # parameters
 prog="LFMM"
 dir="LFMM_CL_v$1"
-src_list="io lapack matrix LFMM"
-main_list="LFMM"
+src_list="io lapack matrix LFMM convert student tracyWidom pca"
+main_list="main_LFMM main_pca main_tracyWidom main_geno2lfmm main_lfmm2geno main_ped2lfmm main_vcf2geno main_ancestrymap2lfmm"
 
 # color definition
 VERT="\\033[1;32m" NORMAL="\\033[0;39m" ROUGE="\\033[1;31m" JAUNE="\\033[1;33m"
@@ -25,6 +25,10 @@ cd $dir
 echo "\tAdd src files"
 
 rm -r code/obj/*/ 
+
+mkdir code/obj/main/
+mkdir code/src/main/
+
 for i in $src_list; do 
 	echo "\t\tCopy of $i in $dir"
 	cp -r ../../../code/src/$i/ code/src/ 
@@ -33,7 +37,7 @@ done
 
 for i in $main_list; do 
 	echo "\t\tCopy of $i in $dir"
-	cp ../../../code/src/$i.c code/src/ 
+	cp ../../../code/src/main/$i.c code/src/main/
 done
 
 # README
@@ -52,7 +56,7 @@ cd  ../../../release/$prog/$dir/
 
 # example
 echo "$VERT" "\tAdd examples files" "$NORMAL"
-cp -r ../../../examples/$prog/* examples/
+cp -r ../../../examples/LFMM/human_example ../../../examples/LFMM/format_example/ ../../../examples/$prog/README examples/
 
 echo "$VERT" "Leaving $dir" "$NORMAL"
 cd ..

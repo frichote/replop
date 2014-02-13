@@ -31,7 +31,7 @@ int main (int argc, char *argv[]) {
 	int K = 0;			// number of ancestral populations
 	int maxiter = 200;		// max number of iterations
 	int num_thrd = 1;		// number of processes	
-	double alpha = 0;		// regularization parameter
+	double alpha = 10;		// regularization parameter
 	double tol = 0.0001;		// tolerance criterion
 	char output_file_F[512] = "";	// output file for ancestral allele frequencies
 	char output_file_Q[512] = "";	// output file for ancestral admixture coefficents

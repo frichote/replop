@@ -53,11 +53,15 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 	create_CCt(CCt, C, D, N);
 
 	// init U, V and beta
+	/*
 	rand_matrix_double(beta, D, M);
 	rand_matrix_double(U, K, N);
 	rand_matrix_double(V, K, M);
+	*/
+	zeros(beta, D * M);
+	zeros(U, K * N);
+	zeros(V, K * M);
 
-	/*
 	if(missing_data)
 		*alpha_R = 1.0 / 
 			var_data_inputation(dat, I, U, V, C, beta, N, M, K, D, 
@@ -65,8 +69,6 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 	else 
 		*alpha_R = 1.0 / 
 			var_data(dat, U, V, C, beta, N, M, K, D, &thrd_m2, num_thrd);
-	*/
-	*alpha_R = 3.45;
 
 	// shell print
 	init_bar(&i, &j);
@@ -75,27 +77,32 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 	while (n < Niter) {
 		// print shell
 		print_bar(&i, &j, Niter);
+        //        printf("alpha_R %G\n",*alpha_R);
 
 		// update_alpha_U
 		update_alpha_U(U, alpha_U, epsilon, K, N);
+	//	printf("alpha_U %G\n",*alpha_U);
 
 		// update_alpha_beta
 		update_alpha_beta(beta, alpha_beta, epsilon, D, M);
+	//	printf("alpha_b %G %G\n",alpha_beta[0], alpha_beta[1]);
 
 		// update_beta
 		update_beta(C, dat, U, V, beta, CCt, m_beta, inv_cov_beta,
 			    alpha_beta, *alpha_R, M, N, K, D, num_thrd);
 
-		// update U
-		update_U(C, dat, U, V, beta, m_U, inv_cov_U, *alpha_U, *alpha_R,
-			 M, N, K, D, num_thrd);
-
+          //      printf("V %G\n",beta[0]);
 		// update V
 		update_V(C, dat, U, V, beta, m_V, inv_cov_V, (double)(1),
 			 *alpha_R, M, N, K, D, num_thrd);
 
+
+		// update U
+		update_U(C, dat, U, V, beta, m_U, inv_cov_U, *alpha_U, *alpha_R,
+			 M, N, K, D, num_thrd);
+
+
 		// update alpha_R
-		/*
 		if(missing_data)
 			*alpha_R = 1.0 / 
 				var_data_inputation(dat, I, U, V, C, beta, N, M, K, D, 
@@ -104,8 +111,6 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 			*alpha_R = 1.0 / 
 				var_data(dat, U, V, C, beta, N, M, K, D, 
 					&thrd_m2, num_thrd);
-		*/
-		*alpha_R = 3.45;
 
 		// update sums
 		if (n >= burn) {

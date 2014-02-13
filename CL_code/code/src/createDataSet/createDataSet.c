@@ -105,6 +105,6 @@ void createDataSet(char* input_file, int m, long long seed, double e,
 	fclose(in_File);	
 	fclose(out_File);
 
-        printf("Write genotype file with masked data %s:\t\tOK.\n\n",output_file);
+        printf("Write genotype file with masked data, %s:\t\tOK.\n\n",output_file);
 }
 

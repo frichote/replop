@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.4.24)  19 DEC 2013 15:17
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.4.24)  13 FEB 2014 15:44
 entering extended mode
  %&-line parsing enabled.
 **note.tex
@@ -627,15 +627,15 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 
 pdfTeX warning: pdflatex (file ./ce.pdf): PDF inclusion: found PDF version <1.5
 >, but at most version <1.4> allowed
-<ce.pdf, id=99, 643.40375pt x 406.51875pt>
+<ce.pdf, id=99, 646.415pt x 414.54875pt>
 File: ce.pdf Graphic file (type pdf)
 <use ce.pdf>
-Underfull \hbox (badness 10000) in paragraph at lines 459--463
+Underfull \hbox (badness 10000) in paragraph at lines 460--464
 
  []
 
 
-Overfull \hbox (13.70927pt too wide) in paragraph at lines 467--471
+Overfull \hbox (13.70927pt too wide) in paragraph at lines 468--472
 \OT1/cmr/m/n/10 olivier.francois@imag.fr). A FAQ (Fre-quently Asked Ques-tions)
  sec-tion is avail-able on our web-page (ttp://membres-
  []
@@ -661,9 +661,9 @@ ts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti1
 0.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr
 /share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texm
 f-texlive/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on note.pdf (7 pages, 252341 bytes).
+Output written on note.pdf (7 pages, 260377 bytes).
 PDF statistics:
- 182 PDF objects out of 1000 (max. 8388607)
+ 174 PDF objects out of 1000 (max. 8388607)
  29 named destinations out of 1000 (max. 500000)
  102 words of extra memory for PDF output out of 10000 (max. 10000000)
 

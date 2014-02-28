@@ -1,5 +1,3 @@
-#Version du Makefile utilisant les fonctions avancées de Make.
-
 ### OPTIONS ####
 CFLAGS = -lm -lpthread
 LDFLAGS += -g -O3 -Wall -Wextra

@@ -19,7 +19,7 @@
 int nb_cols_vcf(char *file);
 
 /**
- * read cnv informations for the file and and save them
+ * read cnv informations for the file and save them in infos
  *
  * @param token		to read infos
  * @param infos		to save infos
@@ -51,7 +51,14 @@ void vcf2geno (char *input_file, char* output_file, int *N, int *M, char* snp_fi
 	char* removed_file, int *removed);
 
 /**
+ * read a line of a vcf file
  *
+ * @param token 	the line to read after write_snp_info done
+ * @param allele	the allele informations...
+ * @param j		the number of the snp (from 0)
+ * @param N		the number of individuals
+ * @param input_file	the name of the input file (char *) (f)
+ * @param input_File	the input file (FILE) (F)
  */
 void fill_line_vcf(char *token, int *allele, int j, int N, char* input_file, FILE* input_File);
 

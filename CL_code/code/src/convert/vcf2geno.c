@@ -178,6 +178,8 @@ void vcf2geno(char* input_file, char *output_file, int *N, int *M,
 	free(allele);
 }
 
+// fill_line_vcf
+
 void fill_line_vcf(char *token, int *allele, int j, int N, char* input_file, FILE* input_File)
 {
 
@@ -230,6 +232,8 @@ void fill_line_vcf(char *token, int *allele, int j, int N, char* input_file, FIL
 	test_column (input_file, input_File, i, j+1, N, token);
 }
 
+// read_cnv_info
+
 void read_cnv_info(char *token, char **infos, char* szbuff, int j)
 {
 	int ip;
@@ -249,6 +253,8 @@ void read_cnv_info(char *token, char **infos, char* szbuff, int j)
 		strcpy(infos[ip],token);
 	}
 }
+
+// write_snp_info
 
 void write_snp_info (FILE* output_File, char **infos, int removed)
 {

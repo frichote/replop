@@ -13,11 +13,11 @@ Organization
 ------------
 The repository is organized as follows:
 
-1. CL\_code/ command-line code directory.
+1. CL\_code: command-line code directory.
 
-2. Eric.Frichot/ personal webpage host by timc at the moment.
+2. Eric.Frichot: personal webpage host by timc at the moment.
 
-3. GUI\_code/ Graphical User Interface code directory for LFMM.
+3. GUI\_code: Graphical User Interface code directory for LFMM.
 
 Softwares
 ----------

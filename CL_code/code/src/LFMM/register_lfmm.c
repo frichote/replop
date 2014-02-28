@@ -177,8 +177,6 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 
 	if (*K < 0 || *num_thrd <= 0 || *burn <= 0 || *Niter <= 0)
 		print_error_lfmm("missing", NULL, 0);
-	else if (*K == 0)
-		printf("TODO: not implemented yet !\n\n");
 
 	if (*burn >= *Niter) {
 		print_error_lfmm("specific",
@@ -194,7 +192,6 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
         // write dev file name
         if (!strcmp(dev_file,"")) {
                 strcpy(dev_file,tmp_file);
-                strcat(dev_file,".dic");
         }
         free(tmp_file);
 

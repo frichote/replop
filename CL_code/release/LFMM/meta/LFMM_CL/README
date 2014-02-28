@@ -17,11 +17,12 @@ not executable, type "chmod +x install.sh" and then
 *  ORGANIZATION  *
 ******************
 
-It is organized in 4 folders:
+It is organized in 5 folders:
 - code
 - documentation
 - examples
 - bin
+- scripts
 
 PLEASE, read the documentation before using our software. It provides
 examples and information on the model and the software.

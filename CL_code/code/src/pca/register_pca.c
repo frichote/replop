@@ -29,7 +29,8 @@
 // analyse_param
 
 void analyse_param_pca(	int argc, char *argv[], char *input, char* output_eva, 
-			char* output_eve, int *K, int *c, int *s) 
+			char* output_eve, char* output_sdev, char* output_x,
+			int *K, int *c, int *s) 
 {
         int i;
 	char *tmp_file;
@@ -69,6 +70,18 @@ void analyse_param_pca(	int argc, char *argv[], char *input, char* output_eva,
 					print_error_pca("cmd","a (output eigenvalues file)");
                                 strcpy(input,argv[i]);
                                 break;
+                        case 'd':
+                                i++;
+                                if (argc == i || argv[i][0] == '-')
+					print_error_pca("cmd","d (output standard deviation file)");
+                                strcpy(input,argv[i]);
+                                break;
+                        case 'p':
+                                i++;
+                                if (argc == i || argv[i][0] == '-')
+					print_error_pca("cmd","p (output projection file)");
+                                strcpy(input,argv[i]);
+                                break;
                         case 'c':
 				*c = 1;
 				break;
@@ -98,6 +111,14 @@ void analyse_param_pca(	int argc, char *argv[], char *input, char* output_eva,
 	if (!strcmp(output_eve,"")) {
 		strcpy(output_eve,tmp_file);
 		strcat(output_eve,".eigenvectors");
+	}
+	if (!strcmp(output_sdev,"")) {
+		strcpy(output_sdev,tmp_file);
+		strcat(output_sdev,".sdev");
+	}
+	if (!strcmp(output_x,"")) {
+		strcpy(output_x,tmp_file);
+		strcat(output_x,".projection");
 	}
 
 	free(tmp_file);

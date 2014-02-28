@@ -27,10 +27,10 @@ void init_bar(int *i, int *j)
 	int n;
 	*i = 0;
 	*j = 0;
-	printf("[");
+	printf("\t[");
 	for (n = 0; n < 75; n++)
 		printf(" ");
-	printf("]\n[");
+	printf("]\n\t[");
 	
 }
 

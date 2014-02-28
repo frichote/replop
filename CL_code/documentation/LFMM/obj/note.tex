@@ -3,7 +3,7 @@
 \usepackage{amssymb}
 \usepackage[french,english]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{graphics}
+\usepackage{graphicx}
 \usepackage{lineno}
 \usepackage{cite}
 \usepackage{float}
@@ -46,13 +46,12 @@ as they infer the background levels of population structure. A description of th
 \\
 \\
 \noindent
-Eric Frichot, Sean Schoville, Guillaume Bouchard, Olivier François, 2013. {\it Landscape genomic tests for associations between loci and environmental gradients} Molecular Biology and Evolution, in press. 
+Eric Frichot, Sean Schoville, Guillaume Bouchard, Olivier François, 2013. {\it Landscape genomic tests for associations between loci and environmental gradients} Molecular Biology and Evolution, 30 (7), 1687-1699. 
 
 \section{Installation} 
 
-We provide a set of R and perl scripts convert to LFMM format and to display manhattan plot.
-By consequence, R and perl are mandatory to convert to LFMM format and to display manhattan plot. 
-they are not mandatory to execute LFMM.
+We provide a set of R and perl scripts and C programs to convert to LFMM format and to display manhattan plot.
+By consequence, R and perl are  mandatory to display manhattan plot. 
 \\
 \noindent
 To install LFMM CL version, you just have to execute the install script (install.sh) 
@@ -63,30 +62,30 @@ A binary called \verb|LFMM| should be created in LFMM main directory.
 
 \section{Data format}
 
-Input files are composed of two files: a genotype file and a variable file. 
+Input files are composed of two files: a genotype file in the lfmm format and a variable file in the env format. 
 \\
 \\
-The {\bf genotype file} is a SNP
-matrix of n lines for n individuals and L columns for L loci. Each element can be 0, 1 or 2. A missing 
-element will be notify by the value 9 or -9. Each element of the matrix is separated by one or several 
-spaces. There should be no space after the last value of each line.
-A line should not contain only missing data (9 or -9).
-Below, an example of genotype file for $n=3$ individuals and $L=5$ loci.
-
+The {\bf lfmm} format for the {\bf genotype file} has one row for each individual. Each row contains
+one value per SNP (separated by spaces or tabulations): the number of alleles.
+The number of alleles can be the number of reference alleles or the number
+of derived alleles as long as it is the same choice for an entire SNP. The missing
+genotypes are encoded with the value -9 or 9.
+Here is an example with 3 individuals and 4 SNPs:
 \begin{center}
 \begin{Verbatim}[frame=single]
-1 0 0 0 1
-1 1 9 2 0
-0 0 2 1 0
+1 0 0 1
+1 1 9 2
+2 0 1 1
 \end{Verbatim}
 \end{center}
 
 \noindent
-The {\bf variable file} is a vector composed of n lines and D columns. 
-Each line is the values of the D variables for the 
-corresponding individual. Below, an example of variable file for $n=3$ individuals and $D=1$ covariable.
-Warning: If you set several covariables, the program will be launched for each covariable sequentially
-and independently.
+The {\bf env} format for the {\bf variable file} has one row for each individual. 
+Each row contains one value per environmental variable
+(separated by spaces or tabulations).
+Below, an example of variable file for $n=3$ individuals and $D=1$ covariable.
+Warning: If you set several covariables, the program can be launched for each covariable sequentially
+or all variables together (see command-line options).
 
 \begin{center}
 \begin{Verbatim}[frame=single]
@@ -97,67 +96,51 @@ and independently.
 \end{center}
 
 \noindent
-The {\bf output file} for 1 environmental variable is composed of 1 line for each SNP.
-Each line is composed of 3 columns.
-1st column $z$-score, 2nd column is the $-log_{10}(pvalue)$, and 3rd column is the pvalue
-for the corresponding loci. Below, an example of output file for $L=4$ loci.
+The {\bf zscore} format for the {\bf output file}
+has one row for each SNP. Each row contains three values: The first value is the zscore, the second value is the -log10(pvalue), the third value is the p-value, the forth value is the -log10(qvalue) (based on Benjaminy-Hochberg approach) and the fifth value is the qvalue (separated by spaces or tabulations).
+Below, an example of output file for $L=4$ loci.
 
 \begin{center}
 \footnotesize
 \begin{Verbatim}[frame=single]
-0.0259401 0.00908548 0.979297
-0.0616506 0.02191 0.950802
-0.0210902 0.0073732 0.983166
-0.00991587 0.00346154 0.992061
+0.698819 0.314558 0.484665 0.0676981 0.855661
+1.35961 0.759568 0.173953 0.224253 0.596688
+0.771135 0.355929 0.440627 0.0795791 0.83257
+0.879092 0.420959 0.379351 0.100315 0.793752
 \end{Verbatim}
 \end{center}
-
-%\noindent
-%The example is available in the directory data. The genotype file is called \verb|genotype.txt| and the variable file is called \verb|variable.txt|. This example is composed of $n=200$ individuals and $L=1050$ 
-%loci. It is described in our paper. The output file is not provided because you will create it by yourself. 
 
 \section{Run the programs}
 The program is executed by a command line. The format is:
 \begin{Verbatim}[frame=single]
-./LFMM -g genotype_file -v variable_file -n individual_number -L loci_number -D variable_number 
--K latent_factors_number -i iterations_number -b burnin_number -o output_file
+./bin/LFMM -x genotype_file -v variable_file -K latent_factors_number 
 \end{Verbatim}
 
 \noindent
 All the previous options are mandatory. There is no order for the options in the command line. 
 Here is a more precise description of the options:
 \begin{itemize}
-\item \verb|-g genotype_file| is the path for the genotype file.
-\item \verb|-v variable_file| is the path for the variable file.
-\item \verb|-n individual_number| is the number of individuals in your input file.
-\item \verb|-L loci_number| is the number of loci in your input file.
-\item \verb|-D variable_number| is the number of covariable in your variable file.
-Warning: If you set several covariables, the program will be launched for each covariable sequentially
-and independently.
-\item \verb|-K latent_factor_number| is the number of latent factors. 
-\item \verb|-i iteration_number| is the number of iterations in the Gibbs Sampling algorithm. This number
-should be large. One way to test if it is large enough is to check if the results are
-similar for several runs with this number of iterations.
-\item \verb|-b burnin_number| is the number of burning iterations in the Gibbs Sampling algorithm. This
-number of iterations is included in the total number of iterations.  
-\item \verb|-o output_file| is the prefixe name of the output files. An output file will be created for each environmental variable. For example if you provided two variables, the results for variable 1 will
-be stored in \verb|output_file_1| and  the results for variable 2 will
-be stored in \verb|output_file_2|.
+\item \verb|-x genotype_file| is the path for the genotype file (in {\bf lfmm} format).
+\item \verb|-v variable_file| is the path for the variable file (in {\bf env} format).
+\item \verb|-K latent_factor_number| is the number of latent factors. Several methods to choose $K$ are described in the tutorial. Check the references for more informations.
 \end{itemize}
 
 \noindent
-Two options are not mandatory:
+Other options are not mandatory:
 \begin{itemize}
-\item \verb|-m| indicates that some data are missing. By default the program assumes that there is no 
-missing data. The program is a bit slower with missing data. Please, do not use this option if it is not necessary.
-\item \verb|-p p| is the number of processes that you choose to use if you run the algorithm in 
-parrallel. Be careful, the number of process has to be lower or equal than the number of physical 
-processes available on your computer. By default, the number of process is 1.
-\item \verb|-C dev_file| is the path to DIC output file. By default, it is "DIC.txt".
-\item \verb|-d dth_variable|. If this option is set, LFMM is launched only with the d-th covariable
-of the environmental file.
+\item \verb|-d nd| fit {\tt LFMM} with the nd-th variable only from the variable file. By default (if NULL and all is FALSE), fit {\tt LFMM} with each variable from the variable file sequentially and independently.
+\item \verb|-a| is a boolean option. If true, fit {\tt LFMM} with all variables from the variable file at the same time. This option is not compatible with d option (by default: FALSE).
+\item \verb| -o output_file| is the base of the path for the zscore output files (in {\bf zscore} format). There is one output file per environmental variable. By default, the base of the output file is the base of the name of the input file. Then it is completed with the number of the covariable (with a "a" for all and a "s" for sequentially), the number of latent factors and .zscore extension. For example, for the 3rd variable sequentially and 3 latent factors, the output file is by default input\_file\_s3.3.zscore.
+\item \verb|-m| is a boolean option. If true, the input file contains missing genotypes. By default the program assumes that there is no missing data. The program is a bit slower with missing data. Please, do not use this option if it is not necessary.
+\item \verb|-p p| is the number of processes (CPU) that you choose to use if you run the algorithm in 
+parrallel. Be careful, the number of processes has to be lower or equal than the number of physical 
+processes available on your computer. By default, the number of processes is 1.
+\item \verb|-i iteration_number| is the number of iterations in the Gibbs Sampling algorithm. This number
+should be large enough (by default: 3000).
+\item \verb|-b burnin_number| is the number of burning iterations in the Gibbs Sampling algorithm (by default 1000). 
+\item \verb|-s seed| is the seed to initialize the randomization. By default, the seed is randomly chosen.
+\item \verb|-C dev_file| is the path for the file containing the DIC and the deviance criterion. By default, the name of the DIC file is the name of the input file with .dic extension. 
 \end{itemize}
-
 
 \noindent
 If you need a summary of the options, you can use the \verb|-h| option by typing the command line
@@ -171,25 +154,36 @@ If you need a summary of the options, you can use the \verb|-h| option by typing
 \noindent
 A full example is available at the end of this note.
 
-
-\paragraph{How to choose $K$, the number of latent factors}.
+\section{How to choose $K$, the number of latent factors}
 The number of latent factors is the number of principal components (or latent factors) that is
 required to describe the neutral structure of the data. Several values should be tested.
 A too small value of $K$ leads to liberal tests and may generate False Positive results.
 A too large value of $K$ leads to conservative tests and may generate False Negative results.           
+We advise you to be really careful in the choice of $K$ and to test several values of $K$.
+
+\subsection{based on a population structure analysis}
+\paragraph{with a Principal Component Analysis approach}
 In our paper, we used the number of significative principal components in the
 Tracy-Widom test of {\tt SmartPCA} (http://helix.nih.gov/Applications/eigensoft.html)
 \cite{Patterson_2006}. This heuristic may be a bit too conservative.
-We also used the Bayesian clustering programs {\tt STRUCTURE}
-(http://pritch.bsd.uchicago.edu/software/structure2\_1.html) \cite{Pritchard_2000} and {\tt TESS}
-(http://membres-timc.imag.fr/Olivier.Francois/tess.html) \cite{Chen_2007, Durand_2009}
+
+\paragraph{with on a clustering approach}
+We also used the Bayesian clustering programs {\tt STRUCTURE}\\
+(http://pritch.bsd.uchicago.edu/software/structure2\_1.html) \cite{Pritchard_2000}, {\tt TESS}\\
+(http://membres-timc.imag.fr/Olivier.Francois/tess.html) \cite{Chen_2007, Durand_2009} and
+{\tt sNMF} (a fast program to estimate ancestry coefficients) \\
+(http://membres-timc.imag.fr/Olivier.Francoissnmff.html)
 to find K the number of components which could better describe our simulated data.
-We advise you to be really careful in the choice of $K$ and to test several values of $K$.
-% careful ???
 
-\section{Scripts}
+\subsection{based on p-values distribution}
+coming soon...
 
-We provide a set of R and perl scripts convert to LFMM format and to plot manhattan plot.
+\section{variance}
+coming soon an explanation of the percentage of variance explained by each variable.
+
+\section{Annex programs}
+
+We provide a set of R and perl scripts and C programs convert to LFMM format and to plot manhattan plot.
 
 \subsection{Data Format}
 Input files are composed of two mandatory files (a genotype file and an environmental variable file)
@@ -197,57 +191,42 @@ and one optional file (the snp information file). The snp file is interesting to
 results and display results with manhattan plots.
 It is not necessary to provide information about individuals.
 All data formats are described with the same
-example. These files are available in \verb|example/format_example/|.
-Each file should end with its format name.
-
+example. These files are available in \verb|examples/format_example/|.
 
 \subsubsection{Genotype Data}
 \begin{itemize}
 \item lfmm (example.lfmm)\\
-The genotype file is 1 line per individual.
-There is 1 genotype column for each SNP (in the order the SNPs are specified in the snp file).
-Each element can be $0$, $1$ or $2$. A missing
-element is identified by the value $9$ or $-9$. Each element of the matrix is 
-separated by a single space.
-There should be no space after the last value of each line.
-Lines containing only missing data ($-9$ or $9$) should be removed.
+The {\bf lfmm} format has one row for each individual. Each row contains
+one value per SNP (separated by spaces or tabulations): the number of alleles.
+The number of alleles can be the number of reference alleles or the number
+of derived alleles as long as it is the same choice for an entire SNP. The missing
+genotypes are encoded with the value -9 or 9.
 
 \begin{center}
 \footnotesize
 \begin{Verbatim}[frame=single]
 1 0 0 1
-1 1 -9 2
+1 1 9 2
 2 0 1 1
 \end{Verbatim}
 \end{center}
+
 \item ped (example.ped) \\
-The genotype file is 1 line per individual.  Each line contains 6 columns
-  of information about the individual, plus two genotype columns for
-  each SNP in the order the SNPs are specified in the snp file.
-  Genotype format must be either 0ACGT or 01234, where 0 means missing data.
-  The first 6 columns of the genotype file are:
-    1st column is family ID,
-    2nd column is sample ID,
-    3rd and 4th column are sample IDs of parents,
-    5th column is gender (male is 1, female is 2),
-    6th column is case/control status (1 is control, 2 is case),
-      quantitative trait value or population group label.
-  In the two genotype columns for each SNP, missing data is represented by 0.
+The {\bf ped} format has one row for each individual. Each row contains 6 columns of information for each individual, plus two genotype columns for each SNP. Each column must be separated by spaces or tabulations. The genotype format must be either 0ACGT or 01234, where 0 means missing genotype. The first 6 columns of the genotype file are: the 1st column is the family ID, the 2nd column is the sample ID, the 3rd and 4th columns are the sample IDs of parents, the 5th column is the gender (male is 1, female is 2), the 6th column is the case/control status (1 is control, 2 is case), the quantitative trait value or the population group label.
+
+The ped format is described here: http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml.
+
 \begin{center}
 \footnotesize
 \begin{Verbatim}[frame=single]
-     1      SAMPLE0 0 0 2 2  1 2  3 3  1 1  2 1
-     2      SAMPLE1 0 0 1 2  2 1  1 3  0 4  1 1
-     3      SAMPLE2 0 0 2 1  2 2  3 3  1 4  1 2
+1       SAMPLE0 0 0 2 2 1 2 3 3 1 1 2 1
+2       SAMPLE1 0 0 1 2 2 1 1 3 0 4 1 1
+3       SAMPLE2 0 0 2 1 2 2 3 3 1 4 1 2
 \end{Verbatim}
 \end{center}
 
 \item ancestrymap (example.ancestrymap)\\
-The genotype file contains 1 line per valid genotype.  There are 3 columns:
-  1st column is SNP name,
-  2nd column is sample ID,
-  3rd column is number of reference alleles (0 or 1 or 2),
-Missing genotypes are encoded by the value $-9$ or $9$ in the genotype file.
+The {\bf ancestrymap} format has one row for each genotype. Each row has 3 columns: the 1st column is the SNP name, the 2nd column is the sample ID, the 3rd column is th number of alleles. It is assumed that the genotypes for a given SNP name are written in consecutive lines. It is also assumed that the genotypes for a set of individuals are given in the same order as lines. The number of alleles can be the number of reference alleles or the number of derived alleles as long as it is the same choice for an entire SNP. It is assumed that the missing genotypes are encoded with the value 9.
 \begin{center}
 \footnotesize
 \begin{Verbatim}[frame=single]
@@ -258,7 +237,7 @@ Missing genotypes are encoded by the value $-9$ or $9$ in the genotype file.
               rs1111              SAMPLE1   1
               rs1111              SAMPLE2   0
               rs2222              SAMPLE0   0
-              rs2222              SAMPLE1   -9
+              rs2222              SAMPLE1   9
               rs2222              SAMPLE2   1
               rs3333              SAMPLE0   1
               rs3333              SAMPLE1   2
@@ -266,13 +245,13 @@ Missing genotypes are encoded by the value $-9$ or $9$ in the genotype file.
 \end{Verbatim}
 \end{center}
 
-\item eigenstratgeno (example.eigenstratgeno)\\
-The genotype file contains 1 line per SNP.
-  Each line contains 1 character per individual:
-  0 means zero copies of reference allele.
-  1 means one copy of reference allele.
-  2 means two copies of reference allele.
-  9 means missing data.
+\item geno (example.geno)\\
+The {\bf geno} format has one row for each SNP.
+Each row contains 1 character per individual:
+        0 means zero copy of the reference allele.
+        1 means one copy of the reference allele.
+        2 means two copies of the reference allele.
+        9 means missing data.
 
 \begin{center}
 \footnotesize
@@ -283,6 +262,28 @@ The genotype file contains 1 line per SNP.
 121
 \end{Verbatim}
 \end{center}
+
+\item vcf (example.vcf)\\
+The {\bf vcf} The vcf format is described here\\
+http://www.1000genomes.org/wiki/Analysis/Variant\%20Call\%20Format/vcf-variant-call-format-version-41
+
+\begin{center}
+\footnotesize
+\begin{Verbatim}[frame=single]
+##fileformat=VCFv4.1
+##FORMAT=<ID=GM,Number=1,Type=Integer,Description="Genotype meta">
+##INFO=<ID=VM,Number=1,Type=Integer,Description="Variant meta">
+##INFO=<ID=SM,Number=1,Type=Integer,Description="SampleVariant meta">
+#CHROM POS ID REF ALT QUAL FILTER INFO FORMAT SAMPLE0 SAMPLE1 SAMPLE2
+1 1001 rs0000 T C 999 . VM=1;SM=100 GT:GM 1/0:1 0/1:2 1/1:3
+1 1002 rs1111 G A 999 . VM=2;SM=101 GT:GM 0/0:6 0/1:7 0/0:8
+1 1003 notres G AA 999 . VM=3;SM=102 GT:GM 0/0:11 ./.:12 0/1:13
+1 1004 rs2222 G A 999 . VM=3;SM=102 GT:GM 0/0:11 . 1/0:13
+1 1003 notres GA A 999 . VM=3;SM=102 GT:GM 0/0:11 ./.:12 0/1:13
+1 1005 rs3333 G A 999 . VM=3;SM=102 GT:GM 1/0:11 1/1:12 0/1:13
+\end{Verbatim}
+\end{center}
+
 
 \end{itemize}
 {\it Tips:} As LFMM does not model allele frequencies, genotype file can be
@@ -306,6 +307,7 @@ The snp file contains 1 line per SNP.  There are 6 columns (last 2 optional):
 11       rs0000     0.000000            0 A C
 11       rs1111     0.001000       100000 A G
 11       rs2222     0.002000       200000 A T
+11       rs3333     0.003000       300000 C A
 \end{Verbatim}
 \end{center}
 
@@ -323,6 +325,7 @@ The snp file contains 1 line per SNP.  There are 6 columns (last 2 optional):
               rs0000  11        0.000000               0 A C
               rs1111  11        0.001000          100000 A G
               rs2222  11        0.002000          200000 A T
+              rs3333  11        0.003000          300000 C A
 \end{Verbatim}
 \end{center}
 
@@ -337,6 +340,7 @@ The snp file contains 1 line per SNP.  There are 3 columns:
               rs0000  11        0
               rs1111  11        100000
               rs2222  11        200000
+              rs3333  11        300000
 \end{Verbatim}
 \end{center}
 \end{itemize}
@@ -347,20 +351,38 @@ It is useful for post-treatment of LFMM analysis.
 \subsection{Data conversion}
 
 The LFMM command-line engine allows data in lfmm format. You can convert from ped, eigenstratgeno,
-ancestrymap to lfmm format using perl scripts. The format is ($n$ is the number of individuals,
-$L$ the number of loci):
+ancestrymap to lfmm format using C progams. 
+
+The format of the command-line is (replacing <format> by ped, ancestrymap, or geno):
+\begin{Verbatim}[frame=single]
+./bin/<format>2lfmm input_file [output_file] 
+\end{Verbatim}
+where
 \begin{itemize}
-\item for example.ped
+\item \verb|input_file| is the path for the input file (in <format> format).
+\item \verb|output_file| is the path for the output\_file (in lfmm format).
+By default, the name of the output file is the name of the input\_file with .lfmm extension.
+\end{itemize}
+
+\noindent
+For examples,
+\begin{itemize}
+\item example.ped
 \begin{Verbatim}[frame=single]
-perl ./scripts/ped2lfmm.pl data/example.ped example.lfmm L n
+./bin/ped2lfmm examples/format_example/example.ped
 \end{Verbatim}
-\item for example.ancestrymap
+\item example.ancestrymap
 \begin{Verbatim}[frame=single]
-perl ./scripts/ancestrymap2lfmm.pl data/example.ancestrymap example.lfmm L n
+./bin/ancestrymap2lfmm examples/format_example/example.ancestrymap
 \end{Verbatim}
-\item for example.eigenstratgeno or example.geno
+\item example.geno
 \begin{Verbatim}[frame=single]
-perl ./scripts/eigenstratgeno2lfmm.pl data/example.eigenstratgeno example.lfmm L n
+./bin/geno2lfmm examples/format_example/example.geno
+\end{Verbatim}
+\item example.vcf
+\begin{Verbatim}[frame=single]
+./bin/vcf2geno examples/format_example/example.vcf
+./bin/geno2lfmm examples/format_example/example.geno
 \end{Verbatim}
 \end{itemize}
 
@@ -444,28 +466,86 @@ for temperature and one for precipitation.
 Here is an example of command line to analyse our dataset
 
 \begin{Verbatim}[frame=single]
-./LFMM -g examples/human_example/panel11_Asia.lfmm -v examples/human_example/cov_panel11_Asia.env 
--n 388 -L 10757 -D 2 -K 7 -i 1200 -b 200 -o examples/human_example/zscore -p 1
+./bin/LFMM -x examples/human_example/panel11_Asia.lfmm -v examples/human_example/cov_panel11_Asia.env 
+-K 7 -d 1 
 \end{Verbatim}
-\noindent
-Here is an example of command line to create \verb|zscore.res| for the second variable.
+Output for LFMM
 \begin{Verbatim}[frame=single]
-perl ./scripts/pedsnp2zscore.pl examples/human_example/zscore_2 examples/human_example/panel11.pedsnp 
-examples/human_example/zscore_2.res 10757
+LFMM  Copyright (C) 2012 Eric Frichot
+This program comes with ABSOLUTELY NO WARRANTY; for details type './LFMM -l'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; type './LFMM -l' for details.
+
+****                         LFMM Version 2.0                                   *****
+****           E. Frichot, S. Schoville, G. Bouchard, O. Francois               *****
+****                         Please cite our paper !                            *****
+****   Information at http://membres-timc.imag.fr/Olivier.Francois/lfmm/        *****
+
+./bin/LFMM -x examples/human_example/panel11_Asia.lfmm -v examples/human_example/cov_panel11_Asia.env -K 7 -d 1 
+Summary of the options:
+
+        -n (number of individuals)      388
+        -L (number of loci)             10757
+        -K (number of latent factors)   7
+        -o (output file)                examples/human_example/panel11_Asia
+        -i (number of iterations)       3000
+        -b (burnin)                     1000
+        -s (seed random init)           11071964616852227840
+        -p (number of processes (CPU))  1
+        -x (genotype file)              examples/human_example/panel11_Asia.lfmm
+        -v (variable file)              examples/human_example/cov_panel11_Asia.env
+        -D (number of covariables)      2
+        -d (the dth covariable)         1
+        -C (DIC file)                   examples/human_example/panel11_Asia.dic
+
+Read variable file:
+ 	examples/human_example/cov_panel11_Asia.env		OK.
+
+Read genotype file:
+ 	examples/human_example/panel11_Asia.lfmm		OK.
+
+<<<<
+	 Analyse for covariable 1
+
+		Start of the Gibbs Sampler algorithm.
+
+[                                                                           ]
+[===========================================================================]
+
+		End of the Gibbs Sampler algorithm.
+
+	ED:4173727.18	 DIC: 4173727.955 
+
+	The zscores for variable 1 were registered in:
+ 		examples/human_example/panel11_Asia_s1.7.zscore.
+	The columns are: zscore, -log10(p-value), p-value, -log10(q-value), q-value.
+
+
+	The execution for covariable 1 worked without error.
+>>>>
+\end{Verbatim}
+
+\noindent
+Here is an example of command line to create \verb|zscore.res| for the variable.
+\begin{Verbatim}[frame=single]
+ perl ./scripts/pedsnp2zscore.pl examples/human_example/panel11_Asia_s1.7.zscore 
+examples/human_example/panel11.pedsnp examples/human_example/panel11_Asia_s1.7.res 10757
 \end{Verbatim}
 \noindent
 Then, we created a file \verb|examples/human_example/toHiglight_table.txt| as follows:
 \begin{Verbatim}[frame=single]
-Name    Chr     Position        Zscore  -log10(p-value) p-value
-Affx-3561055 10 67583134 4.59106 5.35564 4.40916E-06
-Affx-3582668 10 69220278 3.97663 4.15557 6.98929E-05
+Name Chr Position Zscore -log10(p-value) p-value -log10(q-value) q-value
+Affx-3561055 10 67583134 7.55076 13.3638 4.32731e-14 9.33209 4.65489e-10
+Affx-3235806 10 4518973 7.25392 12.3927 4.04887e-13 8.66201 2.17768e-09
 \end{Verbatim}
 \noindent
 Here is an example of command line to create a manhattan plot (in \verb|examples/human_example/manhattan_plot_2.pdf|) with all SNPs and the two previous SNPs highlighted in green:
 \begin{Verbatim}[frame=single]
-Rscript scripts/manhattan.R examples/human_example/zscore_2.res 
-examples/human_example/toHighlight_table.txt examples/human_example/manhattan_plot_2.pdf
+Rscript scripts/manhattan.R examples/human_example/panel11_Asia_s1.7.res 
+examples/human_example/toHighlight_table.txt examples/human_example/panel11_Asia_s1.7.pdf
 \end{Verbatim}
+
+\centerline{\includegraphics[width=18cm,height=18cm]{manhattan.pdf}}
 
 \section{Contact}
 If you need assistance, do not hesitate to send me an

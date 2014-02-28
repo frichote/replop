@@ -54,7 +54,7 @@ void print_head_licence_lfmm()
 void print_head_lfmm()
 {
         print_head_licence_lfmm();
-        printf("****                         LFMM Version 1.1                                   *****\n"
+        printf("****                         LFMM Version 2.0                                   *****\n"
                "****           E. Frichot, S. Schoville, G. Bouchard, O. Francois               *****\n"
                "****                         Please cite our paper !                            *****\n"
                "****   Information at http://membres-timc.imag.fr/Olivier.Francois/lfmm/        *****\n\n");
@@ -117,5 +117,18 @@ void print_summary_lfmm(int N, int M, int K, int D, int d, int Niter, int burn,
         printf("\n");
 }
 
+// print_perc
 
+void print_perc(double *perc, int K, int D)
+{
+	int k, d;
 
+	printf("\tPercentage of variance:\n");
+	for (d = 0; d < D; d++)
+		printf("\t\tvar%d\t\t%3.3G %%\n", d ,perc[1+d] * 100);
+	for (k = 0; k < K; k++)
+		printf("\t\tfactor%d\t\t%3.3G %%\n", k+1,perc[1+D+k] * 100);
+	printf("\t\tresidual\t%3.3G %%\n",perc[0] * 100);
+	printf("\n");
+
+}

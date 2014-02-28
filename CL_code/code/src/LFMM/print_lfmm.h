@@ -58,4 +58,13 @@ void print_summary_lfmm(int N, int M, int K, int D, int d, int Niter, int burn,
 void print_options_lfmm(int argc, char *argv[]);
  */
 
+/**
+ * print percentage of variance 
+ *
+ * @param perc	percentage of variance
+ * @param K	number of latent factors
+ * @param D	number of variables
+ */
+void print_perc(double *perc, int K, int D);
+
 #endif // PRINT_H

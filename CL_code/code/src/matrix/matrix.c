@@ -22,24 +22,49 @@
 #include <math.h>
 #include "matrix.h"
 
+// variance
+
+double variance(double *x, int n)
+{
+	int i;
+	double mean, var;
+
+	// mean
+	mean = 0.0;
+	for (i = 0; i < n; i++)
+		mean += x[i];
+	mean /= n;
+
+	// variance
+	var = 0.0;
+	for (i = 0; i < n; i++)
+		var += (x[i]-mean) * (x[i] - mean);
+	var /= n - 1;
+
+	return var;
+}
+
 // compare
 
 int compare (const void* a, const void* b) 
 {
 	// headack pointer style
-	long double *pa = *(long double**)a;	
-	long double *pb = *(long double **)b;	
+	double *pa = *(double**)a;	
+	double *pb = *(double **)b;	
+	int res;
 
-	if (*pa < *pb) return -1;
-	if (*pa == *pb) return 0;
-	if (*pa > *pb) return 1;
+	if (*pa < *pb) res = -1;
+	if (*pa == *pb) res = 0;
+	if (*pa > *pb) res = 1;
+
+	return res;
 }
 // sort_index
 
-void sort_index(long double *data, int* index, int n)
+void sort_index(double *data, int* index, int n)
 {
 
-	long double** pointers = (long double **) calloc(n, sizeof(long double *));
+	double** pointers = (double **) calloc(n, sizeof(double *));
 	int i;
 
 	// create a table of pointers 

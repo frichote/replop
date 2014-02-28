@@ -1,20 +1,20 @@
 /*
-    LFMM, file: LFMM.c
-    Copyright (C) 2012 Eric Frichot
+   LFMM, file: LFMM.c
+   Copyright (C) 2012 Eric Frichot
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,6 +31,7 @@
 #include "print_lfmm.h"
 #include "data_lfmm.h"
 #include "beta.h"
+#include "lfmm_k0.h"
 #include "U.h"
 #include "V.h"
 #include "error_lfmm.h"
@@ -55,7 +56,9 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 
 	float *dat;		// data matrix
 	int *I = NULL;		// missing value matrix
-	double epsilon = 1000;	// hyperprior epsilon
+	double epsilon = 1;	// hyperprior epsilon
+	double dev, DIC;
+	double *perc_var;	// percentage of variances
 
 	// random initialization
 	init_random(&seed);
@@ -87,8 +90,15 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 	// allocate data memory
 	U = (double *)calloc(K * N, sizeof(double));	// (N,K)
 	V = (double *)calloc(K * M, sizeof(double));	// (N,K)
-	beta = (double *)calloc(D * M, sizeof(double));
-	alpha_beta = (double *)calloc(D, sizeof(double));
+	if (all) {
+		beta = (double *)calloc((nD+1) * M, sizeof(double));
+		alpha_beta = (double *)calloc(nD+1, sizeof(double));
+		perc_var = (double *)calloc(nD + K + 2, sizeof(double));
+	} else {
+		beta = (double *)calloc(D * M, sizeof(double));
+		alpha_beta = (double *)calloc(D, sizeof(double));
+		perc_var = (double *)calloc(D + K + 1, sizeof(double));
+	}	
 
 	// read of covariable file
 	nC = (double *)calloc(N * nD, sizeof(double));	
@@ -123,6 +133,7 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 	if (all) {
 		// allocate memory
 		D = nD + 1;
+		// TOCHECK
 		zscore = (double *)calloc(M * nD, sizeof(double));
 		C = (double *)calloc(N * D, sizeof(double));	// (N,K)
 
@@ -131,12 +142,15 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 		modify_C(nC, N, nD, C, nd, all);
 
 		// run LFMM
-		lfmm_emcmc(dat, I, C, zscore, beta, U, V, alpha_beta, &alpha_R,
-			   &alpha_U, N, M, K, D, epsilon, Niter, burn,
-			   missing_data, num_thrd, dev_file);
+		if (K)
+			lfmm_emcmc(dat, I, C, zscore, beta, U, V, alpha_beta, &alpha_R,
+				&alpha_U, N, M, K, D, epsilon, Niter, burn,
+			   	missing_data, num_thrd, &dev, &DIC, perc_var);
+		else
+			lfmm_k0(dat, I, C, zscore, beta, N, M, D, missing_data, perc_var);
 
 		// write zscore
-	        write_zscore_double(output_file, M, zscore, D-1, 1, 0, K);
+	        write_zscore_double(output_file, M, zscore, D-1, 1, 0, K, N, dev, DIC, perc_var);
 		printf("\tThe execution for all covariables worked without error.\n>>>>\n\n");
 
 	// only with covariable nd
@@ -151,12 +165,15 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 		modify_C(nC, N, nD, C, nd, all);
 
 		// run LFMM
-		lfmm_emcmc(dat, I, C, zscore, beta, U, V, alpha_beta, &alpha_R,
-			   &alpha_U, N, M, K, D, epsilon, Niter, burn,
-			   missing_data, num_thrd, dev_file);
+		if (K) 
+			lfmm_emcmc(dat, I, C, zscore, beta, U, V, alpha_beta, &alpha_R,
+			   	&alpha_U, N, M, K, D, epsilon, Niter, burn,
+			   	missing_data, num_thrd, &dev, &DIC, perc_var);
+		else
+			lfmm_k0(dat, I, C, zscore, beta, N, M, D, missing_data, perc_var);
 
 		// write zscore
-	        write_zscore_double(output_file, M, zscore, 1, 0, 0, K);
+	        write_zscore_double(output_file, M, zscore, 1, 0, 0, K, N, dev, DIC, perc_var);
 		printf("\tThe execution for covariable %d worked without error."
 			"\n>>>>\n\n", nd + 1);
 
@@ -172,12 +189,15 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 			modify_C(nC, N, nD, C, nd, all);
 
 			// run LFMM
-			lfmm_emcmc(dat, I, C, zscore, beta, U, V, alpha_beta, &alpha_R,
-				   &alpha_U, N, M, K, D, epsilon, Niter, burn,
-				   missing_data, num_thrd, dev_file);
+			if (K)
+				lfmm_emcmc(dat, I, C, zscore, beta, U, V, alpha_beta, &alpha_R,
+				   	&alpha_U, N, M, K, D, epsilon, Niter, burn,
+				   	missing_data, num_thrd, &dev, &DIC, perc_var);
+			else
+				lfmm_k0(dat, I, C, zscore, beta, N, M, D, missing_data, perc_var);
 	
 			// write zscore
-	        	write_zscore_double(output_file, M, zscore, 1, 0, nd, K);
+	        	write_zscore_double(output_file, M, zscore, 1, 0, nd, K, N, dev, DIC, perc_var);
 			printf("\tThe execution for covariable %d worked without error."
 				"\n>>>>\n\n", nd + 1);
 		}
@@ -195,4 +215,5 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 	free(alpha_beta);
 	free(beta);
 	free(zscore);
+	free(perc_var);
 }

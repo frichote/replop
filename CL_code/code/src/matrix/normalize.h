@@ -33,7 +33,8 @@ void normalize_cov_I(double *C, int N, int K);
  * @param N	the number of lines of A
  * @param M	the number of columns of A
  */
-void normalize_lines(double *A, int N, int M);
+void normalize_lines (double *A, int N, int M);
+
 
 /**
  * center data for each column with missing data equal 9 or -9

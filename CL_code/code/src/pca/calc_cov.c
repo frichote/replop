@@ -48,7 +48,7 @@ void calc_cov(double *data,  int N, int M, double *vect)
 					" %d have too many missing data.\n", i1+1, i2+1);
 				exit(1);
 			}
-			tmp /= nb;
+			//tmp /= nb;
 			vect[i1 * N + i2] = tmp;
 			vect[i2 * N + i1] = tmp;
 		}
@@ -65,7 +65,28 @@ void calc_cov(double *data,  int N, int M, double *vect)
 				" too many missing data.\n", i1+1);
 			exit(1);
 		}
-		tmp /= nb;
+		//tmp /= nb;
 		vect[i1 * N + i1] = tmp;
 	}
+}
+
+// calc_sdev
+
+void calc_sdev(double *val, int N)
+{
+	int i;
+
+	for (i = 0; i < N; i++)
+		val[i] = sqrt(val[i] / (double)N);
+}
+
+// calc_x
+
+void calc_x(double *vec, double *val, int N, int K)
+{
+	int i, k;
+
+	for (i = 0; i < N; i++)
+		for (k = 0; k < K; k++)
+		vec[i * K + k] = vec[i * K + k] * val[k] * sqrt((double)N);
 }

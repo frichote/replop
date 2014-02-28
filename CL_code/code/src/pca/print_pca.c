@@ -34,6 +34,8 @@ void print_help_pca()
          "        -K K                  -- number of principal components (default: n, the number of individuals)\n"
          "        -a eigenvalue_file    -- output eigenvalues file (default: genotype_file.eigenvalues)\n"
          "        -e eigenvector_file   -- output eigenvectors file (default: genotype_file.eigenvectors)\n"
+         "        -d sdev_file          -- output standard deviation file (default: genotype_file.sdev)\n"
+         "        -p projection_file   -- output eigenvectors file (default: genotype_file.projections)\n"
          "        -c                    -- data centered (default: FALSE)\n"
          "        -s                    -- data centered and scaled (default: FALSE)\n\n"
         );
@@ -43,7 +45,9 @@ void print_help_pca()
 
 void print_summary_pca( int N, int M, int K, int c, int s, 
                         char *input, char *output_values, 
-                        char *output_vectors) 
+                        char *output_vectors, 
+			char *sdev_values, 
+			char *x_vectors) 
 {
 
            printf("summary of the options:\n\n"
@@ -53,7 +57,9 @@ void print_summary_pca( int N, int M, int K, int c, int s,
                 "        -x (genotype file)                  %s\n"
                 "        -a (eigenvalues file)               %s\n"
                 "        -e (eigenvectors file)              %s\n"
-                , N, M, K, input, output_values, output_vectors);
+                "        -d (standard deviation file)        %s\n"
+                "        -p (projection file)                %s\n"
+                , N, M, K, input, output_values, output_vectors, sdev_values, x_vectors);
 
         if (s)
                 printf("        -s data centered and scaled \n\n");

@@ -9,12 +9,31 @@
 
 #define LFMM_PI (3.141592653589793)
 
+/** 
+ * calculate the median of a table
+ *
+ * @param p 	the table 
+ * @param n	the size of p
+ *
+ * @return the median value
+ */
+double median(double *p, int n);
+
 /**
  * initialise random 
  * 
  * @param seed	if seed < 0, random seed, else seed
  */
 void init_random(long long *seed);
+
+/** 
+ * sample 1/0 with probability freq
+ *
+ * @param freq	frequence
+ *
+ * @return sample
+ */
+int rand_binary(double freq);
 
 /**
  * compute a uniform random double, (0,1]
@@ -160,12 +179,22 @@ int rand_vector(double *Pi, int size);
 double rand_gamma(int alpha, double beta);
 
 /**
- * compute the (approximated) pvalue associated a positive zscore
+ * compute the (approximated) pvalue associated a positive zscore (normality)
  * 
  * @param z	zscore 
  * 
  * @return	the associated pvalue
  */
 long double zscore2pvalue(long double z);
+
+/**
+ * compute the (approximated) pvalue associated a positive zscore (student)
+ * 
+ * @param z	zscore 
+ * @param df	degree of freedom
+ * 
+ * @return	the associated pvalue
+ */
+double zscore2pvalue_student(double z, int df);
 
 #endif // RAND_H

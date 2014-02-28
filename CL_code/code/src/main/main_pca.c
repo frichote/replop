@@ -33,13 +33,17 @@ int main (int argc, char *argv[])
 	char input_file[512];		// input file
 	char output_eva_file[512] = "";	// output eigenvalues file
 	char output_eve_file[512] = "";	// output eigenvectors file
+	char output_sdev_file[512] = "";// output sdev file
+	char output_x_file[512] = "";	// output x file
 
 	// analyze command-line
 	analyse_param_pca(argc, argv, input_file, output_eva_file, 
-		output_eve_file, &K, &c, &s);
+		output_eve_file, output_sdev_file, output_x_file,
+		&K, &c, &s);
 
 	// run function
-	pca(input_file, output_eva_file, output_eve_file, K, c, s);
+	pca(input_file, output_eva_file, output_eve_file, 
+		output_sdev_file, output_x_file, K, c, s);
 
 	return 0;
 }

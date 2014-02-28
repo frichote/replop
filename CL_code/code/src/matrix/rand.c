@@ -26,6 +26,47 @@
 #include "rand.h"
 #include "matrix.h"
 #include "cholesky.h"
+#include "../stats/student_t_distribution.h"
+
+
+int compare_double (void const *a, void const *b) {
+  	/* definir des pointeurs type's et initialise's
+     	avec les parametres */
+ 	double const *pa = a;
+	double const *pb = b;
+	int res;
+
+   	/* evaluer et retourner l'etat de l'evaluation (tri croissant) */
+        if (*pa < *pb) res = -1;
+        if (*pa == *pb) res = 0;
+        if (*pa > *pb) res = 1;
+
+	return res;
+}
+
+// median
+
+double median(double *p, int n)
+{
+	double *copy = (double *) calloc(n, sizeof(double));
+	int i;
+	double res;
+
+	for (i = 0; i < n; i++)
+		copy[i] = p[i];
+
+	qsort((void *)copy, n, sizeof(double), compare_double);
+
+	if (n % 2)
+		res = copy[(n+1)/2-1];
+	else
+		res = (copy[(int)floor(n/2)-1] + copy[(int)ceil(n/2)-1]) / 2.0;
+
+	free(copy);
+	
+	return res;
+
+}
 
 // Don t forget to initialize the random (init_random)
 
@@ -71,7 +112,17 @@ float frand()
 	return (float)(rand() + 1.0) / (RAND_MAX + 1.0);
 }
 
-// rand_ind
+// rand_binary
+
+int rand_binary(double freq)
+{
+	if (frand() < freq)
+		return 1;
+	else 
+		return 0;
+}
+
+// rand_int
 
 int rand_int(int size)
 {
@@ -236,11 +287,18 @@ double rand_gamma(int alpha, double beta)
 	return y;
 }
 
-// zscore2pvalue
+// zscore2pvalue in case of normality
 
 long double zscore2pvalue(long double z)
 {
 	long double tmp = erfcl((long double)( z * M_SQRT1_2))/(long double)(2.0);
 	tmp = (long double)(2.0)*tmp;
 	return  tmp;
+}
+
+// zscore2pvalue_student
+
+double zscore2pvalue_student(double z, int df)
+{
+	return 2.0 * Student_t_Distribution(-z, df);
 }

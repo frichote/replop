@@ -29,13 +29,31 @@
  * @param burn  the number of burnin
  * @param missing_data	true if missing data
  * @param num_thrd      the number of processes used
- * @param dev_file	the name of the output DIC file
+ * @param dev		deviance criterion
+ * @param DIC		DIC criterion
+ * @param perc_var	percentage of variances
  */
 void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 		double *U, double *V, double *alpha_beta, double *alpha_R,
 		double *alpha_U, int N, int M, int K, int D,
 		double epsilon, int Niter, int burn, int missing_data,
-		int num_thrd, char *dev_file);
+		int num_thrd, double *dev, double *DIC, double *perc_var);
+
+/**
+ * update empirical variances
+ * 
+ * @param m_var		empirical variances
+ * @param U     the U matrix (of size KxN)
+ * @param V     the V matrix (of size KxM)
+ * @param beta  the beta matrix (of size DxM)
+ * @param var_R	the residual variance
+ * @param N     the number of individuals
+ * @param M     the number of loci
+ * @param K     the number of latent factors
+ * @param D     the number of covariables
+ */
+void udpate_var(double *m_var, double *U, double *V, double *beta, double var_R,
+	int N, int M, int K, int D);
 
 /**
  * update different sums
@@ -43,6 +61,8 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
  * @param beta	posterior beta mean (of size DxM)
  * @param U	posterior U mean (of size KxN)
  * @param V	posterior V mean (of size KxM)
+ * @param m_var		var of each U and X
+ * @param mean_var	mean of the var of each U and X in the GS
  * @param sum2	temporary vector (sum of squares)(of size DxM)
  * @param sum	temporary vector (sum) (of size DxM)
  * @param mean_U	posterior U mean (of size KxN)
@@ -55,7 +75,8 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
  * @param D     the number of covariables
  * @param alpha_R       the inverse of the residual variance
  */
-void update_sums(double *beta, double *U, double *V, double *sum, double *sum2,
+void update_sums(double *beta, double *U, double *V, double *m_var, 
+		 double *mean_var, double *sum, double *sum2,
 		 double *mean_U, double *mean_V, double *deviance,
 		 double thrd_m2, int N, int M, int K, int D, double alpha_R);
 
@@ -74,10 +95,12 @@ void update_sums(double *beta, double *U, double *V, double *sum, double *sum2,
  * @param M     the number of loci
  * @param K     the number of latent factors
  * @param D     the number of covariables
+ * @param num_thrd      the number of processes used
+ * @param mean_var	mean of the var of each U and X in the GS
  */
 void calc_dp_deviance(float *dat, double *sum, double *mean_U, double *mean_V,
 		      double *C, double *deviance, double *dp, int size, int N,
-		      int M, int K, int D, int num_thrd);
+		      int M, int K, int D, int num_thrd, double *mean_var);
 
 /**
  * allocate all temporary memory
@@ -88,6 +111,8 @@ void calc_dp_deviance(float *dat, double *sum, double *mean_U, double *mean_V,
  * @param inv_cov_U	inverse conditional U covariance (of size KxK)
  * @param m_V	conditional V mean (of size KxM)
  * @param inv_cov_V	inverse conditional V covariance (of size KxK)
+ * @param m_var		var of each U and X
+ * @param mean_var	mean of the var of each U and X in the GS
  * @param mean	posterior beta mean (of size DxM)
  * @param mean_U	posterior U mean (of size KxN)
  * @param mean_V	posterior V mean (of size KxM)
@@ -102,7 +127,7 @@ void calc_dp_deviance(float *dat, double *sum, double *mean_U, double *mean_V,
  */
 void allocate_all(double **m_beta, double **inv_cov_beta, double **m_U,
 		  double **inv_cov_U, double **m_V, double **inv_cov_V,
-		  double **mean, double **mean_U, double **mean_V,
+		  double **m_var, double **mean, double **mean_U, double **mean_V,
 		  double **sum2, double **sum, double **bb, double **CCt, int N,
 		  int M, int K, int D);
 
@@ -115,6 +140,8 @@ void allocate_all(double **m_beta, double **inv_cov_beta, double **m_U,
  * @param inv_cov_U	inverse conditional U covariance (of size KxK)
  * @param m_V	conditional V mean (of size KxM)
  * @param inv_cov_V	inverse conditional V covariance (of size KxK)
+ * @param m_var		var of each U and X
+ * @param mean_var	mean of the var of each U and X in the GS
  * @param mean	posterior beta mean (of size DxM)
  * @param mean_U	posterior U mean (of size KxN)
  * @param mean_V	posterior V mean (of size KxM)
@@ -124,7 +151,8 @@ void allocate_all(double **m_beta, double **inv_cov_beta, double **m_U,
  * @param CCt	C covariance matrix (of size DxD)
  */
 void free_all(double *m_beta, double *inv_cov_beta, double *m_U,
-	      double *inv_cov_U, double *m_V, double *inv_cov_V, double *mean,
+	      double *inv_cov_U, double *m_V, double *inv_cov_V,
+              double *m_var, double *mean,
 	      double *mean_U, double *mean_V, double *sum2, double *sum,
 	      double *bb, double *CCt);
 

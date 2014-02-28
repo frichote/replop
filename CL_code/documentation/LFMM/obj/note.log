@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.4.24)  13 FEB 2014 16:27
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.4.24)  14 FEB 2014 13:55
 entering extended mode
  %&-line parsing enabled.
 **note.tex
@@ -279,7 +279,9 @@ Now handling font encoding U ...
    defining Unicode char U+2026 (decimal 8230)
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
-)) (/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+)) (/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 (/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
@@ -290,21 +292,24 @@ Package graphics Info: Driver file: pdftex.def on input line 91.
 (/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
 \Gread@gobject=\count90
-)) (/usr/share/texmf-texlive/tex/latex/lineno/lineno.sty
+))
+\Gin@req@height=\dimen106
+\Gin@req@width=\dimen107
+) (/usr/share/texmf-texlive/tex/latex/lineno/lineno.sty
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
 \linenopenalty=\count91
 \output=\toks18
 \linenoprevgraf=\count92
-\linenumbersep=\dimen106
-\linenumberwidth=\dimen107
+\linenumbersep=\dimen108
+\linenumberwidth=\dimen109
 \c@linenumber=\count93
 \c@pagewiselinenumber=\count94
 \c@LN@truepage=\count95
 \c@internallinenumber=\count96
 \c@internallinenumbers=\count97
-\quotelinenumbersep=\dimen108
-\bframerule=\dimen109
-\bframesep=\dimen110
+\quotelinenumbersep=\dimen110
+\bframerule=\dimen111
+\bframesep=\dimen112
 \bframebox=\box26
 LaTeX Info: Redefining \\ on input line 3056.
 ) (/usr/share/texmf-texlive/tex/latex/cite/cite.sty
@@ -329,12 +334,12 @@ Package: ccaption 2009/09/02 v3.2b Extended captioning and new floats
 Package: caption 2009/10/09 v3.1k Customizing captions (AR)
 (/usr/share/texmf-texlive/tex/latex/caption/caption3.sty
 Package: caption3 2009/10/09 v3.1k caption3 kernel (AR)
-\captionmargin=\dimen111
-\captionmargin@=\dimen112
-\captionwidth=\dimen113
-\caption@indent=\dimen114
-\caption@parindent=\dimen115
-\caption@hangindent=\dimen116
+\captionmargin=\dimen113
+\captionmargin@=\dimen114
+\captionwidth=\dimen115
+\caption@indent=\dimen116
+\caption@parindent=\dimen117
+\caption@hangindent=\dimen118
 Package caption Info: The definition of \@makecaption has been changed,
 (caption)             frenchb will NOT customize it on input line 1007.
 Package caption Info: Unknown document class (or package),
@@ -363,8 +368,8 @@ ontpre {\@contnfont #1\@contdelim }\@conttempa {\@contcstyle \@conttfont #2\par
 Package caption Info: float package is loaded.
 ) (/usr/share/texmf-texlive/tex/latex/tools/array.sty
 Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
-\col@sep=\dimen117
-\extrarowheight=\dimen118
+\col@sep=\dimen119
+\extrarowheight=\dimen120
 \NC@list=\toks21
 \extratabsurround=\skip47
 \backup@length=\skip48
@@ -382,10 +387,10 @@ Package ifvtex Info: VTeX not detected.
 \Gm@cnth=\count101
 \Gm@cntv=\count102
 \c@Gm@tempcnt=\count103
-\Gm@bindingoffset=\dimen119
-\Gm@wd@mp=\dimen120
-\Gm@odd@mp=\dimen121
-\Gm@even@mp=\dimen122
+\Gm@bindingoffset=\dimen121
+\Gm@wd@mp=\dimen122
+\Gm@odd@mp=\dimen123
+\Gm@even@mp=\dimen124
 \Gm@dimlist=\toks22
 (/usr/share/texmf-texlive/tex/xelatex/xetexconfig/geometry.cfg)) (/usr/share/te
 xmf-texlive/tex/latex/fancyvrb/fancyvrb.sty
@@ -430,13 +435,13 @@ Package frenchb.ldf Warning: OT1 encoding should not be used for French.
 (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count107
-\scratchdimen=\dimen123
+\scratchdimen=\dimen125
 \scratchbox=\box30
 \nofMPsegments=\count108
 \nofMParguments=\count109
 \everyMPshowfont=\toks23
 \MPscratchCnt=\count110
-\MPscratchDim=\dimen124
+\MPscratchDim=\dimen126
 \MPnumerator=\count111
 \everyMPtoPDFconversion=\toks24
 )
@@ -496,54 +501,63 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--50
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 66--75
+Underfull \hbox (badness 10000) in paragraph at lines 65--74
 
  []
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 130.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 123.
 
 (/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 130.
-[2] [3] [4] [5]
-Overfull \hbox (31.32947pt too wide) in paragraph at lines 463--465
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 123.
+[2] [3]
+Overfull \hbox (8.77647pt too wide) in paragraph at lines 266--269
+\OT1/cmr/m/n/10 http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Forma
+t/vcf-variant-call-format-version-41 
+ []
+
+[4] [5] [6] [7]
+Overfull \hbox (31.32947pt too wide) in paragraph at lines 541--543
 \OT1/cmr/m/n/10 Here is an ex-am-ple of com-mand line to cre-ate a man-hat-tan 
 plot (in []\OT1/cmtt/m/n/10 examples/human_example/manhattan_plot_2.pdf\OT1/cmr
 /m/n/10 )
  []
 
-
-Overfull \hbox (6.54492pt too wide) in paragraph at lines 471--477
+<manhattan.pdf, id=34, 505.89pt x 505.89pt>
+File: manhattan.pdf Graphic file (type pdf)
+<use manhattan.pdf>
+Overfull \hbox (6.54492pt too wide) in paragraph at lines 551--557
 \OT1/cmr/m/n/10 Ques-tions) sec-tion is avail-able on our web-page (ttp://membr
 es-timc.imag.fr/Olivier.Francois/lfmm.html). LFMM
  []
 
-(./note.bbl) [6] (./note.aux) ) 
+[8 <./manhattan.pdf>] (./note.bbl) [9] (./note.aux) ) 
 Here is how much of TeX's memory you used:
- 4329 strings out of 493848
- 61372 string characters out of 1152823
- 133160 words of memory out of 3000000
- 7547 multiletter control sequences out of 15000+50000
- 12492 words of font info for 49 fonts, out of 3000000 for 9000
+ 4391 strings out of 493848
+ 62300 string characters out of 1152823
+ 135081 words of memory out of 3000000
+ 7605 multiletter control sequences out of 15000+50000
+ 13739 words of font info for 54 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 36i,6n,38p,234b,458s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/ams
-fonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
-bx12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
-usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/te
-xmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/
-fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/p
-ublic/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfo
-nts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt
-10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on note.pdf (6 pages, 160081 bytes).
+ 36i,6n,38p,674b,466s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/
+fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1
+/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
+fonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cm
+mi12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></u
+sr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/tex
+mf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/
+fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1
+/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
+fonts/cm/cmtt8.pfb>
+Output written on note.pdf (9 pages, 239806 bytes).
 PDF statistics:
- 61 PDF objects out of 1000 (max. 8388607)
+ 82 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -9,6 +9,15 @@
 
 #include "../matrix/data.h"
 
+/** calculate lambda criterion of a p.values distribution
+ *
+ * @param p	p values set
+ * @param n	size of p
+ *
+ * @return lambda
+ */
+double lambda(double *p, int n);
+
 /**
  * convert pvalues into qvalues with Benjaminy-Hosberg approximation
  *
@@ -16,7 +25,7 @@
  * @param qvalues	output qvalues table
  * @param n		size of the tables
  */
-void pvalue_qvalue(long double *pvalues, long double *qvalues, int n);
+void pvalue_qvalue(double *pvalues, double *qvalues, int n);
 
 /**
  * compute zscore in the dth column of beta
@@ -101,9 +110,12 @@ void write_DIC(char *file_data, double deviance, double DIC);
  * @param all		if all variables together
  * @param nd		number of the current env variable
  * @param K		number of latent factors
+ * @param N		number of individuals
+ * @param dev		deviance
+ * @param DIC		DIC
  */
 void write_zscore_double(char *output_file, int M, double *zscore, int D, int all, 
-	int nd, int K);
+	int nd, int K, int N, double dev, double DIC, double *perc_var);
 
 /**
  * compute the current residual variance
@@ -159,5 +171,15 @@ double var_data_inputation(float *R, int *I, double *U, double *V, double *C,
  */
 void inputation_lfmm(float *R, double *U, double *V, double *C, double *beta, int *I,
 		int N, int M, int K, int D);
+
+/**
+ * input missing values with empirical frequencies
+ *
+ * @param R     the data matrix (of size NxM)
+ * @param I     the missing data matrix
+ * @param N     the number of individuals
+ * @param M     the number of loci
+ */
+void inputation_freq(float *R, int *I, int N, int M);
 
 #endif // DATA_LFMM_H

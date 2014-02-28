@@ -9,6 +9,14 @@
 #include <math.h>
 
 /**
+ * compute unbiased variance of x
+ * 
+ * @param x	vector
+ * @param n	size of x
+ */
+double variance(double *x, int n);
+
+/**
  * comparaison function of two elements (for qsort)
  *
  * @param a	first element
@@ -25,7 +33,7 @@ int compare (const void* a, const void* b);
  * @param index	indices 
  * @param n	size of data, index
  */
- void sort_index(long double *data, int *index, int n);
+ void sort_index(double *data, int *index, int n);
 
 /**
  * comput min(a, b)

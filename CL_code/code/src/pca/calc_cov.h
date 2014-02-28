@@ -18,4 +18,22 @@
  */
 void calc_cov(double *data, int N, int M, double *cov);
 
+/**
+ * calculate sdev form eigenvalues
+ *
+ * @param val	eigenvalues vector
+ * @param N	size of val
+ */
+void calc_sdev(double *val, int N);
+
+/**
+ * calculate x from vect and val (in fact sdev)
+ *
+ * @param vec	vec matrix 
+ * @param val	sdev matrix
+ * @param N	number of individuals
+ * @param K	number of PCs
+ */
+void calc_x(double *vec, double *val, int N, int K);
+
 #endif // CALC_COV_H

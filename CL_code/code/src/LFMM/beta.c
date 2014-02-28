@@ -199,6 +199,16 @@ void update_beta(double *C, float *dat, double *U, double *V, double *beta,
 		end                                                             */
 	rand_beta(beta, m_beta, inv_cov_beta, alpha_R, D, M, num_thrd);
 
+	/*
+	for (j = 0; j < M; j++) {  
+		mean = 0.0;
+		for (i = 0; i < N; i++) {
+			mean += dat[i * M + j];
+		}
+		beta[j] = mean/N;
+	}
+	*/
+
 	if (isnan(beta[0]))
 		print_error_global("nan", NULL, 0);
 }
@@ -211,7 +221,7 @@ void update_alpha_beta(double *beta, double *alpha_beta, double epsilon,
 	//a = 1 + M/2;
 	int d;
 	//int a = (int)(epsilon) + M/2;
-	int a = (int)1 + M / 2;
+	int a = (int)0 + M / 2;
 	// allocate memory
 	double *bb = (double *)calloc(D, sizeof(double));
 
@@ -220,7 +230,7 @@ void update_alpha_beta(double *beta, double *alpha_beta, double epsilon,
 	//dble_sum2(beta,D,M,bb,1); // beta(K,M)
 
 	// update alpha_beta
-	alpha_beta[0] = rand_gamma(a,1.0/(double)(bb[0]));
+	alpha_beta[0] = rand_gamma(a, 1.0/(double)(bb[0]));
 	for (d = 1; d < D; d++)
 		alpha_beta[d] = rand_gamma(a, 1.0 / (double)(bb[d]));
 

@@ -1,8 +1,0 @@
-Date 08-15-2013
-by Eric Frichot (efrichot@gmail.com)
-
-- create release script for R package
-- write R package
-- test that it is functional
-- use R interface to make tests.
-- 

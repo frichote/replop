@@ -11,7 +11,7 @@ pca  (	input_file, K,
         output_file.eigenvalues, load.eigenvalues = TRUE,
         output_file.eigenvectors, load.eigenvectors = TRUE,
         output_file.sdev, load.sdev = TRUE,
-        output_file.projection, load.projection = TRUE)
+        output_file.projections, load.projections = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -45,10 +45,10 @@ pca  (	input_file, K,
 \item{load.sdev}{
 	a boolean option. If true, load the standard deviations in R. Else, return the path for the output file with the standard deviations. 
 }
-\item{output_file.projection}{
+\item{output_file.projections}{
 	the path for the output file with the projections. By default, the name of the output file is the name of the input file with .projection extension (input_file.projection).
 }
-\item{load.x}{
+\item{load.projections}{
 	a boolean option. If true, load the projections in R. Else, return the path for the output file with the projections. 
 }
 }

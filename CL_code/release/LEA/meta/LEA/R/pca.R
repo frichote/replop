@@ -5,7 +5,7 @@ pca <- function(input_file,
 		output_file.eigenvalues, load.eigenvalues = TRUE, 
 		output_file.eigenvectors, load.eigenvectors = TRUE, 
 		output_file.sdev, load.sdev = TRUE, 
-		output_file.projection, load.projection = TRUE) 
+		output_file.projections, load.projections = TRUE) 
 {
 
         # test arguments and init
@@ -35,17 +35,17 @@ pca <- function(input_file,
 	# load sdev
 	load.sdev = test_logical("load.sdev", load.sdev, TRUE)
 	# x file 
-        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.projection",input_file)
-	output_file.projection = test_character("output_file.projection", output_file.projection, tmp)
+        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.projections",input_file)
+	output_file.projections = test_character("output_file.projections", output_file.projections, tmp)
 	# load x
-	load.projection = test_logical("load.projection", load.projection, TRUE)
+	load.projections = test_logical("load.projections", load.projections, TRUE)
 
     	.C("R_pca", 
 		as.character(input_file),
 		as.character(output_file.eigenvalues),
 		as.character(output_file.eigenvectors),
 		as.character(output_file.sdev),
-		as.character(output_file.projection),
+		as.character(output_file.projections),
 		as.integer(K),
 		as.integer(center),
 		as.integer(scale)
@@ -68,10 +68,10 @@ pca <- function(input_file,
 	} else {
 		res$sdev = output_file.sdev;
 	}
-	if (load.projection) {
-		res$projection = as.matrix(read.table(output_file.projection));	
+	if (load.projections) {
+		res$projections = as.matrix(read.table(output_file.projections));	
 	} else {
-		res$projection = output_file.projection;
+		res$projections = output_file.projections;
 	}
 	res
 }

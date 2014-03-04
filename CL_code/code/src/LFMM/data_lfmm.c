@@ -63,10 +63,12 @@ void pvalue_qvalue(double *pvalues, double *qvalues, int n)
 	// sort pvalue table
 	sort_index(pvalues, index, n);
 
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; i++) {
 		qvalues[index[i]] = pvalues[index[i]] 
 			* (double)(n) / (double) (i+1);	
-
+		if (qvalues[index[i]] > 1.0)
+			qvalues[index[i]] = 1.0;
+	}
 
 	free(index);
 }

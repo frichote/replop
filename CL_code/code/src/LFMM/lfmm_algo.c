@@ -77,7 +77,7 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 		print_bar(&i, &j, Niter);
 
 		// update_alpha_U
-		update_alpha_U(U, alpha_U, 1000, K, N);
+		update_alpha_U(U, alpha_U, 1, K, N);
 		*alpha_U /= *alpha_R * K;
 
 		// update_alpha_beta

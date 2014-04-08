@@ -28,6 +28,20 @@
 #include "cholesky.h"
 #include "../stats/student_t_distribution.h"
 
+// rand_rp
+
+double rand_srp() {
+	double r = drand();
+
+	if (r < 0.166666667)
+		return -1;
+	else if (r >= 0.833333333)
+		return 1;
+	else
+		return 0;
+}
+
+// compare_double 
 
 int compare_double (void const *a, void const *b) {
   	/* definir des pointeurs type's et initialise's

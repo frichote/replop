@@ -32,8 +32,9 @@ int main(int argc, char *argv[])
 	int nd = 0;
 	int all = 0;
 	int K = 0;
-	int burn = 1000;
-	int Niter = 3000;
+	int n, L, D;
+	int burn = 100;
+	int Niter = 1000;
 	int num_thrd = 1;
 	int missing_data = 0;
 	char output_file[512] = "";
@@ -41,6 +42,7 @@ int main(int argc, char *argv[])
 	char cov_file[512];
         char dev_file[512] = "";
 	long long seed = -1;
+	double dev, dic;
 
 	// print
 	print_head_lfmm();
@@ -52,8 +54,8 @@ int main(int argc, char *argv[])
 		      &num_thrd, &seed, &all);
 
 	// run function
-	LFMM(input_file, output_file, cov_file, dev_file, nd, K,
-		Niter, burn, num_thrd, seed, missing_data, all);
+	LFMM(input_file, output_file, cov_file, dev_file, &n, &L, &D, nd, K,
+		Niter, burn, num_thrd, &seed, missing_data, all, &dic, &dev);
 
 	return 0;
 }

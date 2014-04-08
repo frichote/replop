@@ -62,7 +62,7 @@ void lfmm_k0(float *dat, int *I, double *C, double *zscore, double *beta,
 	for (d = 0; d < D; d++)
 		perc_var[d + 1] = variance(&(beta[d * M]), M); 
 	normalize_lines(perc_var, 1, D + 1);
-	print_perc(perc_var, 0, D);
+	//print_perc(perc_var, 0, D);
 
 
 	// save ED and DIC

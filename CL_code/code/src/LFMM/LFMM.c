@@ -39,8 +39,8 @@
 #include "lfmm_algo.h"
 
 void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
-	int nd, int K, int Niter, int burn, int num_thrd, long long seed, 
-	int missing_data, int all)
+	int *n, int *L, int *RD, int nd, int K, int Niter, int burn, int num_thrd, 
+	long long *seed, int missing_data, int all, double *dic, double *deviance)
 {
 
 	// Parameters initialization
@@ -56,12 +56,12 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 
 	float *dat;		// data matrix
 	int *I = NULL;		// missing value matrix
-	double epsilon = 1;	// hyperprior epsilon
+	double epsilon = 1000;	// hyperprior epsilon
 	double dev, DIC;
 	double *perc_var;	// percentage of variances
 
 	// random initialization
-	init_random(&seed);
+	init_random(seed);
 
         // count the number of lines and columns
         M = nb_cols_lfmm(input_file);
@@ -82,10 +82,15 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
                                  "(-d option). d should be between 1 and D",
                                  0);
 
-	// print summary of command line
-	print_summary_lfmm(N, M, K, nD, nd, Niter, burn,
-		      missing_data, output_file, input_file, cov_file, dev_file,
-		      num_thrd, seed, all);
+	*n = N;
+	*L = M;
+	*RD = nD;
+
+        // print summary of command line
+        print_summary_lfmm(N, M, K, nD, nd, Niter, burn,
+                      missing_data, output_file, input_file, cov_file, dev_file,
+                      num_thrd, *seed, all);
+
 
 	// allocate data memory
 	U = (double *)calloc(K * N, sizeof(double));	// (N,K)
@@ -202,6 +207,8 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 				"\n>>>>\n\n", nd + 1);
 		}
 	}
+	*dic = DIC;
+	*deviance = dev;
 
 	// free memory
 	if (missing_data) {

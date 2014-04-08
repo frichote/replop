@@ -26,19 +26,26 @@
 #include "R_LFMM.h" 
 
 void R_LFMM(char** R_input_file, char** R_output_file, char** R_cov_file,
-        char** R_dev_file, int* R_nd, int *R_K, int* R_Niter, int* R_burn,
-        int* R_num_CPU, int* R_seed, int* R_missing_data, int* R_all)
+        char** R_dev_file, int *R_n, int *R_L, int *R_D, int* R_nd, 
+	int *R_K, int* R_Niter, int* R_burn,
+        int* R_num_CPU, long long* R_seed, int* R_missing_data, int* R_all,
+	double *R_dic, double *R_dev)
 {
 	LFMM(	*R_input_file, 
 		*R_output_file, 
 		*R_cov_file,
 		*R_dev_file, 
+		R_n,
+		R_L,
+		R_D,
 		*R_nd, 
 		*R_K, 
 		*R_Niter, 
 		*R_burn,
 		*R_num_CPU, 
-		*R_seed, 
+		R_seed, 
 		*R_missing_data, 
-		*R_all);
+		*R_all,
+		R_dic,
+		R_dev);
 }

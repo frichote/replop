@@ -27,7 +27,9 @@
 
 int main (int argc, char *argv[]) 
 {
-	int K = 0;			// number of individuals
+	int n = 0;			// number of individuals
+	int L = 0;			// number of loci
+	int K = 0;			// number of PCs
 	int s = 0;			// scale parameter
 	int c = 0;			// center parameter
 	char input_file[512];		// input file
@@ -43,7 +45,7 @@ int main (int argc, char *argv[])
 
 	// run function
 	pca(input_file, output_eva_file, output_eve_file, 
-		output_sdev_file, output_x_file, K, c, s);
+		output_sdev_file, output_x_file, &n, &L, &K, c, s);
 
 	return 0;
 }

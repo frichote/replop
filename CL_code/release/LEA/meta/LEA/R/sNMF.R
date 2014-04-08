@@ -18,9 +18,11 @@ sNMF <- function(input_file,
 	# input file
 	input_file = test_character("input_file", input_file, NULL)
 	# K
-	K = test_integer("K", K, NULL)
-	if (K <= 0)
-               	stop("'K' argument has to be positive.")
+	for (k in 1:lengt(K)) {
+		K[k] = test_integer("K", K[k], NULL)
+		if (K[k] <= 0)
+               		stop("'K' argument has to be positive.")
+	}
 	# alpha
 	alpha = test_double("alpha", alpha, 10)
 	if (alpha < 0)
@@ -72,6 +74,11 @@ sNMF <- function(input_file,
 	I = test_integer("I", I, 0)
         if (I < 0)
                 stop("'I' argument has to be of type positive.")
+
+
+	# creation of the res file
+	res = new("snmfClass")
+	
 
 	all_ce = 0;
 	masked_ce = 0;

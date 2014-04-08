@@ -79,16 +79,22 @@ void zscore_calc(double *zscore, double *sum, double *sum2, int n, int cur, int 
 {
 	int i;
 	double var;
+	double *r = (double *) calloc(n*(D-1), sizeof(double));
+	double *m = (double *) calloc(n*(D-1), sizeof(double));
 
 	for (i = n; i < D * n; i++) {
 		// calculate var beta
 		var =
 			((sum2[i] - sum[i] * sum[i] / (double)cur) / (double)(cur -
 				1));
+		
 		// calculate zscore beta
 		zscore[(i - n)] = (sum[i]) / (sqrt(var) * (double)cur);
+		r[i-n] = var;
+		m[i-n] = sum[i]/cur;
 	}
-
+	write_data_double("var.txt", n, D-1, r);
+	write_data_double("mean.txt", n, D-1, m);
 }
 
 // update_sum
@@ -176,7 +182,7 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 	char zscore_file[512]; 
 	char dic_file[512]; 
 	double* pvalues = (double *)calloc(M, sizeof(double));
-	double* qvalues = (double *)calloc(M, sizeof(double));
+	// double* qvalues = (double *)calloc(M, sizeof(double));
 	double l;
 
 	if (all) {
@@ -201,7 +207,7 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 			for (j = 0; j < M; j++)
 				pvalues[j] = (double)zscore2pvalue_student(fabs(zscore[d*M+j]), N-D);
 			// calculate qvalues
-			pvalue_qvalue(pvalues, qvalues, M);
+			// pvalue_qvalue(pvalues, qvalues, M);
 
 			// calculate lambda
 			l = lambda(pvalues, M);
@@ -213,9 +219,9 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 			// and write 
 			file = fopen_write(zscore_file);
 			for (j = 0; j < M; j++) {
-				fprintf(file, "%3.6G %3.6G %3.6G %3.6G %3.6G", (double)fabs(zscore[d*M+j]),
-						(double)(-log10(pvalues[j])), pvalues[j],
-						(double)(-log10(qvalues[j])), qvalues[j]);
+				fprintf(file, "%3.6G %3.6G %3.6G", (double)fabs(zscore[d*M+j]),
+						(double)(-log10(pvalues[j])), pvalues[j]);
+		//				(double)(-log10(qvalues[j])), qvalues[j]);
 				fprintf(file, "\n");
 			}
 			fclose(file);
@@ -225,11 +231,13 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 			printf("\t-------------------------\n");
 		}
 		// write percentage
+		/*
 		for (d = 0; d < D+1; d++)
 			fprintf(file_dic, "percentage_var%d\t\t%3.3G\n", d, prec_var[d+1]);
 		for (d = 0; d < K; d++)
 			fprintf(file_dic, "percentage_factor%d\t\t%3.3G\n", d+1, prec_var[d+2+D]);
 		fprintf(file_dic, "percentage_residual\t%3.3G\n", prec_var[0]);
+		*/
 		fclose(file_dic);
 	} else {	
 		// DIC file
@@ -247,7 +255,7 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 		for (j = 0; j < M; j++)
 			pvalues[j] = (double) zscore2pvalue_student(fabs(zscore[j]), N-D);
 		// calculate qvalues
-		pvalue_qvalue(pvalues, qvalues, M);
+		//	pvalue_qvalue(pvalues, qvalues, M);
 
 		printf("\tThe statitistics for the run are registered in:\n \t\t%s.\n"
 			"\n", dic_file);
@@ -258,11 +266,13 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 		printf("\tLambda for variable %d:\t%3.5G\n\n", nd + 1, l);
         	fprintf(file_dic, "lambda_v%d\t\t%3.5G\n", nd + 1, l);
 		// write percentage
+		/*
 		for (d = 0; d < D+1; d++)
 			fprintf(file_dic, "percentage_var%d\t\t%3.3G\n", d, prec_var[d+1]);
 		for (d = 0; d < K; d++)
 			fprintf(file_dic, "percentage_factor%d\t\t%3.3G\n", d+1, prec_var[d+2+D]);
 		fprintf(file_dic, "percentage_residual\t%3.3G\n", prec_var[0]);
+		*/
 		fclose(file_dic);
 
 		// write file name
@@ -270,9 +280,9 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 		// and write it
 		file = fopen_write(zscore_file);
 		for (j = 0; j < M; j++) {
-			fprintf(file, "%3.6G %3.6G %3.6G %3.6G %3.6G", (double)fabs(zscore[j]),
-					(double)(-log10(pvalues[j])), pvalues[j],
-					(double)(-log10(qvalues[j])), qvalues[j]);
+			fprintf(file, "%3.6G %3.6G %3.6G", (double)fabs(zscore[j]),
+					(double)(-log10(pvalues[j])), pvalues[j]);
+		//			(double)(-log10(qvalues[j])), qvalues[j]);
 			fprintf(file, "\n");
 		}
 		fclose(file);
@@ -283,7 +293,7 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 	}
 
 	free(pvalues);
-	free(qvalues);
+	// free(qvalues);
 }
 
 // var_data

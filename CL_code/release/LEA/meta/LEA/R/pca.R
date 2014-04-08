@@ -2,10 +2,10 @@ pca <- function(input_file,
 		K, 
 		center = TRUE, 
 		scale  = FALSE, 
-		output_file.eigenvalues, load.eigenvalues = TRUE, 
-		output_file.eigenvectors, load.eigenvectors = TRUE, 
-		output_file.sdev, load.sdev = TRUE, 
-		output_file.projections, load.projections = TRUE) 
+		eigenvalue_file, load_eigenvalues = TRUE, 
+		eigenvector_file, load_eigenvectors = TRUE, 
+		sdev_file, load_sdev = TRUE, 
+		projection_file, load_projections = TRUE) 
 {
 
         # test arguments and init
@@ -21,57 +21,55 @@ pca <- function(input_file,
 	scale = test_logical("scale", scale, 0);
 	# eigenvalues file 
         tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.eigenvalues",input_file)
-	output_file.eigenvalues = test_character("output_file.eigenvalues", output_file.eigenvalues, tmp)
+	eigenvalue_file = test_character("eigenvalue_file", eigenvalue_file, tmp)
 	# load eigenvalues
-	load.eigenvalues = test_logical("load.eigenvalues", load.eigenvalues, TRUE)
+	load_eigenvalues = test_logical("load_eigenvalues", load_eigenvalues, TRUE)
 	# eigenvectors file 
         tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.eigenvectors",input_file)
-	output_file.eigenvectors = test_character("output_file.eigenvectors", output_file.eigenvectors, tmp)
+	eigenvector_file = test_character("eigenvector_file", eigenvector_file, tmp)
 	# load eigenvectors
-	load.eigenvectors = test_logical("load.eigenvectors", load.eigenvectors, TRUE)
+	load_eigenvectors = test_logical("load_eigenvectors", load_eigenvectors, TRUE)
 	# standard deviation file 
         tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.sdev",input_file)
-	output_file.sdev = test_character("output_file.sdev", output_file.sdev, tmp)
+	sdev_file = test_character("sdev_file", sdev_file, tmp)
 	# load sdev
-	load.sdev = test_logical("load.sdev", load.sdev, TRUE)
+	load_sdev = test_logical("load_sdev", load_sdev, TRUE)
 	# x file 
         tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.projections",input_file)
-	output_file.projections = test_character("output_file.projections", output_file.projections, tmp)
+	projection_file = test_character("projection_file", projection_file, tmp)
 	# load x
-	load.projections = test_logical("load.projections", load.projections, TRUE)
+	load_projections = test_logical("load_projections", load_projections, TRUE)
 
-    	.C("R_pca", 
+	L = 0;
+	n = 0
+    	resC = .C("R_pca", 
 		as.character(input_file),
-		as.character(output_file.eigenvalues),
-		as.character(output_file.eigenvectors),
-		as.character(output_file.sdev),
-		as.character(output_file.projections),
-		as.integer(K),
+		as.character(eigenvalue_file),
+		as.character(eigenvector_file),
+		as.character(sdev_file),
+		as.character(projection_file),
+		n = as.integer(n),
+		L = as.integer(L),
+		K = as.integer(K),
 		as.integer(center),
 		as.integer(scale)
 	);
 
+	res = new("pcaClass");
+	res@directory = getwd();
+	res@n = as.integer(resC$n);
+	res@L = as.integer(resC$L);
+	res@K = as.integer(resC$K);
+	res@center = center;
+	res@scale = scale;
+	res@input_file = input_file;
+	res@eigenvalue_file = eigenvalue_file;
+	res@eigenvector_file = eigenvector_file;
+	res@sdev_file = sdev_file;
+	res@projection_file = projection_file;
 
-	res = list();
-	if (load.eigenvalues) {
-		res$eigenvalues = as.matrix(read.table(output_file.eigenvalues));	
-	} else {
-		res$eigenvalues = output_file.eigenvalues;
-	}
-	if (load.eigenvectors) {
-		res$eigenvectors = as.matrix(read.table(output_file.eigenvectors));	
-	} else {
-		res$eigenvectors = output_file.eigenvectors;
-	}
-	if (load.sdev) {
-		res$sdev = as.matrix(read.table(output_file.sdev));	
-	} else {
-		res$sdev = output_file.sdev;
-	}
-	if (load.projections) {
-		res$projections = as.matrix(read.table(output_file.projections));	
-	} else {
-		res$projections = output_file.projections;
-	}
+        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.pcaClass",input_file)
+	write(res, tmp); 
+
 	res
 }

@@ -9,6 +9,13 @@
 
 #define LFMM_PI (3.141592653589793)
 
+/**
+ * rand for sparse random projection
+ *
+ * @return	{-1, 0, 1} with proba {1/6, 2/3, 1/6}
+ */
+double rand_srp();
+
 /** 
  * calculate the median of a table
  *

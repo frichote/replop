@@ -76,8 +76,8 @@ void print_help_lfmm()
                "        -o output_file          -- base of the output files with z-scores (default: genotype_file)\n"
                "        -m                      -- missing data                   (default: no)\n"
                "        -p p                    -- number of processes (CPU)      (default: 1)\n"
-               "        -i Niter                -- number of iterations in the GS (default: 1000)\n"
-               "        -b burn                 -- burnin parameter in the GS     (default: 3000)\n"
+               "        -i Niter                -- number of iterations in the GS (default: 100)\n"
+               "        -b burn                 -- burnin parameter in the GS     (default: 1000)\n"
                "        -s seed                 -- seed random init               (default: random)\n"
                "        -C dic_file             -- DIC file                       (default: genotype_file.dic)\n"
                "        -h                      -- help\n\n");

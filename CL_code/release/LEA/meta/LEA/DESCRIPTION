@@ -4,7 +4,7 @@ Date: 2013-08-14
 Title: R package for inferring population genetic structure and gene-environment associations 
 Author: Eric Frichot <eric.frichot@imag.fr>, Olivier Francois <olivier.francois@imag.fr>
 Maintainer: Eric Frichot <eric.frichot@imag.fr>, Olivier Francois <olivier.francois@imag.fr>
-Depends: R (>= 2.14.1)
+Depends: R (>= 2.14.1), methods
 Description: Landscape Ecological Association (LEA) is a R package dedicated to the study of local adaptation and population structure in population genetics. It gathers a set of a statistical methods and vizualization tools for analyzing whole genomes. One particularity of this package is that it joins the power of R statistical tools, the speed of C code and the vizualization of D3 plots to analyze whole genomes data sets.
 License: GPL-3
 Packaged: 2013-08-13 14:06:44 UTC; frichote

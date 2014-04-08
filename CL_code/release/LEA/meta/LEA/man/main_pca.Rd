@@ -8,10 +8,10 @@ Performs a principal components analysis.
 \usage{
 pca  (	input_file, K, 
         center = TRUE, scale = FALSE, 
-        output_file.eigenvalues, load.eigenvalues = TRUE,
-        output_file.eigenvectors, load.eigenvectors = TRUE,
-        output_file.sdev, load.sdev = TRUE,
-        output_file.projections, load.projections = TRUE)
+        eigenvalue_file, load_eigenvalues = TRUE,
+        eigenvector_file, load_eigenvectors = TRUE,
+        sdev_file, load_sdev = TRUE,
+        projection_file, load_projections = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -27,43 +27,43 @@ pca  (	input_file, K,
 \item{scale}{
 	a boolean option. If true, the data matrix is centered and scaled.
 }
-\item{output_file.eigenvalues}{
+\item{eigenvalue_file}{
 	the path for the output file with the eigenvalues. By default, the name of the output file is the name of the input file with .eigenvalues extension (input_file.eigenvalues).
 }
-\item{load.eigenvalues}{
+\item{load_eigenvalues}{
 	a boolean option. If true, load the eigenvalues in R. Else, return the path for the output file with the eigenvalues. 
 }
-\item{output_file.eigenvectors}{
+\item{eigenvector_file}{
 	the path for the output file with the eigenvectors. By default, the name of the output file is the name of the input file with .eigenvectors extension (input_file.eigenvectors).
 }
-\item{load.eigenvectors}{
+\item{load_eigenvectors}{
 	a boolean option. If true, load the eigenvectors in R. Else, return the path for the output file with the eigenvectors. 
 }
-\item{output_file.sdev}{
+\item{sdev_file}{
 	the path for the output file with the standard deviations. By default, the name of the output file is the name of the input file with .sdev extension (input_file.sdev).
 }
-\item{load.sdev}{
+\item{load_sdev}{
 	a boolean option. If true, load the standard deviations in R. Else, return the path for the output file with the standard deviations. 
 }
-\item{output_file.projections}{
+\item{projection_file}{
 	the path for the output file with the projections. By default, the name of the output file is the name of the input file with .projection extension (input_file.projection).
 }
-\item{load.projections}{
+\item{load_projections}{
 	a boolean option. If true, load the projections in R. Else, return the path for the output file with the projections. 
 }
 }
 \value{
 \item{eigenvalues}{
-        if load.eigenvalues is true, the vector of eigenvalues. Otherwise, the path for the output file with the eigenvalues.
+        if load_eigenvalues is true, the vector of eigenvalues. Otherwise, the path for the output file with the eigenvalues.
 }
 \item{eigenvectors}{
-        if load.eigenvectors is true, the matrix of eigenvectors (one column per eigenvector). Otherwise, the path for the output file with the eigenvectors.
+        if load_eigenvectors is true, the matrix of eigenvectors (one column per eigenvector). Otherwise, the path for the output file with the eigenvectors.
 }
 \item{sdev}{
-        if load.sdev is true, the vector of standard deviations. Otherwise, the path for the output file with the standard deviations.
+        if load_sdev is true, the vector of standard deviations. Otherwise, the path for the output file with the standard deviations.
 }
 \item{projection}{
-        if load.projection is true, the matrix of projections (one column per projection). Otherwise, the path for the output file with the projections.
+        if load_projection is true, the matrix of projections (one column per projection). Otherwise, the path for the output file with the projections.
 }
 }
 \author{

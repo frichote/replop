@@ -16,12 +16,14 @@
  * @param output_eve_file       the output file for eigenvectors
  * @param output_sdev_file      the output file for standard deviation
  * @param output_x_file         the output file for x
+ * @param n			number of individuals
+ * @param L			number of loci
  * @param K			number of PCs
  * @param s			boolean: center
  * @param s			boolean: scale and center
  */
 void pca(char* input_file, char *output_eva_file, char *output_eve_file,
 	char *output_sdev_file, char *output_x_file,
-        int K, int c, int s);
+	int *n, int *L, int *K, int c, int s);
 
 #endif // PCA_H

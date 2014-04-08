@@ -59,6 +59,11 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 	rand_matrix_double(beta, D, M);
 	rand_matrix_double(U, K, N);
 	rand_matrix_double(V, K, M);
+	/*
+	zeros(beta, D*M);
+	zeros(U, K*N);
+	zeros(V, K*M);
+	*/
 
 	if(missing_data)
 		*alpha_R = 1.0 / 
@@ -75,15 +80,22 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 	while (n < Niter) {
 		// print shell
 		print_bar(&i, &j, Niter);
+	//	*alpha_R = 2.8;
 
 		// update_alpha_U
-		update_alpha_U(U, alpha_U, 1, K, N);
-		*alpha_U /= *alpha_R * K;
+		update_alpha_U(U, alpha_U, .001, K, N);
+	//	*alpha_U /= *alpha_R * K;
 
 		// update_alpha_beta
-		update_alpha_beta(beta, alpha_beta, 1, D, M);
-		for (d  = 0; d < D; d++)
-			alpha_beta[d] /= *alpha_R;
+		update_alpha_beta(beta, alpha_beta, M*10, D, M);
+	/*
+                for (d  = 0; d < D; d++) {
+  //                      alpha_beta[d] /= *alpha_R;
+                        printf("%G ", alpha_beta[d]);
+                }
+                printf("\n");
+	*/
+
 
 		// update_beta
 		update_beta(C, dat, U, V, beta, CCt, m_beta, inv_cov_beta,
@@ -116,11 +128,9 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 				    mean_V, &deviance, thrd_m2, N, M, K, D, *alpha_R);
 		n++;
 	}
-
 	final_bar();
 	printf("\n");
 	printf("\t\tEnd of the Gibbs Sampler algorithm.\n\n");
-
 	// calculate zscore
 	
 	zscore_calc(zscore, sum, sum2, M, Niter - burn, D);
@@ -135,7 +145,7 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 
 	// percentage of variance
 	normalize_lines(perc_var, 1, K + D + 1);
-	print_perc(perc_var, K, D);
+	//print_perc(perc_var, K, D);
 
 	// save ED and DIC
 	*dev = deviance;

@@ -138,3 +138,29 @@ void normalize_mean_I(double *C, int N, int K)
 		}
 	}
 }
+
+// normalize_mean_I_float
+
+void normalize_mean_I_float(float *C, int N, int K)
+{
+	float mean;
+	int i, k, count;
+
+	for (k = 0; k < K; k++) {
+		// calculate mean
+		mean = 0;
+		count = 0;
+		for (i = 0; i < N; i++) {
+			if (fabs(C[i * K + k]) != 9) {
+				mean += C[i * K + k];
+				count++;
+			}	
+		}
+		mean /= count;
+		// normalize
+		for (i = 0; i < N; i++) {
+			if (fabs(C[i * K + k]) != 9)
+				C[i * K + k] -= mean;
+		}
+	}
+}

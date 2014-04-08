@@ -8,7 +8,7 @@
 \usage{
 LFMM (	input_file, variable_file, K, nd, all = FALSE, 
 	output_file, missing_data = FALSE, 
-	num_CPU = 1, num_iterations = 3000, num_burnin = 1000, 
+	num_CPU = 1, num_iterations = 1000, num_burnin = 100, 
 	seed = -1, DIC_file)
 
 }

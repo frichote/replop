@@ -32,7 +32,7 @@
 
 void pca(char* input_file, char *output_eva_file, char *output_eve_file, 
 	char *output_sdev_file, char *output_x_file,
-	int K, int c, int s)
+	int *n, int *L, int *K, int c, int s)
 {
         double *data;
 	double *cov, *val, *vect;
@@ -42,23 +42,25 @@ void pca(char* input_file, char *output_eva_file, char *output_eve_file,
         M = nb_cols_lfmm(input_file);
         N = nb_lines(input_file, M);
 
+	*L = M;
+	*n = N;
 	// correct K
 	if (N < M)
 		tmp = N;
 	else 
 		tmp = M;
-	if (!K || K > tmp)
-		K = tmp;
+	if (!(*K) || *K > tmp)
+		*K = tmp;
 
         // print command line summary
-	print_summary_pca(N, M, K, c, s, input_file, output_eva_file, 
+	print_summary_pca(N, M, *K, c, s, input_file, output_eva_file, 
 		output_eve_file, output_sdev_file, output_x_file);
 
 	// allocate memory 
 	data = (double *) malloc(N * M * sizeof(double));
 	cov = (double *) malloc(N * N * sizeof(double));
 	val = (double *) malloc(N * sizeof(double));
-	vect = (double *) malloc(N * K * sizeof(double));
+	vect = (double *) malloc(N * (*K) * sizeof(double));
 	
 	// read input_file
 	read_data_double(input_file, N, M, data);
@@ -73,19 +75,19 @@ void pca(char* input_file, char *output_eva_file, char *output_eve_file,
 	calc_cov(data, N, M, cov); 
 
 	// calculate eva and eve
-	diagonalize(cov, N, K, val, vect);
+	diagonalize(cov, N, *K, val, vect);
 
 	// write output
 	write_data_double(output_eva_file, N, 1, val);
-	write_data_double(output_eve_file, N, K, vect);
+	write_data_double(output_eve_file, N, *K, vect);
 
 	// calculate sdev
 	calc_sdev(val, N);
 	write_data_double(output_sdev_file, N, 1, val);
 
 	// calculate x
-	calc_x(vect, val, N, K);
-	write_data_double(output_x_file, N, K, vect);
+	calc_x(vect, val, N, *K);
+	write_data_double(output_x_file, N, *K, vect);
 
 	// free memory
 	free(data);

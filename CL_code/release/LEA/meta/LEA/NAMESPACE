@@ -1,3 +1,5 @@
+import(methods)
+
 useDynLib(LEA)
 
 export(read.geno)
@@ -6,6 +8,9 @@ export(read.lfmm)
 export(write.lfmm)
 export(read.env)
 export(write.env)
+export(read.popgeno)
+export(write.popgeno)
+
 export(read.zscore)
 export(read.dic)
 
@@ -17,13 +22,41 @@ export(vcf2geno)
 export(ancestrymap2lfmm)
 export(ancestrymap2geno)
 
+exportClasses("pcaClass")
+
 export(createDataSet)
 export(sNMF)
 export(crossEntropy)
 
-export(lambda)
 export(pca)
-export(tracyWidom)
+
+exportMethods(	eigenvalues, 
+		eigenvectors,
+		sdev,
+		projections,
+		show,
+		summary,
+		read,
+		write,
+		zscores,
+		pvalues,
+		mlog10pvalues,
+		ecdf
+)
+
+export(.DollarNames.pcaClass)
+
+# LFMM S4methods
+#s4method(lambda, LFMM)
+#s4method(cFDR, LFMM)
+#s4method(plot, LFMM)
+#s4method(print, LFMM)
+#s4method(summary, LFMM)
+
+# sNMF s4methods
+#s4method(crossEntropy, sNMF)
+#s4method(plot, sNMF)
+#s4method(print, sNMF)
+#s4method(summary, sNMF)
 
 export(LFMM)
-

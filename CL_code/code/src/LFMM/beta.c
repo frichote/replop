@@ -226,13 +226,13 @@ void update_alpha_beta(double *beta, double *alpha_beta, double epsilon,
 	double *bb = (double *)calloc(D, sizeof(double));
 
 	// b = 1/2 * sum(sum(beta.^2));
-	dble_sum2(beta, D, M, bb, epsilon);	// beta(K,M)
+	dble_sum2(beta, D, M, bb, 0.0);	// beta(K,M)
 	//dble_sum2(beta,D,M,bb,1); // beta(K,M)
 
 	// update alpha_beta
-	alpha_beta[0] = rand_gamma(a, 1.0/(double)(bb[0]));
+	alpha_beta[0] = rand_gamma(a+.0001, 1.0/(double)(bb[0]+.0001));
 	for (d = 1; d < D; d++)
-		alpha_beta[d] = rand_gamma(a, 1.0 / (double)(bb[d]));
+		alpha_beta[d] = rand_gamma(a + epsilon, 1.0 / (double)(bb[d] + epsilon));
 
 	// free memory
 	free(bb);

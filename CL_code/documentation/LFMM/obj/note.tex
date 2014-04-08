@@ -136,8 +136,8 @@ Other options are not mandatory:
 parrallel. Be careful, the number of processes has to be lower or equal than the number of physical 
 processes available on your computer. By default, the number of processes is 1.
 \item \verb|-i iteration_number| is the number of iterations in the Gibbs Sampling algorithm. This number
-should be large enough (by default: 3000).
-\item \verb|-b burnin_number| is the number of burning iterations in the Gibbs Sampling algorithm (by default 1000). 
+should be large enough (by default: 1000).
+\item \verb|-b burnin_number| is the number of burning iterations in the Gibbs Sampling algorithm (by default 100). 
 \item \verb|-s seed| is the seed to initialize the randomization. By default, the seed is randomly chosen.
 \item \verb|-C dev_file| is the path for the file containing the DIC and the deviance criterion. By default, the name of the DIC file is the name of the input file with .dic extension. 
 \end{itemize}
@@ -488,8 +488,8 @@ Summary of the options:
         -L (number of loci)             10757
         -K (number of latent factors)   7
         -o (output file)                examples/human_example/panel11_Asia
-        -i (number of iterations)       3000
-        -b (burnin)                     1000
+        -i (number of iterations)       1000
+        -b (burnin)                     100
         -s (seed random init)           11071964616852227840
         -p (number of processes (CPU))  1
         -x (genotype file)              examples/human_example/panel11_Asia.lfmm

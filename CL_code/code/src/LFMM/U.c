@@ -201,7 +201,7 @@ void update_U(double *C, float *dat, double *U, double *V, double *beta,
 
 void update_alpha_U(double *U, double *alpha_U, double epsilon, int K, int N)
 {
-	int a = (int)0 + N * K / 2;
+	int a = (int)epsilon + N * K / 2;
 	// b = 1/2*sum(sum(U.^2)) + 1/2*sum(sum(V.^2));
 	double b = 0.5 * dble_sum(U, N * K) + epsilon;	// U(D,N) V(D,M)
 

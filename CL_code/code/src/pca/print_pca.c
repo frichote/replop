@@ -55,8 +55,8 @@ void print_summary_pca( int N, int M, int K, int c, int s,
                 "        -L (number of loci)                 %d\n"
                 "        -K (number of principal components) %d\n"
                 "        -x (genotype file)                  %s\n"
-                "        -a (eigenvalues file)               %s\n"
-                "        -e (eigenvectors file)              %s\n"
+                "        -a (eigenvalue file)                %s\n"
+                "        -e (eigenvector file)               %s\n"
                 "        -d (standard deviation file)        %s\n"
                 "        -p (projection file)                %s\n"
                 , N, M, K, input, output_values, output_vectors, sdev_values, x_vectors);

@@ -9,6 +9,7 @@
 
 void R_pca (char** R_input_file, char **R_output_eva_file, 
 	char **R_output_eve_file, char **R_output_sdev_file,
-	char **R_output_x_file, int *K, int *c, int *s);
+	char **R_output_x_file, int *n, int *L, int *K, 
+	int *c, int *s);
 
 #endif // R_pca_H

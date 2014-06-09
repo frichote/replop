@@ -37,7 +37,8 @@
 void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 		double *U, double *V, double *alpha_beta, double *alpha_R,
 		double *alpha_U, int N, int M, int K, int D,
-		double epsilon, int Niter, int burn, int missing_data,
+		double noise_epsilon, double b_epsilon, int init, 
+		int Niter, int burn, int missing_data,
 		int num_thrd, double *dev, double *DIC, double *perc_var)
 {
 	double *m_beta, *inv_cov_beta, *m_U, *inv_cov_U, *m_V, *inv_cov_V, *m_var;
@@ -56,14 +57,15 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 
 	create_CCt(CCt, C, D, N);
 	// init U, V and beta
-	rand_matrix_double(beta, D, M);
-	rand_matrix_double(U, K, N);
-	rand_matrix_double(V, K, M);
-	/*
-	zeros(beta, D*M);
-	zeros(U, K*N);
-	zeros(V, K*M);
-	*/
+	if (init) {
+		rand_matrix_double(beta, D, M);
+		rand_matrix_double(U, K, N);
+		rand_matrix_double(V, K, M);
+	} else {
+		zeros(beta, D*M);
+		zeros(U, K*N);
+		zeros(V, K*M);
+	}
 
 	if(missing_data)
 		*alpha_R = 1.0 / 
@@ -80,22 +82,12 @@ void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 	while (n < Niter) {
 		// print shell
 		print_bar(&i, &j, Niter);
-	//	*alpha_R = 2.8;
 
 		// update_alpha_U
-		update_alpha_U(U, alpha_U, .001, K, N);
-	//	*alpha_U /= *alpha_R * K;
+		update_alpha_U(U, alpha_U, noise_epsilon, K, N);
 
 		// update_alpha_beta
-		update_alpha_beta(beta, alpha_beta, M*10, D, M);
-	/*
-                for (d  = 0; d < D; d++) {
-  //                      alpha_beta[d] /= *alpha_R;
-                        printf("%G ", alpha_beta[d]);
-                }
-                printf("\n");
-	*/
-
+		update_alpha_beta(beta, alpha_beta, noise_epsilon, b_epsilon, D, M);
 
 		// update_beta
 		update_beta(C, dat, U, V, beta, CCt, m_beta, inv_cov_beta,

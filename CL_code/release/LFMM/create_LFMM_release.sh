@@ -3,7 +3,7 @@
 # parameters
 prog="LFMM"
 dir="LFMM_CL_v$1"
-src_list="io lapack matrix LFMM convert student tracyWidom pca"
+src_list="io lapack matrix LFMM convert stats tracyWidom pca"
 main_list="main_LFMM main_pca main_tracyWidom main_geno2lfmm main_lfmm2geno main_ped2lfmm main_vcf2geno main_ancestrymap2lfmm"
 
 # color definition

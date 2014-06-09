@@ -27,6 +27,7 @@
 #include "../io/io_error.h"
 #include "../io/io_data_int.h"
 #include "../io/read.h"
+#include "register_convert.h"
 
 // next_token
 

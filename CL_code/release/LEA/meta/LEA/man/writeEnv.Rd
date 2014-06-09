@@ -3,7 +3,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Write files in the \code{\link{env}} format}
 \description{
-write a file in the \code{\link{env}} format.
+Write a file in the \code{\link{env}} format.
 }
 \usage{
 write.env(R, output_file)
@@ -16,7 +16,8 @@ write.env(R, output_file)
 	encoded with the value 9.
 }
 \item{output_file}{
-	the path for the output file (in \code{env} format).
+a character string containing a path to the output file,
+an environmental data matrix in the \code{env} formt.
 }
 }
 \author{
@@ -28,14 +29,17 @@ write.env(R, output_file)
 \code{\link{LFMM}}
 }
 \examples{
-# creation of the example.geno file
-data("tuto")
+# Creation of an environmental matrix C 
+# containing 2 environmental variables for 3 individuals.
+# C contains one line for each individual and one column for each variable.
+C = matrix(runif(6), ncol=2, nrow=3)
 
-# write of the tuto environmental file
-#write.env(C,"tuto.env")
+# Write C in a file called "tuto.env".
+# Create file:	"tuto.env".
+write.env(C,"tuto.env")
 
-# read of the tuto environmental file
-#C2 = read.env("tuto.env")
+# Read the file "tuto.env".
+C = read.env("tuto.env")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

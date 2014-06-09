@@ -22,6 +22,7 @@
 #include <time.h>
 #include <math.h>
 #include "convert/ped.h"
+#include "convert/register_convert.h"
 
 #include "R_ped2lfmm.h" 
 
@@ -31,6 +32,8 @@ void R_ped2lfmm (char** R_input_file, char **R_output_file, int *N, int *M)
 			*R_output_file,
 			N,
 			M);
+
+        print_convert(*N, *M);
 }
 	/*
 	// parameter initialization

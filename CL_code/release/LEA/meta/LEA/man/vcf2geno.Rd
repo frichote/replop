@@ -3,7 +3,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Convert from \code{\link{vcf}} to \code{\link{geno}} format}
 \description{
-A function that convert from the \code{\link{vcf}} format to the \code{\link{geno}} format.
+A function that converts from the \code{\link{vcf}} format to the \code{\link{geno}} format.
 }
 \usage{
 vcf2geno(input_file, output_file = NULL)
@@ -11,18 +11,20 @@ vcf2geno(input_file, output_file = NULL)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{input_file}{
-the path for the input file (in \code{\link{vcf}} format). 
+A character string containing a path to the input file,
+a genotypic matrix in the \code{\link{vcf}} format. 
 }
   \item{output_file}{
-the path for the output file (in \code{\link{geno}} format). 
- By default, the name of the output file is the name of the input_file with .geno extension.
-
-
+A character string containing a path to the output file,
+a genotypic matrix in the \code{\link{geno}} format. 
+By default, the name of the output file is the same name 
+as the input file with a .geno extension.
 }
 }
 \value{
 \item{output_file}{
-the path for the output file.
+A character string containing a path to the output file,
+a genotypic matrix in the \code{\link{geno}} format. 
 }
 }
 \author{
@@ -39,18 +41,29 @@ the path for the output file.
 \code{\link{geno2lfmm}}
 }
 \examples{
-# creation of example.vcf
+# creation of a file called "example.vcf"
+# with 4 SNPs for 3 individuals.
 data("example_vcf")
 write.table(example_vcf,"example.vcf",col.names =
-c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", 
-  "FORMAT", "SAMPLE0", "SAMPLE1", "SAMPLE2"), 
+c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO",
+  "FORMAT", "SAMPLE0", "SAMPLE1", "SAMPLE2"),
 row.names = FALSE, quote = FALSE)
 
-# conversion from the vcf (example.vcf) to the geno (example.geno) format
+# Conversion 	from the vcf format ("example.vcf") 
+# 		to the geno format ("example.geno").
+# By default,   the name of the output file is the same name
+#               as the input file with a .geno extension.
+# Create files:	"example.geno",
+#		"example.vcfsnp" - SNP informations,
+#		"example.removed" - removed lines. 
 output = vcf2geno("example.vcf")
 
-# read of the output file
-R = read.geno("example.geno")
+# Conversion    from the vcf format ("example.vcf")
+#               to the geno format with the output file called "plop.geno".
+# Create files:	"plop.geno",
+#		"plop.vcfsnp" - SNP informations,
+#		"plop.removed" - removed lines. 
+output = vcf2geno("example.vcf", "plop.geno")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

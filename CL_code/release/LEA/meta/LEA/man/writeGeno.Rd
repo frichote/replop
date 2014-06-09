@@ -3,7 +3,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Write files in the \code{\link{geno}} format}
 \description{
-write a file in the \code{\link{geno}} format.
+Write a file in the \code{\link{geno}} format.
 }
 \usage{
 write.geno(R, output_file)
@@ -11,10 +11,11 @@ write.geno(R, output_file)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{R}{
-        A matrix containing the genotypes with one line per population and one column per allele frequency. The missing genotypes have to be encoded with the value 9.
+        A matrix containing the genotypes with one line per individuals and one column per SNPs. The missing genotypes have to be encoded with the value 9.
 }
 \item{output_file}{
-	the path for the output file (in \code{geno} format).
+A character string containing a path to the output file,
+a genotypic matrix in the \code{geno} format.
 }
 }
 \author{
@@ -31,16 +32,18 @@ write.geno(R, output_file)
 \code{\link{vcf2geno}}
 }
 \examples{
-# creation of the example.geno file
-data("example_geno")
-write.table(example_geno,"example.geno",col.names = FALSE, row.names = FALSE, quote = FALSE)
+# Creation of a genotypic matrix G with 1000 loci for 100 individuals.
+# The G matrix is composed of one individual per line and one locus per column.
+G = matrix(sample(c(0,1,2), replace=TRUE, size=1000*100), ncol=1000, nrow=100)
 
-# read of the geno file
-R = read.geno("example.geno")
+# Write G in a file called "tuto.geno".
+# Create file:	"tuto.geno".
+write.geno(G, "tuto.geno")
 
-# wite of the geno file 
-write.geno(R, "example2.geno")
+# Read the file "tuto.geno".
+G = read.geno("tuto.geno")
 }
+
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{sNMF}

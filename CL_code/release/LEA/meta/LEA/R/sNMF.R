@@ -1,7 +1,8 @@
 sNMF <- function(input_file, 
 		K, 
+	#	project = NULL,
 		alpha = 10, 
-		tol = 0.0001, 
+		tolerance = 0.00001, 
 		entropy = FALSE,
 		percentage = 0.05,
 		I, 
@@ -9,16 +10,18 @@ sNMF <- function(input_file,
 		ploidy = 2, 
 		seed = -1, 
 		num_CPU = 1, 
-		input_file.Q,
-		output_file.Q, load.Q = TRUE, 
-		output_file.G, load.G = FALSE)
+		Q_input_file,
+	#	output_files, 
+		repetitions = 1)
 {
 
         # test arguments and init
 	# input file
 	input_file = test_character("input_file", input_file, NULL)
+	# check extension and convert if necessary 
+	input_file = test_input_file(input_file, "geno")
 	# K
-	for (k in 1:lengt(K)) {
+	for (k in 1:length(K)) {
 		K[k] = test_integer("K", K[k], NULL)
 		if (K[k] <= 0)
                		stop("'K' argument has to be positive.")
@@ -28,15 +31,16 @@ sNMF <- function(input_file,
 	if (alpha < 0)
                 alpha = 0
 	# tolerance
-	tol = test_double("tol", tol, 0.0001)
-	if (tol <= 0)
-		tol = 0.0001
+	tolerance = test_double("tolerance", tolerance, 0.00001)
+	if (tolerance <= 0)
+		tolerance = 0.00001
 	# entropy
 	entropy = test_logical("entropy", entropy, FALSE)
 	# percentage
 	percentage = test_double("percentage", percentage, 0)
         if (entropy && (percentage < 0 || percentage >= 1))
                 percentage = 0.05
+
 	else if (!entropy)
 		percentage = 0
 	# iterations
@@ -56,65 +60,105 @@ sNMF <- function(input_file,
 	#ifdef windows
 		num_CPU = 1;
 	#endif
-	# Q file 
-        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.",input_file)
-        tmp = paste(tmp, K, ".Q", sep="")
-	output_file.Q = test_character("output_file.Q", output_file.Q, tmp)
-	# F file
-        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.",input_file)
-        tmp = paste(tmp, K, ".G", sep="")
-	output_file.G = test_character("output_file.G", output_file.G, tmp)
-	# load Q
-	load.Q = test_logical("load.Q", load.Q, TRUE)
-	# load F
-	load.G = test_logical("load.G", load.G, FALSE)
 	# input Q
-	input_file.Q = test_character("input_file.Q", input_file.Q, "")
+	Q_input_file = test_character("Q_input_file", Q_input_file, "")
+	# test extension
+	if (Q_input_file != "")
+		test_extension(Q_input_file, "Q")
 	# I	
 	I = test_integer("I", I, 0)
         if (I < 0)
                 stop("'I' argument has to be of type positive.")
-
-
-	# creation of the res file
-	res = new("snmfClass")
+	# repetitions
+	repetitions = test_integer("repetitions", repetitions, 1)
 	
-
-	all_ce = 0;
-	masked_ce = 0;
-    	resC = .C("R_sNMF", 
-		as.character(input_file),
-		as.integer(K),
-		as.double(alpha),
-		as.double(tol),
-		as.double(percentage),
-		as.integer(iterations),
-		as.integer(seed),
-		as.integer(ploidy),
-		as.integer(num_CPU),
-		as.character(input_file.Q),
-		as.character(output_file.Q),
-		as.character(output_file.G),
-		as.integer(I),
-		all_ce = as.double(all_ce),
-		masked_ce = as.double(masked_ce)
-	);
-
-	res = list()
-	if (load.Q) {
-		res$Q = as.matrix(read.table(output_file.Q));
-	} else {
-		res$Q = output_file.Q;
+	# project
+	if (missing(project) || (!missing(project) && is.null(project))) {
+		project = new("snmfProject")
+		project@input_file = input_file
+		tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.",input_file)	
+		tmp = paste(tmp, "snmfProject", sep="")
+		project@snmfProject_file = paste(getwd(),"/", tmp, sep="")
+		project@directory = getwd();
 	}
-	if (load.G) {
-		res$G = as.matrix(read.table(output_file.G));
-	} else {
-		res$G = output_file.G;
-	}
-	if(percentage) {
-		res$all_ce = resC$all_ce;
-		res$masked_ce = resC$masked_ce;
-	}
+	
+	for (r in 1:repetitions) {
+		for (k in K) {
+			print("*************************************");
+			p = paste("* sNMF K =",k," repetition",r,"         *");
+			print(p);
+			print("*************************************");
 
-	res
+			
+
+			re = length(which(project@K == k)) + 1
+			# Q file 
+		        base = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1",input_file)
+			# test si un run du meme nom n existe pas ?
+		        Q_output_file = paste(base,"_r", re ,".",k, ".Q", sep="")
+#			Q_output_file = test_character("Q_output_file", Q_output_file, tmp)
+			# G file
+		        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1",input_file)
+		        G_output_file = paste(tmp,"_r", re ,".",k, ".G", sep="")
+			# G_output_file = test_character("G_output_file", G_output_file, tmp)
+
+			# TODO on peut aussi tester que le fichier n est pas déjà existant 
+		        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1",input_file)
+		        snmfClass_file = paste(tmp,"_r", re ,".",k, ".snmfClass", sep="")
+
+			# creation of the res file
+			res = new("snmfClass")
+
+			all_ce = 0;
+			masked_ce = 0;
+			seed = 0;
+			n = 0;
+			L = 0;
+		    	resC = .C("R_sNMF", 
+				as.character(input_file),
+				as.integer(k),
+				as.double(alpha),
+				as.double(tolerance),
+				as.double(percentage),
+				as.integer(iterations),
+				seed = as.integer(seed),
+				as.integer(ploidy),
+				as.integer(num_CPU),
+				as.character(Q_input_file),
+				as.character(Q_output_file),
+				as.character(G_output_file),
+				as.integer(I),
+				all_ce = as.double(all_ce),
+				masked_ce = as.double(masked_ce),
+				n = as.integer(n),
+				L = as.integer(L)
+			);
+		
+			res@directory = getwd();
+			res@input_file = input_file;
+			res@snmfClass_file  = snmfClass_file;
+			res@n = resC$n;
+			res@L = resC$L;
+			res@K = as.integer(k);
+			res@CPU = as.integer(num_CPU);
+			res@seed = as.integer(resC$seed);
+			res@alpha = alpha;
+			res@percentage = percentage;
+			res@I = as.integer(I);
+			res@iterations = as.integer(iterations);
+			res@entropy = entropy;
+			res@tolerance = tolerance;
+			res@crossEntropy = resC$masked_ce;
+			res@ploidy = as.integer(ploidy);
+			res@Q_input_file = Q_input_file;
+			res@Q_output_file = Q_output_file;
+			res@G_output_file = G_output_file;
+			write.snmfClass(res, res@snmfClass_file)
+
+			project = addRun.snmfProject(project, res);
+		}
+	}
+	write.snmfProject(project, project@snmfProject_file)
+
+	return(project);
 }

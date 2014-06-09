@@ -6,8 +6,10 @@ read.geno <- function(input_file) {
                 stop("'input_file' argument is missing.")
         else if (!is.character(input_file))
                 stop("'input_file' argument has to be of type character.")
+	# check extension 
+	test_extension(input_file, "geno")
 
-	x = scan(file = "example.geno", what = "character", skip = 0, sep ="" )
+	x = scan(file = input_file, what = "character", skip = 0, sep ="" )
 
 	if(length(x) > 0) {
   		M = length(x)

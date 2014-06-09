@@ -42,6 +42,7 @@ int main (int argc, char *argv[]) {
 	double e = 0.0;
 	int I = 0;
 	double all_ce = 0, masked_ce = 0;
+	int n,L;
 
 	print_head_snmf();
 
@@ -54,9 +55,9 @@ int main (int argc, char *argv[]) {
 			output_file_Q, output_file_F, &I);
 
 	// run function
-	sNMF(input_file, K, alpha, tol, e, maxiter, seed, m, num_thrd, 
+	sNMF(input_file, K, alpha, tol, e, maxiter, &seed, m, num_thrd, 
 		input_file_Q, output_file_Q, output_file_F, I,
-		&all_ce, &masked_ce);
+		&all_ce, &masked_ce, &n, &L);
 
 	return 0;
 }

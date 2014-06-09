@@ -2,61 +2,79 @@ import(methods)
 
 useDynLib(LEA)
 
+# read and write functions
 export(read.geno)
 export(write.geno)
 export(read.lfmm)
 export(write.lfmm)
 export(read.env)
 export(write.env)
-export(read.popgeno)
-export(write.popgeno)
-
 export(read.zscore)
-export(read.dic)
 
+# conversion function
 export(geno2lfmm)
 export(lfmm2geno)
 export(ped2geno)
 export(ped2lfmm)
 export(vcf2geno)
+export(vcf2lfmm)
 export(ancestrymap2lfmm)
 export(ancestrymap2geno)
 
-exportClasses("pcaClass")
+# classes
+#exportClasses(	#pcaClass,
+		#snmfClass,
+		#snmfProject,
+#		lfmmClass,
+#		lfmmProject)
 
+# main functions
 export(createDataSet)
 export(sNMF)
-export(crossEntropy)
-
+export(crossEntropyEstimation)
 export(pca)
+# export(tracyWidom) <-- added as a method in pcaClass
+export(LFMM)
 
-exportMethods(	eigenvalues, 
-		eigenvectors,
-		sdev,
-		projections,
+# method associated with the classes
+exportMethods(	#eigenvalues,
+		#eigenvectors,
+		#sdev,
+		#projections,
 		show,
 		summary,
-		read,
-		write,
+		#read.snmfProject,
+		#write.snmfProject,
+		#read.snmfClass,
+		#write.snmfClass,
+		#read.lfmmProject,
+		#write.lfmmProject,
+		#read.lfmmClass,
+		#write.lfmmClass,
+		#write.pcaClass,
+		#read.pcaClass,
+		plot,
+		#Qvalues,
+		#Gvalues,
+		Q,
+		G,
+		#getRuns.lfmmProject,
+		#getRuns.snmfProject,
+		#addRun.lfmmProject,
+		#addRun.snmfProject,
 		zscores,
 		pvalues,
 		mlog10pvalues,
-		ecdf
+		ecdf,
+		crossEntropy,
+		lambda,
+		cFDR,
+		tracyWidom
 )
 
-export(.DollarNames.pcaClass)
+#export(.DollarNames.pcaClass)
+#export(.DollarNames.snmfClass)
+#export(.DollarNames.snmfProject)
+#export(.DollarNames.lfmmClass)
+#export(.DollarNames.snmfProject)
 
-# LFMM S4methods
-#s4method(lambda, LFMM)
-#s4method(cFDR, LFMM)
-#s4method(plot, LFMM)
-#s4method(print, LFMM)
-#s4method(summary, LFMM)
-
-# sNMF s4methods
-#s4method(crossEntropy, sNMF)
-#s4method(plot, sNMF)
-#s4method(print, sNMF)
-#s4method(summary, sNMF)
-
-export(LFMM)

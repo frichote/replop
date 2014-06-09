@@ -24,6 +24,7 @@
 #include "geno.h"
 #include "../io/io_tools.h"
 #include "../io/io_data_int.h"
+#include "register_convert.h"
 
 // lfmm2geno
 

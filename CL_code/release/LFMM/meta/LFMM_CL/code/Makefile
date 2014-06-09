@@ -16,7 +16,7 @@ MAIN = main
 
 ### SOURCES FILES ####
 SRC_LAPACK = $(wildcard $(SRC)/lapack/*.c)
-SRC_TOOLS = $(wildcard $(SRC)/matrix/*.c) $(wildcard $(SRC)/io/*.c) $(wildcard $(SRC)/student/*.c)
+SRC_TOOLS = $(wildcard $(SRC)/matrix/*.c) $(wildcard $(SRC)/io/*.c) $(wildcard $(SRC)/stats/*.c)
 SRC_convert = $(wildcard $(SRC)/convert/*.c) $(SRC_TOOLS) 
 SRC_LFMM = $(wildcard $(SRC)/LFMM/*.c) $(SRC_TOOLS)
 SRC_pca = $(wildcard $(SRC)/pca/*.c) $(SRC_TOOLS)

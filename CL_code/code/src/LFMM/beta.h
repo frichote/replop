@@ -92,11 +92,12 @@ void update_beta(double *C, float *dat, double *U, double *V, double *beta,
  *
  * @param beta	the beta realization (of size KxM)
  * @param alpha_beta	the output vector of hyperparameters for beta (of size K)
- * @param epsilon	epsilon constant
+ * @param noiseepsilon	beta 0 epsilon constant
+ * @param b_epsilon	beta 1 epsilon constant
  * @param D	the number of individuals
  * @param M	the number of loci
  */
-void update_alpha_beta(double *beta, double *alpha_beta, double epsilon,
-		       int D, int M);
+void update_alpha_beta(double *beta, double *alpha_beta, double noise_epsilon,
+			double b_epsilon, int D, int M);
 
 #endif // BETA_H

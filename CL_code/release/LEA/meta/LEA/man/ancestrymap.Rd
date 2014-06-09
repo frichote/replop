@@ -4,12 +4,20 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{\code{ancestrymap} format description}
 \description{
-description of the \code{ancestrymap} format. 
+Description of the \code{ancestrymap} format. The \code{ancestrymap} format 
+can be used as an input format for genotypic matrices in the functions 
+\code{\link{pca}}, \code{\link{LFMM}} and \code{\link{sNMF}}.
 }
 \details{
-The \code{ancestrymap} format has one row for each genotype. Each row has 3 columns: the 1st column is the SNP name, the 2nd column is the sample ID, the 3rd column is th number of alleles. It is assumed that the genotypes for a given SNP name are written in consecutive lines. It is also assumed that the genotypes for a set of individuals are given in the same order as lines. The number of alleles can be the number of reference alleles or the number of derived alleles as long as it is the same choice for an entire SNP. It is assumed that the missing genotypes are encoded with the value 9.
+The \code{ancestrymap} format has one row for each genotype. Each row has 3 
+columns: the 1st column is the SNP name, the 2nd column is the sample ID, 
+the 3rd column is th number of alleles. Genotypes for a given SNP name 
+are written in consecutive lines. The number of alleles can be the number 
+of reference alleles or the number of derived alleles. Missing genotypes 
+are encoded by the value 9.
 
-Here is an example with 3 individuals and 4 SNPs:
+Here is an example of a genotypic matrix using the 
+ancestrymap format with 3 individuals and 4 SNPs:
 \preformatted{
 rs0000	SAMPLE0	1
 rs0000	SAMPLE1	1

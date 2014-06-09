@@ -4,6 +4,8 @@ createDataSet <- function(input_file, output_file, ploidy = 2, seed = -1, percen
 	# test arguments and init
 	# input file
 	input_file = test_character("input_file", input_file, NULL)
+	# check extension and convert if necessary
+	input_file = test_input_file(input_file, "geno")
 	# output file	
 	tmp = sub("([^.]+)\\.[[:alnum:]]+$", "\\1_I.geno",input_file)
 	output_file = test_character("output_file", output_file, tmp)

@@ -8,6 +8,8 @@ ancestrymap2geno <- function(	input_file,
 		stop("'input_file' argument is missing.")
 	else if (!is.character(input_file))
 		stop("'input_file' argument has to be of type character.")
+	# check the extension
+	test_extension(input_file, "ancestrymap");
 	# output file	
 	if (!missing(output_file) && !is.character(output_file))
 		stop("'output_file' argument has to be of type character.")

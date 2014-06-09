@@ -22,6 +22,7 @@
 #include <time.h>
 #include <math.h>
 #include "convert/ancestrymap.h"
+#include "convert/register_convert.h"
 
 #include "R_ancestrymap2geno.h" 
 
@@ -31,6 +32,9 @@ void R_ancestrymap2geno (char** R_input_file, char **R_output_file, int *N, int 
 			*R_output_file,
 			N,
 			M);
+
+        print_convert(*N, *M);
+
 }
 	/*
 	// parameter initialization

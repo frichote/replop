@@ -215,8 +215,8 @@ void update_beta(double *C, float *dat, double *U, double *V, double *beta,
 
 // update_alpha_beta
 
-void update_alpha_beta(double *beta, double *alpha_beta, double epsilon,
-		int D, int M)
+void update_alpha_beta(double *beta, double *alpha_beta, double noise_epsilon, 
+	double b_epsilon, int D, int M)
 {
 	//a = 1 + M/2;
 	int d;
@@ -230,9 +230,9 @@ void update_alpha_beta(double *beta, double *alpha_beta, double epsilon,
 	//dble_sum2(beta,D,M,bb,1); // beta(K,M)
 
 	// update alpha_beta
-	alpha_beta[0] = rand_gamma(a+.0001, 1.0/(double)(bb[0]+.0001));
+	alpha_beta[0] = rand_gamma(a+ noise_epsilon, 1.0/(double)(bb[0]+ noise_epsilon));
 	for (d = 1; d < D; d++)
-		alpha_beta[d] = rand_gamma(a + epsilon, 1.0 / (double)(bb[d] + epsilon));
+		alpha_beta[d] = rand_gamma(a + b_epsilon, 1.0 / (double)(bb[d] + b_epsilon));
 
 	// free memory
 	free(bb);

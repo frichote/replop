@@ -11,17 +11,20 @@ ped2geno(input_file, output_file = NULL)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{input_file}{
-the path for the input file (in \code{\link{ped}} format). 
+a character string containing a path to the input file,
+a genotypic matrix in the \code{\link{ped}} format. 
 }
   \item{output_file}{
-the path for the output file (in \code{\link{geno}} format). 
-By default, the name of the output file is the name of the input_file with .geno extension.
-
+a character string containing a path to the output file,
+a genotypic matrix in the \code{\link{geno}} format. 
+By default, the name of the output file is the same name 
+as the input file with a .geno extension.
 }
 }
 \value{
 \item{output_file}{
-the path for the output file.
+a character string containing a path to the output file,
+a genotypic matrix in the \code{\link{geno}} format. 
 }
 }
 \author{
@@ -38,15 +41,23 @@ the path for the output file.
 \code{\link{lfmm2geno}}
 }
 \examples{
-# creation of example.ancestrymap
+# Creation of a file called "example.ped"
+# with 4 SNPs for 3 individuals.
 data("example_ped")
-write.table(example_ped,"example.ped",col.names = FALSE, row.names = FALSE, quote = FALSE)
+write.table(example_ped,"example.ped",
+	col.names = FALSE, row.names = FALSE, quote = FALSE)
 
-# conversion from the ped (example.ped) to the geno (example.geno) format
+# Conversion 	from the ped format ("example.ped") 
+#		to the geno format ("example.geno").
+# By default, 	the name of the output file is the same name 
+#		as the input file with a .geno extension.
+# Create file:	"example.geno".
 output = ped2geno("example.ped")
 
-# read of the output file
-read.geno("example.geno")
+# Conversion 	from the ped format ("example.ped") 
+#		to the geno format with the output file called "plop.geno".
+# Create file:	"plop.geno".
+output = ped2geno("example.ped", "plop.geno")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

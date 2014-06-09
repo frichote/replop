@@ -10,17 +10,21 @@ ancestrymap2geno(input_file, output_file = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{input_file}{
-the path for the input file (in \code{\link{ancestrymap}} format). 
+\item{input_file}{
+	A character string containing a path to the input file,
+	a genotypic matrix in the \code{\link{ancestrymap}} format. 
 }
   \item{output_file}{
-the path for the output file (in \code{\link{geno}} format). 
-By default, the name of the output file is the name of the input_file with .geno extension.
+	A character string containing a path to the output file,
+	a genotypic matrix in the \code{\link{geno}} format. 
+	By default, the name of the output file is the same name 
+	as the input file with a .geno extension.
 }
 }
 \value{
 \item{output_file}{
-the path for the output file.
+	A character string containing a path to the output file,
+	a genotypic matrix in the \code{\link{geno}} format. 
 }
 }
 \author{
@@ -38,15 +42,23 @@ the path for the output file.
 \code{\link{lfmm2geno}}
 }
 \examples{
-# creation of example.ancestrymap
+# Creation of of file called "example.ancestrymap"
+# a file containing 4 SNPs for 3 individuals.
 data("example_ancestrymap")
-write.table(example_ancestrymap,"example.ancestrymap",col.names = FALSE, row.names = FALSE, quote = FALSE)
+write.table(example_ancestrymap,"example.ancestrymap",
+col.names = FALSE, row.names = FALSE, quote = FALSE)
 
-# conversion from the ancestrymap (example.ancestrymap) to the geno (example.geno) format
+# Conversion 	from the ancestrymap format ("example.ancestrymap") 
+#		to the geno format ("example.geno"). 
+# By default,   the name of the output file is the same name
+#               as the input file with a .geno extension.
+# create file:	example.geno
 output = ancestrymap2geno("example.ancestrymap")
 
-# read of the output file
-R = read.geno("example.geno")
+# Conversion    from the ancestrymap format (example.ancestrymap) 
+#               to the geno format with the output file called plop.geno.
+# Create file:	plop.geno
+output = ancestrymap2geno("example.ancestrymap", "plop.geno")
 }
 \keyword{format}
 \keyword{sNMF}

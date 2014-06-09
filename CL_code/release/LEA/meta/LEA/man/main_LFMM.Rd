@@ -6,25 +6,31 @@
 \code{\link{LFMM}} is used to fit Latent Factor Mixed Models.
 }
 \usage{
-LFMM (	input_file, variable_file, K, nd, all = FALSE, 
-	output_file, missing_data = FALSE, 
+LFMM (	input_file, variable_file, K, project, d, 
+	all = FALSE, output_file, missing_data = FALSE, 
 	num_CPU = 1, num_iterations = 1000, num_burnin = 100, 
-	seed = -1, DIC_file)
+	seed = -1, repetitions = 1, epsilon_noise = 1e-3, 
+	epsilon_b = 1000, random_init = TRUE)
 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{input_file}{
-	the path for the genotype input file (in \code{\link{lfmm}} format).
+A character string containing a path to the input file,
+a genotypic matrix in the \code{\link{lfmm}} format.
 }
 \item{variable_file}{
-	the path for the variable input file (in \code{\link{env}} format).
+A character string containing a path to the environmental file,
+an environmental data matrix in the \code{\link{env}} format.
 }
 \item{K}{
-	the number of latent factors. Several methods to choose \code{K} are described in the tutorial, \code{\link{tuto}}. Check the references for more informations.
+	an integer corresponding to the number of latent factors. 
 }
-\item{nd}{
-	fit \code{LFMM} with the \code{nd}-th variable only from \code{variable_file}. By default (if NULL and all is FALSE), fit \code{LFMM} with each variable from \code{variable_file} sequentially and independently.
+\item{project}{
+        current project of class \code{\link{lfmmProject}}.
+}
+\item{d}{
+	an integer corresponding to the fit \code{LFMM} with the \code{d}-th variable only from \code{variable_file}. By default (if NULL and all is FALSE), fit \code{LFMM} with each variable from \code{variable_file} sequentially and independently.
 }
 \item{all}{
 	a boolean option. If true, fit \code{LFMM} with all variables from \code{variable_file} at the same time. This option is not compatible with \code{nd} option. 
@@ -48,16 +54,25 @@ computer. By default, the number of CPUs is 1.
 }
 #endif
 \item{num_iterations}{
-	the number of total iterations in the Gibbs Sampling algorithm.
+	the total number of iterations in the Gibbs Sampling algorithm.
 }
 \item{num_burnin}{
-	the number of burnin iterations in the Gibbs Sampling algorithm.
+	the burnin number of iterations in the Gibbs Sampling algorithm.
 }
 \item{seed}{
 	the seed to initialize the randomization. By default, the seed is randomly chosen.
 }
-\item{DIC_file}{
-	the path for the file containing the DIC and the deviance criterion. By default, the name of the DIC file is the name of the input file with .dic extension.
+\item{repetitions}{
+	the number of repetitions of each run.
+}
+\item{epsilon_noise}{
+	 prior on the different variances.
+}
+\item{epsilon_b}{
+	prior on the variance of the correlation coefficients.
+}
+\item{random_init}{
+	a boolean option. If true, the Gibbs Sampler is initiliazed randomly. Otherwise, it is initialized with zeros.
 }
 }
 \value{
@@ -82,12 +97,23 @@ computer. By default, the number of CPUs is 1.
 Frichot E, Schoville SD, Bouchard G, Francois O. (2013). \emph{Testing for associations between loci and environmental gradients using latent factor mixed models}. Molecular biology and evolution, 30(7), 1687-1699.
 }
 \examples{
-# creation of the example file
-#data(tuto)
-#write.lfmm(R, "tuto.lfmm")
-#write.env(C, "tuto.env")
+# creation of an example
+n = 10
+L = 100
+D = 2
+R = matrix(sample(c(0,1,2), replace=TRUE, size=n*L), ncol=L)
+X = matrix(runif(n*D), ncol=2)
+write.lfmm(R, "example.lfmm")
+write.env(X, "example.env")
 
-#res = LFMM("tuto.lfmm", "tuto.env", 2)
+# LFMM run
+res = LFMM("example.lfmm", "example.env", K=1)
+res = LFMM("example.lfmm", "example.env", K=1, res, all=TRUE)
+res = LFMM("example.lfmm", "example.env", K=1, res, d = 2)
+res = LFMM("example.lfmm", "example.env", K=2:3, res)
+
+summary(res)
+plot(res)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

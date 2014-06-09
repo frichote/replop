@@ -8,6 +8,7 @@
 #define GENO2LFMM_H
 
 #include <stdint.h>
+#include "register_convert.h"
 
 /**
  * convert a file from geno to lfmm format and count the number of lines (M)

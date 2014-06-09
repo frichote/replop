@@ -12,24 +12,31 @@ createDataSet (input_file, output_file, ploidy = 2, seed = -1, percentage = 0.05
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{input_file}{
-	the path for the genotype input file (in \code{\link{geno}} format).
+	A character string containing a path to the input file,
+	a genotypic matrix in the \code{\link{geno}} format.
 }
 \item{output_file}{
-	the path for the output file (in \code{\link{geno}} format). The output file is the input file with some masked genotypes. By default, the name of the output file is the name of the input file with extension _I.geno.
+	A character string containing a path to the output file,
+	a genotypic matrix in the \code{\link{geno}} format. 
+	The output file is the input file with masked genotypes. 
+	By default, the name of the output file is the sane name as 
+	the input file with a _I.geno extension.
 }
 \item{ploidy}{
 	1 if haploid, 2 if diploid, n if n-ploid.
 }
 \item{seed}{
-	the seed to initialize the randomization. By default, the seed is randomly chosen.
+	A seed to initialize the random number generator. 
+	By default, the seed is randomly chosen.
 }
 \item{percentage}{
-	the percentage of masked genotypes. 
+	A numeric value between 0 and 1 containing the percentage of masked genotypes.  
 }
 }
 \value{
 \item{output_file}{
-the path for the output file.
+	A character string containing a path to the output file,
+	a genotypic matrix in the \code{\link{geno}} format. 
 }
 }
 \author{
@@ -42,11 +49,13 @@ the path for the output file.
 }
 \examples{
 # creation of tuto.geno
+# A file containing 10000 SNPs for 50 individuals.
+# Individuals are clustered in 3 non-admixed populations.
 data("tuto")
-#write.geno(R, "tuto.geno")
+write.geno(R, "tuto.geno")
 
 # creation of the masked data file
-#output = createDataSet("tuto.geno")
+output = createDataSet("tuto.geno")
 }
 % R documentation directory.
 \keyword{sNMF}

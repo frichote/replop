@@ -86,7 +86,7 @@ void print_help_lfmm()
 // print_summary
 
 void print_summary_lfmm(int N, int M, int K, int D, int d, int Niter, int burn,
-                   int m, char *output, char *input, char *cov_file, char *dev_file,
+                   int m, char *output, char *input, char *cov_file, 
                    int num_thrd, long long s, int all)
 {
 
@@ -111,8 +111,6 @@ void print_summary_lfmm(int N, int M, int K, int D, int d, int Niter, int burn,
                 printf("        -a (all variable at the same time)\n");
         if (m)
                 printf("        -m (missing data)                 \n");
-
-                printf("        -C (DIC file)                   %s\n",dev_file);
 
         printf("\n");
 }

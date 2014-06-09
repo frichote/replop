@@ -26,9 +26,9 @@
 #include "R_sNMF.h" 
 
 void R_sNMF (char** R_genotype_file, int* R_K, double* R_alpha, double* R_tol, double* R_percentage,
-	int* R_iteration, int* R_seed, int* R_ploidy, int* R_num_proc, 
+	int* R_iteration, long long* R_seed, int* R_ploidy, int* R_num_proc, 
 	char** R_input_file_Q, char** R_output_file_Q, char** R_output_file_G, int* I,
-	double *all_ce, double *masked_ce) 
+	double *all_ce, double *masked_ce, int *n, int *L) 
 {
 	sNMF(	*R_genotype_file,
 		*R_K,
@@ -36,7 +36,7 @@ void R_sNMF (char** R_genotype_file, int* R_K, double* R_alpha, double* R_tol, d
 		*R_tol,
 		*R_percentage,
 		*R_iteration,
-		(long long) (*R_seed),
+		R_seed,
 		*R_ploidy,
 		*R_num_proc,
 		*R_input_file_Q,
@@ -44,7 +44,9 @@ void R_sNMF (char** R_genotype_file, int* R_K, double* R_alpha, double* R_tol, d
 		*R_output_file_G,
 		*I,
 		all_ce,
-		masked_ce);
+		masked_ce,
+		n,
+		L);
 }	
 /*
 	//parameters initialization

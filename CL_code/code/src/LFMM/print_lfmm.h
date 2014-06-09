@@ -41,13 +41,12 @@ void print_help_lfmm();
  * @param output 	output file
  * @param input		genotype file
  * @param cov_file	covariable file
- * @param dev_file	DIC file
  * @param num_thrd	number of processes in parallel in the GS
  * @param s  	seed value
  * @param all 	true if all variables at the same time
  */
 void print_summary_lfmm(int N, int M, int K, int D, int d, int Niter, int burn,
-		   int m, char *output, char *input, char *cov_file, char *dev_file,
+		   int m, char *output, char *input, char *cov_file, 
 		   int num_thrd, long long s, int all);
 
 /**

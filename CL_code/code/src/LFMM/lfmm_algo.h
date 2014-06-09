@@ -24,7 +24,9 @@
  * @param M     the number of loci
  * @param K     the number of latent factors
  * @param D     the number of covariables
- * @param epsilon       epsilon constant
+ * @param noise_epsilon prior for the different variances
+ * @param b_epsilon     prior for the correlation coefficient variance
+ * @param init          if true, random init. Otherwise, init with zeros.
  * @param Niter the number of iterations
  * @param burn  the number of burnin
  * @param missing_data	true if missing data
@@ -36,7 +38,8 @@
 void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
 		double *U, double *V, double *alpha_beta, double *alpha_R,
 		double *alpha_U, int N, int M, int K, int D,
-		double epsilon, int Niter, int burn, int missing_data,
+		double noise_epsilon, double b_epsilon, int init, 
+		int Niter, int burn, int missing_data,
 		int num_thrd, double *dev, double *DIC, double *perc_var);
 
 /**

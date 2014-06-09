@@ -11,17 +11,20 @@ ancestrymap2lfmm(input_file, output_file = NULL)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{input_file}{
-the path for the input file (in \code{\link{ancestrymap}} format). 
+A character string containing a path to the input file, 
+a genotypic matrix in the \code{\link{ancestrymap}} format. 
 }
 \item{output_file}{
-the path for the output file (in \code{\link{lfmm}} format). 
-By default, the name of the output file is the name of the input_file with .lfmm extension.
-
+A character string containing a path to the output file,
+a genotypic matric in the \code{\link{lfmm}} format. 
+By default, the name of the output file is the same name 
+as the input file with a .lfmm extension.
 }
 }
 \value{
 \item{output_file}{
-the path for the output file.
+A character string containing a path to the output file,
+a genotypic matric in the \code{\link{lfmm}} format. 
 }
 }
 \author{
@@ -41,15 +44,25 @@ the path for the output file.
 
 
 \examples{
-# creation of example.ancestrymap
+# Creation of a file called "example.ancestrymap"
+# containing 4 SNPs for 3 individuals.
 data("example_ancestrymap")
-write.table(example_ancestrymap,"example.ancestrymap",col.names = FALSE, row.names = FALSE, quote = FALSE)
+write.table(example_ancestrymap,"example.ancestrymap",
+col.names = FALSE, row.names = FALSE, quote = FALSE)
 
-# conversion from the ancestrymap (example.ancestrymap) to the lfmm (example.lfmm) format
+# Conversion 	from the ancestrymap format ("example.ancestrymap") 
+#		to the lfmm format ("example.lfmm").
+# By default,   the name of the output file is the same name
+#               as the input file with a .lfmm extension.
+# Create file:	"example.lfmm".
 output = ancestrymap2lfmm("example.ancestrymap")
-
-# read of the output file
-R = read.lfmm("example.lfmm")
+                        
+# Conversion 	from the ancestrymap format ("example.ancestrymap") 
+#		to the geno format ("example.geno").
+# By default,   the name of the output file is the same name
+#               as the input file with a .geno extension.
+# Create file:	"example.geno".
+output = ancestrymap2geno("example.ancestrymap")
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

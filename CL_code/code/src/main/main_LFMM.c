@@ -43,6 +43,9 @@ int main(int argc, char *argv[])
         char dev_file[512] = "";
 	long long seed = -1;
 	double dev, dic;
+	double noise_epsilon = 1e-3;
+	double b_epsilon = 1000;
+	int init = 1; 
 
 	// print
 	print_head_lfmm();
@@ -50,12 +53,13 @@ int main(int argc, char *argv[])
 
 	// analyse of the command line
 	analyse_param_lfmm(argc, argv, &nd, &K, &Niter, &burn,
-		      &missing_data, output_file, input_file, cov_file, dev_file,
+		      &missing_data, output_file, input_file, cov_file,
 		      &num_thrd, &seed, &all);
 
 	// run function
-	LFMM(input_file, output_file, cov_file, dev_file, &n, &L, &D, nd, K,
-		Niter, burn, num_thrd, &seed, missing_data, all, &dic, &dev);
+	LFMM(input_file, output_file, cov_file, &n, &L, &D, nd, K,
+		Niter, burn, num_thrd, &seed, missing_data, all, &dic, &dev,
+		noise_epsilon, b_epsilon, init);
 
 	return 0;
 }

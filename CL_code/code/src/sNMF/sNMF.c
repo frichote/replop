@@ -36,8 +36,8 @@
 #include "../crossEntropy/crossEntropy.h"
 
 void sNMF(char* input_file, int K, double alpha, double tol, double e, int maxiter, 
-	long long seed, int m, int num_thrd, char* input_file_Q, char* output_file_Q, 
-	char* output_file_F, int I, double *all_ce, double *masked_ce) {
+	long long* seed, int m, int num_thrd, char* input_file_Q, char* output_file_Q, 
+	char* output_file_F, int I, double *all_ce, double *masked_ce, int *n, int *L) {
 	
 	//parameters initialization
 
@@ -56,7 +56,7 @@ void sNMF(char* input_file, int K, double alpha, double tol, double e, int maxit
 	char data_file[512];
 
 	//  random init
-	init_random(&seed);
+	init_random(seed);
 
 	// fix the number of possible factors 
 	if (m)
@@ -68,10 +68,13 @@ void sNMF(char* input_file, int K, double alpha, double tol, double e, int maxit
 	N = nb_cols_geno(input_file);
 	M = nb_lines(input_file, N);
 
+	*n = N;
+	*L = M;
+
 	if (I == -1) 
 		I = imin(10000, M/10);
 	// write command line summary
-        print_summary_snmf(N, M, m, seed, K, alpha, tol, maxiter, 
+        print_summary_snmf(N, M, m, *seed, K, alpha, tol, maxiter, 
 		input_file, num_thrd, e, input_file_Q, output_file_Q, 
 		output_file_F, I);
 

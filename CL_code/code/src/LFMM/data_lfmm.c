@@ -32,25 +32,58 @@
 #include "thread_var.h"
 # endif
 
+// quantiles
+
+void quantiles(double *dist, double *prob, int n, int p, double *res)
+{
+        int *index = (int *) calloc(n, sizeof(int));
+	int j, jm, jp;
+
+	sort_index(dist, index, n);
+	for (j = 0; j < p; j++) {
+		jm = floor(n*prob[j]);
+		jp = ceil(n*prob[j]);
+		res[j] = (dist[index[jm]] + dist[index[jp]]) / 2;
+	}
+
+	free(index);
+}
+
 // lambda
 
 double lambda(double *p, int n)
 {
 	//  qchisq(.5, df=1)/ median(qchisq(p.values, df=1))
-	double dot5 = 0.4549364;
-	double *qchisq = (double *) calloc(n, sizeof(double));
+	// double dot5 = 0.4549364;
+	double *qchisq = (double *) calloc(41, sizeof(double));
 	int i;
+	double *pp = (double *) calloc(41, sizeof(double));
+	double *q = (double *) calloc (41, sizeof(double));
+	double *dist = (double *) calloc (n, sizeof(double));
 	double res;
 
-	for (i = 0; i < n; i++) {
-		qchisq[i] = quantile_Gamma_Distribution(p[i], .5);
+	pp[0] = 0.5;
+	for(i = 1; i < 41; i++)
+		pp[i] = pp[i-1] + 0.01;
+
+	for(i = 0; i < n; i++)
+		dist[i] = p[i]*p[i];
+
+	quantiles(dist, pp, n, 41, q);
+	print_data_double(q, 1, 41);
+
+	for (i = 0; i < 41; i++) {
+		qchisq[i] = q[i] / quantile_Gamma_Distribution(pp[i], .5);
 	}
 
-	res = median(qchisq,n);	
+	res = median(qchisq,41);	
 
 	free(qchisq);
+	free(pp);
+	free(q);
+	free(dist);
 
-	return dot5 / res;
+	return res;
 }
 
 // pvalue_qvalue
@@ -69,7 +102,6 @@ void pvalue_qvalue(double *pvalues, double *qvalues, int n)
 		if (qvalues[index[i]] > 1.0)
 			qvalues[index[i]] = 1.0;
 	}
-
 	free(index);
 }
 
@@ -210,10 +242,12 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 			// pvalue_qvalue(pvalues, qvalues, M);
 
 			// calculate lambda
+			/*
 			l = lambda(pvalues, M);
 			printf("\tLambda for variable %d:\t%3.5G\n\n", d+1, l);
 			// write in file
         		fprintf(file_dic, "lambda_v%d\t\t%3.5G\n", d + 1, l);
+			*/
 			// write file name 
 			snprintf(zscore_file, 512, "%s_a%d.%d.zscore", output_file,d+1,K);
 			// and write 
@@ -226,7 +260,7 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 			}
 			fclose(file);
 			printf("\tThe zscores for variable %d are registered in:\n \t\t%s.\n"
-			"\tThe columns are: zscores, -log10(p-values), p-values, -log10(q-values), q-values.\n"
+			"\tThe columns are: zscores, -log10(p-values), p-values.\n"
 				"\n", d+1, zscore_file);
 			printf("\t-------------------------\n");
 		}
@@ -261,10 +295,12 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 			"\n", dic_file);
 
 		// calculate lambda
+		/*
 		l = lambda(pvalues, M);
 		printf("\t-------------------------\n");
 		printf("\tLambda for variable %d:\t%3.5G\n\n", nd + 1, l);
         	fprintf(file_dic, "lambda_v%d\t\t%3.5G\n", nd + 1, l);
+		*/
 		// write percentage
 		/*
 		for (d = 0; d < D+1; d++)
@@ -287,7 +323,7 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 		}
 		fclose(file);
 		printf("\tThe zscores for variable %d are registered in:\n \t\t%s.\n"
-			"\tThe columns are: zscores, -log10(p-values), p-values, -log10(q-values), q-values.\n"
+			"\tThe columns are: zscores, -log10(p-values), p-values.\n"
 			"\n", nd+1, zscore_file);
 		printf("\t-------------------------\n");
 	}

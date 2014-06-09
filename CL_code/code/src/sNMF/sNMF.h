@@ -25,10 +25,12 @@
  * @param I		initialization of Q with I SNPs
  * @param all_ce	cross-entropy of all data
  * @param masked_ce	cross-entropy of masked data
+ * @param n		number of individuals
+ * @param L		number of loci
  */
 
 void sNMF(char* input_file, int K, double alpha, double tol, double e, int maxiter, 
-	long long seed, int m, int num_thrd, char* input_file_Q, char* output_file_Q, 
-	char* output_file_F, int I, double *all_ce, double *masked_ce);
+	long long* seed, int m, int num_thrd, char* input_file_Q, char* output_file_Q, 
+	char* output_file_F, int I, double *all_ce, double *masked_ce, int *n, int *L);
 
 #endif // SNMF_H

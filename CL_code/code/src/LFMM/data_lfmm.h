@@ -9,6 +9,16 @@
 
 #include "../matrix/data.h"
 
+/** calculates the quantiles of dist for prob into
+ *
+ * @param dist  probability distribution
+ * @param prob	probability for the quantiles
+ * @param n	size of dist
+ * @param p	size of prob
+ * @param res	output quantiles
+*/
+void quantiles(double *dist, double *prob, int n, int p, double *res);
+
 /** calculate lambda criterion of a p.values distribution
  *
  * @param p	p values set

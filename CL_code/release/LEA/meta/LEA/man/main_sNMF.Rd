@@ -1,76 +1,89 @@
 \name{sNMF}
 \alias{sNMF}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Fitting the admixture coefficients}
+\title{Estimates individual ancestry coefficients and ancestral allele frequencies.}
 \description{
-\code{\link{sNMF}} is used to fit the admixture coefficients using the sparse Non-Negative Matrix Factorization.
+\code{\link{sNMF}} estimates admixture coefficients using sparse Non-Negative 
+	Matrix Factorization algorithms, and provide STRUCTURE-like outputs.
 }
 \usage{
-sNMF (input_file, K, 
-      alpha = 10, tol = 0.0001, entropy = FALSE, percentage, I,
+sNMF (input_file, K, project, 
+      alpha = 10, tolerance = 0.00001, entropy = FALSE, percentage = 0.05, I,
       iterations = 200, ploidy = 2, seed = -1, num_CPU = 1,
-      input_file.Q,
-      output_file.Q, load.Q = TRUE,
-      output_file.G, load.G = FALSE)
+      Q_input_file, Q_output_file, G_output_file, repetitions = 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{input_file}{
-	the path for the genotype input file (in \code{\link{geno}} format).
+	A character string containing a the path to the input file, a genotypic 
+	matrix in the \code{\link{geno}} format.
 }
 \item{K}{
-	the number of ancestral populations.
+	An integer vector corresponding to the number of ancestral populations for which
+	the snmf algorithm estimates have to be calculated.
+}
+\item{project}{
+	current project of class \code{\link{snmfProject}}.
 }
 \item{alpha}{
-	the regularization parameter. The results can depend on the value of this parameter, especially for small data sets. Please, check the references for more informations.
+	A numeric value corresponding to the snmf regularization parameter. 
+	The results can depend on the value of this parameter, especially for 
+	small data sets. 
 }
-\item{tol}{
-	the tolerance error.
+\item{tolerance}{
+	A numeric value for the tolerance error.
 }
 \item{entropy}{
-	a boolean option. If true, the cross-entropy criterion is calculated (see \code{\link{createDataSet}} and \code{\link{crossEntropy}}).
+	A boolean value. If true, the cross-entropy criterion is calculated 
+	(see \code{\link{createDataSet}} and \code{\link{crossEntropy}}).
 }
 \item{percentage}{
-	the percentage of masked genotypes to calculate the cross-entropy criterion. This option is useful only if \code{entropy} = TRUE (see \code{\link{crossEntropy}}).
+	A numeric value between 0 and 1 containing the percentage of 
+	masked genotypes when computing the cross-entropy 
+	criterion. This option applies only if \code{entropy == TRUE} 
+	(see \code{\link{crossEntropy}}).
 }
 \item{I}{
 	the number of SNPs to initialize the algorithm. It starts the algorithm with a run of sNMF using a subset of nb_SNPs random SNPs. If this option is set with nb\_SNPs, the number of randomly chosen SNPs is the minimum between 10000 and 10 \% of all SNPs. This option can considerably speeds up sNMF estimation for very large data sets.
 }
 \item{iterations}{
-	the maximum number of iterations in algorithm. The algorithm should not go until the maximum number of iterations. The stopping criterion should depend on the tolerance error only.
+	An integer for the maximum number of iterations in algorithm. 
 }
 \item{ploidy}{
 	1 if haploid, 2 if diploid, n if n-ploid.
 }
 \item{seed}{
-	the seed to initialize the randomization. By default, the seed is randomly chosen.
+	A seed to initialize the random number generator. 
+	By default, the seed is randomly chosen.
 }
 #ifndef windows
 \item{num_CPU}{
-	the number of CPUs that you choose to use if you run the algorithm in parrallel. Be careful,
-the number of CPUs has to be lower or equal than the number of physical processes available on your
-computer. By default, the number of CPUs is 1.
+	A number of CPUs to run the parallel version of the 
+	algorithm. By default, the number of CPUs is 1.
 }
 #endif
 #ifdef windows
 \item{num_CPU}{
-	the windows version is not parallelized. By consequence, num_CPU is always set to 1.
+	The windows version is not parallelized. By consequence, 
+	num_CPU is always 1.
 }
 #endif
-\item{input_file.Q}{
-	the path for an initialization file for Q, the individual admixture coefficients.
+\item{Q_input_file}{
+	A character string containing a path to an initialization file for Q, 
+	the individual admixture coefficient matrix.
 }
-\item{output_file.Q}{
-	the path for the output file with the ancestry coefficients. By default, the name of the output file is the name of the input file with .K.Q extension.
+\item{Q_output_file}{
+	A character string containing a path to the output ancestry coefficient 
+	matrix Q . By default, the name of the output file is the same name as the 
+	input file with a .K.Q extension.
 }
-\item{load.Q}{
-	the boolean option. If true, load the ancestry coefficients in R. Else, return the path for the output file with the ancestry coefficients. 
+\item{G_output_file}{
+	A character string containing a path to the output ancestral genotype 
+	frequency matrix G. By default, the name of the output file is the same name 
+	as the input file with a .K.G extension.
 }
-\item{output_file.G}{
-	the path for the output file with the ancestral genotype frequencies. By default, the name of the output file is the name of the input file with .K.G extension.
-}
-\item{load.G}{
-	a boolean option. If true, load the ancestral genotype frequencies in R. Else, return the path for the output file with the ancestral genotype frequencies. 
+\item{repetitions}{
+	an integer corresponding with the number of repetitions for each value of \code{K}.
 }
 }
 \value{
@@ -102,14 +115,24 @@ Frichot E, Mathieu F, Trouillon T, Bouchard G, Francois O. (2014). \emph{Fast an
 }
 \examples{
 # creation of the example file
-#data(tuto)
-#write.geno(R, "tuto.geno")
+data(tuto)
+write.geno(R, "tuto.geno")
 
 # run of sNMF
-#res = sNMF("tuto.geno", 3)
+project = sNMF("tuto.geno", 3)
+project = sNMF("tuto.geno",1, entropy = TRUE, project)
+project = sNMF("tuto.geno",2, entropy = TRUE, project)
+project = sNMF("tuto.geno",3, entropy = TRUE, project)
 
-# display
-#barplot(t(res$Q),col=c("red", "green", "blue"))
+# Project
+plot(res, lwd = 5, col = "red", pch=1)
+summary(res)
+p = getRuns.snmfProject(res,c(2,1))
+addRun.snmfProject(res, p[[1]])
+getCrossEntropy(res, 3)
+show(res)
+write.snmfProject(res, "tmp.snmfProject")
+res = read.snmfProject("tmp.snmfProject")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -4,12 +4,15 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{\code{vcf} format description}
 \description{
-description of the \code{vcf} format. 
+Description of the \code{vcf} format. 
+The \code{vcf} format can be used as an input format 
+for genotypic matrices in the functions \code{\link{sNMF}},
+\code{\link{LFMM}}, and \code{\link{pca}}. 
 }
 \details{
 The vcf format is described \href{http://www.1000genomes.org/wiki/Analysis/Variant\%20Call\%20Format/vcf-variant-call-format-version-41}{here}.
 
-Here is an example with 3 individuals and 4 SNPs:
+Here is an example of a genotypic matrix using the vcf format with 3 individuals and 4 loci: 
 \preformatted{
 ##fileformat=VCFv4.1 
 ##FORMAT=<ID=GM,Number=1,Type=Integer,Description="Genotype meta"> 
@@ -30,6 +33,7 @@ Here is an example with 3 individuals and 4 SNPs:
 }
 \seealso{
 \code{\link{vcf2geno}}
+\code{\link{vcf2lfmm}}
 \code{\link{geno}}
 \code{\link{lfmm}}
 \code{\link{ped}}

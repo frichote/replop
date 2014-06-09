@@ -3,35 +3,39 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Tracy-Widom test for eigenvalues}
 \description{
-Performs tracy-widom tests on a set of eigenvalues to determine the number of significative eigenvalues and calculate the percentage of variance explained by each principal component. 
+Perform tracy-widom tests on a set of eigenvalues to determine the number of significative eigenvalues and calculate the percentage of variance explained by each principal component. 
 }
 \usage{
-tracyWidom  (input_file.eigenvalues, output_file.tracywidom)
+tracyWidom  (eigenvalue_input_file, tracywidom_output_file)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-\item{input_file.eigenvalues}{
-	the path for the eigenvalues input file (with one column).
+\item{eigenvalue_input_file}{
+a character string containing a path to the input file,
+a vector of eigenvalues in the .eigenvalues format.
 }
-\item{output_file.tracywidom}{
-	the path for the tracywidom output file. By default, the name of the output file is the name of the input file with .tracywidom extension (input_file.tracywidom).
+\item{tracywidom_output_file}{
+a character string containing a path to the output.
+By default, the name of the output file is the same name 
+as the input file with a .tracywidom extension.
 }
 }
 \value{
 \item{eigenvalues}{
-	the sorted input vector of eigenvalues
+	The sorted input vector of eigenvalues (by descreasing order).
 }
 \item{twstats}{
-	the vector of tracy-widom statistics.
+	The vector of tracy-widom statistics.
 }
 \item{pvalues}{
-	the vector of p-values for each eigenvalue. 
+	The vector of p-values associated with each eigenvalue. 
 }
 \item{effecn}{
-	the vector of effective sizes.
+	The vector of effective sizes.
 }
 \item{percentage}{
-	the vector of percentage of variance explained by each principal component.
+	The vector containing the percentage of variance 
+	explained by each principal component.
 }
 }
 \author{
@@ -43,18 +47,43 @@ tracyWidom  (input_file.eigenvalues, output_file.tracywidom)
 \code{\link{LFMM}}
 }
 \examples{
-# creation of tuto.lfmm
+
+# Creation of the genotype file, tuto.lfmm.
+# It contains 10000 SNPs for 50 individuals.
 data("tuto")
-#write.lfmm(R, "tuto.lfmm")
+write.lfmm(R, "tuto.lfmm")
 
 # run of PCA
-#res = pca("tuto.lfmm", scale = TRUE)
+# available options, 	K (the number of PCs calculated), 
+#			center and scale. 
+# Created files: tuto.eigenvalues - eigenvalues,	
+#		 tuto.eigenvectors - eigenvectors,
+#		 tuto.sdev - standard deviations,
+#		 tuto.projections - projections,
+#		 tuto.pcaClass - the pcaClass object.
+# All informations of the analysis are available 
+#		in a pca-class object, res.
+res = pca("tuto.lfmm", scale = TRUE)
+
+# Perfom Tracy-Widom tests on the eigenvalues.
+# Created file: tuto.tracyWidom - tracy-widom test informations.	
+tw = tracyWidom(res$eigenvalue_file)
+
+# Plot the percentage of variance explained by each component.
+plot(tw$percentage)
+
+# Display the p-values (for Tracy-Widom test) associated with each PC. 
+tw$pvalues
+
+# run of PCA
+res = pca("tuto.lfmm", scale = TRUE)
 
 # tracy-widom tests of eigenvalues
-#tw = tracyWidom("tuto.eigenvalues")
+tw = tracyWidom("tuto.eigenvalues")
 
-#tw$pvalues
-#plot(tw$percentage)
+# results
+tw$pvalues
+plot(tw$percentage)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

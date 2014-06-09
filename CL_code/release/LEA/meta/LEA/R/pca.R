@@ -2,16 +2,18 @@ pca <- function(input_file,
 		K, 
 		center = TRUE, 
 		scale  = FALSE, 
-		eigenvalue_file, load_eigenvalues = TRUE, 
-		eigenvector_file, load_eigenvectors = TRUE, 
-		sdev_file, load_sdev = TRUE, 
-		projection_file, load_projections = TRUE) 
+		eigenvalue_file, 
+		eigenvector_file, 
+		sdev_file, 
+		projection_file) 
 {
 
         # test arguments and init
 	# input file
 	input_file = test_character("input_file", input_file, NULL)
-	# K
+	# check extension and convert if necessary
+	input_file = test_input_file(input_file, "lfmm")
+	#K
 	K = test_integer("K", K, 0);
         if (K < 0)
                 stop("'K positive.")
@@ -22,23 +24,19 @@ pca <- function(input_file,
 	# eigenvalues file 
         tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.eigenvalues",input_file)
 	eigenvalue_file = test_character("eigenvalue_file", eigenvalue_file, tmp)
-	# load eigenvalues
-	load_eigenvalues = test_logical("load_eigenvalues", load_eigenvalues, TRUE)
 	# eigenvectors file 
         tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.eigenvectors",input_file)
 	eigenvector_file = test_character("eigenvector_file", eigenvector_file, tmp)
-	# load eigenvectors
-	load_eigenvectors = test_logical("load_eigenvectors", load_eigenvectors, TRUE)
 	# standard deviation file 
         tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.sdev",input_file)
 	sdev_file = test_character("sdev_file", sdev_file, tmp)
-	# load sdev
-	load_sdev = test_logical("load_sdev", load_sdev, TRUE)
 	# x file 
         tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.projections",input_file)
 	projection_file = test_character("projection_file", projection_file, tmp)
-	# load x
-	load_projections = test_logical("load_projections", load_projections, TRUE)
+
+	print("******************************");
+	print(" Principal Component Analysis ");
+	print("******************************");
 
 	L = 0;
 	n = 0
@@ -69,7 +67,8 @@ pca <- function(input_file,
 	res@projection_file = projection_file;
 
         tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.pcaClass",input_file)
-	write(res, tmp); 
+	res@pcaClass_file = tmp
+	write.pcaClass(res, tmp); 
 
 	res
 }

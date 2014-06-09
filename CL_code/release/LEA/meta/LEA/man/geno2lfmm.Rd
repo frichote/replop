@@ -11,17 +11,20 @@ geno2lfmm(input_file, output_file = NULL)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{input_file}{
-the path for the input file (in \code{\link{geno}} format). 
+A character string containing a path to the input file,
+a genotypic matrix in the \code{\link{geno}} format. 
 }
   \item{output_file}{
-the path for the output file (in \code{\link{lfmm}} format). 
-By default, the name of the output file is the name of the input file with .lfmm extension.
-
+A character string containing a path to the output file,
+a genotypic matrix in the \code{\link{lfmm}} format. 
+By default, the name of the output file is the same name 
+as the input file with a .lfmm extension.
 }
 }
 \value{
 \item{output_file}{
-the path for the output file.
+A character string containing a path to the output file,
+a genotypic matrix in the \code{\link{lfmm}} format. 
 }
 }
 \author{
@@ -36,17 +39,26 @@ the path for the output file.
 \code{\link{ped2geno}}
 \code{\link{vcf2geno}}
 \code{\link{lfmm2geno}}
+\code{\link{read.geno}}
+\code{\link{write.geno}}
 }
 \examples{
-# creation of example.geno
-data("example_geno")
-write.table(example_geno,"example.geno",col.names = FALSE, row.names = FALSE, quote = FALSE)
+# Creation of a file called "tuto.geno" in the working directory,
+# with 1000 SNPs for 100 individuals.
+G = matrix(sample(c(0,1,2),replace=TRUE, size=1000*100), ncol=1000, nrow=100)
+write.geno(G, "tuto.geno")
 
-# conversion from the geno (example.geno) to the lfmm (example.lfmm) format
-output = geno2lfmm("example.geno")
+# Conversion 	from the geno format ("tuto.geno") 
+#		to the lfmm format ("tuto.lfmm").
+# By default, 	the name of the output file is the same name 
+#		as the input file with a .lfmm extension.
+# Create file:	"tuto.lfmm".
+output = geno2lfmm("tuto.geno")
 
-# read of the output file
-R = read.lfmm("example.lfmm")
+# Conversion 	from the geno format ("tuto.geno") 
+#		to the lfmm format with the output file called "plop.lfmm".
+# Create file:	"plop.lfmm".
+output = geno2lfmm("tuto.geno", "plop.lfmm")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

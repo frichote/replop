@@ -28,7 +28,7 @@
 // analyse_param_lfmm
 
 void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int *burn,
-		   int *m, char *output, char *input, char *cov_file, char *dev_file,
+		   int *m, char *output, char *input, char *cov_file, 
 		   int *num_thrd, long long *s, int *all)
 {
 	int i, g_data = 0, g_cov = 0;
@@ -135,12 +135,6 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 				g_data = 1;
 				strcpy(input, argv[i]);
 				break;
-                        case 'C':
-                                i++;
-                                if (argc == i || argv[i][0] == '-')
-                                        print_error_lfmm("cmd","C (DIC file)",0);
-                                strcpy(dev_file,argv[i]);
-                                break;
 			case 'v':
 				i++;
 				if (argc == i || argv[i][0] == '-')
@@ -189,10 +183,5 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
         tmp_file = remove_ext(input,'.','/');
         if (!strcmp(output,""))
         	strcpy(output, tmp_file);
-        // write dev file name
-        if (!strcmp(dev_file,"")) {
-                strcpy(dev_file,tmp_file);
-        }
         free(tmp_file);
-
 }

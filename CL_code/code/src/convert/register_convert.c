@@ -59,6 +59,6 @@ void analyse_param_convert (int argc, char *argv[], char *input, char *output, c
 
 void print_convert(int N, int M)
 {
-        printf("\n\t- number of individuals detected:\t%d\n",N);
-        printf("\t- number of loci detected:\t\t%d\n\n",M);
+        printf("\n\t- number of detected individuals:\t%d\n",N);
+        printf("\t- number of detected loci:\t\t%d\n\n",M);
 }

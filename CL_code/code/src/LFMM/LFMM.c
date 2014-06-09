@@ -38,9 +38,10 @@
 #include "register_lfmm.h"
 #include "lfmm_algo.h"
 
-void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
+void LFMM(char* input_file, char* output_file, char* cov_file, 
 	int *n, int *L, int *RD, int nd, int K, int Niter, int burn, int num_thrd, 
-	long long *seed, int missing_data, int all, double *dic, double *deviance)
+	long long *seed, int missing_data, int all, double *dic, double *deviance,
+	double noise_epsilon, double b_epsilon, int init)
 {
 
 	// Parameters initialization
@@ -56,7 +57,6 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 
 	float *dat;		// data matrix
 	int *I = NULL;		// missing value matrix
-	double epsilon = 1000;	// hyperprior epsilon
 	double dev, DIC;
 	double *perc_var;	// percentage of variances
 
@@ -81,14 +81,13 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
                 print_error_lfmm("specific",
                                  "(-d option). d should be between 1 and D",
                                  0);
-
 	*n = N;
 	*L = M;
 	*RD = nD;
 
         // print summary of command line
         print_summary_lfmm(N, M, K, nD, nd, Niter, burn,
-                      missing_data, output_file, input_file, cov_file, dev_file,
+                      missing_data, output_file, input_file, cov_file, 
                       num_thrd, *seed, all);
 
 
@@ -149,7 +148,7 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 		// run LFMM
 		if (K)
 			lfmm_emcmc(dat, I, C, zscore, beta, U, V, alpha_beta, &alpha_R,
-				&alpha_U, N, M, K, D, epsilon, Niter, burn,
+				&alpha_U, N, M, K, D, noise_epsilon, b_epsilon, init, Niter, burn,
 			   	missing_data, num_thrd, &dev, &DIC, perc_var);
 		else
 			lfmm_k0(dat, I, C, zscore, beta, N, M, D, missing_data, perc_var);
@@ -172,13 +171,13 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 		// run LFMM
 		if (K) 
 			lfmm_emcmc(dat, I, C, zscore, beta, U, V, alpha_beta, &alpha_R,
-			   	&alpha_U, N, M, K, D, epsilon, Niter, burn,
+				&alpha_U, N, M, K, D, noise_epsilon, b_epsilon, init, Niter, burn,
 			   	missing_data, num_thrd, &dev, &DIC, perc_var);
 		else
 			lfmm_k0(dat, I, C, zscore, beta, N, M, D, missing_data, perc_var);
 
 		// write zscore
-	        write_zscore_double(output_file, M, zscore, 1, 0, 0, K, N, dev, DIC, perc_var);
+	        write_zscore_double(output_file, M, zscore, 1, 0, nd, K, N, dev, DIC, perc_var);
 		printf("\tThe execution for covariable %d worked without error."
 			"\n>>>>\n\n", nd + 1);
 
@@ -196,7 +195,7 @@ void LFMM(char* input_file, char* output_file, char* cov_file, char* dev_file,
 			// run LFMM
 			if (K)
 				lfmm_emcmc(dat, I, C, zscore, beta, U, V, alpha_beta, &alpha_R,
-				   	&alpha_U, N, M, K, D, epsilon, Niter, burn,
+					&alpha_U, N, M, K, D, noise_epsilon, b_epsilon, init, Niter, burn,
 				   	missing_data, num_thrd, &dev, &DIC, perc_var);
 			else
 				lfmm_k0(dat, I, C, zscore, beta, N, M, D, missing_data, perc_var);

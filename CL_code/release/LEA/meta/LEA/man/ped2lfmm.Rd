@@ -11,16 +11,20 @@ ped2lfmm(input_file, output_file = NULL)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{input_file}{
-the path for the input file (in \code{\link{ped}} format). 
+A character string containing a path to the input file,
+a genotypic matrix in the \code{\link{ped}} format. 
 }
   \item{output_file}{
-the path for the output file (in \code{\link{lfmm}} format). 
-By default, the name of the output file is the name of the input_file with .lfmm extension.
+A character string containing a path for the output file,
+a genotypic matricx in the \code{\link{lfmm}} format. 
+By default, the name of the output file is the same name 
+as the input file with a .lfmm extension.
 }
 }
 \value{
 \item{output_file}{
-the path for the output file.
+A character string containing a path for the output file,
+a genotypic matricx in the \code{\link{lfmm}} format. 
 }
 }
 \author{
@@ -37,16 +41,23 @@ the path for the output file.
 \code{\link{lfmm2geno}}
 }
 \examples{
-# creation of example.ped
+# Creation of a file called "example.ped"
+# with 4 SNPs for 3 individuals.
 data("example_ped")
-write.table(example_ped,"example.ped",col.names = FALSE, row.names = FALSE, quote = FALSE)
+write.table(example_ped,"example.ped",
+	col.names = FALSE, row.names = FALSE, quote = FALSE)
 
-# conversion from the ped (example.ped) to the lfmm (example.lfmm) format
+# Conversion 	from the ped format ("example.ped") 
+#		to the lfmm format ("example.lfmm").
+# By default, 	the name of the output file is the same name 
+#		as the input file with a .lfmm extension.
+# Create file:	"example.lfmm".
 output = ped2lfmm("example.ped")
 
-# read of the output file
-read.lfmm("example.lfmm")
-
+# Conversion 	from the ped format ("example.ped") 
+#		to the geno format with the output file called "plop.lfmm".
+# Create file:	"plop.lfmm".
+output = ped2lfmm("example.ped", "plop.lfmm")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

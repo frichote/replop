@@ -3,7 +3,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Read files in the \code{\link{lfmm}} format}
 \description{
-read a file in the \code{\link{lfmm}} format.
+Read a file in the \code{\link{lfmm}} format.
 }
 \usage{
 read.lfmm(input_file)
@@ -11,12 +11,13 @@ read.lfmm(input_file)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{input_file}{
-	the path for the input file (in \code{lfmm} format).
+A character string containing a path to the input file,
+a genotypic matrix in the \code{lfmm} format.
 }
 }
 \value{
 \item{R}{
-	A matrix containing the genotypes with one line per individual and one column per SNP.
+A matrix containing the genotypes with one line per individual and one column per SNP.
 }
 }
 
@@ -33,12 +34,16 @@ read.lfmm(input_file)
 \code{\link{ped2lfmm}}
 }
 \examples{
-# creation of example.geno
-data("example_lfmm")
-write.table(example_lfmm,"example.lfmm",col.names = FALSE, row.names = FALSE, quote = FALSE)
+# Creation of a genotypic matrix G with 1000 SNPs for 100 individuals.
+# The G matrix contains one individual per line and one locus per column.
+G = matrix(sample(c(0,1,2),replace=TRUE, size=1000*100), ncol=1000, nrow=100)
 
-# read of the geno file
-R = read.geno("example.lfmm")
+# write G in a file called "tuto.lfmm"
+# Create file:	"tuto.lfmm".
+write.lfmm(G, "tuto.lfmm")
+
+# read the file "tuto.lfmm".
+G = read.lfmm("tuto.lfmm")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -3,14 +3,15 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Read environmental file in the \code{\link{env}}format}
 \description{
-read a file in the \code{\link{env}} format.
+Read a file in the \code{\link{env}} format.
 }
 \usage{
 read.env(input_file)
 }
 \arguments{
 \item{input_file}{
-	the path for the environmental input file (in \code{\link{env}} format).
+a character string containing a path to the input file,
+an environmental data matrix in the \code{\link{env}} format.
 }
 }
 \value{
@@ -29,12 +30,17 @@ read.env(input_file)
 \code{\link{LFMM}}
 }
 \examples{
-# creation of example.geno
-#data("tuto")
-#write.env(C,"tuto.env")
+# Creation of an environmental matrix C 
+# containing 2 environmental variables for 3 individuals.
+# C contains one line for each individual and one column for each variable.
+C = matrix(runif(6), ncol=2, nrow=3)
 
-# read of the geno file
-#C2 = read.env("tuto.env")
+# Write C in a file called "tuto.env".
+# Create file:	"tuto.env".
+write.env(C,"tuto.env")
+
+# Read the file "tuto.env".
+C = read.env("tuto.env")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

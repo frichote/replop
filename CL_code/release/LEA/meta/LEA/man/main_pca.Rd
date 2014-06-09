@@ -12,12 +12,7 @@ on each component. The function pca returns an object of class
 "pca-class" containing the output data and the input parameters. 
 }
 \usage{
-pca  (	input_file, K, 
-        center = TRUE, scale = FALSE, 
-        eigenvalue_file, 
-        eigenvector_file, 
-        sdev_file, 
-        projection_file)
+pca (input_file, K, center = TRUE, scale = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -34,26 +29,6 @@ a genotypic matrix in the \code{\link{lfmm}} format.
 }
 \item{scale}{
 	A boolean option. If true, the data matrix is centered and scaled.
-}
-\item{eigenvalue_file}{
-A character string containing the output eigenvalues.
-By default, the name of the output file is the same name 
-as the input file with a .eigenvalues extension.
-}
-\item{eigenvector_file}{
-A character string containing the output eigenvectors.
-By default, the name of the output file is the same name 
-as the input file with a .eigenvectors extension.
-}
-\item{sdev_file}{
-A character string containing the output standard deviations.
-By default, the name of the output file is the same name 
-as the input file with a .sdev extension.
-}
-\item{projection_file}{
-A character string containing the output principal components.
-By default, the name of the output file is the same name 
-as the input file with a .projections extension.
 }
 }
 \value{
@@ -83,11 +58,11 @@ The following methods can be applied to the object of class pcaClass returned by
 \item{tracyWidom}{
 	perform Tracy-Widom tests on the eigenvalues.
 }
-\item{write.pcaClass}{\code{signature(x = "pcaClass", file = "character")}}{
-	write a pcaClass object into a file.
+\item{save.pcaClass}{\code{signature(x = "pcaClass", file = "character")}}{
+	save a pcaClass object into a file.
 }
-\item{read.pcaClass}{\code{signature(file = "character")}}{
-	read the file containing a pcaClass object and return the pcaClass object.
+\item{load.pcaClass}{\code{signature(file = "character")}}{
+	load the file containing a pcaClass object and return the pcaClass object.
 }
 }
 \author{

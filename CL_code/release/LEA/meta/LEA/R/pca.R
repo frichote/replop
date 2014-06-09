@@ -1,11 +1,11 @@
 pca <- function(input_file, 
 		K, 
 		center = TRUE, 
-		scale  = FALSE, 
-		eigenvalue_file, 
-		eigenvector_file, 
-		sdev_file, 
-		projection_file) 
+		scale  = FALSE) 
+#		eigenvalue_file, 
+#		eigenvector_file, 
+#		sdev_file, 
+#		projection_file) 
 {
 
         # test arguments and init
@@ -22,17 +22,17 @@ pca <- function(input_file,
 	# scaled
 	scale = test_logical("scale", scale, 0);
 	# eigenvalues file 
-        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.eigenvalues",input_file)
-	eigenvalue_file = test_character("eigenvalue_file", eigenvalue_file, tmp)
+        eigenvalue_file = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.eigenvalues",input_file)
+	#eigenvalue_file = test_character("eigenvalue_file", eigenvalue_file, tmp)
 	# eigenvectors file 
-        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.eigenvectors",input_file)
-	eigenvector_file = test_character("eigenvector_file", eigenvector_file, tmp)
+        eigenvector_file = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.eigenvectors",input_file)
+	#eigenvector_file = test_character("eigenvector_file", eigenvector_file, tmp)
 	# standard deviation file 
-        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.sdev",input_file)
-	sdev_file = test_character("sdev_file", sdev_file, tmp)
+        sdev_file = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.sdev",input_file)
+	#sdev_file = test_character("sdev_file", sdev_file, tmp)
 	# x file 
-        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.projections",input_file)
-	projection_file = test_character("projection_file", projection_file, tmp)
+        projection_file = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.projections",input_file)
+	#projection_file = test_character("projection_file", projection_file, tmp)
 
 	print("******************************");
 	print(" Principal Component Analysis ");

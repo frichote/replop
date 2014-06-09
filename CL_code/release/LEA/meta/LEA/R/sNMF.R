@@ -1,6 +1,5 @@
 sNMF <- function(input_file, 
 		K, 
-	#	project = NULL,
 		alpha = 10, 
 		tolerance = 0.00001, 
 		entropy = FALSE,
@@ -73,13 +72,18 @@ sNMF <- function(input_file,
 	repetitions = test_integer("repetitions", repetitions, 1)
 	
 	# project
-	if (missing(project) || (!missing(project) && is.null(project))) {
+	tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.",input_file)	
+	projectName = paste(tmp, "snmfProject", sep="")
+	# creation of the project if it does not exist
+	if (!file.exists(projectName)) {
 		project = new("snmfProject")
 		project@input_file = input_file
-		tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.",input_file)	
-		tmp = paste(tmp, "snmfProject", sep="")
-		project@snmfProject_file = paste(getwd(),"/", tmp, sep="")
+		project@snmfProject_file = paste(getwd(),"/", projectName, sep="")
 		project@directory = getwd();
+	# or load the existing project
+	} else {
+		print("plop")
+		project = load.snmfProject(projectName)
 	}
 	
 	for (r in 1:repetitions) {
@@ -153,12 +157,12 @@ sNMF <- function(input_file,
 			res@Q_input_file = Q_input_file;
 			res@Q_output_file = Q_output_file;
 			res@G_output_file = G_output_file;
-			write.snmfClass(res, res@snmfClass_file)
+			save.snmfClass(res, res@snmfClass_file)
 
 			project = addRun.snmfProject(project, res);
 		}
 	}
-	write.snmfProject(project, project@snmfProject_file)
+	save.snmfProject(project)
 
 	return(project);
 }

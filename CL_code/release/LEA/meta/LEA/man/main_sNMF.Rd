@@ -72,27 +72,12 @@ sNMF (input_file, K, project,
 	A character string containing a path to an initialization file for Q, 
 	the individual admixture coefficient matrix.
 }
-\item{Q_output_file}{
-	A character string containing a path to the output ancestry coefficient 
-	matrix Q . By default, the name of the output file is the same name as the 
-	input file with a .K.Q extension.
-}
-\item{G_output_file}{
-	A character string containing a path to the output ancestral genotype 
-	frequency matrix G. By default, the name of the output file is the same name 
-	as the input file with a .K.G extension.
-}
 \item{repetitions}{
 	an integer corresponding with the number of repetitions for each value of \code{K}.
 }
 }
 \value{
-\item{Q}{
-	if load.Q is true, the matrix of ancestry coefficients. Otherwise, the path for the output file with the ancestry coefficients.
-}
-\item{G}{
-	if load.G is true, the matrix of ancestral genotype frequencies. Otherwise, the path for the output file with the ancestral genotype frequencies.
-}
+plop plop TODO
 \item{masked_ce}{
 	if the percentage of masked data is not zero, the value of the cross-entropy criterion of the masked genotypes.
 }

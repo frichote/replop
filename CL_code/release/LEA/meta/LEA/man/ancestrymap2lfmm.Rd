@@ -50,18 +50,18 @@ data("example_ancestrymap")
 write.table(example_ancestrymap,"example.ancestrymap",
 col.names = FALSE, row.names = FALSE, quote = FALSE)
 
-# Conversion 	from the ancestrymap format ("example.ancestrymap") 
-#		to the lfmm format ("example.lfmm").
-# By default,   the name of the output file is the same name
-#               as the input file with a .lfmm extension.
-# Create file:	"example.lfmm".
+# Conversion   from the ancestrymap format ("example.ancestrymap") 
+#              to the lfmm format ("example.lfmm").
+# By default,  the name of the output file is the same name
+#              as the input file with a .lfmm extension.
+# Create file: "example.lfmm".
 output = ancestrymap2lfmm("example.ancestrymap")
                         
-# Conversion 	from the ancestrymap format ("example.ancestrymap") 
-#		to the geno format ("example.geno").
-# By default,   the name of the output file is the same name
-#               as the input file with a .geno extension.
-# Create file:	"example.geno".
+# Conversion   from the ancestrymap format ("example.ancestrymap") 
+#              to the geno format ("example.geno").
+# By default,  the name of the output file is the same name
+#              as the input file with a .geno extension.
+# Create file: "example.geno".
 output = ancestrymap2geno("example.ancestrymap")
 }
 

@@ -82,7 +82,6 @@ sNMF <- function(input_file,
 		project@directory = getwd();
 	# or load the existing project
 	} else {
-		print("plop")
 		project = load.snmfProject(projectName)
 	}
 	

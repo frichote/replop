@@ -45,12 +45,11 @@ createDataSet (input_file, output_file, ploidy = 2, seed = -1, percentage = 0.05
 \seealso{
 \code{\link{geno}}
 \code{\link{sNMF}}
-\code{\link{crossEntropy}}
+\code{\link{crossEntropyEstimation}}
 }
 \examples{
 # creation of tuto.geno
-# A file containing 10000 SNPs for 50 individuals.
-# Individuals are clustered in 3 non-admixed populations.
+# A file containing 10000 SNPs for 50 individuals.
 data("tuto")
 write.geno(R, "tuto.geno")
 

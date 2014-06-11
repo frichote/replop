@@ -1,10 +1,8 @@
 LFMM <- function(input_file, 
 		variable_file, 
 		K,
-		project,
 		d = 0,
 		all = FALSE,
-		output_file,
 		missing_data = FALSE,
 		num_CPU = 1,
 		num_iterations = 1000,
@@ -48,8 +46,7 @@ LFMM <- function(input_file,
 	# all
 	all = test_logical("all",all, FALSE)
 	# output_file
-	tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1", input_file)
-	output_file = test_character("output_file", output_file, tmp)
+	output_file = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1", input_file)
 	# missing_data  
 	missing_data = test_logical("missing_data", missing_data, FALSE)
 	# CPU	
@@ -86,14 +83,19 @@ LFMM <- function(input_file,
 	random_init = test_logical("random_init", random_init, TRUE)
 
         # project
-        if (missing(project)) {
+        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1",input_file)
+        tmp2 = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.",variable_file)
+        projectName = paste(tmp, "_", tmp2 , "lfmmProject", sep="")
+        # creation of the project if it does not exist
+	if (!file.exists(projectName)) {
                 project = new("lfmmProject")
                 project@input_file = input_file
                 project@variable_file = variable_file
-                tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.",input_file)
-                tmp = paste(tmp, "lfmmProject", sep="")
-                project@lfmmProject_file = paste(getwd(),"/", tmp, sep="")
+                project@lfmmProject_file = paste(getwd(),"/", projectName, sep="")
                 project@directory = getwd();
+        # or load the existing project
+        } else {
+                project = load.lfmmProject(projectName)
         }
 
 	for (r in 1:repetitions) {
@@ -141,7 +143,6 @@ LFMM <- function(input_file,
 					# creation of the res file
 					res = new("lfmmClass");
 					res@zscore_file = paste(output_prefix,"_a",nd,".",k,".zscore",sep="");
-					res@dic_file = paste(output_prefix,"_a.",k,".dic",sep="");
 					res@lfmmClass_file = paste(output_prefix, "_a",nd,".",k,".lfmmClass",sep="");
 					res@directory = getwd();
 					res@K = as.integer(k);
@@ -161,11 +162,11 @@ LFMM <- function(input_file,
 					res@epsilon_b = epsilon_b;
 					res@random_init = random_init;
 					res@seed = resC$seed
-					res@lambda = getLambda(res)
+					res@inflationFactor = inflationFactor(res)
 					res@deviance = resC$dev;
 					res@DIC = resC$dic;
 					seed = resC$seed
-		                        write.lfmmClass(res, res@lfmmClass_file)
+		                        save.lfmmClass(res, res@lfmmClass_file)
 
 					project = addRun.lfmmProject(project, res);
 				}
@@ -212,7 +213,6 @@ LFMM <- function(input_file,
 					# creation of the res file
 					res = new("lfmmClass");
 					res@zscore_file = paste(output_prefix,"_s",nd,".",k,".zscore",sep="");
-					res@dic_file = paste(output_prefix,"_s",nd,".",k,".dic",sep="");
 					res@lfmmClass_file = paste(output_prefix, "_s",nd,".",k,".lfmmClass",sep="");
 					res@directory = getwd();
 					res@K = as.integer(k);
@@ -232,11 +232,11 @@ LFMM <- function(input_file,
 					res@epsilon_b = epsilon_b;
 					res@random_init = random_init;
 					res@seed = resC$seed
-					res@lambda = getLambda(res)
+					res@inflationFactor = inflationFactor(res)
 					res@deviance = resC$dev;
 					res@DIC = resC$dic;
 					seed = resC$seed
-					write.lfmmClass(res, res@lfmmClass_file);
+					save.lfmmClass(res, res@lfmmClass_file);
 
 					project = addRun.lfmmProject(project, res);
 				} 
@@ -244,7 +244,7 @@ LFMM <- function(input_file,
 		}	
 	}
 
-        write.lfmmProject(project, project@lfmmProject_file)
+        save.lfmmProject(project)
 
 	return(project);
 } 

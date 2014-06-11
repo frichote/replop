@@ -45,18 +45,18 @@ a genotypic matrix in the \code{\link{geno}} format.
 # with 4 SNPs for 3 individuals.
 data("example_ped")
 write.table(example_ped,"example.ped",
-	col.names = FALSE, row.names = FALSE, quote = FALSE)
+        col.names = FALSE, row.names = FALSE, quote = FALSE)
 
-# Conversion 	from the ped format ("example.ped") 
-#		to the geno format ("example.geno").
-# By default, 	the name of the output file is the same name 
-#		as the input file with a .geno extension.
-# Create file:	"example.geno".
+# Conversion   from the ped format ("example.ped") 
+#              to the geno format ("example.geno").
+# By default,  the name of the output file is the same name 
+#              as the input file with a .geno extension.
+# Create file: "example.geno".
 output = ped2geno("example.ped")
 
-# Conversion 	from the ped format ("example.ped") 
-#		to the geno format with the output file called "plop.geno".
-# Create file:	"plop.geno".
+# Conversion   from the ped format ("example.ped") 
+#              to the geno format with the output file called "plop.geno".
+# Create file: "plop.geno".
 output = ped2geno("example.ped", "plop.geno")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

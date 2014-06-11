@@ -11,8 +11,8 @@ write.env(R, output_file)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{R}{
-        A matrix containing the environmental variables with one line per individual
-        and one column per environmental variable. The missing genotypes have to be
+        A matrix containing the environmental variables with one line for each individual
+        and one column for each environmental variable. The missing genotypes have to be
 	encoded with the value 9.
 }
 \item{output_file}{

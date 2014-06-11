@@ -17,7 +17,7 @@ a genotypic matrix in the \code{geno} format.
 }
 \value{
 \item{R}{
-A matrix containing the genotypes with one line per individual and one column per SNP.
+A matrix containing the genotypes with one line for each individual and one column for each SNP.
 }
 }
 \author{

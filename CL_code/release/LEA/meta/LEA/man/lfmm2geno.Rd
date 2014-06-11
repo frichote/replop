@@ -47,16 +47,16 @@ library(LEA)
 G = matrix(sample(c(0,1,2),replace=TRUE, size=1000*100), ncol=1000, nrow=100)
 write.lfmm(G, "tuto.lfmm")
 
-# Conversion 	from the lfmm format ("tuto.lfmm") 
-#		to the geno format ("tuto.geno").
-# By default, 	the name of the output file is the same name 
-#		as the input file with a .geno extension.
-# Create file:	"tuto.geno".
+# Conversion   from the lfmm format ("tuto.lfmm") 
+#              to the geno format ("tuto.geno").
+# By default,  the name of the output file is the same name 
+#              as the input file with a .geno extension.
+# Create file: "tuto.geno".
 output = lfmm2geno("tuto.lfmm")
 
-# Conversion 	from the lfmm format ("tuto.lfmm") 
-#		to the geno format with the output file called "plop.geno".
-# Create file:	"plop.geno".
+# Conversion   from the lfmm format ("tuto.lfmm") 
+#              to the geno format with the output file called "plop.geno".
+# Create file: "plop.geno".
 output = lfmm2geno("tuto.lfmm", "plop.geno")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

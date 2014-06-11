@@ -49,15 +49,15 @@ write.table(example_ancestrymap,"example.ancestrymap",
 col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 # Conversion 	from the ancestrymap format ("example.ancestrymap") 
-#		to the geno format ("example.geno"). 
+#               to the geno format ("example.geno"). 
 # By default,   the name of the output file is the same name
 #               as the input file with a .geno extension.
-# create file:	example.geno
+# Create file:  "example.geno".
 output = ancestrymap2geno("example.ancestrymap")
 
 # Conversion    from the ancestrymap format (example.ancestrymap) 
 #               to the geno format with the output file called plop.geno.
-# Create file:	plop.geno
+# Create file:  "plop.geno".
 output = ancestrymap2geno("example.ancestrymap", "plop.geno")
 }
 \keyword{format}

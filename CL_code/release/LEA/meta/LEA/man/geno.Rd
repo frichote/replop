@@ -11,7 +11,7 @@ for genotypic matrices in the functions \code{\link{sNMF}},
 }
 \details{
 The \code{geno} format has one row for each SNP.
-Each row contains 1 character per individual:
+Each row contains 1 character for each individual:
   	0 means zero copy of the reference allele.
   	1 means one copy of the reference allele.
   	2 means two copies of the reference allele.

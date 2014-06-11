@@ -68,7 +68,7 @@ pca <- function(input_file,
 
         tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.pcaClass",input_file)
 	res@pcaClass_file = tmp
-	write.pcaClass(res, tmp); 
+	save.pcaClass(res, tmp); 
 
 	res
 }

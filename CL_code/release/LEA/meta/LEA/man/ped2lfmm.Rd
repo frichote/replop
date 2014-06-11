@@ -45,18 +45,18 @@ a genotypic matricx in the \code{\link{lfmm}} format.
 # with 4 SNPs for 3 individuals.
 data("example_ped")
 write.table(example_ped,"example.ped",
-	col.names = FALSE, row.names = FALSE, quote = FALSE)
+        col.names = FALSE, row.names = FALSE, quote = FALSE)
 
-# Conversion 	from the ped format ("example.ped") 
-#		to the lfmm format ("example.lfmm").
-# By default, 	the name of the output file is the same name 
-#		as the input file with a .lfmm extension.
-# Create file:	"example.lfmm".
+# Conversion   from the ped format ("example.ped") 
+#              to the lfmm format ("example.lfmm").
+# By default,  the name of the output file is the same name 
+#              as the input file with a .lfmm extension.
+# Create file: "example.lfmm".
 output = ped2lfmm("example.ped")
 
-# Conversion 	from the ped format ("example.ped") 
-#		to the geno format with the output file called "plop.lfmm".
-# Create file:	"plop.lfmm".
+# Conversion   from the ped format ("example.ped") 
+#              to the geno format with the output file called "plop.lfmm".
+# Create file: "plop.lfmm".
 output = ped2lfmm("example.ped", "plop.lfmm")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

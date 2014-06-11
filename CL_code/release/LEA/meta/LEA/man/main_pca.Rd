@@ -1,5 +1,12 @@
 \name{pca}
 \alias{pca}
+\alias{eigenvalues}
+\alias{eigenvectors}
+\alias{projections}
+\alias{sdev}
+\alias{load.pcaClass}
+\alias{save.pcaClass}
+\alias{remove.pcaClass}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Principal Component Analysis}
 \description{
@@ -21,18 +28,18 @@ A character string containg the path to the genotype input file,
 a genotypic matrix in the \code{\link{lfmm}} format.
 }
 \item{K}{
-	An integer corresponding to the number of principal components
-	calculated. By default, all principal components are calculated.
+        An integer corresponding to the number of principal components
+        calculated. By default, all principal components are calculated.
 }
 \item{center}{
-	A boolean option. If true, the data matrix is centered.
+        A boolean option. If true, the data matrix is centered (default: TRUE).
 }
 \item{scale}{
-	A boolean option. If true, the data matrix is centered and scaled.
+        A boolean option. If true, the data matrix is centered and scaled (default: FALSE).
 }
 }
 \value{
-\code{pca} returns an object of class pcaClass containing the following components:
+\code{pca} returns an object of class \code{pcaClass} containing the following components:
 \item{eigenvalues}{
         the vector of eigenvalues.
 }
@@ -43,37 +50,41 @@ a genotypic matrix in the \code{\link{lfmm}} format.
         the vector of standard deviations. 
 }
 \item{projections}{
-       	the matrix of projections (one column for each projection).
+               the matrix of projections (one column for each projection).
 }
 The following methods can be applied to the object of class pcaClass returned by \code{pca}: 
 \item{plot}{ 
-	plot eigenvalues.
+        plot the eigenvalues.
 }
 \item{show}{
-	display information about the analysis.
+        display information about the analysis.
 }
 \item{summary}{
-	summarize the analysis.
+        summarize the analysis.
 }
 \item{tracyWidom}{
-	perform Tracy-Widom tests on the eigenvalues.
+        perform Tracy-Widom tests on the eigenvalues.
 }
 \item{save.pcaClass}{\code{signature(x = "pcaClass", file = "character")}}{
-	save a pcaClass object into a file.
+        save a pcaClass object into a file.
 }
 \item{load.pcaClass}{\code{signature(file = "character")}}{
-	load the file containing a pcaClass object and return the pcaClass object.
+        load the file containing a pcaClass object and return the pcaClass object.
+}
+\item{remove.pcaClass}{\code{signature(file = "character")}}{
+        Erase a \code{pcaClass} object. Caution: All the files associated with the 
+        object will be removed.
 }
 }
 \author{
-	Eric Frichot
+        Eric Frichot
 }
 \seealso{
 \code{\link{geno}}
 \code{\link{sNMF}}
 \code{\link{LFMM}}
 \code{\link{createDataSet}}
-\code{\link{crossEntropy}}
+\code{\link{crossEntropyEstimation}}
 }
 \examples{
 # Creation of the genotype file "tuto.lfmm"
@@ -81,26 +92,35 @@ The following methods can be applied to the object of class pcaClass returned by
 data("tuto")
 write.lfmm(R, "tuto.lfmm")
 
+#################
+# Perform a PCA #
+#################
+
 # run of PCA
-# Available options, 	K (the number of PCs calculated), 
-#			center and scale. 
-# Create files: tuto.eigenvalues - eigenvalues,	
-#		 tuto.eigenvectors - eigenvectors,
-#		 tuto.sdev - standard deviations,
-#		 tuto.projections - projections,
-#		 tuto.pcaClass - the pcaClass object.
+# Available options, K (the number of PCs calculated), 
+#                    center and scale. 
+# Create files: tuto.eigenvalues - eigenvalues,        
+#               tuto.eigenvectors - eigenvectors,
+#               tuto.sdev - standard deviations,
+#               tuto.projections - projections,
+#               tuto.pcaClass - the pcaClass object.
 # Create a pca-class object: pc.
 pc = pca("tuto.lfmm", scale = TRUE)
 
-### display information ###
+#######################
+# Display Information #
+#######################
 
-# Display informations about the analysis.
+# Display information about the analysis.
 show(pc)
 
 # Summarize the analysis.
 summary(pc)
 
-### graphical outputs ###
+#####################
+# Graphical outputs #
+#####################
+
 par(mfrow=c(2,2))
 
 # Plot eigenvalues.
@@ -114,15 +134,18 @@ plot(pc$projections[,3:4])
 # Plot standard deviations.
 plot(pc$sdev)
 
-### Tracy-Widom tests ####
+#############################
+# Perform Tracy-Widom tests #
+#############################
+
 # Perfom Tracy-Widom tests on all eigenvalues.
-# create file: tuto.tracyWidom - tracy-widom test information.	
+# Create file: tuto.tracyWidom - tracy-widom test information.        
 tw = tracyWidom(pc)
 
-# plot the percentage of variance explained by each component
+# Plot the percentage of variance explained by each component.
 plot(tw$percentage)
 
-# display the p-values for the Tracy-Widom tests. 
+# Display the p-values for the Tracy-Widom tests. 
 tw$pvalues
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

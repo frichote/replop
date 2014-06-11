@@ -16,8 +16,8 @@ an environmental data matrix in the \code{\link{env}} format.
 }
 \value{
 \item{R}{
-        A matrix containing the environmental variables with one line per individual 
-	and one column per environmental variable.
+        A matrix containing the environmental variables with one line for each individual 
+	and one column for each environmental variable.
 }
 }
 

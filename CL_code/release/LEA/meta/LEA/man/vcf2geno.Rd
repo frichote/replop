@@ -41,7 +41,7 @@ a genotypic matrix in the \code{\link{geno}} format.
 \code{\link{geno2lfmm}}
 }
 \examples{
-# creation of a file called "example.vcf"
+# Creation of a file called "example.vcf"
 # with 4 SNPs for 3 individuals.
 data("example_vcf")
 write.table(example_vcf,"example.vcf",col.names =
@@ -49,20 +49,20 @@ c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO",
   "FORMAT", "SAMPLE0", "SAMPLE1", "SAMPLE2"),
 row.names = FALSE, quote = FALSE)
 
-# Conversion 	from the vcf format ("example.vcf") 
-# 		to the geno format ("example.geno").
-# By default,   the name of the output file is the same name
+# Conversion    from the vcf format ("example.vcf") 
+#               to the geno format ("example.geno").
+# By defaul,    the name of the output file is the same name
 #               as the input file with a .geno extension.
-# Create files:	"example.geno",
-#		"example.vcfsnp" - SNP informations,
-#		"example.removed" - removed lines. 
+# Create files: "example.geno",
+#               "example.vcfsnp" - SNP informations,
+#               "example.removed" - removed lines. 
 output = vcf2geno("example.vcf")
 
 # Conversion    from the vcf format ("example.vcf")
 #               to the geno format with the output file called "plop.geno".
-# Create files:	"plop.geno",
-#		"plop.vcfsnp" - SNP informations,
-#		"plop.removed" - removed lines. 
+# Create files: "plop.geno",
+#               "plop.vcfsnp" - SNP informations,
+#               "plop.removed" - removed lines. 
 output = vcf2geno("example.vcf", "plop.geno")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

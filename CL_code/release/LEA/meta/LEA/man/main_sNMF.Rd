@@ -1,5 +1,11 @@
 \name{sNMF}
 \alias{sNMF}
+\alias{Q}
+\alias{crossEntropy}
+\alias{load.snmfProject}
+\alias{save.snmfProject}
+\alias{remove.snmfProject}
+\alias{G}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Estimates individual ancestry coefficients and ancestral allele frequencies.}
 \description{
@@ -7,10 +13,10 @@
 	Matrix Factorization algorithms, and provide STRUCTURE-like outputs.
 }
 \usage{
-sNMF (input_file, K, project, 
+sNMF (input_file, K, 
       alpha = 10, tolerance = 0.00001, entropy = FALSE, percentage = 0.05, I,
       iterations = 200, ploidy = 2, seed = -1, num_CPU = 1,
-      Q_input_file, Q_output_file, G_output_file, repetitions = 1)
+      Q_input_file, repetitions = 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -21,9 +27,6 @@ sNMF (input_file, K, project,
 \item{K}{
 	An integer vector corresponding to the number of ancestral populations for which
 	the snmf algorithm estimates have to be calculated.
-}
-\item{project}{
-	current project of class \code{\link{snmfProject}}.
 }
 \item{alpha}{
 	A numeric value corresponding to the snmf regularization parameter. 
@@ -77,13 +80,22 @@ sNMF (input_file, K, project,
 }
 }
 \value{
-plop plop TODO
-\item{masked_ce}{
-	if the percentage of masked data is not zero, the value of the cross-entropy criterion of the masked genotypes.
+\code{sNMF} returns an object of class \code{snmfProject}.
+
+The following methods can be applied to the object of class {snmfProject} returned by \code{sNMF}:
+\item{save.snmfProject}{\code{signature(object = "snmfProject", file = "character")}}{
+        save a snmfProject object into a file.
 }
-\item{all_ce}{
-	if the percentage of masked data is not zero, the value of the cross-entropy criterion of the all genotypes.
+\item{load.snmfProject}{\code{signature(file = "character")}}{
+        load the file containing an snmfProject objet and return the snmfProject object.
 }
+\item{remove.snmfProject}{\code{signature(file = "character")}}{
+        Erase a \code{snmfProject} object. Caution: All the files associated with the
+        object will be removed.
+}
+\item{}{
+}
+\it
 }
 \author{
 	Eric Frichot
@@ -93,31 +105,111 @@ plop plop TODO
 \code{\link{pca}}
 \code{\link{LFMM}}
 \code{\link{createDataSet}}
-\code{\link{crossEntropy}}
+\code{\link{crossEntropyEstimation}}
 }
 \references{
-Frichot E, Mathieu F, Trouillon T, Bouchard G, Francois O. (2014). \emph{Fast and Efficient Estimation of Indidividual Ancestry Coefficients}. Genetics, 113.160572.
+Frichot E, Mathieu F, Trouillon T, Bouchard G, Francois O. (2014). \emph{Fast and Efficient Estimation of Individual Ancestry Coefficients}. Genetics, 194(4): 973--983.
 }
 \examples{
-# creation of the example file
-data(tuto)
+### Example of analyses using sNMF ###
+
+# creation of the genotype file, tuto.geno.
+# It contains 10000 SNPs for 50 individuals.
+# It is composed of three non-admixed populations
+# with respectively 20, 10, and 20 indiviuals. 
+data("tuto")
 write.geno(R, "tuto.geno")
 
-# run of sNMF
-project = sNMF("tuto.geno", 3)
-project = sNMF("tuto.geno",1, entropy = TRUE, project)
-project = sNMF("tuto.geno",2, entropy = TRUE, project)
-project = sNMF("tuto.geno",3, entropy = TRUE, project)
+################
+# runs of sNMF #
+################
 
-# Project
-plot(res, lwd = 5, col = "red", pch=1)
-summary(res)
-p = getRuns.snmfProject(res,c(2,1))
-addRun.snmfProject(res, p[[1]])
-getCrossEntropy(res, 3)
-show(res)
-write.snmfProject(res, "tmp.snmfProject")
-res = read.snmfProject("tmp.snmfProject")
+# main options, K: (the number of ancestral populations), 
+#		alpha: the regularization parameter, 
+#		entropy: calculate the cross-entropy criterion, 
+#		tolerance: the stopping criterion. 
+#		num_CPU: the number of CPUs.
+
+# Runs with K between 1 and 5 with cross-entropy and 2 repetitions.
+project = sNMF("tuto.geno", K=1:5, entropy = TRUE, repetitions = 2)
+
+# plot cross-entropy criterion of all runs of the project
+plot(project, lwd = 5, col = "red", pch=1)
+
+# get the cross-entropy of each run for K = 3
+ce = crossEntropy(project, K = 3)
+
+# select the run with the lowest cross-entropy
+best = which.min(ce)
+
+# plot the best run for K = 3 (ancestry coefficients).
+barplot(t(Q(project, K = 3, run = best)), col = c("red", "blue", "yellow"))
+
+##########################
+# Manage an snmf project #
+##########################
+
+# All the runs of sNMF for a given file are 
+# automatically saved into a snmf project. 
+# The name of the snmfProject file is the same name as 
+# the name of the input file with a .snmfProject extension ("tuto.snmfProject").
+# There is only one snmf Project for each input file including all the runs.
+
+# A snmfProject can be load in a different session.
+project = load.snmfProject("tuto.snmfProject") 
+
+# A snmfProject can be erased.
+# Caution: All the files associated with the project will be removed.
+project = remove.snmfProject("tuto.snmfProject")
+
+###################
+# Post-treatments #
+###################
+
+# show the project
+show(project)
+
+# plot cross-entropy criterion of all runs of the project 
+plot(project, lwd = 5, col = "red", pch=1)
+
+# summary of the project
+summary(project)
+
+# get the cross-entropy for all runs for K = 3 
+ce = crossEntropy(project, K = 3)
+
+# get the cross-entropy for the 2nd run for K = 3
+ce = crossEntropy(project, K = 2, run = 1)
+
+# get the ancestral genotype frequency matrix, G, for the 2nd run for K = 3. 
+res = G(project, K = 3, run = 2)
+
+#############################
+# Advanced sNMF run options #
+#############################
+
+#Add of one run for K=1 and K=2 with cross-entropy to project
+project = sNMF("tuto.geno",K = c(1,2), entropy = TRUE)
+summary(project)
+
+# Q_input_file: init a run with a given ancestry coefficient matrix Q. 
+# Here, it is initialized with the Q matrix from the first run with K=3
+project = sNMF("tuto.geno", K = 3, Q_input_file = "tuto_r1.3.Q")
+
+# I: init the Q matrix of a run from a smaller run with 10% randomly chosen SNPs. 
+project = sNMF("tuto.geno", 3, I)
+# or 5% randomly chosen SNPs.
+project = sNMF("tuto.geno", 3, I = 0.05)
+
+# num_CPU: run sNMF with 2 CPUs. 
+project = sNMF("tuto.geno", 3, num_CPU=2, project)
+
+# percentage: run sNMF and calculate the cross-entropy criterion with 10% of masked
+# genotypes, instead of 5% of masked genotypes. 
+project = sNMF("tuto.geno", 3, entropy= TRUE, percentage = 0.1)
+
+# seed: choose the seed to init the randomization.
+project = sNMF("tuto.geno", 3, seed=42)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

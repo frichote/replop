@@ -23,16 +23,14 @@
 #include "../matrix/inverse.h"
 #include "../matrix/rand.h"
 #include "beta.h"
+#include "register_lfmm.h"
+#include "lfmm_algo.h"
 #include "data_lfmm.h"
 #include "error_lfmm.h"
 
-# ifndef WIN32
-#include "thread_lfmm.h"
-#include "thread_beta.h"
-# endif
-
 // create_m_beta
 
+/*
 void create_m_beta(double *C, float *R, double *U, double *V, double *m_beta,
 		int M, int N, int D, int K, int num_thrd)
 {
@@ -78,9 +76,9 @@ void create_m_beta(double *C, float *R, double *U, double *V, double *m_beta,
 	}
 # endif
 }
-
+*/
 // create_CCt
-
+/*
 void create_CCt(double *cov, double *C, int D, int N)
 {
 	int d1, d2, i;
@@ -127,7 +125,6 @@ void create_inv_cov_beta(double *inv_cov_beta, double *alpha_beta,
 	// free memory
 	free(tmp);
 }
-
 // rand_beta
 
 void rand_beta(double *beta, double *m_beta, double *inv_cov_beta,
@@ -179,47 +176,46 @@ void rand_beta(double *beta, double *m_beta, double *inv_cov_beta,
 	// free memory
 	free(L);
 }
+*/
 
 // update_beta
 
-void update_beta(double *C, float *dat, double *U, double *V, double *beta,
-		double *CCt, double *m_beta, double *inv_cov_beta,
-		double *alpha_beta, double alpha_R, int M, int N,
-		int K, int D, int num_thrd)
+void update_beta(LFMM_param param, LFMM_GS_param GS_param) 
 {
-	// m_beta = C' * (I.*(R - U'*V));                       (D,M)
-	create_m_beta(C, dat, U, V, m_beta, M, N, D, K, num_thrd);
+	// m_beta = C' * (R - U'*V);                       (D,M)
+	create_m(param->C, param->dat, param->U, param->V, 
+		GS_param->m_beta, param->L, param->n, param->mD, 
+		param->K, param->num_thrd);
 
 	// cov_beta = alpha_beta .* eye(D) + alpha_R .* C'*C;   (D,D)
-	create_inv_cov_beta(inv_cov_beta, alpha_beta, alpha_R, D, CCt);
+	create_inv_cov(GS_param->inv_cov_beta, param->alpha_beta, 
+		param->alpha_R, param->beta, param->mD, param->n, 
+		param->num_thrd);
 
 	/*      mu_beta = alpha_R .* inv(cov_beta) * m_beta;            (D,M)
 		for j=1:M
 		beta(:,j) = mvnrnd(mu_beta(:,j),inv(cov_beta));
 		end                                                             */
-	rand_beta(beta, m_beta, inv_cov_beta, alpha_R, D, M, num_thrd);
+	rand_matrix(param->beta, GS_param->m_beta, GS_param->inv_cov_beta, 
+		param->alpha_R, param->mD, param->L, param->num_thrd);
 
-	/*
-	for (j = 0; j < M; j++) {  
-		mean = 0.0;
-		for (i = 0; i < N; i++) {
-			mean += dat[i * M + j];
-		}
-		beta[j] = mean/N;
-	}
-	*/
-
-	if (isnan(beta[0]))
+	// nan check
+	if (isnan(param->beta[0]))
 		print_error_global("nan", NULL, 0);
 }
 
 // update_alpha_beta
 
-void update_alpha_beta(double *beta, double *alpha_beta, double noise_epsilon, 
-	double b_epsilon, int D, int M)
+void update_alpha_beta(LFMM_param param)
 {
-	//a = 1 + M/2;
+	// temporary parameters
+	double *beta = param->beta;
+	double noise_epsilon = param->noise_epsilon;
+	double b_epsilon = param->b_epsilon;
+	int D = param->mD;
+	int M = param->L;
 	int d;
+
 	//int a = (int)(epsilon) + M/2;
 	int a = (int)0 + M / 2;
 	// allocate memory
@@ -230,9 +226,9 @@ void update_alpha_beta(double *beta, double *alpha_beta, double noise_epsilon,
 	//dble_sum2(beta,D,M,bb,1); // beta(K,M)
 
 	// update alpha_beta
-	alpha_beta[0] = rand_gamma(a+ noise_epsilon, 1.0/(double)(bb[0]+ noise_epsilon));
+	param->alpha_beta[0] = rand_gamma(a+ noise_epsilon, 1.0/(double)(bb[0]+ noise_epsilon));
 	for (d = 1; d < D; d++)
-		alpha_beta[d] = rand_gamma(a + b_epsilon, 1.0 / (double)(bb[d] + b_epsilon));
+		param->alpha_beta[d] = rand_gamma(a + b_epsilon, 1.0 / (double)(bb[d] + b_epsilon));
 
 	// free memory
 	free(bb);

@@ -1,5 +1,7 @@
 /**
- * @file print_snmf.h
+ * @addtogroup print_snmf
+ * @ingroup sNMF
+ * @{
  *
  * @brief set of printing functions for snmf program
  */
@@ -52,3 +54,5 @@ void print_summary_snmf (     int N, int M, int m, long long seed, int K, double
 			char* input_Q, char *output_Q, char *output_F, int I);
 
 #endif // PRINT_SNMF_H
+
+/** @} */

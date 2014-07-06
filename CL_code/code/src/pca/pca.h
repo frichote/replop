@@ -1,5 +1,7 @@
 /**
- * @file pca.h
+ * @addtogroup pca
+ * @ingroup pca
+ * @{
  *
  * @brief function for individual pca calculation
  */
@@ -27,3 +29,5 @@ void pca(char* input_file, char *output_eva_file, char *output_eve_file,
 	int *n, int *L, int *K, int c, int s);
 
 #endif // PCA_H
+
+/** @} */

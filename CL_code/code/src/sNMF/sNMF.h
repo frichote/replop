@@ -1,5 +1,7 @@
 /**
- * @file sNMF.h
+ * @addtogroup sNMF
+ * @ingroup sNMF
+ * @{
  *
  * @brief function for sNMF paramater calculation
  */
@@ -34,3 +36,5 @@ void sNMF(char* input_file, int K, double alpha, double tol, double e, int maxit
 	char* output_file_F, int I, double *all_ce, double *masked_ce, int *n, int *L);
 
 #endif // SNMF_H
+
+/** @} */

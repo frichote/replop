@@ -1,5 +1,7 @@
 /**
- * @file error_ce.h
+ * @addtogroup error_ce
+ * @ingroup crossEntropy
+ * @{
  *
  * @brief function to manage error types
  */
@@ -19,3 +21,5 @@
 void print_error_ce(char* msg, char* file);
 
 #endif // ERROR_CE_H
+
+/** @} */

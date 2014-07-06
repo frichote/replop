@@ -86,6 +86,8 @@ void calc_beta_k0(double *C, float *R, double *beta, double *CCt,
 	free(inv_CCt);
 }
 
+// zscore_calc_k0
+
 void zscore_calc_k0(double *zscore, double *beta, double *var_beta, int D, int M)
 {
 	int d, j;
@@ -95,3 +97,23 @@ void zscore_calc_k0(double *zscore, double *beta, double *var_beta, int D, int M
 			zscore[(d - 1) * M + j] = fabs(beta[d * M + j]) / sqrt(var_beta[d * M + j]);
 
 }
+
+// create_CCt
+
+void create_CCt(double *cov, double *C, int D, int N)
+{
+        int d1, d2, i;
+
+        // calculate t(C) %*% C
+        for (d1 = 0; d1 < D; d1++) {
+                for (d2 = 0; d2 < d1; d2++) {
+                        for (i = 0; i < N; i++)
+                                cov[d1 * D + d2] += C[i * D + d1] * C[i * D + d2];      // C(N,D)
+                        cov[d2 * D + d1] = cov[d1 * D + d2];
+                }
+                for (i = 0; i < N; i++)
+                        cov[d1 * (D + 1)] += C[i * D + d1] * C[i * D + d1];     // C(N,D)
+
+        }
+}
+

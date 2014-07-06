@@ -34,224 +34,182 @@
 
 // lfmm_emcmc
 
-void lfmm_emcmc(float *dat, int *I, double *C, double *zscore, double *beta,
-		double *U, double *V, double *alpha_beta, double *alpha_R,
-		double *alpha_U, int N, int M, int K, int D,
-		double noise_epsilon, double b_epsilon, int init, 
-		int Niter, int burn, int missing_data,
-		int num_thrd, double *dev, double *DIC, double *perc_var)
+void lfmm_emcmc(LFMM_param param)
 {
-	double *m_beta, *inv_cov_beta, *m_U, *inv_cov_U, *m_V, *inv_cov_V, *m_var;
-	double *mean, *mean_U, *mean_V, *sum, *sum2, *bb, *CCt;
-	int i, j, n, d;
+	// GS structure allocation
+	LFMM_GS_param GS_param = (LFMM_GS_param) calloc(1, sizeof(lfmm_GS_param));
+	
+	// temporary parameters
+	int i, j, n;
 	double deviance = 0;
 	double dp = 0;
-	double thrd_m2 = 0;
+	GS_param->thrd_m2 = 0;
+	int N = param->n;
+	int M = param->L;
+	int D = param->mD;
+	int K = param->K;
 
 	// allocate memory
-	allocate_all(&m_beta, &inv_cov_beta, &m_U, &inv_cov_U, &m_V, &inv_cov_V,
-		     &m_var, &mean, &mean_U, &mean_V, &sum2, &sum, &bb, &CCt, N, M, K,
-		     D);
+	allocate_all(GS_param, N, M, K, D);
 
 	printf("\t\tStart of the Gibbs Sampler algorithm.\n\n");
 
-	create_CCt(CCt, C, D, N);
 	// init U, V and beta
-	if (init) {
-		rand_matrix_double(beta, D, M);
-		rand_matrix_double(U, K, N);
-		rand_matrix_double(V, K, M);
+	if (param->init) {
+		rand_matrix_double(param->beta, D, M);
+		rand_matrix_double(param->U, K, N);
+		rand_matrix_double(param->V, K, M);
 	} else {
-		zeros(beta, D*M);
-		zeros(U, K*N);
-		zeros(V, K*M);
+		zeros(param->beta, D*M);
+		zeros(param->U, K*N);
+		zeros(param->V, K*M);
 	}
 
-	if(missing_data)
-		*alpha_R = 1.0 / 
-			var_data_inputation(dat, I, U, V, C, beta, N, M, K, D, 
-				&thrd_m2, num_thrd);
-	else 
-		*alpha_R = 1.0 / 
-			var_data(dat, U, V, C, beta, N, M, K, D, &thrd_m2, num_thrd);
+	// update alpha_R
+	param->alpha_R = update_alpha_R (param, GS_param);
 
 	// shell print
 	init_bar(&i, &j);
 
 	n = 0;
-	while (n < Niter) {
+	while (n < param->Niter) {
 		// print shell
-		print_bar(&i, &j, Niter);
+		print_bar(&i, &j, param->Niter);
 
 		// update_alpha_U
-		update_alpha_U(U, alpha_U, noise_epsilon, K, N);
+		update_alpha_U(param);
 
 		// update_alpha_beta
-		update_alpha_beta(beta, alpha_beta, noise_epsilon, b_epsilon, D, M);
+		update_alpha_beta(param);
 
 		// update_beta
-		update_beta(C, dat, U, V, beta, CCt, m_beta, inv_cov_beta,
-			    alpha_beta, *alpha_R, M, N, K, D, num_thrd);
+		update_beta(param, GS_param); 
 
 		// update U
-		update_U(C, dat, U, V, beta, m_U, inv_cov_U, *alpha_U, *alpha_R,
-			 M, N, K, D, num_thrd);
+		update_U(param, GS_param);
 
 		// update V
-		update_V(C, dat, U, V, beta, m_V, inv_cov_V, (double)(1),
-			 *alpha_R, M, N, K, D, num_thrd);
-
-		// update_var
-		udpate_var(m_var, U, V, beta, 1/(*alpha_R), N, M, K, D); 
+		update_V(param, GS_param);
 
 		// update alpha_R
-		if(missing_data)
-			*alpha_R = 1.0 / 
-				var_data_inputation(dat, I, U, V, C, beta, N, M, K, D, 
-					&thrd_m2, num_thrd);
-		else 
-			*alpha_R = 1.0 / 
-				var_data(dat, U, V, C, beta, N, M, K, D, 
-					&thrd_m2, num_thrd);
+		param->alpha_R = update_alpha_R (param, GS_param);
 
 		// update sums
-		if (n >= burn) 
-			update_sums(beta, U, V, m_var, perc_var, sum, sum2, mean_U, 
-				    mean_V, &deviance, thrd_m2, N, M, K, D, *alpha_R);
+		if (n >= param->burn) 
+			update_sums(param, GS_param);
 		n++;
 	}
 	final_bar();
 	printf("\n");
 	printf("\t\tEnd of the Gibbs Sampler algorithm.\n\n");
+
 	// calculate zscore
-	
-	zscore_calc(zscore, sum, sum2, M, Niter - burn, D);
+	zscore_calc(param->zscore, GS_param->sum, GS_param->sum2, param->L, 
+		param->Niter - param->burn, param->mD);
 
 	// check zscore
-	if (check_mat(zscore, M, 0, 1))
+	if (check_mat(param->zscore, param->L, 0, 1))
 		print_error_global("nan", NULL, 0);
 
 	// calculate dp and deviance
-	calc_dp_deviance(dat, sum, mean_U, mean_V, C, &deviance, &dp,
-			 Niter - burn, N, M, K, D, num_thrd, perc_var);
-
-	// percentage of variance
-	normalize_lines(perc_var, 1, K + D + 1);
-	//print_perc(perc_var, K, D);
+	calc_dp_deviance(param, GS_param, &deviance, &dp);
 
 	// save ED and DIC
-	*dev = deviance;
-	*DIC = 2 * deviance - dp;
+	param->dev = deviance;
+	param->DIC = 2 * deviance - dp;
 	printf("\tED:%10.10G\t DIC: %10.10G \n\n", deviance, 2 * deviance - dp);
-        // write_DIC(dev_file,deviance,2*deviance-dp);
 
 	// free memory
-	free_all(m_beta, inv_cov_beta, m_U, inv_cov_U, m_V, inv_cov_V, 
-		 m_var, mean, mean_U, mean_V, sum2, sum, bb, CCt);
+	free_all(GS_param);
+	free(GS_param);
 }
-
-// update_var
-
-void udpate_var(double *m_var, double *U, double *V, double *beta, double var_R,
-	int N, int M, int K, int D)
-{
-	int k, d;
-
-	m_var[0] = var_R;
-
-	for(d = 0; d < D; d++)
-		m_var[d + 1] = variance(&(beta[d * M]), M); 
-	m_var[1] /= N;
-
-	for(k = 0; k < K; k++)
-		m_var[k + 1 + D] = variance(&(U[k * N]), N) * variance(&(V[k * M]), M);  
-
-} 
 
 // update_sums
 
-void update_sums(double *beta, double *U, double *V, double *m_var, 
-		 double *mean_var, double *sum, double *sum2,
-		 double *mean_U, double *mean_V, double *deviance,
-		 double thrd_m2, int N, int M, int K, int D, double alpha_R)
+void update_sums(LFMM_param param, LFMM_GS_param GS_param)
 {
 	double dv;
+	int D = param->mD;
+	int M = param->L;
+	int N = param->n;
+	int K = param->K;
 
-	update_sum(beta, sum, D * M);
-	update_sum(m_var, mean_var, D + K + 1);
-	update_sum2(beta, sum2, D * M);
-	update_sum(U, mean_U, K * N);
-	update_sum(V, mean_V, K * M);
-	dv = thrd_m2 * alpha_R;
-	update_sum(&dv, deviance, 1);
+	// sum beta
+	update_sum(param->beta, GS_param->sum, D * M);
+	// sum squares beta
+	update_sum2(param->beta, GS_param->sum2, D * M);
+	// sum U
+	update_sum(param->U, GS_param->mean_U, K * N);
+	// sum V
+	update_sum(param->V, GS_param->mean_V, K * M);
+	dv = GS_param->thrd_m2 * param->alpha_R;
+	// sum devince
+	update_sum(&dv, &(param->dev), 1);
 }
 
 // calc_dp_deviance
 
-void calc_dp_deviance(float *dat, double *sum, double *mean_U, double *mean_V,
-		      double *C, double *deviance, double *dp, int size, int N,
-		      int M, int K, int D, int num_thrd, double *mean_var)
+void calc_dp_deviance(LFMM_param param, LFMM_GS_param GS_param, 
+		      double *deviance, double *dp) 
 {
-	double thrd_m2, tmp;
+	double tmp;
+	double size = param->Niter - param->burn;
+	int D = param->mD;
+	int M = param->L;
+	int N = param->n;
+	int K = param->K;
 
-	update_m(sum, D * M, size);
-	update_m(mean_U, K * N, size);
-	update_m(mean_V, K * M, size);
-	update_m(deviance, 1, size);
-	tmp =
-	    var_data(dat, mean_U, mean_V, C, sum, N, M, K, D, &thrd_m2,
-		     num_thrd);
-	*dp = thrd_m2 / tmp;
+	update_m(GS_param->sum, D * M, size);
+	update_m(GS_param->mean_U, K * N, size);
+	update_m(GS_param->mean_V, K * M, size);
+	update_m(&(param->dev), 1, size);
+	tmp = var_data(param, GS_param);
 
-	update_m(mean_var, K + D + 1, size);
+	*dp = GS_param->thrd_m2 / tmp;
+	*deviance = param->dev;
 }
 
 // allocate_all
 
-void allocate_all(double **m_beta, double **inv_cov_beta, double **m_U,
-		  double **inv_cov_U, double **m_V, double **inv_cov_V,
-		  double **m_var, double **mean, double **mean_U, double **mean_V,
-		  double **sum2, double **sum, double **bb, double **CCt, int N,
-		  int M, int K, int D)
+void allocate_all(LFMM_GS_param GS_param, int N, int M, int K, int D) 
 {
-	*m_beta = (double *) malloc(D * M * sizeof(double));
-	*inv_cov_beta = (double *) malloc(D * D * sizeof(double));
-	*m_U = (double *) malloc(K * N * sizeof(double));
-	*inv_cov_U = (double *) malloc(K * K * sizeof(double));
-	*m_V = (double *) malloc(K * M * sizeof(double));
-	*inv_cov_V = (double *) malloc(K * K * sizeof(double));
-	*m_var = (double *) malloc((K + D + 1) * sizeof(double));
+	GS_param->m_beta = (double *) malloc(D * M * sizeof(double));
+	GS_param->inv_cov_beta = (double *) malloc(D * D * sizeof(double));
+	GS_param->m_U = (double *) malloc(K * N * sizeof(double));
+	GS_param->inv_cov_U = (double *) malloc(K * K * sizeof(double));
+	GS_param->m_V = (double *) malloc(K * M * sizeof(double));
+	GS_param->inv_cov_V = (double *) malloc(K * K * sizeof(double));
 
-	*mean = (double *)calloc(D * M, sizeof(double));
-	*mean_U = (double *)calloc(K * N, sizeof(double));
-	*mean_V = (double *)calloc(K * M, sizeof(double));
-	*sum = (double *)calloc(D * M, sizeof(double));
-	*sum2 = (double *)calloc(D * M, sizeof(double));
-	*bb = (double *)calloc(D, sizeof(double));
-	*CCt = (double *)calloc(D * D, sizeof(double));
+	GS_param->mean_U = (double *)calloc(K * N, sizeof(double));
+	GS_param->mean_V = (double *)calloc(K * M, sizeof(double));
+	GS_param->sum = (double *)calloc(D * M, sizeof(double));
+	GS_param->sum2 = (double *)calloc(D * M, sizeof(double));
 }
 
 // free_all
 
-void free_all(double *m_beta, double *inv_cov_beta, double *m_U,
-	      double *inv_cov_U, double *m_V, double *inv_cov_V, 
-	      double *m_var, double *mean,
-	      double *mean_U, double *mean_V, double *sum2, double *sum,
-	      double *bb, double *CCt)
+void free_all(LFMM_GS_param GS_param)
 {
-	free(m_beta);
-	free(inv_cov_beta);
-	free(m_U);
-	free(inv_cov_U);
-	free(m_V);
-	free(inv_cov_V);
-	free(m_var);
-	free(mean);
-	free(mean_U);
-	free(mean_V);
-	free(sum2);
-	free(sum);
-	free(bb);
-	free(CCt);
+	free(GS_param->m_beta);
+	free(GS_param->inv_cov_beta);
+	free(GS_param->m_U);
+	free(GS_param->inv_cov_U);
+	free(GS_param->m_V);
+	free(GS_param->inv_cov_V);
+	free(GS_param->mean_U);
+	free(GS_param->mean_V);
+	free(GS_param->sum2);
+	free(GS_param->sum);
 }
 
+// update_alpha_R
+
+double update_alpha_R(LFMM_param param, LFMM_GS_param GS_param)
+{
+	/*
+	if(param->missing_data)
+		return 1.0 / var_data_inputation(param, GS_param);
+	else 
+	*/
+	return 1.0 / var_data(param, GS_param);
+}

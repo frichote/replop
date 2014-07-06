@@ -1,5 +1,7 @@
 /**
- * @file error_nmf.h
+ * @addtogroup error_nmf
+ * @ingroup sNMF
+ * @{
  *
  * @brief function to manage error types in sNMF
  */
@@ -20,3 +22,5 @@
 void print_error_nmf(char* msg, char* file, int n);
 
 #endif // ERROR_NMF_H
+
+/** @} */

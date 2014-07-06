@@ -1,5 +1,7 @@
 /**
- * @file thread_F.h
+ * @addtogroup thread_F
+ * @ingroup sNMF
+ * @{
  *
  * @brief multithreaded part of the functions to compute 
  * 	  new values for F.
@@ -16,3 +18,5 @@
 void slice_temp3_X(void *G);
 
 #endif // THREAD_F_H
+
+/** @} */

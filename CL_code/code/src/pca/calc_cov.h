@@ -1,5 +1,7 @@
 /**
- * @file calc_cov.h
+ * @addtogroup calc_cov
+ * @ingroup pca
+ * @{
  *
  * @brief function to calculate covariance matrix
  */
@@ -37,3 +39,5 @@ void calc_sdev(double *val, int N);
 void calc_x(double *vec, double *val, int N, int K);
 
 #endif // CALC_COV_H
+
+/** @} */

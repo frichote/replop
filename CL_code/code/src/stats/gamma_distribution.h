@@ -1,5 +1,10 @@
+/**
+ * @addtogroup gamma_distribution
+ * @ingroup stats
+ * @{
+ */
+
 ////////////////////////////////////////////////////////////////////////////////
-// File: gamma_distribution.h                                                 //
 // Routine(s):                                                                //
 //    gamma_distribution                                                      //
 ////////////////////////////////////////////////////////////////////////////////
@@ -12,3 +17,5 @@ double Gamma_Distribution(double x, double nu);
 double quantile_Gamma_Distribution(double p, double nu);
 
 #endif 
+
+/** @} */

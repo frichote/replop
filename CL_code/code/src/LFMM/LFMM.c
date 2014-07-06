@@ -38,188 +38,160 @@
 #include "register_lfmm.h"
 #include "lfmm_algo.h"
 
-void LFMM(char* input_file, char* output_file, char* cov_file, 
-	int *n, int *L, int *RD, int nd, int K, int Niter, int burn, int num_thrd, 
-	long long *seed, int missing_data, int all, double *dic, double *deviance,
-	double noise_epsilon, double b_epsilon, int init)
+void LFMM(LFMM_param param)
 {
 
 	// Parameters initialization
-	int N = 0, N2;
-	int M = 0;
-	int D = 2;
-	int nD = 0;		// total number of covariable
+	int N2;
+	param->n = 0;
+	param->D = 0;
 
 	// temporary variables
-	double *beta, *U, *V, *alpha_beta, *zscore;	// beta, U, V
-	double *C, *nC;		// covariable
-	double alpha_R, alpha_U;
+	int K = param->K;	  
+	int n = param->n; 
+	int L = param->L;
+	int mD = param->mD;
+	int D = param->D;
+	int d;
 
-	float *dat;		// data matrix
-	int *I = NULL;		// missing value matrix
-	double dev, DIC;
 	double *perc_var;	// percentage of variances
 
 	// random initialization
-	init_random(seed);
+	init_random(&(param->seed));
 
         // count the number of lines and columns
-        M = nb_cols_lfmm(input_file);
-        N = nb_lines(input_file, M);
+        param->L = nb_cols_lfmm(param->input_file);
+        param->n = nb_lines(param->input_file, param->L);
 
-        nD = nb_cols_lfmm(cov_file);
-        N2 = nb_lines(cov_file, nD);
+        param->D = nb_cols_lfmm(param->cov_file);
+        N2 = nb_lines(param->cov_file, param->D);
 
 	// check the number of lines and columns
-	if (N2 != N) {
+	if (N2 != param->n) {
 		printf("The number of individuals of %s (%d) is different from the number"
-			" of individuals of %s (%d)\n",input_file, N, cov_file, N2);
+			" of individuals of %s (%d)\n",param->input_file, param->n, 
+			param->cov_file, N2);
 		exit(1);
 	}
 
-	if (nd && (nd < 1 || nd > nD))
+	if (param->nd && (param->nd < 1 || param->nd > param->D))
                 print_error_lfmm("specific",
                                  "(-d option). d should be between 1 and D",
                                  0);
-	*n = N;
-	*L = M;
-	*RD = nD;
 
         // print summary of command line
-        print_summary_lfmm(N, M, K, nD, nd, Niter, burn,
-                      missing_data, output_file, input_file, cov_file, 
-                      num_thrd, *seed, all);
-
+        print_summary_lfmm(param);
 
 	// allocate data memory
-	U = (double *)calloc(K * N, sizeof(double));	// (N,K)
-	V = (double *)calloc(K * M, sizeof(double));	// (N,K)
-	if (all) {
-		beta = (double *)calloc((nD+1) * M, sizeof(double));
-		alpha_beta = (double *)calloc(nD+1, sizeof(double));
-		perc_var = (double *)calloc(nD + K + 2, sizeof(double));
+	param->U = (double *)calloc(K * n, sizeof(double));	// (N,K)
+	param->V = (double *)calloc(K * L, sizeof(double));	// (N,K)
+	param->alpha_U = (double *)calloc(K, sizeof(double));
+	param->alpha_V = (double *)calloc(K, sizeof(double));
+	if (param->all) {
+		mD = D + 1;
 	} else {
-		beta = (double *)calloc(D * M, sizeof(double));
-		alpha_beta = (double *)calloc(D, sizeof(double));
-		perc_var = (double *)calloc(D + K + 1, sizeof(double));
+		mD = 2;
 	}	
+	param->mD = mD;
+	param->beta = (double *)calloc(mD * L, sizeof(double));
+	param->alpha_beta = (double *)calloc(mD, sizeof(double));
+	perc_var = (double *)calloc(mD + K + 1, sizeof(double));
 
 	// read of covariable file
-	nC = (double *)calloc(N * nD, sizeof(double));	
-	read_data_double(cov_file, N, nD, nC);
-	normalize_cov(nC, N, nD);
-	printf("Read variable file:\n \t%s\t\tOK.\n\n", cov_file);
+	param->C = (double *)calloc(L * D, sizeof(double));	
+	read_data_double(param->cov_file, n, D, param->C);
+	normalize_cov(param->C, n, D);
+	printf("Read variable file:\n \t%s\t\tOK.\n\n", param->cov_file);
 
 	// read of data file
-	dat = (float *)calloc(N * M, sizeof(float));
-	read_data_float(input_file, N, M, dat);
+	param->dat = (float *)calloc(n * L, sizeof(float));
+	read_data_float(param->input_file, n, L, param->dat);
 
 	// creation on the missing data matrix
-	if (missing_data) {
-		I = (int *)calloc(N * M, sizeof(int));
-		create_I(dat, I, N, M);
+	if (param->missing_data) {
+		param->I = (int *)calloc(n * L, sizeof(int));
+		create_I(param->dat, param->I, n, L);
 	}
 
 	// warnings about the covariables
-	if (all) {
+	if (param->all) {
 		printf("WARNING: You launched LFMM command line with several"
 		       " covariables with '-a' option."
 		       " The model will be\n\tlaunched with all covariables at the same time.\n\n");
-	} else if (!nd && nD > 1) {
+	} else if (!param->nd && D > 1) {
 		printf("WARNING: You launched LFMM command line with several"
 		       " covariables. The model will be\n\tlaunched sequentially"
 		       " (independently) for each covariable.\n\n");
 	}
 
-	printf("Read genotype file:\n \t%s\t\tOK.\n", input_file);
+	printf("Read genotype file:\n \t%s\t\tOK.\n", param->input_file);
 
 	// all covariables at the same time
-	if (all) {
+	if (param->all) {
 		// allocate memory
-		D = nD + 1;
-		// TOCHECK
-		zscore = (double *)calloc(M * nD, sizeof(double));
-		C = (double *)calloc(N * D, sizeof(double));	// (N,K)
+		param->zscore = (double *)calloc(L * D, sizeof(double));
+		param->mC = (double *)calloc(n * mD, sizeof(double));	
 
 		printf("\n<<<<\n\t Analyse for all covariables.\n\n");
 		// create C
-		modify_C(nC, N, nD, C, nd, all);
+		modify_C(param->C, n, mD, param->mC, param->nd, param->all);
 
 		// run LFMM
 		if (K)
-			lfmm_emcmc(dat, I, C, zscore, beta, U, V, alpha_beta, &alpha_R,
-				&alpha_U, N, M, K, D, noise_epsilon, b_epsilon, init, Niter, burn,
-			   	missing_data, num_thrd, &dev, &DIC, perc_var);
+			lfmm_emcmc(param); 
 		else
-			lfmm_k0(dat, I, C, zscore, beta, N, M, D, missing_data, perc_var);
+			lfmm_k0(param);
 
 		// write zscore
-	        write_zscore_double(output_file, M, zscore, D-1, 1, 0, K, N, dev, DIC, perc_var);
+	        write_zscore_double(param->output_file, L, param->zscore, 
+			mD-1, 1, 0, K, n, param->dev, param->DIC);
 		printf("\tThe execution for all covariables worked without error.\n>>>>\n\n");
 
 	// only with covariable nd
-	} else if (nd) {
+	} else if (param->nd) {
 		// allocate memory
-		zscore = (double *)calloc(M, sizeof(double));
-		C = (double *)calloc(N * D, sizeof(double));	// (N,K)
-		nd = nd - 1;
+		param->zscore = (double *)calloc(L, sizeof(double));
+		param->mC = (double *)calloc(n * mD, sizeof(double));	// (N,K)
+		param->nd -= 1;	// modify nd to be the index of C column 
 
-		printf("\n<<<<\n\t Analyse for covariable %d\n\n", nd + 1);
+		printf("\n<<<<\n\t Analyse for covariable %d\n\n", param->nd + 1);
 		// create C
-		modify_C(nC, N, nD, C, nd, all);
+		modify_C(param->C, n, mD, param->mC, param->nd, param->all);
 
 		// run LFMM
 		if (K) 
-			lfmm_emcmc(dat, I, C, zscore, beta, U, V, alpha_beta, &alpha_R,
-				&alpha_U, N, M, K, D, noise_epsilon, b_epsilon, init, Niter, burn,
-			   	missing_data, num_thrd, &dev, &DIC, perc_var);
+			lfmm_emcmc(param);
 		else
-			lfmm_k0(dat, I, C, zscore, beta, N, M, D, missing_data, perc_var);
+			lfmm_k0(param);
 
 		// write zscore
-	        write_zscore_double(output_file, M, zscore, 1, 0, nd, K, N, dev, DIC, perc_var);
+	        write_zscore_double(param->output_file, L, param->zscore, 
+		1, 0, param->nd, K, n, param->dev, param->DIC);
 		printf("\tThe execution for covariable %d worked without error."
-			"\n>>>>\n\n", nd + 1);
+			"\n>>>>\n\n", param->nd + 1);
 
 	// each covariable sequentially
 	} else {
 		// allocate memory
-		zscore = (double *)calloc(M, sizeof(double));
-		C = (double *)calloc(N * D, sizeof(double));	// (N,K)
+		param->zscore = (double *)calloc(L, sizeof(double));
+		param->mC = (double *)calloc(n * D, sizeof(double));	// (N,K)
 		// for each variable
-		for (nd = 0; nd < nD; nd++) {
-			printf("\n<<<<\n\t Analyse for covariable %d\n\n", nd + 1);
+		for (d = 0; d < param->D; d++) {
+			printf("\n<<<<\n\t Analyse for covariable %d\n\n", d + 1);
 			// create C
-			modify_C(nC, N, nD, C, nd, all);
+			modify_C(param->C, n, mD, param->mC, d, param->all);
 
 			// run LFMM
 			if (K)
-				lfmm_emcmc(dat, I, C, zscore, beta, U, V, alpha_beta, &alpha_R,
-					&alpha_U, N, M, K, D, noise_epsilon, b_epsilon, init, Niter, burn,
-				   	missing_data, num_thrd, &dev, &DIC, perc_var);
+				lfmm_emcmc(param);
 			else
-				lfmm_k0(dat, I, C, zscore, beta, N, M, D, missing_data, perc_var);
+				lfmm_k0(param);
 	
 			// write zscore
-	        	write_zscore_double(output_file, M, zscore, 1, 0, nd, K, N, dev, DIC, perc_var);
+	        	write_zscore_double(param->output_file, L, param->zscore, 
+			1, 0, d, K, n, param->dev, param->DIC);
 			printf("\tThe execution for covariable %d worked without error."
-				"\n>>>>\n\n", nd + 1);
+				"\n>>>>\n\n", d + 1);
 		}
 	}
-	*dic = DIC;
-	*deviance = dev;
-
-	// free memory
-	if (missing_data) {
-		free(I);
-	}
-	free(C);
-	free(nC);
-	free(U);
-	free(V);
-	free(dat);
-	free(alpha_beta);
-	free(beta);
-	free(zscore);
-	free(perc_var);
 }

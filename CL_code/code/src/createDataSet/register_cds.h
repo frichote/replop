@@ -1,7 +1,9 @@
 /**
- * @file register_cds.h
+ * @addtogroup register_cds
+ * @ingroup createDataSet
+ * @{
  *
- * @brief functions to read data matrices
+ * @brief functions to analyse command line parameters 
  */
 
 #ifndef REGISTER_CDS_H
@@ -10,15 +12,17 @@
 /**
  * analyse command line set of parameters and set the parameters
  * 
- * @param argc  the number of arguments
- * @param argv  the set of arguments
- * @param m     the number of alleles
- * @param s     seed
- * @param e	percentage of genotypes to remove
- * @param input	the input file
- * @param output_file	the output file
+ * @param[in] argc  the number of arguments
+ * @param[in] argv  the set of arguments
+ * @param[out] m     the number of alleles
+ * @param[out] s     seed
+ * @param[out] e	percentage of genotypes to remove
+ * @param[out] input	the input file
+ * @param[out] output_file	the output file
  */
 void analyse_param_cds(	int argc, char *argv[], int *m, long long *s,
 			double *e, char *input, char* output_file);
 
 #endif // REGISTER_CDS_H
+
+/** @} */

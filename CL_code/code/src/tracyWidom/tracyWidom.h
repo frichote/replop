@@ -1,5 +1,7 @@
 /**
- * @file tracyWidom.h
+ * @addtogroup tracyWidom
+ * @ingroup tracyWidom
+ * @{
  *
  * @brief function for tracyWidom calculation
  */
@@ -76,3 +78,5 @@ void clean_zeros(double **values, int *M);
 void clean_sort(double **values, int *M);
 
 #endif // TRACYWIDOM_H
+
+/** @} */

@@ -1,5 +1,7 @@
 /**
- * @file blockpivot.h
+ * @addtogroup blockpivot
+ * @ingroup nnlsm
+ * @{
  *
  * @brief functions to manage matrix multiplication in nnlsm algorithm
  */
@@ -126,3 +128,5 @@ int XY_update(double *AtA, double *AtB, int *PassiveSet, int *NotGood,
 
 #endif // BLOCKPIVOT_H
 
+
+/** @} */

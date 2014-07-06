@@ -1,5 +1,7 @@
 /**
- * @file thread_snmf.h
+ * @addtogroup thread_snmf
+ * @ingroup sNMF
+ * @{
  *
  * @brief general function and structure to manage multithreading
  */
@@ -47,3 +49,5 @@ void thread_fct_snmf(bituint *R, double *out, double *Q, double *F,
                 int nc, int K, int M, int Mp, int N, int num_thrd, void (*fct) ());
 
 #endif // THREAD_H
+
+/** @} */

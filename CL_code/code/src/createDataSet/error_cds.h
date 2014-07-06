@@ -1,5 +1,7 @@
 /**
- * @file error_cds.h
+ * @addtogroup error_cds
+ * @ingroup createDataSet
+ * @{
  *
  * @brief function to manage error types for createDataSet
  */
@@ -13,9 +15,11 @@
 /**
  * print a specific createDataSet error message
  *
- * @param msg   the string to recognize the error type
- * @param file  the name of a file (depends on the error)
+ * @param[in] msg   the string to recognize the error type
+ * @param[in] file  the name of a file (depends on the error)
  */
 void print_error_cds(char* msg, char* file);
 
 #endif // ERROR_CDS_H
+
+/** @} */

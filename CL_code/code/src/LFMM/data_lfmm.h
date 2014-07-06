@@ -1,5 +1,7 @@
 /**
- * @file data_lfmm.h
+ * @addtogroup data_lfmm
+ * @ingroup LFMM
+ * @{
  *
  * @brief set of functions to manage data
  */
@@ -8,6 +10,54 @@
 #define DATA_LFMM_H
 
 #include "../matrix/data.h"
+#include "register_lfmm.h"
+#include "lfmm_algo.h"
+
+/**
+ * simulate values from a normal distribution of
+ * mean m_A and inverse covavariance inv_cov_A
+ * into A (with alpha_R somewhere :p) 
+ * 
+ * @param A     the output A realization (of size KxN)
+ * @param m_A   the conditional A mean matrix (of size KxN)
+ * @param inv_cov_A     the conditional A covariance matrix (of size KxK)
+ * @param alpha_R       the inverse of the residual variance
+ * @param K     the number of latent factors
+ * @param N     the number of individuals
+ * @param num_thrd      the number of processes used
+ */
+void rand_matrix(double *A, double *m_A, double *inv_cov_A, double alpha_R,
+        int K, int N, int num_thrd);
+
+
+/** 
+ * calculate inv_cov = inv(alphaR A %*% t(A) + diag(alpha))
+ *
+ * @param inv_cov  the output matrix (of size KxK)
+ * @param alpha    the hyperparameters for A
+ * @param alpha_R  the inverse of the residual variance
+ * @param V     the A matrix (of size KxM)
+ * @param K     a size 
+ * @param M     a size
+ * @param num_thrd      the number of processes used
+ */
+void create_inv_cov(double *inv_cov, double* alpha, double alpha_R,
+       double *A, int K, int M, int num_thrd);
+
+/** calculate m = (R - B'*C)) * A'
+ * @param A	matrix (of size KxM)
+ * @param R	data matrix (of size NxM)
+ * @param B	matrix (of size JxN)
+ * @param C	matrix (of size JxM)
+ * @param m	matrix (of size NxK)
+ * @param M	size
+ * @param N	size
+ * @param J	size
+ * @param K	size
+ * @param num_thrd	number of processe used
+ */
+void create_m(double *A, float *R, double *B, double *C, double *m,
+                int M, int N, int J, int K, int num_thrd);
 
 /** calculates the quantiles of dist for prob into
  *
@@ -125,26 +175,15 @@ void write_DIC(char *file_data, double deviance, double DIC);
  * @param DIC		DIC
  */
 void write_zscore_double(char *output_file, int M, double *zscore, int D, int all, 
-	int nd, int K, int N, double dev, double DIC, double *perc_var);
+	int nd, int K, int N, double dev, double DIC);
 
 /**
  * compute the current residual variance
  *
- * @param R	the data matrix (of size NxM)
- * @param U	the U matrix (of size KxN)
- * @param V	the V matrix (of size KxM)
- * @param C	the C matrix (of size NxD)
- * @param beta	the beta parameter (of size DxM)
- * @param N	the number of individuals
- * @param M	the number of loci
- * @param D	the number of covariables
- * @param K	the number of latent factors
- * @param thrd_m2	the output value of the mean
- * @param num_thrd	the number of thread used
+ * @param param		parameter structure
+ * @param GS_param	GS parameter structure
  */
-double var_data(float *R, double *U, double *V, double *C, double *beta, int N,
-		int M, int K, int D, double *thrd_m2, int num_thrd);
-
+double var_data(LFMM_param param, LFMM_GS_param GS_param);
 
 /**
  * compute the current residual variance and input missing data
@@ -162,8 +201,8 @@ double var_data(float *R, double *U, double *V, double *C, double *beta, int N,
  * @param thrd_m2	the output value of the mean
  * @param num_thrd	the number of thread used
  */
-double var_data_inputation(float *R, int *I, double *U, double *V, double *C, 
-	double *beta, int N, int M, int K, int D, double *thrd_m2, int num_thrd);
+//double var_data_inputation(float *R, int *I, double *U, double *V, double *C, 
+//	double *beta, int N, int M, int K, int D, double *thrd_m2, int num_thrd);
 
 /**
  * input missing values with U'*V+C*beta
@@ -193,3 +232,5 @@ void inputation_lfmm(float *R, double *U, double *V, double *C, double *beta, in
 void inputation_freq(float *R, int *I, int N, int M);
 
 #endif // DATA_LFMM_H
+
+/** @} */

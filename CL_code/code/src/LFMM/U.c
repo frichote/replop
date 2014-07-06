@@ -27,13 +27,9 @@
 #include "../matrix/rand.h"
 #include "error_lfmm.h"
 
-#ifndef WIN32
-#include "thread_U.h"
-#include "thread_lfmm.h"
-#endif
-
 // create_m_U
 
+/*
 void create_m_U(double *V, float *R, double *C, double *beta, double *m_U,
 		int M, int N, int D, int K, int num_thrd)
 {
@@ -174,37 +170,52 @@ void rand_U(double *U, double *m_U, double *inv_cov_U, double alpha_R,
 	// free memory
 	free(L);
 }
+*/
 
 // update_U
 
-void update_U(double *C, float *dat, double *U, double *V, double *beta,
-		double *m_U, double *inv_cov_U, double alpha_U, double alpha_R,
-		int M, int N, int K, int D, int num_thrd)
+void update_U(LFMM_param param, LFMM_GS_param GS_param)
 {
 	// m_U = (I.*(R - C*beta)) * V';                        (N,K)
-	create_m_U(V, dat, C, beta, m_U, M, N, D, K, num_thrd);
+	create_m(param->V, param->dat, param->C, param->beta, 
+		GS_param->m_U, param->L, param->n, param->mD, 
+		param->K, param->num_thrd);
 
 	// cov_U = alpha .* eye(K) + alpha_R .* V*V';           (K,K)
-	create_inv_cov_U(inv_cov_U, alpha_U, alpha_R, V, K, M, num_thrd);
+	create_inv_cov(GS_param->inv_cov_U, param->alpha_U, param->alpha_R, 
+		param->V, param->K, param->L, param->num_thrd);
 
 	/*      mu_U = alpha_R .* inv(cov_U) * m_U';                    (N,K)
 		for i=1:N
 		U(:,i) = mvnrnd(mu_U(:,i),inv(cov_U));
 		end                                                             */
-	rand_U(U, m_U, inv_cov_U, alpha_R, K, N, num_thrd);
+	rand_matrix(param->U, GS_param->m_U, GS_param->inv_cov_U, 
+		param->alpha_R, param->K, param->n, param->num_thrd);
 
-	if (isnan(U[0]))
+	if (isnan(param->U[0]))
 		print_error_global("nan", NULL, 0);
 }
 
 // update_alpha_U
 
-void update_alpha_U(double *U, double *alpha_U, double epsilon, int K, int N)
+void update_alpha_U(LFMM_param param) // double *U, double *alpha_U, double epsilon, int K, int N)
 {
+	// temporary parameters
+	int N = param->n;
+	int K = param->K;
+	double epsilon = param->noise_epsilon;
+	double *U = param->U;
+	double tmp;
+	int k;
+
 	int a = (int)epsilon + N * K / 2;
 	// b = 1/2*sum(sum(U.^2)) + 1/2*sum(sum(V.^2));
 	double b = 0.5 * dble_sum(U, N * K) + epsilon;	// U(D,N) V(D,M)
 
 	// update alpha_U
-	*alpha_U = rand_gamma(a, 1.0 / b);
+	tmp = rand_gamma(a, 1.0 / b);
+	for (k = 0; k < K; k++) {
+		param->alpha_U[k] = tmp; 
+		param->alpha_V[k] = tmp; 
+	}
 }

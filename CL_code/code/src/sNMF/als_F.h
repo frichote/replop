@@ -1,5 +1,7 @@
 /**
- * @file als_F.h
+ * @addtogroup als_F
+ * @ingroup sNMF
+ * @{
  *
  * @brief set of functions to compute F matrix from als algorithm
  */
@@ -55,3 +57,5 @@ double update_nnlsm_F(double *F, double *Q, bituint *X, int N, int M, int nc,
 void normalize_F(double *F, int M, int nc, int K);
 
 #endif // ALS_F_H
+
+/** @} */

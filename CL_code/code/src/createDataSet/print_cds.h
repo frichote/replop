@@ -1,5 +1,7 @@
 /**
- * @file print_cds.h
+ * @addtogroup print_cds
+ * @ingroup createDataSet
+ * @{
  *
  * @brief set of printing functions
  */
@@ -16,14 +18,16 @@ void print_help_cds();
 /**
  * print summary of the parameters
  *
- * @param N     the number of individuals
- * @param M     the number of loci
- * @param m     ploidy (1 for haploid, 2 diploid, d d-ploid)
- * @param seed	seed value
- * @param e     percentage of missing data
- * @param input         genotype file
+ * @param[in] N     the number of individuals
+ * @param[in] M     the number of loci
+ * @param[in] m     ploidy (1 for haploid, 2 diploid, d d-ploid)
+ * @param[in] seed	seed value
+ * @param[in] e     percentage of missing data
+ * @param[in] input         genotype file
  */
 void print_summary_cds (int N, int M, int m, long long seed,
                         double e, char *input, char *output);
 
 #endif // PRINT_CDS_H
+
+/** @} */

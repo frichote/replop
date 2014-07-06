@@ -1,5 +1,7 @@
 /**
- * @file beta_k0.h
+ * @addtogroup beta_k0
+ * @ingroup LFMM
+ * @{
  *
  * @brief functions to calc beta parameters in LM model.
  * 	The code is based on a previous matlab version. 
@@ -38,4 +40,17 @@ void calc_beta_k0(double *C, float *R, double *beta,
  */
 void zscore_calc_k0(double *zscore, double *beta, double *var_beta, int D, int M);
 
+/**
+ * compute the C'*C in tmp
+ *
+ * @param cov   the output matrix (of size DxD)
+ * @param C     the covariable matrix (of size NxD)
+ * @param D     the number of covariables
+ * @param N     the number of individuals
+ */
+void create_CCt(double *cov, double *C, int D, int N);
+
+
 #endif // BETA_K0_H
+
+/** @} */

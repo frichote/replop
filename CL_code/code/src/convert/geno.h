@@ -1,4 +1,7 @@
 /**
+ * @addtogroup geno
+ * @ingroup convert
+ * @{
  * @file geno.h
  *
  * @brief functions to read/write files with geno format.
@@ -53,4 +56,4 @@ void write_geno(char* output_file, int N, int M, int *data);
  */
 void write_geno_line(FILE* File, int* line, int N);
 
-#endif // GENO_H
+#endif /** @} GENO_H */

@@ -27,39 +27,26 @@
 
 int main(int argc, char *argv[])
 {
+	// parameters allocation
+	lfmm_param *param = (lfmm_param *) calloc(1, sizeof(lfmm_param));
 
 	// Parameters initialization
-	int nd = 0;
-	int all = 0;
-	int K = 0;
-	int n, L, D;
-	int burn = 100;
-	int Niter = 1000;
-	int num_thrd = 1;
-	int missing_data = 0;
-	char output_file[512] = "";
-	char input_file[512];
-	char cov_file[512];
-        char dev_file[512] = "";
-	long long seed = -1;
-	double dev, dic;
-	double noise_epsilon = 1e-3;
-	double b_epsilon = 1000;
-	int init = 1; 
+	init_param_lfmm(param);
 
 	// print
 	print_head_lfmm();
 	print_options(argc, argv);
 
-	// analyse of the command line
-	analyse_param_lfmm(argc, argv, &nd, &K, &Niter, &burn,
-		      &missing_data, output_file, input_file, cov_file,
-		      &num_thrd, &seed, &all);
+	// analyse the command line and fill param
+	analyse_param_lfmm(argc, argv, param);
 
 	// run function
-	LFMM(input_file, output_file, cov_file, &n, &L, &D, nd, K,
-		Niter, burn, num_thrd, &seed, missing_data, all, &dic, &dev,
-		noise_epsilon, b_epsilon, init);
+	LFMM(param); 
+
+	// free memory 
+	free_param_lfmm(param);
+	free(param);
 
 	return 0;
+
 }

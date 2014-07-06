@@ -27,10 +27,9 @@
 
 // thread_fct_lfmm
 
-void thread_fct_lfmm(float *R, float *datb, double *U, double *V, double *C,
-		double *beta, double *m, double *inv_cov, double *L,
-		int K, int D, int M, int N, int num_thrd, void (*fct) (),
-		double alpha, double alpha_R)
+void thread_fct_lfmm(float *R, double *A, double *B, double *C, double *m,
+	double *inv_cov, double *L, int J, int K, int N, int M, double *alpha,
+	double alpha_R, int num_thrd, void (*fct) ())
 {
 	pthread_t *thread;	// pointer to a group of threads
 	int i;
@@ -42,15 +41,13 @@ void thread_fct_lfmm(float *R, float *datb, double *U, double *V, double *C,
 	for (i = 1; i < num_thrd; i++) {
 		Ma[i] = (Matrix_lfmm) malloc(1 * sizeof(matrix_lfmm));
 		Ma[i]->R = R;
-		Ma[i]->datb = datb;
-		Ma[i]->U = U;
-		Ma[i]->V = V;
+		Ma[i]->A = A;
+		Ma[i]->B = B;
 		Ma[i]->C = C;
-		Ma[i]->beta = beta;
 		Ma[i]->m = m;
 		Ma[i]->inv_cov = inv_cov;
 		Ma[i]->L = L;
-		Ma[i]->D = D;
+		Ma[i]->J = J;
 		Ma[i]->K = K;
 		Ma[i]->N = N;
 		Ma[i]->M = M;
@@ -71,16 +68,14 @@ void thread_fct_lfmm(float *R, float *datb, double *U, double *V, double *C,
 	 * main thread does everything if threadd number is specified as 1*/
 	Ma[0] = (Matrix_lfmm) malloc(1 * sizeof(matrix_lfmm));
 	Ma[0]->R = R;
-	Ma[0]->datb = datb;
-	Ma[0]->U = U;
-	Ma[0]->V = V;
+	Ma[0]->A = A;
+	Ma[0]->B = B;
 	Ma[0]->C = C;
-	Ma[0]->beta = beta;
 	Ma[0]->m = m;
 	Ma[0]->inv_cov = inv_cov;
 	Ma[0]->L = L;
+	Ma[0]->J = J;
 	Ma[0]->K = K;
-	Ma[0]->D = D;
 	Ma[0]->N = N;
 	Ma[0]->M = M;
 	Ma[0]->alpha = alpha;

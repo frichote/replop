@@ -1,5 +1,7 @@
 /**
- * @file register_ce.h
+ * @addtogroup register_ce
+ * @ingroup crossEntropy
+ * @{
  *
  * @brief functions to read data matrices
  */
@@ -25,3 +27,5 @@ void analyse_param_ce(	int argc, char *argv[], int *m,
 			char* input_file_F, char *input_file_I); 
 
 #endif // REGISTER_CE_H
+
+/** @} */

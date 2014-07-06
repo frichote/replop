@@ -1,5 +1,7 @@
 /**
- * @file print_pca.h
+ * @addtogroup print_pca
+ * @ingroup pca
+ * @{
  *
  * @brief set of printing functions
  */
@@ -34,3 +36,5 @@ void print_summary_pca( int N, int M, int K, int c, int s,
 			char *x_vectors);    
 
 #endif // PRINT_PCA_H
+
+/** @} */

@@ -1,5 +1,7 @@
 /**
- * @file normalize.h
+ * @addtogroup normalize
+ * @ingroup matrix
+ * @{
  *
  * @brief functions to normalize data and covariance matrices
  */
@@ -55,3 +57,5 @@ void normalize_mean_I(double *C, int N, int K);
 void normalize_mean_I_float(float *C, int N, int K);
 
 #endif // NORMALIZE_H
+
+/** @} */

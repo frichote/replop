@@ -1,7 +1,11 @@
-/*
+/**
+ * @addtogroup ancestrymap
+ * @ingroup convert
+ * @{
  * @file ancestrymap.h
  *
- * @brief functions to read/write files with ancestrymap format.
+ * @brief functions to read/write files in an ancestrymap format 
+ * and convert to lfmm and geno formats.
  */
 
 #ifndef ANCESTRYMAP_H
@@ -10,7 +14,7 @@
 #include <stdint.h>
 
 /**
- * count the number of individuals in ancestrymap files
+ * count the number of individuals in an ancestrymap file
  *
  * @param input_file	input file in ancestrymap format 
  *
@@ -64,5 +68,7 @@ void ancestrymap2geno (char *input_file, char* output_file, int *N, int *M);
  */
 void ancestrymap2lfmm (char *input_file, char* output_file, int *N, int *M);
 
+
 #endif // ANCESTRYMAP_H
 
+/** @}*/

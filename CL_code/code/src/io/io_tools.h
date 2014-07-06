@@ -1,5 +1,7 @@
 /**
- * @file io_tools.h
+ * @addtogroup io_tools
+ * @ingroup io
+ * @{
  *
  * @brief tools to read and write data files
  */
@@ -80,3 +82,5 @@ FILE* fopen_write (char *file_data);
 void print_options(int argc, char *argv[]);
 
 #endif // IO_TOOLS_H
+
+/** @} */

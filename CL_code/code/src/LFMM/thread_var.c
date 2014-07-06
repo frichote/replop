@@ -27,32 +27,31 @@
 
 // thrd_var
 
-void thrd_var(float *R, double *U, double *V, double *C,
-	      double *beta, int K, int D, int M, int N, int num_thrd,
-	      void (*fct) (), double mean, double *res, double *res2)
+void thrd_var(LFMM_param param, LFMM_GS_param GS_param, 
+	      void (*fct) (), double *res, double *res2)
 {
 	pthread_t *thread;	// pointer to a group of threads
 	int i;
+	int num_thrd = param->num_thrd;
 
-	thread = (pthread_t *) malloc(num_thrd * sizeof(pthread_t));
-	Mat *Ma = (Mat *) malloc(num_thrd * sizeof(Mat));
+	thread = (pthread_t *) malloc(param->num_thrd * sizeof(pthread_t));
+	Mat *Ma = (Mat *) malloc(param->num_thrd * sizeof(Mat));
 
 	/* this for loop not entered if threadd number is specified as 1 */
-	for (i = 1; i < num_thrd; i++) {
+	for (i = 1; i < param->num_thrd; i++) {
 		Ma[i] = (Mat) malloc(1 * sizeof(mat));
-		Ma[i]->R = R;
-		Ma[i]->U = U;
-		Ma[i]->V = V;
-		Ma[i]->C = C;
-		Ma[i]->beta = beta;
-		Ma[i]->D = D;
-		Ma[i]->K = K;
-		Ma[i]->N = N;
-		Ma[i]->M = M;
-		Ma[i]->mean = mean;
+		Ma[i]->R = param->dat;
+		Ma[i]->U = param->U;
+		Ma[i]->V = param->V;
+		Ma[i]->C = param->mC;
+		Ma[i]->beta = param->beta;
+		Ma[i]->D = param->mD;
+		Ma[i]->K = param->K;
+		Ma[i]->N = param->n;
+		Ma[i]->M = param->L;
 		Ma[i]->res = 0;
 		Ma[i]->res2 = 0;
-		Ma[i]->num_thrd = num_thrd;
+		Ma[i]->num_thrd = param->num_thrd;
 		Ma[i]->slice = i;
 		/* creates each thread working on its own slice of i */
 		if (pthread_create
@@ -67,19 +66,18 @@ void thrd_var(float *R, double *U, double *V, double *C,
 	 *          so everybody is busy
 	 *                   main thread does everything if threadd number is specified as 1*/
 	Ma[0] = (Mat) malloc(1 * sizeof(mat));
-	Ma[0]->R = R;
-	Ma[0]->U = U;
-	Ma[0]->V = V;
-	Ma[0]->C = C;
-	Ma[0]->beta = beta;
-	Ma[0]->K = K;
-	Ma[0]->D = D;
-	Ma[0]->N = N;
-	Ma[0]->M = M;
-	Ma[0]->mean = mean;
+	Ma[0]->R = param->dat;
+	Ma[0]->U = param->U;
+	Ma[0]->V = param->V;
+	Ma[0]->C = param->mC;
+	Ma[0]->beta = param->beta;
+	Ma[0]->D = param->mD;
+	Ma[0]->K = param->K;
+	Ma[0]->N = param->n;
+	Ma[0]->M = param->L;
 	Ma[0]->res = 0;
 	Ma[0]->res2 = 0;
-	Ma[0]->num_thrd = num_thrd;
+	Ma[0]->num_thrd = param->num_thrd;
 	Ma[0]->slice = 0;
 	/* creates each thread working on its own slice of i */
 	fct(Ma[0]);

@@ -1,5 +1,7 @@
 /**
- * @file crossEntropy.h
+ * @addtogroup crossEntropy
+ * @ingroup crossEntropy
+ * @{
  *
  * @brief function for crossEntropy calculation
  */
@@ -24,3 +26,5 @@ void crossEntropy(char* input_file, char* input_file_I, char* input_file_Q, char
         int K, int m, double *all_ce, double *missing_ce);
 
 #endif // CROSSENTROPY_H
+
+/** @} */

@@ -1,5 +1,7 @@
 /**
- * @file als_k1.h
+ * @addtogroup als_k1
+ * @ingroup sNMF
+ * @{
  *
  * @brief set of functions to compute SNMF for k=1
  */
@@ -24,3 +26,5 @@
 void ALS_k1(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp);
 
 #endif // ALS_K1_H
+
+/** @} */

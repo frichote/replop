@@ -1,4 +1,7 @@
 /**
+ * @addtogroup lfmm2geno
+ * @ingroup convert
+ * @{
  * @file lfmm2geno.h
  *
  * @brief functions to convert a file from geno to lfmm format.
@@ -20,3 +23,5 @@
 void lfmm2geno (char *input_file, char* output_file, int *N, int *M);
 
 #endif // LFMM2GENO_H
+
+/** @} */

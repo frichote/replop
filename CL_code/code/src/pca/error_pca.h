@@ -1,5 +1,7 @@
 /**
- * @file error_pca.h
+ * @addtogroup error_pca
+ * @ingroup pca
+ * @{
  *
  * @brief function to manage error types
  */
@@ -17,3 +19,5 @@
 void print_error_pca(char* msg, char* file);
 
 #endif // ERROR_PCA_H
+
+/** @} */

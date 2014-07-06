@@ -27,13 +27,9 @@
 #include "../io/read.h"
 #include "../matrix/rand.h"
 
-#ifndef WIN32
-#include "thread_lfmm.h"
-#include "thread_V.h"
-#endif
-
 // create_m_V
 
+/*
 void create_m_V(double *U, float *R, double *C, double *beta, double *m_V,
 		int M, int N, int D, int K, int num_thrd)
 {
@@ -179,26 +175,31 @@ void rand_V(double *V, double *m_V, double *inv_cov_V, double alpha_R, int K,
 	// free memory
 	free(L);
 }
+*/
 
 // update_V
 
-void update_V(double *C, float *dat, double *U, double *V, double *beta,
-		double *m_V, double *inv_cov_V, double alpha_V, double alpha_R,
-		int M, int N, int K, int D, int num_thrd)
+void update_V(LFMM_param param, LFMM_GS_param GS_param) 
 {
 	// m_V = U * (I.*(R - C*beta));                         (K,M)
-	create_m_V(U, dat, C, beta, m_V, M, N, D, K, num_thrd);
+	create_m(param->U, param->dat, param->C, param->beta, 
+		GS_param->m_V, param->L, param->n, param->mD, 
+		param->K, param->num_thrd);
 
 	// cov_V = alpha .* eye(K) + alpha_R .* U*U';           (K,K)
-	create_inv_cov_V(inv_cov_V, alpha_V, alpha_R, U, K, N, num_thrd);
+	create_inv_cov(GS_param->inv_cov_V, param->alpha_V, 
+		param->alpha_R, param->U, param->K, param->n, 
+		param->num_thrd);
 
 	/*      mu_V = alpha_R .* inv(cov_V) * m_V;                     (K,M)
 		for j=1:M
 		V(:,j) = mvnrnd(mu_V(:,j),inv(cov_V));
 		end                                                             */
-	rand_V(V, m_V, inv_cov_V, alpha_R, K, M, num_thrd);
+	rand_matrix(param->V, GS_param->m_V, GS_param->inv_cov_V, 
+		param->alpha_R, param->K, param->L, param->num_thrd);
 
-	if (isnan(V[0]))
+	// check nan
+	if (isnan(param->V[0]))
 		print_error_global("nan", NULL, 0);
 
 }

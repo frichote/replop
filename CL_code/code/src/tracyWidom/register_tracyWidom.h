@@ -1,5 +1,7 @@
 /**
- * @file register_tracyWidom.h
+ * @addtogroup register_tracyWidom
+ * @ingroup tracyWidom
+ * @{
  *
  * @brief functions to read data matrices
  */
@@ -18,3 +20,5 @@
 void analyse_param_tracyWidom( int argc, char *argv[], char *input, char* output);
 
 #endif // REGISTER_TRACYWIDOM_H
+
+/** @} */

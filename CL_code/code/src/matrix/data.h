@@ -1,5 +1,7 @@
 /**
- * @file data.h
+ * @addtogroup data
+ * @ingroup matrix
+ * @{
  *
  * @brief set of functions to manage data
  */
@@ -47,3 +49,5 @@ void update_m(double *beta, int n, int nb);
 void create_I(float *dat, int *I, int N, int M);
 
 #endif // DATA_H
+
+/** @} */

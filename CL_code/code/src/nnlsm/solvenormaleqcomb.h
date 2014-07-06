@@ -1,5 +1,7 @@
 /**
- * @file solevnormaleqcomb.h
+ * @addtogroup solvenormaleqcomb
+ * @ingroup nnlsm
+ * @{
  *
  * @brief functions to solve AtA*Z() = AtB conditionned to PassiveSet
  */
@@ -37,3 +39,5 @@ void solveRegression (double *AtA, double* AtB, int *selectK, int* selectN,
 
 #endif // SOLVENORMALEQCOMB_H
 
+
+/** @} */

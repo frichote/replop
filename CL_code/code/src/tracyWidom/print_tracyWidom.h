@@ -1,5 +1,7 @@
 /**
- * @file print_tracyWidom.h
+ * @addtogroup print_tracyWidom
+ * @ingroup tracyWidom
+ * @{
  *
  * @brief set of printing functions
  */
@@ -24,3 +26,5 @@ void print_help_tracyWidom();
 void print_summary_tracyWidom( int M, char *input, char *output);
 
 #endif // PRINT_TRACYWIDOM_H
+
+/** @} */

@@ -1,7 +1,11 @@
 /**
- * @file bituint.h
+ * @addtogroup bituint
+ * @ingroup bituint
+ * @{
  *
  * @brief set of functions to store data in bit.
+ *
+ * 
  */
 
 #ifndef BITUINT_H
@@ -129,11 +133,13 @@
 /**
  * allocate the memory to store data of size nxMc
  * 
- * @param dat   address to the bituint data matrix 
- * @param N	number of lines of the matrix
- * @param Mc	number of elements to store per lines
- * @param Mp	(output) number of columns of the matrix
+ * @param[in, out] dat  bituint data matrix 
+ * @param[in]  N	number of lines of the matrix
+ * @param[in] Mc	number of elements to store per lines
+ * @param[out] Mp	(output) number of columns of the matrix
  */
 void init_mat_bituint(bituint** dat, int N, int Mc, int *Mp);
 
 #endif // BITUINT_H
+
+/** @} */

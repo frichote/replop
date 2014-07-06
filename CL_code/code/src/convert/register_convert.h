@@ -1,4 +1,7 @@
 /**
+ * @addtogroup register_convert
+ * @ingroup convert
+ * @{
  * @file register_convert.h
  *
  * @brief functions to analyse command line
@@ -27,3 +30,5 @@ void analyse_param_convert (int argc, char *argv[], char *input, char *output, c
 void print_convert(int N, int M);
 
 #endif // REGISTER_CONVERT_H
+
+/** @} */

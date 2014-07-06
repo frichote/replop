@@ -1,5 +1,7 @@
 /**
- * @file createDataSet.h
+ * @addtogroup createDataSet
+ * @ingroup createDataSet
+ * @{
  *
  * @brief function to create a data set with masked genotypes
  */
@@ -11,13 +13,15 @@
 /**
  * create a data set with masked genotypes 
  *
- * @param input_file	input file name
- * @param m		ploidy
- * @param seed		seed for randomization
- * @param e 		percentage of masked data
- * @param output_file	output file name
+ * @param[in] input_file	input file name
+ * @param[in] m			ploidy
+ * @param[in] seed		seed for randomization
+ * @param[in] e 		percentage of masked data
+ * @param[in] output_file	output file name
  */
 void createDataSet(char* input_file, int m, long long seed, double e,
 	char* output_file); 
 
 #endif // CREATEDATASET_H
+
+/** @} */

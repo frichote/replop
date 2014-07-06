@@ -1,5 +1,7 @@
 /**
- * @file error_tracyWidom.h
+ * @addtogroup error_tracyWidom
+ * @ingroup tracyWidom
+ * @{
  *
  * @brief function to manage error types
  */
@@ -17,3 +19,5 @@
 void print_error_tracyWidom(char* msg, char* file);
 
 #endif // ERROR_TRACYWIDOM_H
+
+/** @} */

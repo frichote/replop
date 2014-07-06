@@ -1,5 +1,7 @@
 /**
- * @file als.h
+ * @addtogroup als
+ * @ingroup sNMF
+ * @{
  *
  * @brief set of functions to compute SNMF with als algorithm
  */
@@ -31,3 +33,5 @@ void ALS(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp, int K,
 	int maxiter, double tol, int num_thrd, double alpha);
 
 #endif // ALS_H
+
+/** @} */

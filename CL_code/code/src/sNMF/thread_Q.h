@@ -1,5 +1,7 @@
 /**
- * @file thread_Q.h
+ * @addtogroup thread_Q
+ * @ingroup sNMF
+ * @{
  *
  * @brief multithreaded part of the functions to compute 
  * 	  new values of Q
@@ -23,3 +25,5 @@ void slice_F_TX(void *G);
 void slice_F_TF(void *G);
 
 #endif // THREAD_Q_H
+
+/** @} */

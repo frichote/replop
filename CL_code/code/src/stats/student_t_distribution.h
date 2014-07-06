@@ -1,5 +1,9 @@
+/**
+ * @addtogroup student_t_distribution
+ * @ingroup stats
+ * @{
+ */
 ////////////////////////////////////////////////////////////////////////////////
-// File: student_t_distribution.c                                             //
 // Routine(s):                                                                //
 //    Student_t__Distribution                                                 //
 ////////////////////////////////////////////////////////////////////////////////
@@ -10,3 +14,5 @@
 double Student_t_Distribution(double x, int n);
 
 #endif 
+
+/** @} */

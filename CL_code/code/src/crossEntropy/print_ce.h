@@ -1,5 +1,7 @@
 /**
- * @file print_ce.h
+ * @addtogroup print_ce
+ * @ingroup crossEntropy
+ * @{
  *
  * @brief set of printing functions
  */
@@ -35,3 +37,5 @@ void print_summary_ce ( int N, int M, int K,
 			char *input_F, char *input_I);
 
 #endif // PRINT_CE_H
+
+/** @} */

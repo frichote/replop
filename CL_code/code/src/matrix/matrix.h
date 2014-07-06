@@ -1,5 +1,7 @@
 /**
- * @file matrix.h
+ * @addtogroup matrix
+ * @ingroup matrix
+ * @{
  *
  * @brief set of matrix operations
  */
@@ -114,3 +116,5 @@ void transpose_float (float *m, int w, int h);
 void transpose_int (int *m, int w, int h);
 
 #endif // MATRIX_H
+
+/** @} */

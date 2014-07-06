@@ -1,5 +1,7 @@
 /**
- * @file read_data_int.h
+ * @addtogroup io_data_int
+ * @ingroup io
+ * @{
  *
  * @brief functions to read data matrices and register them with int type
  */
@@ -40,3 +42,5 @@ void write_data_int(char *file_data, int N, int M, int *dat);
 void print_data_int(int *dat, int N, int M);
 
 #endif // READ_DATA_INT_H
+
+/** @} */

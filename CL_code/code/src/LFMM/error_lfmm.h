@@ -1,5 +1,7 @@
 /**
- * @file error_lfmm.h
+ * @addtogroup error_lfmm
+ * @ingroup LFMM
+ * @{
  *
  * @brief function to manage error types for lfmm code
  */
@@ -18,3 +20,5 @@
 void print_error_lfmm(char *msg, char *file, int n);
 
 #endif // ERROR_LFMM_H
+
+/** @} */

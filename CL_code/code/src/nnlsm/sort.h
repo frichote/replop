@@ -1,5 +1,7 @@
 /**
- * @file sort.h
+ * @addtogroup sort
+ * @ingroup nnlsm
+ * @{
  *
  * @brief functions to sort binary matrices
  */
@@ -45,3 +47,5 @@ void sortColsRec(int* breaks, int* sortIx, int* X, int K, int N, int startN,
 
 #endif // SORT_H
 
+
+/** @} */

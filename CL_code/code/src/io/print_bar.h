@@ -1,5 +1,7 @@
 /**
- * @file print_bar.h
+ * @addtogroup print_bar
+ * @ingroup io
+ * @{
  *
  * @brief functions to display a command line advancement bar
  */
@@ -30,3 +32,5 @@ void print_bar(int *i, int *j, int Niter);
 void final_bar();
 
 #endif // PRINT_BAR_H
+
+/** @} */

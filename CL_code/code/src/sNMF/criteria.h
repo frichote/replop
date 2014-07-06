@@ -1,5 +1,7 @@
 /**
- * @file criteria.h
+ * @addtogroup criteria
+ * @ingroup sNMF
+ * @{
  *
  * @brief set of functions to compute least square criterion for sNMF
  */
@@ -27,3 +29,5 @@ double least_square(bituint *X, double *Q, double *F, int N, int M, int nc,
 	int Mp, int K, double alpha); 
 
 #endif // CRITERIA_H
+
+/** @} */

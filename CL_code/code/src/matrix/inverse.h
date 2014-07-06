@@ -1,5 +1,7 @@
 /**
- * @file inverse.h
+ * @addtogroup inverse
+ * @ingroup matrix
+ * @{
  *
  * @brief functions to inverse matrices
  */
@@ -46,3 +48,5 @@ void cofact(double *num, int f, double *inv);
 void trans(double *num, double *fac, int r, double *inv);
 
 #endif // INVERSE_H
+
+/** @} */

@@ -1,5 +1,7 @@
 /**
- * @file register_snmf.h
+ * @addtogroup register_snmf
+ * @ingroup sNMF
+ * @{
  *
  * @brief functions to read command line
  */
@@ -32,3 +34,5 @@ void analyse_param_snmf(int argc, char *argv[], int *m, long long *s,
 			int *I);
 
 #endif // REGISTER_SNMF_H
+
+/** @} */

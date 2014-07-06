@@ -1,5 +1,7 @@
 /**
- * @file io_data_double.h
+ * @addtogroup io_data_double
+ * @ingroup io
+ * @{
  *
  * @brief functions to read (and write) data matrices and register them with double type
  */
@@ -40,3 +42,5 @@ void write_data_double(char *file_data, int N, int M, double *dat);
 void print_data_double(double *dat, int N, int M);
 
 #endif // IO_DATA_DOUBLE_H
+
+/** @} */

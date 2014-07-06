@@ -1,5 +1,7 @@
 /**
- * @file rand.h
+ * @addtogroup rand
+ * @ingroup matrix
+ * @{
  *
  * @brief set of probability functions
  */
@@ -205,3 +207,5 @@ long double zscore2pvalue(long double z);
 double zscore2pvalue_student(double z, int df);
 
 #endif // RAND_H
+
+/** @} */

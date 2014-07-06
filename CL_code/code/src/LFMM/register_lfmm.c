@@ -25,27 +25,49 @@
 #include "error_lfmm.h"
 #include "../io/io_tools.h"
 
+// init_param_lfmm
+
+void init_param_lfmm(LFMM_param param)
+{
+	// default values 
+	param->nd = 0;
+	param->D = 0;
+	param->mD = 0;
+	param->all = 0;
+	param->K = 0;
+	param->burn = 100;
+	param->Niter = 1000;
+	param->num_thrd = 1;
+        param->missing_data = 0;
+        strcpy(param->output_file, "");
+        param->seed = -1;
+        param->noise_epsilon = 1e-3;
+        param->b_epsilon = 1000;
+        param->init = 1;
+
+}
+
 // analyse_param_lfmm
 
-void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int *burn,
-		   int *m, char *output, char *input, char *cov_file, 
-		   int *num_thrd, long long *s, int *all)
+void analyse_param_lfmm(int argc, char *argv[], LFMM_param param)
 {
+	// temporary variables 
 	int i, g_data = 0, g_cov = 0;
         char* tmp_file;
 	int g_d = 0;
 
+	// read each command line argument
 	for (i = 1; i < argc; i++) {
 		if (argv[i][0] == '-') {
 			switch (argv[i][1]) {
 			case 'a':	// global
-				*all = 1;
+				param->all = 1;
 				break;
                         case 'd':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
                                         print_error_lfmm("cmd","d (numerous of the covariable)",0);
-                                *d = atoi(argv[i]);
+                                param->nd = atoi(argv[i]);
 				g_d = 1;
                                 break;
 			case 'K':
@@ -54,7 +76,7 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 					print_error_lfmm("cmd",
 							 "K (number of latent factors)",
 							 0);
-				*K = atoi(argv[i]);
+				param->K = atoi(argv[i]);
 				break;
 			case 'n':
 				i++;
@@ -83,16 +105,16 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 					print_error_lfmm("cmd",
 							 "i (number of iterations in the GS)",
 							 0);
-				*Niter = atoi(argv[i]);
+				param->Niter = atoi(argv[i]);
 				break;
                         case 's':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
                                         print_error_lfmm("cmd","s (seed number)",0);
-                                *s = atoi(argv[i]);
+                                param->seed = atoll(argv[i]);
                                 break;
 			case 'm':	// global
-				*m = 1;
+				param->missing_data = 1;
 				break;
 			case 'h':	// global
 				print_help_lfmm();
@@ -108,7 +130,7 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 					print_error_lfmm("cmd",
 							 "b (burn parameter in the GS)",
 							 0);
-				*burn = atoi(argv[i]);
+				param->burn = atoi(argv[i]);
 				break;
 			case 'p':
 				i++;
@@ -116,7 +138,7 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 					print_error_lfmm("cmd",
 							 "p (number of processes used)",
 							 0);
-				*num_thrd = atoi(argv[i]);
+				param->num_thrd = atoi(argv[i]);
 				break;
 			case 'o':
 				i++;
@@ -124,7 +146,7 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 					print_error_lfmm("cmd",
 							 "o (output file with z-scores)",
 							 0);
-				strcpy(output, argv[i]);
+				strcpy(param->output_file, argv[i]);
 				break;
 			case 'x':
 				i++;
@@ -133,7 +155,7 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 							 "x (genotype file)",
 							 0);
 				g_data = 1;
-				strcpy(input, argv[i]);
+				strcpy(param->input_file, argv[i]);
 				break;
 			case 'v':
 				i++;
@@ -142,7 +164,7 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 							 "v (variable file)",
 							 0);
 				g_cov = 1;
-				strcpy(cov_file, argv[i]);
+				strcpy(param->cov_file, argv[i]);
 				break;
 			default:
 				print_error_lfmm("basic", NULL, 0);
@@ -159,20 +181,20 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 	if (!g_cov)
 		print_error_lfmm("option", "-v variable_file", 0);
 
-	if (*all && *d) {
+	if (param->all && param->nd) {
 		print_error_lfmm("specific",
 				 "-a (to run LFMM on all covariables at the same time) and -d (to run LFMM"
 				 " on a specific variable) cannot be provided in the same command line.",
 				 0);
 	}
 
-	if (g_d && *d <= 0)
+	if (g_d && param->nd <= 0)
 		print_error_lfmm("missing", NULL, 0);
 
-	if (*K < 0 || *num_thrd <= 0 || *burn <= 0 || *Niter <= 0)
+	if (param->K < 0 || param->num_thrd <= 0 || param->burn <= 0 || param->Niter <= 0)
 		print_error_lfmm("missing", NULL, 0);
 
-	if (*burn >= *Niter) {
+	if (param->burn >= param->Niter) {
 		print_error_lfmm("specific",
 				 "the number of iterations for burnin "
 				 "(b) is greater than the number total of iterations (i)",
@@ -180,8 +202,47 @@ void analyse_param_lfmm(int argc, char *argv[], int* d, int *K, int *Niter, int 
 	}
 
         // write output file name
-        tmp_file = remove_ext(input,'.','/');
-        if (!strcmp(output,""))
-        	strcpy(output, tmp_file);
+        tmp_file = remove_ext(param->input_file,'.','/');
+        if (!strcmp(param->output_file,""))
+        	strcpy(param->output_file, tmp_file);
         free(tmp_file);
+}
+
+// free_param 
+
+void free_param_lfmm (LFMM_param param)
+{
+	// alpha_beta
+	if (param->alpha_beta)
+		free(param->alpha_beta);
+	// alpha_U
+	if (param->alpha_U)
+		free(param->alpha_U);
+	// alpha_V
+	if (param->alpha_V)
+		free(param->alpha_V);
+	// I
+	if (param->I)
+		free(param->I);
+	// U
+	if (param->U)
+		free(param->U);
+	// V
+	if (param->V)
+		free(param->V);
+	// dat
+	if (param->dat)
+		free(param->dat);
+	// beta
+	if (param->beta)
+		free(param->beta);
+	// C
+	if (param->C)
+		free(param->C);
+	// mC
+	if (param->mC)
+		free(param->mC);
+	// zscore
+	if (param->zscore)
+		free(param->zscore);
 }

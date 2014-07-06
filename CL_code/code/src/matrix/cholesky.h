@@ -1,5 +1,7 @@
 /**
- * @file cholesky.h
+ * @addtogroup cholesky
+ * @ingroup matrix
+ * @{
  *
  * @brief function to compute the lower cholesky decomposition of a matrix
  */
@@ -17,3 +19,5 @@
 void cholesky(double *A, int n, double *L);
 
 #endif // CHOLESKY_H
+
+/** @} */

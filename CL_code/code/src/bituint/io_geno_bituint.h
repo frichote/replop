@@ -1,5 +1,7 @@
 /**
- * @file io_geno_bituint.h
+ * @addtogroup io_geno_bituint
+ * @ingroup bituint
+ * @{
  *
  * @brief set of functions to read, write and print data in geno format file 
  * 	with bituint data memory format.
@@ -82,3 +84,5 @@ void select_geno_bituint(bituint *X, bituint *Xi, int N, int M, int Mi,
 	int nc, int Mpi, int Mp);
 
 #endif // IO_GENO_BITUINT_H
+
+/** @} */

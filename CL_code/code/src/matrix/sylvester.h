@@ -1,5 +1,7 @@
 /**
- * @file sylvester.h
+ * @addtogroup sylvester
+ * @ingroup matrix
+ * @{
  *
  * @brief solve the sylvester equation AX + XB = C
  */
@@ -31,3 +33,5 @@ void sylvester(double *A, double *B, double *C, double *X, int M, int N);
 void schur(double *A, double *Q, int M);
 
 #endif // SYLVESTER_H
+
+/** @} */

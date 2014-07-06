@@ -22,6 +22,10 @@
 #include <math.h>
 #include "data_lfmm.h"
 #include "error_lfmm.h"
+#include "register_lfmm.h"
+#include "lfmm_algo.h"
+#include "../matrix/cholesky.h"
+#include "../matrix/inverse.h"
 #include "../matrix/rand.h"
 #include "../matrix/matrix.h"
 #include "../io/io_tools.h"
@@ -30,7 +34,150 @@
 
 # ifndef WIN32
 #include "thread_var.h"
+#include "thread_lfmm.h"
+#include "slice_lfmm.h"
 # endif
+
+// rand_matrix
+
+void rand_matrix(double *A, double *m_A, double *inv_cov_A, double alpha_R,
+	int K, int N, int num_thrd)
+{
+        int i, k, kp;
+        double *mu;
+        double *y;
+        // allocate memory
+        double *L = (double *)calloc(K * K, sizeof(double));
+
+        // cholesky of inv_cov_U
+        cholesky(inv_cov_A, K, L);
+
+#ifndef WIN32
+        // multithread non windows version
+        if (num_thrd > 1) {
+                thread_fct_lfmm(NULL, A, NULL, NULL, m_A, inv_cov_A, L, 
+			0, K, N, 0, NULL, alpha_R, num_thrd, slice_rand);
+        // uni-threaded or windows version
+        } else {
+#endif
+                // allocate memory
+                mu = (double *)calloc(K, sizeof(double));
+                y = (double *)calloc(K, sizeof(double));
+                for (i = 0; i < N; i++) {
+                        for (k = 0; k < K; k++) {
+                                // inv_cov_U %*% m_u
+                                mu[k] = 0;
+                                for (kp = 0; kp < K; kp++) {
+                                        mu[k] +=
+                                                inv_cov_A[k * K + kp] * m_A[i * K + kp];
+                                }
+                                // times alpha_R
+                                mu[k] *= alpha_R;
+                        }
+                        // rand U
+                        mvn_rand(mu, L, K, y);
+                        for (k = 0; k < K; k++)
+                                A[k * N + i] = y[k];
+                }
+                // free memory
+                free(mu);
+                free(y);
+#ifndef WIN32
+        }
+#endif
+        // free memory
+        free(L);
+}
+
+// create_inv_cov
+
+void create_inv_cov(double *inv_cov, double* alpha, double alpha_R,
+	double *A, int K, int M, int num_thrd)
+{
+        int k1, k2, j;
+        // allocate memory
+        double *tmp2 = (double *)calloc(K * K, sizeof(double));
+
+#ifndef WIN32
+        // multi-threaded non windows version
+        if (num_thrd > 1) {
+                thread_fct_lfmm(NULL, A, NULL, NULL, NULL, tmp2, NULL, 
+			0, K, 0, M, alpha, alpha_R, num_thrd, slice_inv_cov);
+        // uni-threaded or windows version
+        } else {
+#endif
+                // calculate cov = alphaR A %*% t(A) + diag(alpha)
+                for (k1 = 0; k1 < K; k1++) {
+                        for (k2 = 0; k2 < k1; k2++) {
+                                tmp2[k1 * K + k2] = 0;
+                                for (j = 0; j < M; j++)
+                                        tmp2[k1 * K + k2] +=
+                                                (A[k1 * M + j] * A[k2 * M + j]);
+                                tmp2[k1 * K + k2] *= alpha_R;
+                                tmp2[k2 * K + k1] = tmp2[k1 * K + k2];
+                        }
+                        tmp2[k1 * (K + 1)] = 0;
+                        for (j = 0; j < M; j++)
+                                tmp2[k1 * (K + 1)] +=
+                                        (A[k1 * M + j] * A[k1 * M + j]);
+                        tmp2[k1 * (K + 1)] *= alpha_R;
+                        tmp2[k1 * (K + 1)] += alpha[k1];
+                }
+#ifndef WIN32
+        }
+#endif
+        // inverse  
+        if (K == 1) {
+                inv_cov[0] = 1 / tmp2[0];
+        } else {
+                fast_inverse(tmp2, K, inv_cov);
+        }
+        // free memory
+        free(tmp2);
+}
+
+
+// create_m
+
+void create_m(double *A, float *R, double *B, double *C, double *m,
+                int M, int N, int J, int K, int num_thrd)
+{
+        int i, j, k, d;
+        double *tmp_i;
+
+#ifndef WIN32
+        // multi-threaded non windows version
+        if (num_thrd > 1) {
+                thread_fct_lfmm(R, A, B, C, m, NULL, NULL,
+                	J, K, N, M, NULL, 0, num_thrd, slice_m);
+        } else {
+#endif
+                // uni-threaded or windows version
+                // allocate memory 
+                tmp_i = (double *) malloc(M * sizeof(double));
+
+                for (i = 0; i < N; i++) {
+                        // calculate tmp_i = R - B'C
+                        for (j = 0; j < M; j++)
+                                tmp_i[j] = (double)(R[i * M + j]);
+                        for (d = 0; d < J; d++) {
+                                for (j = 0; j < M; j++)
+                                        tmp_i[j] -= B[d * N + i] * C[d * M + j];
+                        }
+                        // calculate tmp_i * A'
+                        for (k = 0; k < K; k++) {
+                                m[i * K + k] = 0;
+                                for (j = 0; j < M; j++)
+                                        m[i * K + k] += A[k * M + j] * tmp_i[j];
+                        }
+                }
+                // free memory
+                free(tmp_i);
+#ifndef WIN32
+        }
+#endif
+}
+
 
 // quantiles
 
@@ -176,16 +323,16 @@ void modify_C(double *C, int N, int nD, double *Cpp, int d, int all)
 
 	if (all) {
 		for (i = 0; i < N; i++)
-			Cpp[i * (nD+1)] = 1.0;
+			Cpp[i] = 1.0;
 		for (i = 0; i < N; i++)
 			for (nd = 0; nd < nD; nd++)
-				Cpp[i * (nD+1) + (nd+1)] = C[i * nD + nd];
+				Cpp[(nd+1) * (N) + i] = C[i * nD + nd];
 
 	} else {
 		for (i = 0; i < N; i++)
-			Cpp[i * 2] = 1.0;
+			Cpp[i] = 1.0;
 		for (i = 0; i < N; i++)
-			Cpp[i * 2 + 1] = C[i * nD + d];
+			Cpp[N + i] = C[i * nD + d];
 	}
 }
 
@@ -205,7 +352,7 @@ void write_DIC(char *file_data, double deviance, double DIC)
 // write_zscore_double
 
 void write_zscore_double(char *output_file, int M, double *zscore, int D, int all, 
-		int nd, int K, int N, double dev, double DIC, double *prec_var)
+		int nd, int K, int N, double dev, double DIC)
 {
 	FILE *file = NULL;
 	FILE *file_dic = NULL;
@@ -215,7 +362,6 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 	char dic_file[512]; 
 	double* pvalues = (double *)calloc(M, sizeof(double));
 	// double* qvalues = (double *)calloc(M, sizeof(double));
-	double l;
 
 	if (all) {
 		// DIC file
@@ -334,19 +480,21 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 
 // var_data
 
-double var_data(float *R, double *U, double *V, double *C, double *beta, int N,
-		int M, int K, int D, double *thrd_m2, int num_thrd)
+double var_data(LFMM_param param, LFMM_GS_param GS_param)
 {
 	double mean, mean2, tmp1, tmp2, tmp;
 	int i, j, d, k;
+	int N = param->n;
+	int M = param->L;
+	int K = param->K;
+	int D = param->mD;
 	/*
 	   thrd_var(R,U,V,C,beta,K,D,M,N,num_thrd,slice_mean,0,&mean,0);
 	   mean /= N*M;
 	 */
 # ifndef WIN32
-	if (num_thrd > 1) {
-		thrd_var(R, U, V, C, beta, K, D, M, N, num_thrd, slice_var, 0, &mean,
-				&mean2);
+	if (param->num_thrd > 1) {
+		thrd_var(param, GS_param, slice_var, &mean, &mean2);
 	} else {
 # endif
 		mean = 0.0;
@@ -355,11 +503,11 @@ double var_data(float *R, double *U, double *V, double *C, double *beta, int N,
 			for (j = 0; j < M; j++) {
 				tmp1 = 0.0;
 				for (d = 0; d < D; d++)
-					tmp1 += C[i * D + d] * beta[d * M + j];
+					tmp1 += param->mC[i * D + d] * param->beta[d * M + j];
 				tmp2 = 0.0;
 				for (k = 0; k < K; k++)
-					tmp2 += U[k * N + i] * V[k * M + j];
-				tmp = ((double)(R[i * M + j]) - tmp1 - tmp2);
+					tmp2 += param->U[k * N + i] * param->V[k * M + j];
+				tmp = ((double)(param->dat[i * M + j]) - tmp1 - tmp2);
 				mean += tmp;     //(double)(R[i*M+j])-tmp1-tmp2)
 				mean2 += tmp * tmp;  	//((double)(R[i*M+j])-tmp1-tmp2)*
 				// ((double)(R[i*M+j])-tmp1-tmp2);
@@ -369,13 +517,13 @@ double var_data(float *R, double *U, double *V, double *C, double *beta, int N,
 	}
 # endif
 
-	*thrd_m2 = mean2;
+	GS_param->thrd_m2 = mean2;
 
 	return (mean2 - mean * mean / (N * M)) / (N * M - 1);
 }
 
 // var_data_inputation
-
+/*
 double var_data_inputation(float *R, int *I, double *U, double *V, double *C, 
 	double *beta, int N, int M, int K, int D, double *thrd_m2, int num_thrd)
 {
@@ -414,6 +562,7 @@ double var_data_inputation(float *R, int *I, double *U, double *V, double *C,
 
 	return (mean2 - mean * mean / (N * M)) / (N * M - 1);
 }
+*/
 
 // inputation
 

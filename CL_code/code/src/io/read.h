@@ -1,5 +1,7 @@
 /**
- * @file read.h
+ * @addtogroup read
+ * @ingroup io
+ * @{
  *
  * @brief few common defines
  */
@@ -20,3 +22,5 @@
 # define MAX_LENGTH_NB_INT 5
 
 #endif // READ_H
+
+/** @} */

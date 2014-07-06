@@ -1,5 +1,7 @@
 /**
- * @file io_data_float.h
+ * @addtogroup io_data_float
+ * @ingroup io
+ * @{
  *
  * @brief functions to read (and write) data matrices and register them with float type
  */
@@ -41,3 +43,5 @@ void write_data_float(char *file_data, int N, int M, float *dat);
 void print_data_float(float *dat, int N, int M);
 
 #endif // IO_DATA_FLOAT_H
+
+/** @} */

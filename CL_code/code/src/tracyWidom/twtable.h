@@ -1,5 +1,7 @@
 /**
- * @file twtable.h
+ * @addtogroup twtable
+ * @ingroup tracyWidom
+ * @{
  *
  * @brief tracy widom table
  */
@@ -173,3 +175,5 @@ double twtable[483] =
 }; 
 
 #endif // TRACYWIDOM_H
+
+/** @} */

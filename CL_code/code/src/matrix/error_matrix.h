@@ -1,5 +1,7 @@
 /**
- * @file error_matrix.h
+ * @addtogroup error_matrix
+ * @ingroup matrix
+ * @{
  *
  * @brief function to manage error types
  */
@@ -17,3 +19,5 @@
 void print_error_global(char *msg, char *file, int n);
 
 #endif // ERROR_MATRIX_H
+
+/** @} */

@@ -1,5 +1,7 @@
 /**
- * @file diagonalize.h
+ * @addtogroup diagonalize
+ * @ingroup matrix
+ * @{
  *
  * @brief function to diagonalize symetric matrices
  */
@@ -19,3 +21,5 @@
 void diagonalize(double *cov, int N, int K, double *val, double *vect);
 
 #endif // DIAGONALIZE_H
+
+/** @} */

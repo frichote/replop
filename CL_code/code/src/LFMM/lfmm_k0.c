@@ -21,6 +21,7 @@
 #include "data_lfmm.h"
 #include "print_lfmm.h"
 #include "error_lfmm.h"
+#include "register_lfmm.h"
 #include "beta_k0.h"
 #include "../matrix/matrix.h"
 #include "../matrix/normalize.h"
@@ -30,12 +31,22 @@
 
 // lfmm_emcmc
 
-void lfmm_k0(float *dat, int *I, double *C, double *zscore, double *beta,
-		int N, int M, int D, int missing_data, double *perc_var)
+void lfmm_k0(LFMM_param param)
 {
 	double *var_beta;
 	double *CCt;
-	int d;
+
+	// temporary parameters
+	int M = param->L;
+	int N = param->n;
+	int D = param->mD;
+	float *dat = param->dat;
+	int *I = param->I;
+	double *C = param->mC;
+	double *zscore = param->zscore;
+	double *beta = param->beta;
+	int missing_data = param->missing_data;
+	double perc_var;
 
 	// allocate memory
 	var_beta = (double *) malloc(D * M * sizeof(double));
@@ -49,7 +60,7 @@ void lfmm_k0(float *dat, int *I, double *C, double *zscore, double *beta,
 	create_CCt(CCt, C, D, N);
 
 	// calculate E[beta] and var[beta] 
-	calc_beta_k0(C, dat, beta, CCt, var_beta, M, N, D, &(perc_var[0]));
+	calc_beta_k0(C, dat, beta, CCt, var_beta, M, N, D, &perc_var);
 
 	// calculate zscore
 	zscore_calc_k0(zscore, beta, var_beta, D, M);
@@ -57,13 +68,6 @@ void lfmm_k0(float *dat, int *I, double *C, double *zscore, double *beta,
 	// check zscore
 	if (check_mat(zscore, M, 0, 1))
 		print_error_global("nan", NULL, 0);
-
-	// percentage of variance 
-	for (d = 0; d < D; d++)
-		perc_var[d + 1] = variance(&(beta[d * M]), M); 
-	normalize_lines(perc_var, 1, D + 1);
-	//print_perc(perc_var, 0, D);
-
 
 	// save ED and DIC
 	printf("\tED: NA\t DIC: NA \n\n");

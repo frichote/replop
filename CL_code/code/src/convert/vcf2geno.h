@@ -1,4 +1,7 @@
 /**
+ * @addtogroup vcf2geno
+ * @ingroup convert
+ * @{
  * @file vcf2geno.h
  *
  * @brief functions to read a file in vcf format and write in geno format.
@@ -63,3 +66,5 @@ void vcf2geno (char *input_file, char* output_file, int *N, int *M, char* snp_fi
 void fill_line_vcf(char *token, int *allele, int j, int N, char* input_file, FILE* input_File);
 
 #endif // VCF2GENO_H
+
+/** @} */

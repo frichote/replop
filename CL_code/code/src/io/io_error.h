@@ -1,5 +1,7 @@
 /**
- * @file io_error.h
+ * @addtogroup io_error
+ * @ingroup io
+ * @{
  *
  * @brief manage error while reading files
  */
@@ -30,3 +32,5 @@ void test_column(char *file, FILE *m_File, int i, int j, int N, char *token);
 void test_line(char *file, FILE *m_File, int i, int N);
 
 #endif // IO_ERROR_H
+
+/** @} */

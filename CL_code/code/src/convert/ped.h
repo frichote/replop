@@ -1,4 +1,7 @@
 /**
+ * @addtogroup ped
+ * @ingroup convert
+ * @{
  * @file ped.h
  *
  * @brief functions to read/write files with ped format.
@@ -77,3 +80,5 @@ void ped2geno (char *input_file, char* output_file, int *N, int *M);
 void ped2lfmm (char *input_file, char* output_file, int *N, int *M);
 
 #endif // PED_H
+
+/** @} */

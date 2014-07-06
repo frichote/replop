@@ -17,6 +17,7 @@
 */
 
 #include "print_lfmm.h"
+#include "register_lfmm.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -85,9 +86,12 @@ void print_help_lfmm()
 
 // print_summary
 
-void print_summary_lfmm(int N, int M, int K, int D, int d, int Niter, int burn,
+void print_summary_lfmm(LFMM_param param)
+	/*
+	int N, int M, int K, int D, int d, int Niter, int burn,
                    int m, char *output, char *input, char *cov_file, 
                    int num_thrd, long long s, int all)
+	*/
 {
 
         printf("Summary of the options:\n\n"
@@ -102,14 +106,16 @@ void print_summary_lfmm(int N, int M, int K, int D, int d, int Niter, int burn,
                "        -x (genotype file)              %s\n"
                "        -v (variable file)              %s\n"
                "        -D (number of covariables)      %d\n",
-               N, M, K, output, Niter, burn, s, num_thrd, input, cov_file, D);
+               param->n, param->L, param->K, param->output_file, 
+		param->Niter, param->burn, param->seed, param->num_thrd, 
+		param->input_file, param->cov_file, param->D);
 
         // if missing data
-        if (d)
-                printf("        -d (the dth covariable)         %d\n",d);
-        if (all)
+        if (param->nd)
+                printf("        -d (the dth covariable)         %d\n",param->nd);
+        if (param->all)
                 printf("        -a (all variable at the same time)\n");
-        if (m)
+        if (param->missing_data)
                 printf("        -m (missing data)                 \n");
 
         printf("\n");

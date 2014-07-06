@@ -1,5 +1,7 @@
 /**
- * @file register_pca.h
+ * @addtogroup register_pca
+ * @ingroup pca
+ * @{
  *
  * @brief functions to read data matrices
  */
@@ -26,3 +28,5 @@ void analyse_param_pca( int argc, char *argv[], char *input, char* output_eva,
 			int *K, int *c, int *s);
 
 #endif // REGISTER_PCA_H
+
+/** @} */

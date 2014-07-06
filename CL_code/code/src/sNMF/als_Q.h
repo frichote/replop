@@ -1,5 +1,7 @@
 /**
- * @file als_Q.h
+ * @addtogroup als_Q
+ * @ingroup sNMF
+ * @{
  *
  * @brief set of functions to compute update Q in als algorithm
  */
@@ -86,3 +88,5 @@ void tF_tX(double *temp3, bituint *X, double *F, int nc, int K, int M, int Mp,
 
 
 #endif // ALS_Q_H
+
+/** @} */

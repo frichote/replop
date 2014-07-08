@@ -3,7 +3,9 @@
  * @ingroup tracyWidom
  * @{
  *
- * @brief function for tracyWidom calculation
+ * @brief functions to perform tracy-widom test on a set of eigenvalues
+ * 	  such as described by Patterson et al (2006) "Eigenanalysis".
+ *	  This program is very similar with the one in Eigensoft.
  */
 
 

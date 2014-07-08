@@ -23,6 +23,8 @@
 #include <time.h>
 #include <math.h>
 
+// calc_cov
+
 void calc_cov(double *data,  int N, int M, double *vect)
 {
 	int nb;
@@ -52,6 +54,7 @@ void calc_cov(double *data,  int N, int M, double *vect)
 			vect[i1 * N + i2] = tmp;
 			vect[i2 * N + i1] = tmp;
 		}
+		// compute diagonal elements
 		tmp = 0.0;
 		nb = 0;
 		for (j = 0; j < M; j++) {

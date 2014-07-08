@@ -3,7 +3,8 @@
  * @ingroup pca
  * @{
  *
- * @brief function to calculate covariance matrix
+ * @brief functions to calculate the covariance matrix,
+ *	x and the standard deviation. 
  */
 
 
@@ -11,7 +12,7 @@
 #define CALC_COV_H
 
 /**
- * calculate the covariance matrix  
+ * calculate the covariance matrix of data into cov 
  *
  * @param data		data matrix (of size NxM)
  * @param N		number of individuals
@@ -21,7 +22,7 @@
 void calc_cov(double *data, int N, int M, double *cov);
 
 /**
- * calculate sdev form eigenvalues
+ * calculate sdev form eigenvalues, sdev = sqrt(val/N)
  *
  * @param val	eigenvalues vector
  * @param N	size of val
@@ -29,9 +30,9 @@ void calc_cov(double *data, int N, int M, double *cov);
 void calc_sdev(double *val, int N);
 
 /**
- * calculate x from vect and val (in fact sdev)
+ * calculate x from vect and val (in fact sdev), vec <-x = vec * val /sqrt(N)
  *
- * @param vec	vec matrix 
+ * @param vec	in, vec matrix. out, x.
  * @param val	sdev matrix
  * @param N	number of individuals
  * @param K	number of PCs

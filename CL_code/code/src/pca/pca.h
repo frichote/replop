@@ -3,7 +3,8 @@
  * @ingroup pca
  * @{
  *
- * @brief function for individual pca calculation
+ * @brief compute a pca of a matrix. It computes eigenvalues,
+ *	eigenvectors, x (as prcomp in R), and standard deviation
  */
 
 
@@ -21,8 +22,8 @@
  * @param n			number of individuals
  * @param L			number of loci
  * @param K			number of PCs
- * @param s			boolean: center
- * @param s			boolean: scale and center
+ * @param s			boolean: FALSE centered data, 
+ * 					 TRUE scaled and centered data
  */
 void pca(char* input_file, char *output_eva_file, char *output_eve_file,
 	char *output_sdev_file, char *output_x_file,

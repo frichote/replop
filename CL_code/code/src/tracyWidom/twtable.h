@@ -9,7 +9,9 @@
 
 #ifndef TWTABLE_H
 #define TWTABLE_H
-
+/**
+ * @brief input table (161x3) needed to compute Tracy-Widom statistics
+ */
 double twtable[483] =
  {-8.000, 1.000000000, 0.000000000, 
 -7.900, 1.000000000, 0.000000000, 

@@ -11,10 +11,12 @@
 #define ERROR_TRACYWIDOM_H
 
 /**
- * print a specific lfmm error message
+ * print a specific tracyWidom error message
  *
- * @param msg   the string to recognize the error type
- * @param file  the name of a file (depends on the error)
+ * @param msg   the string to recognize the error type. 
+		It can be "cmd", "option", "missing", "basic", 
+		"specific" or internal otherwise.
+ * @param file  the name of a file (for "option" and "specific" error)
  */
 void print_error_tracyWidom(char* msg, char* file);
 

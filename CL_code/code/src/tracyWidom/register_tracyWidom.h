@@ -3,7 +3,7 @@
  * @ingroup tracyWidom
  * @{
  *
- * @brief functions to read data matrices
+ * @brief read cmd line parameter for tracyWidom program
  */
 
 #ifndef REGISTER_TRACYWIDOM_H

@@ -1,5 +1,5 @@
 /*
-    pca, file: main.c
+    pca, file: pca.c
     Copyright (C) 2013 François Mathieu, Eric Frichot
 
     This program is free software: you can redistribute it and/or modify
@@ -29,6 +29,8 @@
 #include "print_pca.h"
 #include "../matrix/normalize.h"
 #include "../matrix/diagonalize.h"
+
+// pca
 
 void pca(char* input_file, char *output_eva_file, char *output_eve_file, 
 	char *output_sdev_file, char *output_x_file,
@@ -85,7 +87,7 @@ void pca(char* input_file, char *output_eva_file, char *output_eve_file,
 	calc_sdev(val, N);
 	write_data_double(output_sdev_file, N, 1, val);
 
-	// calculate x
+	// calculate x into vect
 	calc_x(vect, val, N, *K);
 	write_data_double(output_x_file, N, *K, vect);
 

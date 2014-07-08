@@ -10,11 +10,6 @@
 #define REGISTER_LFMM_H
 
 /**
- * pointer to lfmm_param struct
- */
-typedef struct _lfmm_param *LFMM_param;
-
-/**
  * initialize the parameter with the default values for LFMM 
  *
  * @param param	parameter structure

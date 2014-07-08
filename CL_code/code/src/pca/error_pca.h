@@ -14,7 +14,9 @@
  * print a specific lfmm error message
  *
  * @param msg   the string to recognize the error type
- * @param file  the name of a file (depends on the error)
+                It can be "cmd", "option", "missing", "basic", 
+                "specific" or internal otherwise.
+ * @param file  the name of a file (for "option" and "specific" error)
  */
 void print_error_pca(char* msg, char* file);
 

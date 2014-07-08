@@ -21,7 +21,7 @@ void print_help_tracyWidom();
  *
  * @param M     		the number of eigenvalues
  * @param input         	input eigenvalues file
- * @param output_values  	output file
+ * @param output 	  	output file
  */
 void print_summary_tracyWidom( int M, char *input, char *output);
 

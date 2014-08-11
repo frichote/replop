@@ -1,0 +1,80 @@
+body {
+        font-family:verdana;
+	background-color:#eee;
+	width: 800px;
+	margin: 0 auto;
+}
+/*
+#left-nav dl{
+margin:-5px;
+padding:0;
+}
+#left-nav dt{
+margin:1px;
+padding:0;
+}
+#left-nav dt a{
+background-color:#D2E1FB;
+border-left:.5em solid #E8F0FD;
+border-right:.5em solid #E8F0FD;
+color:#0A00B0;
+display:block;
+padding:4px 3px 5px 5px;
+text-decoration:none;
+font-weight:800;
+width:8.4em;
+}
+
+#left-nav dt a:hover{
+background-color:#A9CFFE;
+border-right:.5em solid #000;
+border-left:.5em solid #E8F0FD;
+color:#FFF;
+}
+*/
+
+hr
+{
+   width: 50%;
+   color: black; /* Là je suis pas certain pour la couleur, c'est peut être border... essaye */
+   height: 1px;
+}
+
+canvas { border: 4px solid brown; background: #FFFFFF }
+
+article {
+    	border:1px #000 solid;
+	background-color:white;
+	padding:4%;
+	    border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+
+}
+
+
+footer {
+        background:url(../images/bg-menu.png) no-repeat left top;
+    	border:1px #000 solid;
+	position:bottom;
+	height:20px;
+	    border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+}
+
+article h1 {
+	color:black;
+}
+
+article h2 {
+	color:#9894f3;
+}
+
+dt {
+	font-weight:bold;
+}
+
+p {
+	text-align: justify;
+}

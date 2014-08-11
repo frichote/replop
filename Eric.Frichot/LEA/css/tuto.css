@@ -1,0 +1,112 @@
+#tuto-nav {
+	margin: 0;
+	margin-top:-30px;
+        list-style-type:none;
+}
+
+#tuto-nav li {
+        margin-left: 40px;
+        float:left; /* pour IE */
+}
+
+#tuto-nav li button {
+	border-radius: 10px;
+        display: block;
+        float: left;
+        width: 80px;
+        background-color: white;
+        color:black;
+        text-decoration:none;
+        text-align:center;
+        padding:5px;
+	font-size:18px;
+        border:2px solid;
+         /*pour avoir un effet "outset" avec IE :*/
+	border-color: white;
+}
+
+/*#tuto-nav li button:hover {
+	background-color:white;
+	border-color:#3a64e6 #9894f3 #9894f3 #3a64e6;
+}*/  
+
+#bar-nav{
+	width:80%;
+	color: black;
+	height: 1px;
+	margin-top:-40px;
+}
+
+div{
+	display:none;
+}
+
+#main{
+	display:inline;
+}
+
+#lfmm{
+	display:inline;
+}
+
+#convert-nav {
+	margin-left:10px;
+	margin-top:-10px;
+        list-style-type:none;
+}
+
+#convert-nav li {
+        margin-left: 0px;
+        float:left; /* pour IE */
+}
+
+#convert-nav li button {
+	border-radius: 10px;
+        display: block;
+        float: left;
+        width: 100px;
+        background-color: white;
+        color:black;
+        text-decoration:none;
+        text-align:center;
+	font-size:16px;
+        padding:2px;
+        border:2px solid;
+         /*pour avoir un effet "outset" avec IE :*/
+        border-color:white;
+}
+
+/*#convert-nav li button:hover {
+ background-color:white;
+	 border-color:#3a64e6 #9894f3 #9894f3 #3a64e6;
+} */ 
+
+#bar-nav{
+	width:90%;
+	color: black;
+	height: 1px;
+	margin-top:-40px;
+}
+
+.conv {
+	font-size:15px;
+}
+
+.box {
+ border-width:1px;
+ border-style:dashed;
+ border-color:gray;
+ padding:0 10px;
+ font-size:13px;
+ display:block;
+ background-color:#fef1d2;
+}
+
+#tuto-nav li #main-b {
+        border:2px solid #9894f3;
+}
+
+#convert-nav li #lfmm-b {
+        border:2px solid #9894f3;
+}
+

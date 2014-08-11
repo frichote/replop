@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <title> LEA webpage</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/tuto.css">
+	<script type="text/javascript" src="js/display.js"></script>
+</head>
+<body>
+        <header>
+        <hgroup>
+        <h1> LEA: an R package for Landscape and Ecological Associations studies</h1>
+        </hgroup>
+        </header>
+
+        <nav id="center-nav">
+        <ul>
+            <li><a href="index.htm">Home</a></li>
+            <li><a href="news.htm">News</a></li>
+            <li><a href="software.htm">Software</a></li>
+            <li><a href="tutorial.htm" style="color:#99ff33">Tutorial</a></li>
+            <li><a href="faq.htm">FAQ</a></li>
+            <li><a href="contact.htm">Contact</a></li>
+            <li class="pad"></li>
+        </ul>
+        </nav>
+
+	<article>
+	<ul id="tuto-nav">
+		<li> <button class='tuto-c' id="main-b" onclick="display('main', 'tuto', 'main-b', 'tuto-c')">tutorial</button> </li>
+		<li> <button class='tuto-c' id="convert-b" onclick="display('convert', 'tuto', 'convert-b', 'tuto-c')">convert</button> </li>
+		<li> <button class='tuto-c' id="pca-b" onclick="display('pca', 'tuto', 'pca-b', 'tuto-c')">pca</button> </li>
+		<li> <button class='tuto-c' id="sNMF-b" onclick="display('sNMF', 'tuto', 'sNMF-b', 'tuto-c')">sNMF</button></li>
+		<li> <button class='tuto-c' id="LFMM-b" onclick="display('LFMM', 'tuto', 'LFMM-b', 'tuto-c')">LFMM</button></li>
+	</ul>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<hr id="bar-nav"/>
+
+	<div class="tuto" id="main">
+	<p>
+	The goal of this tutorial is to give an overview of LEA functionalities.
+	</p>
+	<p>
+	One specifity of the LEA package is to be able to handle very lage population
+	genetic data sets. Genomic data are never loaded into the R memory, and they 
+	are processed using fast C codes wrapped into the R code. For this reason, 
+	most of the LEA functions use character strings containing paths to input files
+	as arguments.
+	</p>
+	<p>
+	As some functions may take several hours for very large datasets, nobody wants to 
+	erase their results when quitting R. That is why output files are
+	written into text files that can be read by LEA after each run.
+	We advise creating a working directory containing your data when you start using
+	LEA. 
+	It is assumed that two files with the same name and a different extension in the 
+	same directory contain the same data matrix in different formats.
+	</p>
+	
+	</div>
+	<div class="tuto" id="convert">
+		<ul id="convert-nav">
+			<li> <button class='convert-c' id="lfmm-b" 
+				onclick="display('lfmm', 'conv', 'lfmm-b', 'convert-c')">lfmm</button> </li>
+			<li> <button class='convert-c' id="env-b" 
+				onclick="display('env', 'conv', 'env-b', 'convert-c')">env</button> </li>
+			<li> <button class='convert-c' id="geno-b" 
+				onclick="display('geno', 'conv', 'geno-b', 'convert-c')">geno</button></li>
+			<li> <button class='convert-c' id="ped-b" 
+				onclick="display('ped', 'conv', 'ped-b', 'convert-c')">ped</button></li>
+			<li> <button class='convert-c' id="ancestrymap-b" 
+				onclick="display('ancestrymap', 'conv', 'ancestrymap-b', 'convert-c')">ancestrymap</button></li>
+			<li> <button class='convert-c' id="vcf-b" 
+				onclick="display('vcf', 'conv', 'vcf-b', 'convert-c')">vcf</button></li>
+		</ul>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<hr id="bar-nav"/>
+		<br/>
+		<div class="conv" id="lfmm">
+			<p>
+			The lfmm format can be used as an input format for genotypic matrices
+			in the LFMM, sNMF and pca functions.
+			The lfmm format has one row for each individual. Each row contains 
+			one value at each loci (separated by spaces or tabulations) 
+			corresponding to the number of 
+			alleles. The number of alleles corresponds to the number of reference alleles 
+			or the number of derived alleles.
+			Missing genotypes are encoded by the value -9 or 9.
+			<br/>
+			<br/>
+			Here is an example of a genotypic matrix using the lfmm format with 3 individuals and 4 loci:
+			<div class="box">
+			<pre><code>1 0 0 1
+1 1 9 2
+2 0 1 1</code></pre></div>
+			</p>
+			<p>
+			R code examples:
+			<ul>
+			<li> Read and write data in the lfmm format 
+			<div class="box">
+			<pre><code>library(LEA)
+
+# Creation of a genotypic matrix G with 1000 SNPs for 100 individuals.
+# The G matrix contains one individual per line and one locus per column.
+G = matrix(sample(c(0,1,2),replace=TRUE, size=1000*100), ncol=1000, nrow=100)
+
+# write G in a file called "tuto.lfmm"
+# Create file:	"tuto.lfmm".
+write.lfmm(G, "tuto.lfmm")
+
+# read the file "tuto.lfmm".
+G = read.lfmm("tuto.lfmm")</code></pre></div>
+<br/>
+</li>
+<li>
+Conversion from the lfmm format to the geno format
+<div class="box">
+<pre><code>library(LEA)
+
+# Creation of a file called "tuto.lfmm" in the working directory,
+# with 1000 SNPs for 100 individuals.
+G = matrix(sample(c(0,1,2),replace=TRUE, size=1000*100), ncol=1000, nrow=100)
+write.lfmm(G, "tuto.lfmm")
+
+# Conversion 	from the lfmm format ("tuto.lfmm") 
+#		to the geno format ("tuto.geno").
+# By default, 	the name of the output file is the same name 
+#		as the input file with a .geno extension.
+# Create file:	"tuto.geno".
+output = lfmm2geno("tuto.lfmm")
+
+# Conversion 	from the lfmm format ("tuto.lfmm") 
+#		to the geno format with the output file called "plop.geno".
+# Create file:	"plop.geno".
+output = lfmm2geno("tuto.lfmm", "plop.geno")</code></pre></div>
+</li>
+</ul>
+			</p>
+		</div>
+		<div class="conv" id="env">
+			<p>
+			The "env" format can be used as an input format for the 
+			environmental variables in the LFMM function.
+			An env format file has one row for each individual.
+			Each row contains one value for each environmental variable
+			(separated by spaces or tabulations).
+			<br/>
+			<br/>
+			Here is an example of an environmental file using the "env" format with 3 individuals and 2 variable:
+			<div class="box">
+			<pre><code>0.252477 0.95250639
+0.216618 0.10902647
+-0.47509 0.07626694</code></pre></div>
+			</p>
+			<p>
+			R code examples:
+			<ul> 
+			<li> Read and write of an environmental variables in the env format	
+			<div class="box">
+			<pre><code>library(LEA)
+
+# Creation of an environmental matrix C 
+# containing 2 environmental variables for 3 individuals.
+# C contains one line for each individual and one column for each variable.
+C = matrix(runif(6), ncol=2, nrow=3)
+
+# Write C in a file called "tuto.env".
+# Create file:	"tuto.env".
+write.env(C,"tuto.env")
+
+# Read the file "tuto.env".
+C = read.env("tuto.env")</code></pre></div>
+			</li>
+			</ul>
+			</p>
+		</div>
+		<div class="conv" id="geno">
+                        <p>
+			The geno format can be used as an input format for genotypic matrices
+			in the LFMM, sNMF and pca functions.
+			The geno format has one row for each locus. Each row contains 1 
+			character per individual:
+  			0 means zero copies of the reference allele.
+  			1 means one copy of the reference allele.
+  			2 means two copies of the reference allele.
+  			9 means missing data.
+                        <br/>
+                        <br/>
+                        Here is an example of a genotypic matrix using the geno format with 3 individuals and 4 loci:
+                        <div class="box">
+                        <pre><code>112
+010
+091
+121</code></pre></div>
+                        </p>
+                        <p>
+                        R code examples:
+			<ul>
+			<li> Read and write data in the geno format 
+                        <div class="box">
+                        <pre><code>library(LEA)
+
+# Creation of a genotypic matrix G with 1000 loci for 100 individuals.
+# The G matrix is composed of one individual per line and one locus per column.
+G = matrix(sample(c(0,1,2), replace=TRUE, size=1000*100), ncol=1000, nrow=100)
+
+# Write G in a file called "tuto.geno".
+# Create file:	"tuto.geno".
+write.geno(G, "tuto.geno")
+
+# Read the file "tuto.geno".
+G = read.geno("tuto.geno")</code></pre></div>
+			<br/>
+			</li>
+			<li>Conversion from the geno format to the lfmm format
+                        <div class="box">
+			<pre><code>library(LEA)
+
+# Creation of a file called "tuto.geno" in the working directory,
+# with 1000 SNPs for 100 individuals.
+G = matrix(sample(c(0,1,2),replace=TRUE, size=1000*100), ncol=1000, nrow=100)
+write.geno(G, "tuto.geno")
+
+# Conversion 	from the geno format ("tuto.geno") 
+#		to the lfmm format ("tuto.lfmm").
+# By default, 	the name of the output file is the same name 
+#		as the input file with a .lfmm extension.
+# Create file:	"tuto.lfmm".
+output = geno2lfmm("tuto.geno")
+
+# Conversion 	from the geno format ("tuto.geno") 
+#		to the lfmm format with the output file called "plop.lfmm".
+# Create file:	"plop.lfmm".
+output = geno2lfmm("tuto.geno", "plop.lfmm")</code></pre></div>
+			</li>
+			</ul>
+                        </p>
+		</div>
+		<div class="conv" id="ped">
+			<p>
+                        The ped format is largely used in population genetics.
+			The ped format can be used as an input format for genotypic matrices
+			in the LFMM, sNMF and pca functions.
+			LEA includes functions to convert from ped to geno and lfmm formats.
+			The ped format has one row for each individual. Each row contains 
+			6 columns of information for each individual, plus two genotype 
+			columns for each SNP. Each column must be separated by spaces or 
+			tabulations. Genotype format must be either 0ACGT or 01234, where 
+			0 means missing data. The first 6 columns of the genotype file are: 
+			1st column is family ID, 2nd column is sample ID, 3rd and 4th columns 
+			are sample IDs of parents, 5th column is gender (male is 1, female is 2), 
+			6th column is case/control status (1 is control, 2 is case), quantitative 
+			trait value or population group label.
+			<br/>
+			<br/>
+			The ped format is also described <a href="http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml#ped">here</a>.
+
+                        <br/>
+                        <br/>
+                        Here is an example of a genotypic matrix in the ped format using 3 individuals and 4 loci:
+                        <div class="box">
+                        <pre><code>1 SAMPLE0 0 0 2 2 1 2 3 3 1 1 2 1
+2 SAMPLE1 0 0 1 2 2 1 1 3 0 4 1 1
+3 SAMPLE2 0 0 2 1 2 2 3 3 1 4 1 1</code></pre></div>
+                        </p>
+                        <p>
+                        R code examples:
+			<ul>
+			<li>Conversion from the ped format to the lfmm and geno formats
+                        <div class="box">
+                        <pre><code>library(LEA)
+
+# Creation of a file called "example.ped"
+# with 4 SNPs for 3 individuals.
+data("example.ped")
+write.table(example.ped,"example.ped",
+	col.names = FALSE, row.names = FALSE, quote = FALSE)
+
+# Conversion 	from the ped format ("example.ped") 
+#		to the lfmm format ("example.lfmm").
+# By default, 	the name of the output file is the same name 
+#		as the input file with a .lfmm extension.
+# Create file:	"example.lfmm".
+output = ped2lfmm("example.ped")
+
+# Conversion 	from the ped format ("example.ped") 
+#		to the geno format ("example.geno").
+# By default, 	the name of the output file is the same name 
+#		as the input file with a .geno extension.
+# Create file:	"example.geno".
+output = ped2geno("example.ped")
+
+# Conversion 	from the ped format ("example.ped") 
+#		to the geno format with the output file called "plop.geno".
+# Create file:	"plop.geno".
+output = ped2geno("example.ped", "plop.geno")</code></pre></div>
+			</li>
+			</ul>
+                        </p>
+
+		</div>
+		<div class="conv" id="ancestrymap">
+                        <p>
+                        The ancestrymap format is widely used in population genetics.
+			The ancestrymap format can be used as an input format for genotypic matrices
+			in the LFMM, sNMF and pca functions.
+                        LEA includes functions to convert ancestrymap data to geno and lfmm formats.
+			The ancestrymap format has one row for each genotype. Each row has 3 columns: 
+			the 1st column is the SNP name, the 2nd column is the sample ID, 
+			the 3rd column is the number of alleles. 
+			Genotypes for a given SNP name are written in consecutive lines.
+			The number of alleles can be the number of 
+			reference alleles or the number of derived alleles 
+			Missing genotypes are encoded by the value 9.
+                        <br/>
+                        <br/>
+                        Here is an example of a genotypic matrix using the ancestrymap format 
+			with 3 individuals and 4 loci:
+                        <div class="box">
+                        <pre><code>rs0000  SAMPLE0 1
+rs0000  SAMPLE1 1
+rs0000  SAMPLE2 2
+rs1111  SAMPLE0 0
+rs1111  SAMPLE1 1
+rs1111  SAMPLE2 0
+rs2222  SAMPLE0 0
+rs2222  SAMPLE1 9
+rs2222  SAMPLE2 1
+rs3333  SAMPLE0 1
+rs3333  SAMPLE1 2
+rs3333  SAMPLE3 1</code></pre></div>
+                        </p>
+                        <p>
+                        R code examples:
+			<ul>
+			<li>Conversion from the ancestymap format to the lfmm and geno formats
+                        <div class="box">
+                        <pre><code>library(LEA)
+
+# Creation of a file called "example.ancestrymap"
+# with 4 SNPs for 3 individuals.
+data("example.ancestrymap")
+write.table(example.ancestrymap,"example.ancestrymap",
+col.names = FALSE, row.names = FALSE, quote = FALSE)
+
+# Conversion 	from the ancestrymap format ("example.ancestrymap") 
+#		to the lfmm format ("example.lfmm").
+# By default,   the name of the output file is the same name
+#               as the input file with a .lfmm extension.
+# Create file:	"example.lfmm".
+output = ancestrymap2lfmm("example.ancestrymap")
+                        
+# Conversion 	from the ancestrymap format ("example.ancestrymap") 
+#		to the geno format ("example.geno").
+# By default,   the name of the output file is the same name
+#               as the input file with a .geno extension.
+# Create file:	"example.geno".
+output = ancestrymap2geno("example.ancestrymap")
+
+# Conversion    from the ancestrymap format ("example.ancestrymap") 
+#               to the geno format with the output file called "plop.geno".
+# Create file:	"plop.geno".
+output = ancestrymap2geno("example.ancestrymap", "plop.geno")</code></pre></div>
+			</li>
+			</ul>
+                        </p>
+		</div>
+		<div class="conv" id="vcf">
+                       <p>
+                        The vcf format is often used in population genetics. 
+			The vcf format can be used as an input format for genotypic matrices
+			in the LFMM, sNMF and pca functions.
+                        LEA includes functions to convert the vcf format to the geno format.
+			The vcf format is described <a href="http://www.1000genomes.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-41">here</a>.	
+                        <br/>
+                        <br/>
+                        Here is an example of a genotypic matrix using the vcf format 
+			with 3 individuals and 4 loci:
+                        <div class="box">
+                        <pre><code>##fileformat=VCFv4.1 
+##FORMAT=<ID=GM,Number=1,Type=Integer,Description="Genotype meta"> 
+##INFO=<ID=VM,Number=1,Type=Integer,Description="Variant meta"> 
+##INFO=<ID=SM,Number=1,Type=Integer,Description="SampleVariant meta"> 
+#CHROM POS ID REF ALT QUAL FILTER INFO FORMAT SAMPLE0 SAMPLE1 SAMPLE2 
+1 1001 rs0000 T C 999 . VM=1;SM=100 GT:GM 1/0:1 0/1:2 1/1:3 
+1 1002 rs1111 G A 999 . VM=2;SM=101 GT:GM 0/0:6 0/1:7 0/0:8 
+1 1003 notres G AA 999 . VM=3;SM=102 GT:GM 0/0:11 ./.:12 0/1:13 
+1 1004 rs2222 G A 999 . VM=3;SM=102 GT:GM 0/0:11 . 1/0:13
+1 1003 notres GA A 999 . VM=3;SM=102 GT:GM 0/0:11 ./.:12 0/1:13 
+1 1005 rs3333 G A 999 . VM=3;SM=102 GT:GM 1/0:11 1/1:12 0/1:13</code></pre></div>
+                        </p>
+                        <p>
+                        R code examples:
+			<ul>
+			<li>Conversion from the vcf format to the geno format
+                        <div class="box">
+                        <pre><code>library(LEA)
+
+# creation of a file called "example.vcf"
+# with 4 SNPs for 3 individuals.
+data("example.vcf")
+write.table(example.vcf,"example.vcf",col.names =
+c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO",
+  "FORMAT", "SAMPLE0", "SAMPLE1", "SAMPLE2"),
+row.names = FALSE, quote = FALSE)
+
+# Conversion 	from the vcf format ("example.vcf") 
+# 		to the geno format ("example.geno").
+# By default,   the name of the output file is the same name
+#               as the input file with a .geno extension.
+# Create files:	"example.geno",
+#		"example.vcfsnp" - SNP information,
+#		"example.removed" - removed lines. 
+output = vcf2geno("example.vcf")
+
+# Conversion    from the vcf format ("example.vcf")
+#               to the geno format with the output file called "plop.geno".
+# Create files:	"plop.geno",
+#		"plop.vcfsnp" - SNP information,
+#		"plop.removed" - removed lines. 
+output = vcf2geno("example.vcf", "plop.geno")</code></pre></div>
+			</li>
+			</ul>
+                        </p>
+
+		</div>
+	</div>
+	<div class="tuto" id="pca">
+		<p>
+		The function pca performs a Principal Component Analysis of 
+		a genotypic matrix using the lfmm, geno, ancestrymap, ped or vcf format.
+		The function computes eigenvalue, eigenvector, and standard
+		deviation for each principal component and the projection of
+		each individual on each component. The function pca returns an object of class
+		"pca-class" containing the output data and the input parameters.
+		<br/>
+		<br/>
+		The function tracyWidom performs Tracy-Widom test on the eigenvalues.
+		</p>
+
+                R code examples:<br/>
+		<small>&emsp;&emsp;(Caution: the examples have to be executed in the same order as in the tutorial.)
+		</small>
+			<ul>
+			<li> Perform a PCA
+                        <div class="box">
+                        <pre><code>library(LEA)
+
+# Creation of the genotype file "tuto.lfmm"
+# with 10000 SNPs for 50 individuals.
+data("tuto")
+write.lfmm(R, "tuto.lfmm")
+
+# run of PCA
+# Available options, 	K (the number of PCs calculated), 
+#			center and scale. 
+# Create files: tuto.eigenvalues - eigenvalues,	
+#		 tuto.eigenvectors - eigenvectors,
+#		 tuto.sdev - standard deviations,
+#		 tuto.projections - projections,
+#		 tuto.pcaClass - the pcaClass object.
+# Create a pca-class object: pc.
+pc = pca("tuto.lfmm", scale = TRUE)</code></pre></div>
+			<br/>
+                        </li>
+                        <li> Display information 
+                        <div class="box">
+                        <pre><code># Display information about the analysis.
+show(pc)
+
+# Summarize the analysis.
+summary(pc)</code></pre></div>
+			<br/>
+			</li>
+                        <li> Graphical outputs 
+  <div class="box">
+                        <pre><code>par(mfrow=c(2,2))
+
+# Plot eigenvalues.
+plot(pc, lwd=5, col="red",xlab=("PCs"),ylab="eigen")
+
+# PC1-PC2 plot.
+plot(pc$projections)
+# PC3-PC4 plot.
+plot(pc$projections[,3:4])
+
+# Plot standard deviations.
+plot(pc$sdev)</code></pre></div>
+ <br/>
+                        </li>
+                        <li> Perform Tracy-Widom tests 
+ <div class="box">
+                        <pre><code># Perfom Tracy-Widom tests on all eigenvalues.
+# create file: tuto.tracyWidom - tracy-widom test information.	
+tw = tracyWidom(pc)
+
+# plot the percentage of variance explained by each component
+plot(tw$percentage)
+
+# display the p-values for the Tracy-Widom tests. 
+tw$pvalues</code></pre></div>
+			</li>
+			</ul>
+                        </p>
+                </div>
+
+	</div>
+	<div class="tuto" id="sNMF">
+	                <p>
+		sNMF is used to fit the ancestry coefficients using the sparse Non-Negative Matrix Factorization.
+		sNMF function returns a project containing all the runs of sNMF for a given input file.
+		It is interesting to perform several runs for several number of ancestral populations (K).
+                <br/>
+                <br/>
+		This tutorial describe how to: analyze a dataset, manage a snmf project, run sNMF with advanced
+		optinons, and perform post-treatment of the results.
+                </p>
+
+		<p>
+                R code examples:<br/>
+                <small>&emsp;&emsp;(Caution: the examples have to be executed in the same order as in the tutorial.)
+                </small>
+
+			<ul>
+			<li> Example of analyses using sNMF
+                        <div class="box">
+                        <pre><code>library(LEA)
+
+# creation of the genotype file, tuto.geno.
+# It contains 10000 SNPs for 50 individuals.
+# It is composed of three non-admixed populations
+# with respectively 20, 10, and 20 indiviuals. 
+data("tuto")
+write.geno(R, "tuto.geno")
+
+###  rnns of sNMF ####
+# main options, K: (the number of ancestral populations), 
+#		alpha: the regularization parameter, 
+#		entropy: calculate the cross-entropy criterion, 
+#		tolerance: the stopping criterion. 
+#		CPU: the number of CPUs.
+
+# Runs with K between 1 and 5 with cross-entropy and 2 repetitions.
+project = sNMF("tuto.geno", K=1:5, entropy = TRUE, repetitions = 2)
+
+# plot cross-entropy criterion of all runs of the project
+plot(project, lwd = 5, col = "red", pch=1)
+
+# get the cross-entropy of each run for K = 3
+ce = crossEntropy(project, K = 3)
+
+# select the run with the lowest cross-entropy
+best = which.min(ce)
+
+# plot the best run for K = 3 (ancestry coefficients).
+barplot(t(Q(project, K = 3, run = best)), col = c("red", "blue", "yellow"))</code></pre></div>
+			<br/>
+                        </li>
+			<li> Manage a snmf project
+                        <div class="box">
+                        <pre><code># All the runs of sNMF for a given file are 
+# automatically saved into a snmf project. 
+# The name of the snmfProject file is the same name as 
+# the name of the input file with a .snmfProject extension ("tuto.snmfProject").
+# There is only one snmf Project for each input file including all the runs.
+
+# A snmfProject can be load in a different session.
+project = load.snmfProject("tuto.snmfProject") 
+
+# A snmfProject can be erased.
+# Caution: All the files associated with the project will be removed.
+project = remove.snmfProject("tuto.snmfProject")</code></pre></div>
+                        <br/>
+                        </li>
+                        <li> Post-treatments
+                        <div class="box">
+                        <pre><code># show the project
+show(project)
+
+# plot cross-entropy criterion of all runs of the project 
+plot(project, lwd = 5, col = "red", pch=1)
+
+# summary of the project
+summary(project)
+
+# get the cross-entropy for all runs for K = 3 
+ce = crossEntropy(project, K = 3)
+
+# get the cross-entropy for the 2nd run for K = 3
+ce = crossEntropy(project, K = 2, run = 1)
+
+# get the ancestral genotype frequency matrix, G, for the 2nd run for K = 3. 
+res = G(project, K = 3, run = 2)</code></pre></div>
+			<br/>
+			</li>
+			<li> Advanced sNMF run options
+                        <div class="box">
+                        <pre><code>#Add of one run for K=1 and K=2 with cross-entropy to project
+project = sNMF("tuto.geno",K = c(1,2), entropy = TRUE)
+summary(project)
+
+# Q.input.file: init a run with a given ancestry coefficient matrix Q. 
+# Here, it is initialized with the Q matrix from the first run with K=3
+project = sNMF("tuto.geno", K = 3, Q.input.file = "tuto_r1.3.Q")
+
+# I: init the Q matrix of a run from a smaller run with 10% randomly chosen SNPs. 
+project = sNMF("tuto.geno", 3, I)
+# or 5% randomly chosen SNPs.
+project = sNMF("tuto.geno", 3, I = 0.05)
+
+# CPU: run sNMF with 2 CPUs. 
+project = sNMF("tuto.geno", 3, CPU=2, project)
+
+# percentage: run sNMF and calculate the cross-entropy criterion with 10% of masked
+# genotypes, instead of 5% of masked genotypes. 
+project = sNMF("tuto.geno", 3, entropy= TRUE, percentage = 0.1)
+
+# seed: choose the seed to init the randomization.
+project = sNMF("tuto.geno", 3, seed=42)
+</code></pre></div>
+			</li>
+			</ul>
+		</p>
+                </div>
+
+	
+	</div>
+	<div class="tuto" id="LFMM">
+                       <p>
+                LFMM is used is used to fit Latent Factor Mixed Models.
+                <br/>
+                <br/>
+                LFMM function returns a project containing all the runs of LFMM. If you perform additional runs,
+                you can set this project as parameter to include the new runs into the project. Several runs
+                may be interesting for several number of latent factors (K).
+                <br/>
+                <br/>
+                LEA includes a set of post-treatment functions for LFMM runs.
+                </p>
+
+		<p>
+                R code examples:<br/>
+                <small>&emsp;&emsp;(Caution: the examples have to be executed in the same order as in the tutorial.)
+                </small>
+			<ul>
+			<li> Example of analyses using LFMM
+                        <div class="box">
+                        <pre><code>library(LEA)
+
+# creation of the genotype file, tuto.lfmm
+# 	  and the variable file, tuto.env.
+# It contains 10000 SNPs for 50 individuals and 2 variables.
+data("tuto")
+write.lfmm(R, "tuto.lfmm")
+write.env(C, "tuto.env")
+
+###  runs of LFMM ####
+# main options, K: (the number of latent factors), 
+#		d: run for the d-th variable
+#		CPU: the number of CPUs.
+
+# Runs with K = 1 and K = 2 and 3 repetitions.
+project = LFMM("tuto.lfmm", "tuto.env", K = 1:2, d = 1, repetitions = 3)
+
+# plot lambda criterion of all runs of the project
+plot(project, lwd = 5, col = "red", pch=1)
+
+# return a list controled for the False Discovery Rate for K = 2 and d = 1
+res = cFDR(project, K = 2, d = 1)</code></pre></div>
+			<br/>
+			</li>
+			<li> Manage a lfmm project
+                        <div class="box">
+                        <pre><code># All the runs of LFMM for a given 
+# input file and a given variable file  are 
+# automatically saved into a lfmm project. 
+# The name of the lfmmProject file is the same name as 
+# the name of the input file with a .lfmmProject extension ("tuto.lfmmProject").
+# There is only one lfmm Project for each input file, gathering all the runs.
+
+# A lfmmProject can be load in a different session.
+project = load.lfmmProject("tuto.lfmmProject") 
+
+# A lfmmProject can be erased.
+# Caution: All the files associated with the project will be removed.
+project = remove.lfmmProject("tuto.lfmmProject")</code></pre></div>
+                        <br/>
+                        </li>
+                        <li> Post-treatments
+                        <div class="box">
+                        <pre><code># show the project
+show(project)
+
+# plot the lambda criterion of all runs of the project 
+plot(project, lwd = 5, col = "red", pch=1)
+
+# get a plot of the empirical cumulative distribution function.
+ecdf(project)
+
+# summary of the project
+summary(project)
+		
+# get the z-scores for the 2nd run for K = 2 and d = 1
+z = zscores(project, K = 2, d = 1, run = 2) 
+
+# get the -log10(pvalues) for the 2nd run for K = 2 and d = 1
+mp = mlog10pvalues(project, K = 2, d = 1, run = 2) 
+
+# get the pvalues for the 2nd run for K = 2 and d = 1
+p = pvalues(project, K = 2, d = 1, run = 2) </code></pre></div>
+			<br/>
+			</li>
+                        <li> Advanced LFMM run options
+                        <div class="box">
+                        <pre><code># show the project
+show(project)
+
+
+			</code></pre></div>
+			<br/>
+			</li>
+			</ul>
+		</p>
+	</div>
+	</article>
+	<footer>
+	</footer>
+</body>
+</html>

@@ -16,7 +16,7 @@ MAIN = main
 
 ### SOURCES FILES ####
 SRC_LAPACK = $(wildcard $(SRC)/lapack/*.c)
-SRC_TOOLS = $(wildcard $(SRC)/bituint/*.c) $(wildcard $(SRC)/matrix/*.c) $(wildcard $(SRC)/nnlsm/*.c) $(wildcard $(SRC)/io/*.c)
+SRC_TOOLS = $(wildcard $(SRC)/bituint/*.c) $(wildcard $(SRC)/matrix/*.c) $(wildcard $(SRC)/nnlsm/*.c) $(wildcard $(SRC)/io/*.c (wildcard $(SRC)/stats/*.c))
 SRC_convert = $(wildcard $(SRC)/convert/*.c) $(SRC_TOOLS) 
 SRC_createDataSet = $(wildcard $(SRC)/createDataSet/*.c) $(SRC_TOOLS) 
 SRC_crossEntropy = $(wildcard $(SRC)/crossEntropy/*.c) $(SRC_TOOLS)

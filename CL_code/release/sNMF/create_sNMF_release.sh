@@ -3,7 +3,7 @@
 # parameters
 prog="sNMF"
 dir="sNMF_CL_v$1"
-src_list="bituint createDataSet crossEntropy io lapack matrix nnlsm sNMF convert"
+src_list="stats bituint createDataSet crossEntropy io lapack matrix nnlsm sNMF convert"
 main_list="main_sNMF main_createDataSet main_crossEntropy main_geno2lfmm main_lfmm2geno main_ped2geno main_vcf2geno main_ancestrymap2geno"
 
 # color definition

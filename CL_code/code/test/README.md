@@ -1,8 +1,9 @@
+
 Description
 -----------
 This directory contains tests of the C source files.
 The tests are not well described and they should be
-done using an appropriate software.
+done using an appropriate tool (out of date).
 
 Organization
 ------------

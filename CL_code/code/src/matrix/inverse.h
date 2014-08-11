@@ -2,6 +2,7 @@
  * @addtogroup inverse
  * @ingroup matrix
  * @{
+ * @file inverse.h
  *
  * @brief functions to inverse matrices
  */

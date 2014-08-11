@@ -2,6 +2,7 @@
  * @addtogroup print_bar
  * @ingroup io
  * @{
+ * @file print_bar.h
  *
  * @brief functions to display a command line advancement bar
  */

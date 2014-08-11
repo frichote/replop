@@ -2,6 +2,7 @@
  * @addtogroup gamma_distribution
  * @ingroup stats
  * @{
+ * @file gamma_distribution.h
  * @brief Description:                                                              
  *    The gamma distribution is defined to be the integral of the gamma      
  *    density which is 0 for x < 0 and x^(nu-1) exp(-nu) for x > 0 where the 

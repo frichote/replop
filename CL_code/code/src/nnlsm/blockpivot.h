@@ -2,6 +2,7 @@
  * @addtogroup blockpivot
  * @ingroup nnlsm
  * @{
+ * @file blockpivot.h
  *
  * @brief functions to manage parameter updates in nnlsm algorithm
  */

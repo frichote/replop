@@ -2,6 +2,7 @@
  * @addtogroup lfmm_algo
  * @ingroup LFMM
  * @{
+ * @file lfmm_algo.h
  *
  * @brief functions to compute lfmm parameters (zscores)
  * 

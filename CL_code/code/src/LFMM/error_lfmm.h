@@ -2,6 +2,7 @@
  * @addtogroup error_lfmm
  * @ingroup LFMM
  * @{
+ * @file error_lfmm.h
  *
  * @brief function to manage error types for lfmm code
  */

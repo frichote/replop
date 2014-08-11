@@ -2,6 +2,7 @@
  * @addtogroup twtable
  * @ingroup tracyWidom
  * @{
+ * @file twtable.h
  *
  * @brief tracy widom table
  */

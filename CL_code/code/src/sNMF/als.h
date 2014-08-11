@@ -2,6 +2,7 @@
  * @addtogroup als
  * @ingroup sNMF
  * @{
+ * @file als.h
  *
  * @brief set of functions to compute SNMF with als algorithm
  */

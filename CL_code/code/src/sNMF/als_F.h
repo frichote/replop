@@ -2,6 +2,7 @@
  * @addtogroup als_F
  * @ingroup sNMF
  * @{
+ * @file als_F.h
  *
  * @brief set of functions to compute F matrix from als algorithm
  */

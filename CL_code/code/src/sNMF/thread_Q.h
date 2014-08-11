@@ -2,6 +2,7 @@
  * @addtogroup thread_Q
  * @ingroup sNMF
  * @{
+ * @file thread_Q.h
  *
  * @brief multithreaded part of the functions to compute 
  * 	  new values of Q

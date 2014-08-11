@@ -2,6 +2,7 @@
  * @addtogroup U
  * @ingroup LFMM
  * @{
+ * @file U.h
  *
  * @brief functions to update U parameters in LFMM model
  */

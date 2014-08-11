@@ -2,6 +2,7 @@
  * @addtogroup createDataSet
  * @ingroup createDataSet
  * @{
+ * @file createDataSet.h
  *
  * @brief function to create a data set with masked genotypes.
  * A masked genotype is just a genotype replaced with a missing

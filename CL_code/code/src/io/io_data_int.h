@@ -2,6 +2,7 @@
  * @addtogroup io_data_int
  * @ingroup io
  * @{
+ * @file io_data_int.h
  *
  * @brief functions to read data matrices and register them with int type
  */

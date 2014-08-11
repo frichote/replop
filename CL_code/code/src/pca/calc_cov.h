@@ -2,6 +2,7 @@
  * @addtogroup calc_cov
  * @ingroup pca
  * @{
+ * @file calc_cov.h
  *
  * @brief functions to calculate the covariance matrix,
  *	x and the standard deviation. 

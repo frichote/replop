@@ -2,6 +2,7 @@
  * @addtogroup student_t_distribution
  * @ingroup stats
  * @{
+ * @file student_t_distribution.h
  *                                                                            
  * @brief 
  *    Description:                                                              

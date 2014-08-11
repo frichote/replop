@@ -2,6 +2,7 @@
  * @addtogroup print_snmf
  * @ingroup sNMF
  * @{
+ * @file print_snmf.h
  *
  * @brief set of printing functions for snmf program
  */

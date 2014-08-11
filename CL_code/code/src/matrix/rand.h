@@ -2,6 +2,7 @@
  * @addtogroup rand
  * @ingroup matrix
  * @{
+ * @file rand.h
  *
  * @brief set of probability functions
  */

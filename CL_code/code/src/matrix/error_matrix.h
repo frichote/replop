@@ -2,6 +2,7 @@
  * @addtogroup error_matrix
  * @ingroup matrix
  * @{
+ * @file error_matrix.h
  *
  * @brief function to manage error types
  */

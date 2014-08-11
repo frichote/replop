@@ -2,6 +2,7 @@
  * @addtogroup io_error
  * @ingroup io
  * @{
+ * @file io_error.h
  *
  * @brief manage error while reading files
  */

@@ -2,6 +2,7 @@
  * @addtogroup normalize
  * @ingroup matrix
  * @{
+ * @file normalize.h
  *
  * @brief functions to normalize data and covariance matrices
  */

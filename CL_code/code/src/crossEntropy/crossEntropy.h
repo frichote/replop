@@ -2,6 +2,7 @@
  * @addtogroup crossEntropy
  * @ingroup crossEntropy
  * @{
+ * @file crossEntropy.h
  *
  * @brief function to calculate the crossEntropy criterion.
  * 

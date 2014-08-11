@@ -2,6 +2,7 @@
  * @addtogroup io_data_float
  * @ingroup io
  * @{
+ * @file io_data_float.h
  *
  * @brief functions to read (and write) data matrices and register them with float type
  */

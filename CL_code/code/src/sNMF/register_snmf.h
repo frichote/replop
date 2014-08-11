@@ -2,6 +2,7 @@
  * @addtogroup register_snmf
  * @ingroup sNMF
  * @{
+ * @file register_snmf.h
  *
  * @brief functions to read command line
  */

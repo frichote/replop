@@ -2,6 +2,7 @@
  * @addtogroup print_ce
  * @ingroup crossEntropy
  * @{
+ * @file print_ce.h
  *
  * @brief functions to print help and a summary of the parameters
  */

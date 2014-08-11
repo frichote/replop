@@ -2,6 +2,7 @@
  * @addtogroup io_data_double
  * @ingroup io
  * @{
+ * @file io_data_double.h
  *
  * @brief functions to read (and write) data matrices and register them with double type
  */

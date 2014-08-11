@@ -2,6 +2,7 @@
  * @addtogroup print_tracyWidom
  * @ingroup tracyWidom
  * @{
+ * @file print_tracyWidom.h
  *
  * @brief functions to print help and a summary of the parameters
  */

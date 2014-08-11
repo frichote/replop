@@ -2,6 +2,7 @@
  * @addtogroup thread_lfmm
  * @ingroup LFMM
  * @{
+ * @file thread_lfmm.h
  *
  * @brief general function and structure to manage multithreading
  */

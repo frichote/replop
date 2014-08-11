@@ -2,6 +2,7 @@
  * @addtogroup beta_k0
  * @ingroup LFMM
  * @{
+ * @file beta_k0.h
  *
  * @brief functions to calc beta parameters in LM model.
  * 	The code is based on a previous matlab version. 

@@ -2,6 +2,7 @@
  * @addtogroup thread_snmf
  * @ingroup sNMF
  * @{
+ * @file thread_snmf.h
  *
  * @brief general function and structure to manage multithreading
  */

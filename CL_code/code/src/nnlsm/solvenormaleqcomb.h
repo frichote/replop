@@ -2,6 +2,7 @@
  * @addtogroup solvenormaleqcomb
  * @ingroup nnlsm
  * @{
+ * @file solvenormaleqcomb.h
  *
  * @brief functions to solve AtA*Z() = AtB conditionned for PassiveSet
  */

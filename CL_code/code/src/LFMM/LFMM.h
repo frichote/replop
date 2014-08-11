@@ -2,6 +2,7 @@
  * @addtogroup LFMM
  * @ingroup LFMM
  * @{
+ * @file LFMM.h
  *
  * @brief functions to estimate the parameters of LFMM 
  *

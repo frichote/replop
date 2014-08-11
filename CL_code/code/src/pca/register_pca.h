@@ -2,6 +2,7 @@
  * @addtogroup register_pca
  * @ingroup pca
  * @{
+ * @file register_pca.h
  *
  * @brief functions to analyze the command-line
  */

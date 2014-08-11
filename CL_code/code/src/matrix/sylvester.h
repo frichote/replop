@@ -2,6 +2,7 @@
  * @addtogroup sylvester
  * @ingroup matrix
  * @{
+ * @file sylvester.h
  *
  * @brief solve the sylvester equation AX + XB = C
  */

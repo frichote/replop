@@ -2,6 +2,7 @@
  * @addtogroup register_lfmm
  * @ingroup LFMM
  * @{
+ * @file register_lfmm.h
  *
  * @brief functions to analyse the command line, init and and free the parameters. 
  */

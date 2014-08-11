@@ -2,6 +2,7 @@
  * @addtogroup error_pca
  * @ingroup pca
  * @{
+ * @file error_pca.h
  *
  * @brief function to manage error types
  */

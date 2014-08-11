@@ -2,6 +2,7 @@
  * @addtogroup cholesky
  * @ingroup matrix
  * @{
+ * @file cholesky.h
  *
  * @brief function to compute the lower cholesky decomposition of a matrix
  */

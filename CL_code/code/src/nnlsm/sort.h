@@ -2,6 +2,7 @@
  * @addtogroup sort
  * @ingroup nnlsm
  * @{
+ * @file sort.h
  *
  * @brief functions to sort binary matrices
  */

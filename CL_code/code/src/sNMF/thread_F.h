@@ -2,6 +2,7 @@
  * @addtogroup thread_F
  * @ingroup sNMF
  * @{
+ * @file thread_F.h
  *
  * @brief multithreaded part of the functions to compute 
  * 	  new values for F.

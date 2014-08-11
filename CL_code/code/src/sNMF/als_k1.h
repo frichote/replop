@@ -2,6 +2,7 @@
  * @addtogroup als_k1
  * @ingroup sNMF
  * @{
+ * @file als_k1.h
  *
  * @brief set of functions to compute SNMF for k=1
  */

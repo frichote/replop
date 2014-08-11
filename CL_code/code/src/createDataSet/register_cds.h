@@ -2,6 +2,7 @@
  * @addtogroup register_cds
  * @ingroup createDataSet
  * @{
+ * @file register_cds.h
  *
  * @brief functions to analyse command line parameters 
  */

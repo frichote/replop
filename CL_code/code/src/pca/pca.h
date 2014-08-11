@@ -2,6 +2,7 @@
  * @addtogroup pca
  * @ingroup pca
  * @{
+ * @file pca.h
  *
  * @brief compute a pca of a matrix. It computes eigenvalues,
  *	eigenvectors, projection/x (as prcomp in R), and standard deviation

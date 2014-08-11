@@ -2,6 +2,7 @@
  * @addtogroup lfmm_k0
  * @ingroup LFMM
  * @{
+ * @file lfmm_k0.h
  *
  * @brief functions to compute lfmm parameters (zscores) in case of K=0
  */

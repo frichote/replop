@@ -2,6 +2,7 @@
  * @addtogroup register_ce
  * @ingroup crossEntropy
  * @{
+ * @file register_ce.h
  *
  * @brief function to analyze the command-line parameters
  */

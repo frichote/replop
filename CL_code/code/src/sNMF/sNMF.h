@@ -2,6 +2,7 @@
  * @addtogroup sNMF
  * @ingroup sNMF
  * @{
+ * @file sNMF.h
  *
  * @brief function for sNMF paramater calculation
  * 

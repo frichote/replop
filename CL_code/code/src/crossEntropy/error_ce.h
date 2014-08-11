@@ -2,6 +2,7 @@
  * @addtogroup error_ce
  * @ingroup crossEntropy
  * @{
+ * @file error_ce.h
  *
  * @brief function to manage error types
  */

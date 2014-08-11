@@ -2,6 +2,7 @@
  * @addtogroup print_pca
  * @ingroup pca
  * @{
+ * @file print_pca.h
  *
  * @brief functions to print help and summary of the parameters
  */

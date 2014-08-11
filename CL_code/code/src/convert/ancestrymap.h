@@ -6,6 +6,7 @@
  *
  * @brief functions to read files in the ancestrymap format 
  * and convert to the lfmm and geno formats.
+ *
  * It is assumed that the lines of a file in the ancestrymap format
  * are ordered such that line number (i * N + j) contains the (i+1)th
  * locus for (j+1)th individual, where N is the number of individuals,

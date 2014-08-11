@@ -2,6 +2,7 @@
  * @addtogroup register_tracyWidom
  * @ingroup tracyWidom
  * @{
+ * @file register_tracyWidom.h
  *
  * @brief read cmd line parameter for tracyWidom program
  */

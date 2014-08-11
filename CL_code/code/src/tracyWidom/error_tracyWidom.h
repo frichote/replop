@@ -2,6 +2,7 @@
  * @addtogroup error_tracyWidom
  * @ingroup tracyWidom
  * @{
+ * @file error_tracyWidom.h
  *
  * @brief function to manage error types
  */

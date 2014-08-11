@@ -2,6 +2,7 @@
  * @addtogroup io_tools
  * @ingroup io
  * @{
+ * @file io_tools.h
  *
  * @brief tools to read and write data files
  */

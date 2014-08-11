@@ -2,6 +2,7 @@
  * @addtogroup diagonalize
  * @ingroup matrix
  * @{
+ * @file diagonalize.h
  *
  * @brief function to diagonalize symetric matrices
  */

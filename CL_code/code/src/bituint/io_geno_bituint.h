@@ -2,6 +2,7 @@
  * @addtogroup io_geno_bituint
  * @ingroup bituint
  * @{
+ * @file io_geno_bituint.h
  *
  * @brief set of functions to read, write and print data in geno format file 
  * 	with bituint data memory format.

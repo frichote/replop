@@ -2,6 +2,7 @@
  * @addtogroup bituint
  * @ingroup bituint
  * @{
+ * @file bituint.h
  *
  * @brief set of functions to manage data store and operations in bituint format.
  *

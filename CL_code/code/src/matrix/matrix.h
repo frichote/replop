@@ -2,7 +2,8 @@
  * @addtogroup matrix
  * @ingroup matrix
  * @{
- *
+ * @file matrix.h
+ * 
  * @brief set of matrix operations
  * 
  * TODO:

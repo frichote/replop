@@ -2,6 +2,7 @@
  * @addtogroup beta
  * @ingroup LFMM
  * @{
+ * @file beta.h
  *
  * @brief functions to update beta parameters in LFMM model.
  * 	The code is based on a previous matlab version. 

@@ -2,6 +2,7 @@
  * @addtogroup tracyWidom
  * @ingroup tracyWidom
  * @{
+ * @file tracyWidom.h
  *
  * @brief functions to perform tracy-widom test on a set of eigenvalues
  * 	  such as described by Patterson et al (2006) "Eigenanalysis".

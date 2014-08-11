@@ -2,6 +2,7 @@
  * @addtogroup als_Q
  * @ingroup sNMF
  * @{
+ * @file als_Q.h
  *
  * @brief set of functions to compute update Q in als algorithm
  */

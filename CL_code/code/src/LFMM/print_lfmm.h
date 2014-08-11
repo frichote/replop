@@ -2,6 +2,7 @@
  * @addtogroup print_lfmm
  * @ingroup LFMM
  * @{
+ * @file print_lfmm.h
  *
  * @brief set of printing functions
  */

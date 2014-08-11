@@ -2,6 +2,7 @@
  * @addtogroup data
  * @ingroup matrix
  * @{
+ * @file data.h
  *
  * @brief set of functions to manage data matrices
  */

@@ -2,6 +2,7 @@
  * @addtogroup error_cds
  * @ingroup createDataSet
  * @{
+ * @file error_cds.h
  *
  * @brief function to manage error types for createDataSet
  */

@@ -2,6 +2,7 @@
  * @addtogroup data_lfmm
  * @ingroup LFMM
  * @{
+ * @file data_lfmm.h
  *
  * @brief set of functions to manage data
  */

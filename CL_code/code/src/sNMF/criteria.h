@@ -2,6 +2,7 @@
  * @addtogroup criteria
  * @ingroup sNMF
  * @{
+ * @file criteria.h
  *
  * @brief set of functions to compute least square criterion for sNMF
  */

@@ -2,6 +2,7 @@
  * @addtogroup thread_var
  * @ingroup LFMM
  * @{
+ * @file thread_var.h
  *
  * @brief functions to compute new values for the variance
  *        (possibly multithreaded) 

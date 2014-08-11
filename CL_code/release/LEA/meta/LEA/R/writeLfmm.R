@@ -1,4 +1,4 @@
-write.lfmm <- function(R, output_file) 
+write.lfmm <- function(R, output.file) 
 {
         if(missing(R))
                 stop("'R' argument is missing.")
@@ -9,13 +9,13 @@ write.lfmm <- function(R, output_file)
        	else if (is.data.frame(R))
                R = as.matrix(R)
 
-	output_file = test_character("output_file", output_file, NULL)
+	output.file = test_character("output.file", output.file, NULL)
 
        R[which(is.na(R))] = 9
        R[which(is.nan(R))] = 9
 
-       write.table(R,output_file,col.names=FALSE,row.names=FALSE,sep=" ");
+       write.table(R,output.file,col.names=FALSE,row.names=FALSE,sep=" ");
 
-       return(output_file);
+       return(output.file);
 }
 

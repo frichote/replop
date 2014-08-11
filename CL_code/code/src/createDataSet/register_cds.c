@@ -29,19 +29,18 @@
 
 // analyse_param_cds
 
-void analyse_param_cds(	int argc, char *argv[], int* m, long long* s,
+void analyse_param_cds(	int argc, char *argv[], long long* s,
 			double *e, char *input, char *output_file) 
 {
         int i;
 	int g_data = -1;
-	char* tmp_file;
-	int g_m = 0;
 	int g_e = 0;
 	int g_s = 0;
 
 	for (i = 1; i < argc; i++) {
                 if (argv[i][0] == '-') {
                         switch (argv[i][1]) {
+			// seed
                         case 's':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
@@ -49,13 +48,7 @@ void analyse_param_cds(	int argc, char *argv[], int* m, long long* s,
                                 *s = atoi(argv[i]);
 				g_s = 1;
                                 break;
-                        case 'm':
-                                i++;
-                                if (argc == i || argv[i][0] == '-')
-					print_error_cds("cmd","m (number of alleles)");
-                                *m = atoi(argv[i]);
-				g_m = 1;
-                                break;
+			// percentage of masked genotype
 			case 'r':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
@@ -67,14 +60,17 @@ void analyse_param_cds(	int argc, char *argv[], int* m, long long* s,
 					*e =  1;
 				g_e = 1;
                                 break;
-                        case 'h':   // global
+			// help
+                        case 'h': 
                                 print_help_cds();
                                 exit(1);
                                 break;
-                        case 'l':   // global
+			// licence 
+                        case 'l':  
                                 print_licence_snmf();
                                 exit(1);
                                 break;
+			// input file
                         case 'x':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
@@ -82,6 +78,7 @@ void analyse_param_cds(	int argc, char *argv[], int* m, long long* s,
                                 g_data = 0;
                                 strcpy(input,argv[i]);
                                 break;
+			// output file
                         case 'o':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
@@ -95,25 +92,19 @@ void analyse_param_cds(	int argc, char *argv[], int* m, long long* s,
 		}
         }
 
+	// no data file
         if (g_data == -1)
 		print_error_cds("option","-x genotype_file");
 
-	if (g_m && *m <= 0)
-		print_error_cds("missing","");
-
+	// no seed
 	if (g_s && *s <= 0)
 		*s = -1;
 
+	// percentage not in [0,1]
 	if (g_e && (*e <= 0 || *e >= 1))
 		print_error_cds("missing","");
 
         // write output file name
-        tmp_file = remove_ext(input,'.','/');
-	if (!strcmp(output_file,"")) {
-        	strcpy(output_file,tmp_file);
-        	strcat(output_file,"_I.geno");
-	}
-        free(tmp_file);
-
+	change_ext(input, output_file, "_I.geno");
 }
 

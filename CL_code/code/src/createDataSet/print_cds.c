@@ -31,7 +31,6 @@ void print_help_cds()
 
          "optional:\n"
          "        -h                    -- help\n"
-         "        -m ploidy             -- 1 if haploid, 2 if diploid   (default: 2)\n"
          "        -s seed               -- seed random init             (default: random)\n"
          "        -r percentage         -- percentage of masked data    (default: 0.05)\n\n"
          "        -o output_file        -- output file (in .geno format)(default: input_file_I.geno)\n\n"
@@ -40,7 +39,7 @@ void print_help_cds()
 
 // print_summary
 
-void print_summary_cds (int N, int M, int m, long long seed, double e, char *input, char *output) 
+void print_summary_cds (int N, int M, long long seed, double e, char *input, char *output) 
 {
 
            printf("summary of the options:\n\n"
@@ -51,12 +50,5 @@ void print_summary_cds (int N, int M, int m, long long seed, double e, char *inp
                 "        -x (genotype file in .geno format)         %s\n"
                 "        -o (output file in .geno format)           %s\n"
                 , N, M, (unsigned long)seed, e, input, output);
-
-        if (m == 1)
-                printf("        - haploid\n\n");
-        else if (m == 2)
-                printf("        - diploid\n\n");
-        else 
-                printf("        - %d-ploid\n\n",m);
 }
 

@@ -4,7 +4,7 @@
  * @{
  * @file vcf2geno.h
  *
- * @brief functions to read a file in vcf format and write in geno format.
+ * @brief functions to read a file in the vcf format and write it in the geno format.
  */
 
 #ifndef VCF2GENO_H
@@ -41,7 +41,7 @@ void read_cnv_info(char *token, char **infos, char* szbuff, int j);
 void write_snp_info (FILE* output_File, char **infos, int removed);
 
 /**
- * convert a file from vcf to geno format and store additional informatio
+ * convert a file from vcf to geno format and store additional informations
  *
  * @param input_file	input_file in vcf format
  * @param output_file	output file in geno format

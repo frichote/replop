@@ -1,4 +1,4 @@
-write.geno <- function(R, output_file) 
+write.geno <- function(R, output.file) 
 {
 
         if(missing(R))
@@ -10,7 +10,7 @@ write.geno <- function(R, output_file)
 	else if (is.data.frame(R))
 		R = as.matrix(R)
 
-	output_file = test_character("output_file", output_file, NULL)
+	output.file = test_character("output.file", output.file, NULL)
 
 	R[which(is.na(R))] = 9
 	R[which(is.nan(R))] = 9
@@ -18,7 +18,7 @@ write.geno <- function(R, output_file)
 	if(any(R != 2 & R != 1 & R != 0 & R != 9))
 		stop("'R' matrix can only contains 0, 1, 2 or 9.") 
 
-	write.table(t(R), output_file, col.names=FALSE,row.names=FALSE,sep="");
+	write.table(t(R), output.file, col.names=FALSE,row.names=FALSE,sep="");
 	
-	return(output_file);
+	return(output.file);
 }

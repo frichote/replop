@@ -16,20 +16,20 @@ is to identify genetic polymorphisms that exhibit high correlation with some env
 gradient or with the variables used as proxies for ecological pressures.
 }
 \usage{
-LFMM (        input_file, variable_file, K, d, 
-        all = FALSE, missing_data = FALSE, 
-        num_CPU = 1, num_iterations = 1000, num_burnin = 100, 
-        seed = -1, repetitions = 1, epsilon_noise = 1e-3, 
-        epsilon_b = 1000, random_init = TRUE)
+LFMM (        input.file, variable.file, K, d, 
+        all = FALSE, missing.data = FALSE, 
+        CPU = 1, iterations = 1000, burnin = 100, 
+        seed = -1, repetitions = 1, epsilon.noise = 1e-3, 
+        epsilon.b = 1000, init = TRUE)
 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-\item{input_file}{
+\item{input.file}{
 A character string containing a path to the input file,
 a genotypic matrix in the \code{\link{lfmm}} format.
 }
-\item{variable_file}{
+\item{variable.file}{
 A character string containing a path to the environmental file,
 an environmental data matrix in the \code{\link{env}} format.
 }
@@ -37,29 +37,29 @@ an environmental data matrix in the \code{\link{env}} format.
         an integer corresponding to the number of latent factors. 
 }
 \item{d}{
-        an integer corresponding to the fit of \code{LFMM} model with the \code{d}-th variable only from \code{variable_file}. By default (if NULL and all is FALSE), fit \code{LFMM} with each variable from \code{variable_file} sequentially and independently.
+        an integer corresponding to the fit of \code{LFMM} model with the \code{d}-th variable only from \code{variable.file}. By default (if NULL and all is FALSE), fit \code{LFMM} with each variable from \code{variable.file} sequentially and independently.
 }
 \item{all}{
-        a boolean option. If true, fit \code{LFMM} with all variables from \code{variable_file} at the same time. This option is not compatible with the \code{d} option. 
+        a boolean option. If true, fit \code{LFMM} with all variables from \code{variable.file} at the same time. This option is not compatible with the \code{d} option. 
 }
-\item{missing_data}{
-        a boolean option. If true, the \code{input_file} contains missing genotypes.
+\item{missing.data}{
+        a boolean option. If true, the \code{input.file} contains missing genotypes.
 }
 #ifndef windows
-\item{num_CPU}{
+\item{CPU}{
 	A number of CPUs to run the parallel version of the algorithm.
 	By default, the number of CPUs is 1.
 }
 #endif
 #ifdef windows
-\item{num_CPU}{
-        the windows version is not parallelized. By consequence, num_CPU is always set to 1.
+\item{CPU}{
+        the windows version is not parallelized. By consequence, CPU is always set to 1.
 }
 #endif
-\item{num_iterations}{
+\item{iterations}{
         the total number of iterations in the Gibbs Sampling algorithm.
 }
-\item{num_burnin}{
+\item{burnin}{
         the burnin number of iterations in the Gibbs Sampling algorithm.
 }
 \item{seed}{
@@ -68,13 +68,13 @@ an environmental data matrix in the \code{\link{env}} format.
 \item{repetitions}{
         the number of repetitions of each run.
 }
-\item{epsilon_noise}{
+\item{epsilon.noise}{
          prior on the different variances.
 }
-\item{epsilon_b}{
+\item{epsilon.b}{
         prior on the variance of the correlation coefficients.
 }
-\item{random_init}{
+\item{random.init}{
         a boolean option. If true, the Gibbs Sampler is initiliazed randomly. Otherwise, it is initialized with zeros.
 }
 }

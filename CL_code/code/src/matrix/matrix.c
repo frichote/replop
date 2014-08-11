@@ -1,26 +1,29 @@
 /*
-    LFMM, file: matrix.c
-    Copyright (C) 2012 Eric Frichot
+   LFMM, file: matrix.c
+   Copyright (C) 2012 Eric Frichot
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include "matrix.h"
+#include "slice_matrix.h"
+#include "thread_matrix.h"
+#include "data.h"
 
 // variance
 
@@ -59,11 +62,11 @@ int compare (const void* a, const void* b)
 
 	return res;
 }
+
 // sort_index
 
 void sort_index(double *data, int* index, int n)
 {
-
 	double** pointers = (double **) calloc(n, sizeof(double *));
 	int i;
 
@@ -80,7 +83,6 @@ void sort_index(double *data, int* index, int n)
 
 	free(pointers);
 }
-
 
 // imin
 
@@ -138,7 +140,7 @@ void transpose_double (double *m, int w, int h)
 {
 	int start, next, i;
 	double tmp;
- 
+
 	for (start = 0; start <= w * h - 1; start++) {
 		next = start;
 		i = 0;
@@ -146,7 +148,7 @@ void transpose_double (double *m, int w, int h)
 			next = (next % h) * w + next / h;
 		} while (next > start);
 		if (next < start || i == 1) continue;
- 
+
 		tmp = m[next = start];
 		do {
 			i = (next % h) * w + next / h;
@@ -163,7 +165,7 @@ void transpose_float (float *m, int w, int h)
 {
 	int start, next, i;
 	float tmp;
- 
+
 	for (start = 0; start <= w * h - 1; start++) {
 		next = start;
 		i = 0;
@@ -171,7 +173,7 @@ void transpose_float (float *m, int w, int h)
 			next = (next % h) * w + next / h;
 		} while (next > start);
 		if (next < start || i == 1) continue;
- 
+
 		tmp = m[next = start];
 		do {
 			i = (next % h) * w + next / h;
@@ -184,11 +186,11 @@ void transpose_float (float *m, int w, int h)
 // transpose_int
 
 // from Rosetta Code
-void transpose_int (int *m, int w, int h)
+void transpose_int(int *m, int w, int h)
 {
 	int start, next, i;
 	int tmp;
- 
+
 	for (start = 0; start <= w * h - 1; start++) {
 		next = start;
 		i = 0;
@@ -196,7 +198,7 @@ void transpose_int (int *m, int w, int h)
 			next = (next % h) * w + next / h;
 		} while (next > start);
 		if (next < start || i == 1) continue;
- 
+
 		tmp = m[next = start];
 		do {
 			i = (next % h) * w + next / h;
@@ -204,4 +206,48 @@ void transpose_int (int *m, int w, int h)
 			next = i;
 		} while (next > start);
 	}
+}
+
+// tBB
+
+void tBB_alpha(double *A, double *B, double alpha, int N, int K, int num_thrd)
+{
+	int k1, k2, i;	
+
+	// init A
+	zeros(A,K*K);
+
+#ifndef WIN32
+        // multi-threaded non windows version
+	if (num_thrd > 1) {
+		thread_fct_matrix(A, B, NULL, K, N, 0, 0.0, num_thrd, slice_tBB);
+	} else {
+#endif
+        	// multi-threaded non windows version
+		// calculate the lower triangular values of A
+		for (i = 0; i < N; i++) {
+			for (k1 = 0; k1 < K; k1++) {
+				for (k2 = 0; k2 <= k1; k2++) {
+					A[k1 * K + k2] += B[i * K + k1] * B[i * K + k2];
+				}
+			}
+		}
+#ifndef WIN32
+	}
+#endif
+	// copy the lower triangular values into the upper triangular values
+	// by symetry.
+	for (k1 = 0; k1 < K; k1++)
+		for (k2 = 0; k2 < k1; k2++)
+			A[k2 * K + k1] = A[k1 * K + k2];
+
+	// add alpha
+        if (alpha) {
+                for (k1 = 0; k1 < K; k1++) {
+                        for (k2 = 0; k2 < K; k2++) {
+                                A[k1*K+k2] += alpha;
+                        }
+                }
+        }
+
 }

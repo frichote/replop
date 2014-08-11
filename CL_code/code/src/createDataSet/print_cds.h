@@ -3,7 +3,7 @@
  * @ingroup createDataSet
  * @{
  *
- * @brief set of printing functions
+ * @brief functions to print help and a summary of the parameters
  */
 
 
@@ -20,12 +20,11 @@ void print_help_cds();
  *
  * @param[in] N     the number of individuals
  * @param[in] M     the number of loci
- * @param[in] m     ploidy (1 for haploid, 2 diploid, d d-ploid)
  * @param[in] seed	seed value
  * @param[in] e     percentage of missing data
  * @param[in] input         genotype file
  */
-void print_summary_cds (int N, int M, int m, long long seed,
+void print_summary_cds (int N, int M, long long seed,
                         double e, char *input, char *output);
 
 #endif // PRINT_CDS_H

@@ -56,7 +56,7 @@ void rand_matrix(double *A, double *m_A, double *inv_cov_A, double alpha_R,
         // multithread non windows version
         if (num_thrd > 1) {
                 thread_fct_lfmm(NULL, A, NULL, NULL, m_A, inv_cov_A, L, 
-			0, K, N, 0, NULL, alpha_R, num_thrd, slice_rand);
+			0, K, N, 0, NULL, alpha_R, num_thrd, 0, slice_rand);
         // uni-threaded or windows version
         } else {
 #endif
@@ -65,7 +65,7 @@ void rand_matrix(double *A, double *m_A, double *inv_cov_A, double alpha_R,
                 y = (double *)calloc(K, sizeof(double));
                 for (i = 0; i < N; i++) {
                         for (k = 0; k < K; k++) {
-                                // inv_cov_U %*% m_u
+                                // inv_cov_A %*% m_A
                                 mu[k] = 0;
                                 for (kp = 0; kp < K; kp++) {
                                         mu[k] +=
@@ -74,7 +74,7 @@ void rand_matrix(double *A, double *m_A, double *inv_cov_A, double alpha_R,
                                 // times alpha_R
                                 mu[k] *= alpha_R;
                         }
-                        // rand U
+                        // rand A
                         mvn_rand(mu, L, K, y);
                         for (k = 0; k < K; k++)
                                 A[k * N + i] = y[k];
@@ -102,7 +102,7 @@ void create_inv_cov(double *inv_cov, double* alpha, double alpha_R,
         // multi-threaded non windows version
         if (num_thrd > 1) {
                 thread_fct_lfmm(NULL, A, NULL, NULL, NULL, tmp2, NULL, 
-			0, K, 0, M, alpha, alpha_R, num_thrd, slice_inv_cov);
+			0, K, 0, M, alpha, alpha_R, num_thrd, 0, slice_inv_cov);
         // uni-threaded or windows version
         } else {
 #endif
@@ -140,16 +140,20 @@ void create_inv_cov(double *inv_cov, double* alpha, double alpha_R,
 // create_m
 
 void create_m(double *A, float *R, double *B, double *C, double *m,
-                int M, int N, int J, int K, int num_thrd)
+                int M, int N, int J, int K, int num_thrd, int mode)
 {
         int i, j, k, d;
         double *tmp_i;
+
+	// init m with zeros
+	if (!mode) 
+		zeros(m, K * M);
 
 #ifndef WIN32
         // multi-threaded non windows version
         if (num_thrd > 1) {
                 thread_fct_lfmm(R, A, B, C, m, NULL, NULL,
-                	J, K, N, M, NULL, 0, num_thrd, slice_m);
+                	J, K, N, M, NULL, 0, num_thrd, mode, slice_m);
         } else {
 #endif
                 // uni-threaded or windows version
@@ -165,11 +169,19 @@ void create_m(double *A, float *R, double *B, double *C, double *m,
                                         tmp_i[j] -= B[d * N + i] * C[d * M + j];
                         }
                         // calculate tmp_i * A'
-                        for (k = 0; k < K; k++) {
-                                m[i * K + k] = 0;
-                                for (j = 0; j < M; j++)
-                                        m[i * K + k] += A[k * M + j] * tmp_i[j];
-                        }
+			if (mode) {
+                        	for (k = 0; k < K; k++) {
+                                	m[k * N + i] = 0;
+                                	for (j = 0; j < M; j++)
+                                        	m[k * N + i] += A[k * M + j] * tmp_i[j];
+                        	}
+			} else {
+                        	for (k = 0; k < K; k++) {
+                                	m[k * N + i] = 0;
+                                	for (j = 0; j < M; j++)
+                                        	m[k * N + j] += A[k * N + i] * tmp_i[j];
+                        	}
+			}
                 }
                 // free memory
                 free(tmp_i);
@@ -274,6 +286,9 @@ void zscore_calc(double *zscore, double *sum, double *sum2, int n, int cur, int 
 	}
 	write_data_double("var.txt", n, D-1, r);
 	write_data_double("mean.txt", n, D-1, m);
+
+	free(r);
+	free(m);
 }
 
 // update_sum
@@ -503,7 +518,7 @@ double var_data(LFMM_param param, LFMM_GS_param GS_param)
 			for (j = 0; j < M; j++) {
 				tmp1 = 0.0;
 				for (d = 0; d < D; d++)
-					tmp1 += param->mC[i * D + d] * param->beta[d * M + j];
+					tmp1 += param->mC[d * N + i] * param->beta[d * M + j];
 				tmp2 = 0.0;
 				for (k = 0; k < K; k++)
 					tmp2 += param->U[k * N + i] * param->V[k * M + j];

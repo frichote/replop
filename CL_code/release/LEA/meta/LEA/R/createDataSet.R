@@ -1,14 +1,14 @@
 
-createDataSet <- function(input_file, output_file, ploidy = 2, seed = -1, percentage = 0.05) 
+createDataSet <- function(input.file, output.file, ploidy = 2, seed = -1, percentage = 0.05) 
 {
 	# test arguments and init
 	# input file
-	input_file = test_character("input_file", input_file, NULL)
+	input.file = test_character("input.file", input.file, NULL)
 	# check extension and convert if necessary
-	input_file = test_input_file(input_file, "geno")
+	input.file = test_input_file(input.file, "geno")
 	# output file	
-	tmp = sub("([^.]+)\\.[[:alnum:]]+$", "\\1_I.geno",input_file)
-	output_file = test_character("output_file", output_file, tmp)
+	tmp = sub("([^.]+)\\.[[:alnum:]]+$", "\\1_I.geno",input.file)
+	output.file = test_character("output.file", output.file, tmp)
 	# ploidy	
 	ploidy = test_integer("ploidy", ploidy, 2)
 	if (ploidy <= 0)
@@ -22,13 +22,13 @@ createDataSet <- function(input_file, output_file, ploidy = 2, seed = -1, percen
 
 	# run method
     .C("R_createDataSet", 
-	as.character(input_file),
+	as.character(input.file),
 	as.integer(ploidy),
 	as.integer(seed),
 	as.double(percentage),
-	as.character(output_file)
+	as.character(output.file)
 	);
 
 	# create output 
-	return(output_file);
+	return(output.file);
 }

@@ -105,6 +105,9 @@ void write_geno(char *output_file, int N, int M, int *data)
 	fclose(file);
 }
 
+// write_geno_line
+
+// not used 
 void write_geno_line(FILE* File, int* line, int N)
 {
 	int i = 0;

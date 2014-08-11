@@ -35,14 +35,13 @@ void crossEntropy(char* input_file, char* input_file_I, char* input_file_Q, char
 	int K, int m, double *all_ce, double *missing_ce)
 {
         //parameters initialization
-
 	int N = 0;			// number of individuals
 	int M = 0;			// number of SNPs	
 	double *Q;			// matrix for ancestral admixture coefficients (of size NxK)
 	double *F;			// matrix for ancestral allele frequencies (of size M x nc xK)
 	int* X;				// data matrix "without" missing data 
 	int* I;				// data matrix with missing data
-	int nc = 3;			// ploidy, 3 if 0,1,2 , 2 if 0,1 (number of factors)
+	int nc;				// ploidy, 3 if 0,1,2 , 2 if 0,1 (number of factors)
 
 	// local parameters 
 	long double iE, aE;
@@ -59,10 +58,9 @@ void crossEntropy(char* input_file, char* input_file_I, char* input_file_Q, char
         char *szbuffI; 
 
         // fix the number of possible factors 
-        if (m)
-                nc = m + 1;
-	else 
-		m = 2;
+        if (!m)
+                m = 2;
+	nc = m + 1;
 
         // count the number of lines and columns
         N = nb_cols_geno(input_file);
@@ -70,7 +68,6 @@ void crossEntropy(char* input_file, char* input_file_I, char* input_file_Q, char
 	max_char_per_line = 5*N;
         szbuff = (char *) calloc(5*N, sizeof(char));
         szbuffI = (char *) calloc(5*N, sizeof(char));
-
 
         // write command line summary
 	print_summary_ce(N, M, K, m, input_file, input_file_Q, input_file_F, input_file_I);
@@ -137,13 +134,14 @@ void crossEntropy(char* input_file, char* input_file_I, char* input_file_Q, char
 					for (n = 0; n < nc; n++) 
                                         	qfc[n] += Q[i*K+k]*F[(nc*j+n)*K+k];
 				}
-				// calculate CE
+				// calculate CE no masked data
 				if (I[i] != 9) {
 					for (n = 0; n < nc; n++) {
 						if (X[i] == n)
 							aE += -log(qfc[n]);
 					}
 					naE ++;
+				// calculate CE masked data
 				} else if (I[i] == 9) {
 					for (n = 0; n < nc; n++) {
 						if (X[i] == n)
@@ -161,13 +159,14 @@ void crossEntropy(char* input_file, char* input_file_I, char* input_file_Q, char
 	tok = fgets(szbuffI, max_char_per_line, m_FileI);
 	test_line(input_file_I, m_FileI, j, M);
 
-	// print output
-	printf("Cross-Entropy (all data):\t %G\n",(double)(aE/naE));
-	if (niE)
-		printf("Cross-Entropy (masked data):\t %G\n",(double)(iE/niE));
-
+	// calculate ce
 	*all_ce = aE/naE;
 	*missing_ce = iE/niE;
+
+	// print output
+	printf("Cross-Entropy (all data):\t %G\n",(double)(*all_ce));
+	if (niE)
+		printf("Cross-Entropy (masked data):\t %G\n",(double)(*missing_ce));
 
 	// close file
         fclose(m_File);

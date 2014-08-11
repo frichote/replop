@@ -16,7 +16,7 @@
 /**
  * simulate values from a normal distribution of
  * mean m_A and inverse covavariance inv_cov_A
- * into A (with alpha_R somewhere :p) 
+ * into A (with alpha_R somewhere TODO) 
  * 
  * @param A     the output A realization (of size KxN)
  * @param m_A   the conditional A mean matrix (of size KxN)
@@ -44,7 +44,7 @@ void rand_matrix(double *A, double *m_A, double *inv_cov_A, double alpha_R,
 void create_inv_cov(double *inv_cov, double* alpha, double alpha_R,
        double *A, int K, int M, int num_thrd);
 
-/** calculate m = (R - B'*C)) * A'
+/** calculate m = A * (R - B'*C))' if mode = 1 or m = A * (R - B'*C) if mode = °
  * @param A	matrix (of size KxM)
  * @param R	data matrix (of size NxM)
  * @param B	matrix (of size JxN)
@@ -55,11 +55,12 @@ void create_inv_cov(double *inv_cov, double* alpha, double alpha_R,
  * @param J	size
  * @param K	size
  * @param num_thrd	number of processe used
+ * @param mode	mode
  */
 void create_m(double *A, float *R, double *B, double *C, double *m,
-                int M, int N, int J, int K, int num_thrd);
+                int M, int N, int J, int K, int num_thrd, int mode);
 
-/** calculates the quantiles of dist for prob into
+/** calculates the quantiles of dist for prob
  *
  * @param dist  probability distribution
  * @param prob	probability for the quantiles
@@ -69,7 +70,9 @@ void create_m(double *A, float *R, double *B, double *C, double *m,
 */
 void quantiles(double *dist, double *prob, int n, int p, double *res);
 
-/** calculate lambda criterion of a p.values distribution
+/**
+ * calculate lambda criterion of a p.values distribution 
+ * (Olivier's version with median over 41 values)
  *
  * @param p	p values set
  * @param n	size of p
@@ -79,7 +82,7 @@ void quantiles(double *dist, double *prob, int n, int p, double *res);
 double lambda(double *p, int n);
 
 /**
- * convert pvalues into qvalues with Benjaminy-Hosberg approximation
+ * convert pvalues into qvalues with Benjaminy-Hochberg approximation
  *
  * @param pvalues	pvalues table
  * @param qvalues	output qvalues table
@@ -206,6 +209,7 @@ double var_data(LFMM_param param, LFMM_GS_param GS_param);
 
 /**
  * input missing values with U'*V+C*beta
+ * (not used)
  *
  * @param R     the data matrix (of size NxM)
  * @param U     the U matrix (of size DxN)
@@ -223,6 +227,7 @@ void inputation_lfmm(float *R, double *U, double *V, double *C, double *beta, in
 
 /**
  * input missing values with empirical frequencies
+ * (used for k=0)
  *
  * @param R     the data matrix (of size NxM)
  * @param I     the missing data matrix

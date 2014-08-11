@@ -6,7 +6,7 @@
 Write a file in the \code{\link{env}} format.
 }
 \usage{
-write.env(R, output_file)
+write.env(R, output.file)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -15,7 +15,7 @@ write.env(R, output_file)
         and one column for each environmental variable. The missing genotypes have to be
 	encoded with the value 9.
 }
-\item{output_file}{
+\item{output.file}{
 a character string containing a path to the output file,
 an environmental data matrix in the \code{env} formt.
 }

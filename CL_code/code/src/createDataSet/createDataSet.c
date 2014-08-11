@@ -33,13 +33,11 @@
 
 // createDataSet
 
-void createDataSet(char* input_file, int m, long long seed, double e,
-	char* output_file) 
+void createDataSet(char* input_file, long long seed, double e, char* output_file) 
 {
 	int N = 0;			// number of individuals
 	int M = 0;			// number of SNPs
-	int X;				// data matrix "without" missing data
-        int nc = 3;                     // ploidy, 3 if 0,1,2 , 2 if 0,1 (number of factors)
+	int X;				// genotype 
 	
 	// local parameters
 	int i, j;
@@ -51,18 +49,12 @@ void createDataSet(char* input_file, int m, long long seed, double e,
 
 	init_random(&seed);
 
-        // fix the number of possible factors 
-        if (m)
-                nc = nc + 1;
-	else 
-		m = 2;
-
         // count the number of lines and columns
         N = nb_cols_geno(input_file);
         M = nb_lines(input_file, N);
 
 	// write command line summary
-	print_summary_cds(N, M, m, seed, e, input_file, output_file);
+	print_summary_cds(N, M, seed, e, input_file, output_file);
 
         // open files 
         in_File = fopen(input_file, "r");
@@ -77,15 +69,15 @@ void createDataSet(char* input_file, int m, long long seed, double e,
         j = 0;
       	while (!feof(in_File) & (j < M)) {
 
-                // read of X line
+                // read a line
                 i = 0;
 	        token = (char)fgetc(in_File);
 
-		// for each column
+		// for each column of the line
 	        while(token != EOF && token != '\n' && i<N) {
 
 	                X = (int)(token - '0');
-			// remove a part of the data and write it			
+			//  write the new genotype	
                 	if (frand() < e) 
 				fprintf(out_File,"9");
 			else 
@@ -105,6 +97,6 @@ void createDataSet(char* input_file, int m, long long seed, double e,
 	fclose(in_File);	
 	fclose(out_File);
 
-        printf("Write genotype file with masked data, %s:\t\tOK.\n\n",output_file);
+        printf("\n Write genotype file with masked data, %s:\t\tOK.\n\n",output_file);
 }
 

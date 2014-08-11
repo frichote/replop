@@ -4,7 +4,7 @@
  * @{
  * @file geno2lfmm.h
  *
- * @brief functions to convert a file from geno to lfmm format.
+ * @brief function to convert a file from geno to lfmm format.
  */
 
 #ifndef GENO2LFMM_H

@@ -16,7 +16,7 @@
  * @param A     a matrix (of size MxM)
  * @param B     a matrix (of size NxN)
  * @param C     a matrix (of size MxN)
- * @param X     the outp matrix (of size MxN)
+ * @param X     the output matrix (of size MxN)
  * @param M     the number of lines of C/X
  * @param N     the number of columns of C/X
  */

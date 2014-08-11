@@ -19,11 +19,11 @@ on each component. The function pca returns an object of class
 "pca-class" containing the output data and the input parameters. 
 }
 \usage{
-pca (input_file, K, center = TRUE, scale = FALSE)
+pca (input.file, K, center = TRUE, scale = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-\item{input_file}{
+\item{input.file}{
 A character string containg the path to the genotype input file,
 a genotypic matrix in the \code{\link{lfmm}} format.
 }

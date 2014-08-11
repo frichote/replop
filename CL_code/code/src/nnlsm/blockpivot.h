@@ -3,54 +3,13 @@
  * @ingroup nnlsm
  * @{
  *
- * @brief functions to manage matrix multiplication in nnlsm algorithm
+ * @brief functions to manage parameter updates in nnlsm algorithm
  */
 
 #ifndef BLOCKPIVOT_H
 #define BLOCKPIVOT_H
 
-typedef struct _memory* Memory;
-
-typedef struct _memory{
-    	int* P;
-    	int* Ninf;
-    	int* PassiveSet;
-	int *NonOptSet;
- 	int* InfeaSet;
-	int* NotGood;
-	int* Cols3Ix;
-	double* subX;
-	double* subY;
-	double* subAtB;
-	int* subPassiveSet;
-	int* selectK;
-	int* selectN;
-	int* breaks;
-	int* sortIx;
-	double* sAtA;
-	double* inVsAtA;
-	int* tempSortIx;
-	double *temp1;
-	double* tempQ;
-	double* temp3;
-	double* Y;
-} memory;
-
-Memory allocate_memory(int N, int K);
-
-void free_memory(Memory mem);
-/* @brief solution of NNLS problem of Kim and Park (2011).
- *
- * @param AtA   matrix of size (KxK)
- * @param AtB   matrix of size (KxN)
- * @param N     number of columns of B
- * @param K     number of columns and lines of A
- * @param X     output matrix of size (KxN)
- * @param Y     output matrix of size (KxN)
- * 
- * @return the number of iterations
- */
-int nnlsm_blockpivot(double* AtA, double* AtB, int N, int K, double *X, double *Y, Memory mem);
+#include "nnlsm.h"
 
 /* @brief update Y = AtAX - AtB
  *
@@ -124,7 +83,7 @@ void PassiveSet_update(int *NotGood, int *Ninf, int *P, int pbar,
  * @return number of iterations
  */
 int XY_update(double *AtA, double *AtB, int *PassiveSet, int *NotGood, 
-	int NotOptCols_nb, int N, int K, double *X, double *Y, Memory mem);
+	int NotOptCols_nb, int N, int K, double *X, double *Y, Nnlsm_param param);
 
 #endif // BLOCKPIVOT_H
 

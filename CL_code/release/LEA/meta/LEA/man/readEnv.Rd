@@ -6,10 +6,10 @@
 Read a file in the \code{\link{env}} format.
 }
 \usage{
-read.env(input_file)
+read.env(input.file)
 }
 \arguments{
-\item{input_file}{
+\item{input.file}{
 a character string containing a path to the input file,
 an environmental data matrix in the \code{\link{env}} format.
 }

@@ -28,14 +28,14 @@ void print_help_ce()
    printf("\nHELP: ./crossEntropy options \n\n"
          "mandatory:\n"
          "        -x genotype_file      -- genotype file (in .geno format)\n"
-         "        -K K                  -- number K of ancestral populations\n\n"
+         "        -K K                  -- the number of ancestral populations\n\n"
 
          "optional:\n"
          "        -h                    -- help\n"
-         "        -m ploidy             -- 1 if haploid, 2 if diploid     (default: 2)\n"
-         "        -q input_file_I.Q     -- individual admixture coefficients (default: genotype_file_I.K.Q)\n"
-         "        -g input_file_I.F     -- ancestral genotype frequencies (default: genotype_file_I.K.G)\n"
-         "        -i input_file_I.geno  -- genotype file with masked genotypes (default: genotype_file_I.geno)\n\n"
+         "        -m ploidy             -- 1 if haploid, 2 if diploid     	 (default: 2)\n"
+         "        -q input_file_I.Q     -- individual admixture coefficient file (default: genotype_file_I.K.Q)\n"
+         "        -g input_file_I.F     -- ancestral genotype frequency file 	 (default: genotype_file_I.K.G)\n"
+         "        -i input_file_I.geno  -- genotype file with masked genotypes 	 (default: genotype_file_I.geno)\n\n"
         );
 }
 

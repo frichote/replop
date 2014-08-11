@@ -6,15 +6,15 @@
 A function that converts from the \code{\link{ancestrymap}} format to the \code{\link{geno}} format.
 }
 \usage{
-ancestrymap2geno(input_file, output_file = NULL)
+ancestrymap2geno(input.file, output.file = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-\item{input_file}{
+\item{input.file}{
 	A character string containing a path to the input file,
 	a genotypic matrix in the \code{\link{ancestrymap}} format. 
 }
-  \item{output_file}{
+  \item{output.file}{
 	A character string containing a path to the output file,
 	a genotypic matrix in the \code{\link{geno}} format. 
 	By default, the name of the output file is the same name 
@@ -22,7 +22,7 @@ ancestrymap2geno(input_file, output_file = NULL)
 }
 }
 \value{
-\item{output_file}{
+\item{output.file}{
 	A character string containing a path to the output file,
 	a genotypic matrix in the \code{\link{geno}} format. 
 }
@@ -44,8 +44,8 @@ ancestrymap2geno(input_file, output_file = NULL)
 \examples{
 # Creation of of file called "example.ancestrymap"
 # a file containing 4 SNPs for 3 individuals.
-data("example_ancestrymap")
-write.table(example_ancestrymap,"example.ancestrymap",
+data("example.ancestrymap")
+write.table(example.ancestrymap,"example.ancestrymap",
 col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 # Conversion 	from the ancestrymap format ("example.ancestrymap") 

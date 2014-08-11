@@ -28,16 +28,16 @@
 // solveNormalEqComb
 
 int solveNormalEqComb(double* AtA, double* AtB, int *PassSet, 
-		int N, int K, double* Z, Memory mem)
+		int N, int K, double* Z, Nnlsm_param param)
 {
 	int niter = 0;
 	int i, k, prev_i, ip;
-	int *selectK = mem->selectK;
-	int *selectN = mem->selectN;
-	int *breaks = mem->breaks;
-	int *sortIx = mem->sortIx;
-	double *sAtA = mem->sAtA;
-	double *inVsAtA = mem->inVsAtA;
+	int *selectK = param->selectK;
+	int *selectN = param->selectN;
+	int *breaks = param->breaks;
+	int *sortIx = param->sortIx;
+	double *sAtA = param->sAtA;
+	double *inVsAtA = param->inVsAtA;
 	int all = 1;
 	int sK;
 
@@ -78,7 +78,7 @@ int solveNormalEqComb(double* AtA, double* AtB, int *PassSet,
 		niter ++;
 	} else {
 		// sort PassSet by columns with indices in sortIx
-		sortCols(breaks, sortIx, PassSet, K, N, mem);
+		sortCols(breaks, sortIx, PassSet, K, N, param);
 		prev_i = 0;
 		selectN[sortIx[N-1]] = 1;
 		for (i=1;i<N;i++) {

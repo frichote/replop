@@ -7,15 +7,15 @@
 \code{\link{createDataSet}} creates a data set with a given percentage of masked data from the original data set. It is used to calculate the \code{\link{crossEntropy}} criterion.
 }
 \usage{
-createDataSet (input_file, output_file, ploidy = 2, seed = -1, percentage = 0.05)
+createDataSet (input.file, output.file, ploidy = 2, seed = -1, percentage = 0.05)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-\item{input_file}{
+\item{input.file}{
 	A character string containing a path to the input file,
 	a genotypic matrix in the \code{\link{geno}} format.
 }
-\item{output_file}{
+\item{output.file}{
 	A character string containing a path to the output file,
 	a genotypic matrix in the \code{\link{geno}} format. 
 	The output file is the input file with masked genotypes. 
@@ -34,7 +34,7 @@ createDataSet (input_file, output_file, ploidy = 2, seed = -1, percentage = 0.05
 }
 }
 \value{
-\item{output_file}{
+\item{output.file}{
 	A character string containing a path to the output file,
 	a genotypic matrix in the \code{\link{geno}} format. 
 }

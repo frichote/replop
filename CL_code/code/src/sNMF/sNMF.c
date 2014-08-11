@@ -35,123 +35,137 @@
 #include "../createDataSet/createDataSet.h"
 #include "../crossEntropy/crossEntropy.h"
 
-void sNMF(char* input_file, int K, double alpha, double tol, double e, int maxiter, 
-	long long* seed, int m, int num_thrd, char* input_file_Q, char* output_file_Q, 
-	char* output_file_F, int I, double *all_ce, double *masked_ce, int *n, int *L) {
-	
+void sNMF(sNMF_param param) 
+{	
 	//parameters initialization
-
+	
+/*
 	int N = 0;			// number of individuals
 	int M = 0;			// number of SNPs
 	double *Q_res;			// matrix for ancestral admixture coefficients (of size NxK)
 	double *F_res;			// matrix for ancestral allele frequencies (of size M x nc xK)
 	double *F_I;			// matrix for ancestral allele frequencies (of size M x nc xK)
 	int Mc, Mci;				// size of memory allocation for one individual
-	bituint* X;			// data matrix
-	bituint* Xi;			// data matrix
 	int Mp, Mi, Mpi;				// ???
-	int nc = 3;			// ploidy, 3 if 0,1,2 , 2 if 0,1 (number of factors)
+*/
+
+	// temporary variables
 	double like = 0.0;
+        int K = param->K;
+        int n = param->n;
+        int L = param->L;
 	char *tmp_file; 
-	char data_file[512];
+	int Mc, Mci, Mp, Mi;
+	bituint* X;
 
 	//  random init
-	init_random(seed);
+	init_random(&(param->seed));
 
 	// fix the number of possible factors 
-	if (m)
-		nc = m + 1;
+	if (param->m)
+		param->nc = param->m + 1;
 	else 
-		m = 2;
+		param->m = 2;
 
 	// count the number of lines and columns
-	N = nb_cols_geno(input_file);
-	M = nb_lines(input_file, N);
+	param->n = nb_cols_geno(param->input_file);
+	param->L = nb_lines(param->input_file, param->n);
 
-	*n = N;
-	*L = M;
+	n = param->n;
+	L = param->L;
+	param->Mc = param->L * param->nc;
+	// memory allocation
+	param->temp1 = calloc(K * K, sizeof(double));
+	param->tempQ = calloc(n * K, sizeof(double));
+	param->temp3 = calloc(n * K, sizeof(double));
+	param->Y = calloc(K * n, sizeof(double));
 
-	if (I == -1) 
-		I = imin(10000, M/10);
+	if (param->I == -1) 
+		param->I = imin(10000, L/10);
 	// write command line summary
-        print_summary_snmf(N, M, m, *seed, K, alpha, tol, maxiter, 
-		input_file, num_thrd, e, input_file_Q, output_file_Q, 
-		output_file_F, I);
+        print_summary_snmf(param); 
 
         // write input file name
-	if (e) {
-	        tmp_file = remove_ext(input_file,'.','/');
-                strcpy(data_file, tmp_file);
-	        strcat(data_file, "_I.geno");
+	if (param->pourcentage) {
+	        tmp_file = remove_ext(param->input_file,'.','/');
+                strcpy(param->data_file, tmp_file);
+	        strcat(param->data_file, "_I.geno");
 	        free(tmp_file);
 		// create file with masked genotypes
 		printf("\n <<<<<< createDataSet program\n\n");
-		createDataSet(input_file, m, -1, e, data_file);
+		createDataSet(param->input_file, param->m, param->pourcentage, 
+			param->data_file);
 		printf("\n >>>>>>\n\n");
 	} else 
-                strcpy(data_file,input_file);
+                strcpy(param->data_file, param->input_file);
 	
 	// memory allocation
-	Mc = nc*M;
-	init_mat_bituint(&X,N,Mc,&Mp);
-        Q_res = (double *) calloc(N*K,sizeof(double));      // of size NxK
-        F_res = (double *) calloc(K*Mc,sizeof(double));     // of size McxK
+	Mc = param->nc*L;
+	init_mat_bituint(&(param->X), n, Mc, &(param->Mp));
+        param->Q = (double *) calloc(n * K, sizeof(double));      // of size NxK
 
 	// read of genotypic data
-	read_geno_bituint(data_file, N, M, Mp, nc, X);
-        printf("Read genotype file %s:\t\tOK.\n\n",input_file);
+	read_geno_bituint(param->data_file, n, L, param->Mp, param->nc, param->X);
+        printf("Read genotype file %s:\t\tOK.\n\n",param->input_file);
 
 	
 	// init with a given matrix Q
-	if (strcmp(input_file_Q,"")) {
-		read_data_double(input_file_Q, N, K, Q_res);	
+	if (strcmp(param->input_file_Q,"")) {
+		read_data_double(param->input_file_Q, n, K, param->Q);	
 	// init of Q with a smaller data set
 	} else {
-		rand_matrix_double(Q_res, N, K);
-		if (I && K > 1) {
+		rand_matrix_double(param->Q, n, K);
+		if (param->I && K > 1) {
+			// save X
+			Mp = param->Mp;
+			X = param->X;
 			// init subset matrices
 			printf("Initialization of Q with a random subset of SNPs:\n");
-			Mci = nc * Mi;
-			init_mat_bituint(&Xi, N, Mci, &Mpi);
-        		F_I = (double *) calloc(K * Mci, sizeof(double));     // of size McxK
+			Mci = param->nc * Mi;
+			init_mat_bituint(&(param->X), n, Mci, &(param->Mp));
+        		//F = (double *) calloc(K * Mci, sizeof(double));     // of size McxK
 			// select a subset of SNPs
-			select_geno_bituint(X, Xi, N, M, Mi, nc, Mpi, Mp);
+			select_geno_bituint(X, param->X, n, L, Mi, param->nc, param->Mp, Mp);
 			// calc init of Q_res
-			ALS(Xi, Q_res, F_I, N, Mi, nc, Mpi, K, maxiter, tol, num_thrd, alpha);
+			ALS(param);
 			// free memory
-			free(F_I);
-			free(Xi);
+			free(param->F);
+			free(param->X);
+			// put back X
+			param->X = X;
+			param->Mp = Mp;
 		}
 	} 
+
+	// memory allocation
+        param->F = (double *) calloc(K * Mc, sizeof(double));     // of size McxK
 
 	// parameter estimation
 	printf("\nMain algorithm:\n");
 	if (K == 1) 
-		ALS_k1(X, Q_res, F_res, N, M, nc, Mp);
+		ALS_k1(param);
 	else
-		ALS(X, Q_res, F_res, N, M, nc, Mp, K, maxiter, tol, num_thrd, alpha);
+		ALS(param);
 
 	// least square estimates
-	like = least_square(X, Q_res, F_res, N, M, nc, Mp, K, alpha); 
+	like = least_square(param); 
 	printf("\nLeast-square error: %f\n", like);
 
-	write_data_double(output_file_Q, N, K, Q_res);
+	// write Q
+	write_data_double(param->output_file_Q, n, K, param->Q);
        	printf("Write individual ancestry coefficient file %s:"
-		"\t\tOK.\n",output_file_Q);
+		"\t\tOK.\n",param->output_file_Q);
 
-	write_data_double(output_file_F, Mc, K ,F_res);
+	// write F
+	write_data_double(param->output_file_F, Mc, K ,param->F);
         printf("Write ancestral allele frequency coefficient file %s:"
-		"\tOK.\n",output_file_F);
+		"\tOK.\n",param->output_file_F);
 
-	if (e) {
+	// cross-entropy
+	if (param->pourcentage) {
 		printf("\n <<<<<< crossEntropy program\n\n");
-		crossEntropy(input_file, data_file, output_file_Q, 
-			output_file_F, K, m, all_ce, masked_ce);	
+		crossEntropy(param->input_file, param->data_file, param->output_file_Q, 
+		param->output_file_F, K, param->m, &(param->all_ce), &(param->masked_ce));	
 		printf("\n >>>>>>\n\n");
 	}
-
-	//free memory
-	free(X);
-	free(Q_res);
-	free(F_res);
 }

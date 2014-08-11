@@ -9,12 +9,13 @@
 #ifndef THREAD_LFMM_H
 #define THREAD_LFMM_H
 
-/**
- * structure to manage multithreading
- */
-typedef struct _matrix_lfmm *Matrix_lfmm;
+typedef struct _multithreading_lfmm *Multithreading_lfmm;
 
-typedef struct _matrix_lfmm {
+/**
+ * @brief structure containing generic parameters for multithreading
+ * 	in LFMM functions.
+ */
+typedef struct _multithreading_lfmm {
 	float *R;
 	double *A;
 	double *B;
@@ -26,12 +27,13 @@ typedef struct _matrix_lfmm {
 	int N;
 	int M;
 	int K;
+	int mode;
 	double* alpha;
 	double alpha_R;
 	int slice;
 	int c;
 	int num_thrd;
-} matrix_lfmm;
+} multithreading_lfmm;
 
 /**
  * general multithreading function manager. Some parameters can be NULL
@@ -39,7 +41,7 @@ typedef struct _matrix_lfmm {
  */
 void thread_fct_lfmm(float *R, double *A, double *B, double *C, double *m,
 	double *inv_cov, double *L, int J, int K, int N, int M, double *alpha,
-	double alpha_R, int num_thrd, void (*fct) ());
+	double alpha_R, int num_thrd, int mode, void (*fct) ());
 
 #endif // THREAD_H
 

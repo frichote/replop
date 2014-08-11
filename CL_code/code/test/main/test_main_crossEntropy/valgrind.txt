@@ -1,14 +1,14 @@
-==14176== Memcheck, a memory error detector
-==14176== Copyright (C) 2002-2011, and GNU GPL'd, by Julian Seward et al.
-==14176== Using Valgrind-3.7.0 and LibVEX; rerun with -h for copyright info
-==14176== Command: ../../../bin/crossEntropy -g files/N10_M1000.geno -K 4
-==14176== 
+==4344== Memcheck, a memory error detector
+==4344== Copyright (C) 2002-2011, and GNU GPL'd, by Julian Seward et al.
+==4344== Using Valgrind-3.7.0 and LibVEX; rerun with -h for copyright info
+==4344== Command: ../../../bin/crossEntropy -g files/N10_M1000.geno -K 4
+==4344== 
 sNMF  Copyright (C) 2013 François Mathieu, Eric Frichot
 This program comes with ABSOLUTELY NO WARRANTY; for details type './sNMF -l'.
 This is free software, and you are welcome to redistribute it
 under certain conditions; type './sNMF -l' for details.
 
-****                      sNMF Version 0.5                                     *****
+****                      sNMF Version 1.1                                     *****
 ****   E. Frichot , F. Mathieu, T. Trouillon, G. Bouchard, O. Francois         *****
 ****                    Please cite our paper !                                *****
 ****   Information at http://membres-timc.imag.fr/Olivier.Francois/snmf.html   *****
@@ -20,23 +20,23 @@ ERROR: the following option is mandatory: -x genotype_file.
 HELP: ./crossEntropy options 
 
 mandatory:
-        -x genotype_file	-- genotype file (in .geno format)
-        -K K                  -- number K of ancestral populations
+        -x genotype_file      -- genotype file (in .geno format)
+        -K K                  -- the number of ancestral populations
 
 optional:
         -h                    -- help
-        -m ploidy             -- 1 if haploid, 2 if diploid     (default: 2)
-        -q input_file_I.Q     -- individual admixture coefficients (default: genotype_file_I.K.Q)
-        -g input_file_I.F     -- ancestral genotype frequencies (default: genotype_file_I.K.G)
-        -i input_file_I.geno  -- genotype file with masked genotypes (default: genotype_file_I.geno)
+        -m ploidy             -- 1 if haploid, 2 if diploid     	 (default: 2)
+        -q input_file_I.Q     -- individual admixture coefficient file (default: genotype_file_I.K.Q)
+        -g input_file_I.F     -- ancestral genotype frequency file 	 (default: genotype_file_I.K.G)
+        -i input_file_I.geno  -- genotype file with masked genotypes 	 (default: genotype_file_I.geno)
 
 
-==14176== 
-==14176== HEAP SUMMARY:
-==14176==     in use at exit: 0 bytes in 0 blocks
-==14176==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
-==14176== 
-==14176== All heap blocks were freed -- no leaks are possible
-==14176== 
-==14176== For counts of detected and suppressed errors, rerun with: -v
-==14176== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)
+==4344== 
+==4344== HEAP SUMMARY:
+==4344==     in use at exit: 0 bytes in 0 blocks
+==4344==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==4344== 
+==4344== All heap blocks were freed -- no leaks are possible
+==4344== 
+==4344== For counts of detected and suppressed errors, rerun with: -v
+==4344== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 2 from 2)

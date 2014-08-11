@@ -177,9 +177,9 @@ void rand_U(double *U, double *m_U, double *inv_cov_U, double alpha_R,
 void update_U(LFMM_param param, LFMM_GS_param GS_param)
 {
 	// m_U = (I.*(R - C*beta)) * V';                        (N,K)
-	create_m(param->V, param->dat, param->C, param->beta, 
+	create_m(param->V, param->dat, param->mC, param->beta, 
 		GS_param->m_U, param->L, param->n, param->mD, 
-		param->K, param->num_thrd);
+		param->K, param->num_thrd, 1);
 
 	// cov_U = alpha .* eye(K) + alpha_R .* V*V';           (K,K)
 	create_inv_cov(GS_param->inv_cov_U, param->alpha_U, param->alpha_R, 

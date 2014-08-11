@@ -30,63 +30,66 @@
 #include "../io/print_bar.h"
 #include "als_Q.h"
 #include "als_F.h"
+#include "sNMF.h"
 #include "../bituint/bituint.h"
+#include "../nnlsm/nnlsm.h"
 
 // ALS
 
-void ALS(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp, int K,
-		int maxiter, double tol, int num_thrd, double alpha) 
+void ALS(sNMF_param param) 
 {
 	double prec2 = 1.0, sum2 = 0.0;
 	int k, i, j, l, c;
-	Memory mem;
+	Nnlsm_param n_param;
+	int N = param->n;
+	int M = param->L;
+	int K = param->K;
+	int nc = param->nc;
+	double *Q = param->Q;
+	double *F = param->F;
 
 	//Initialisation of Q, prec and bar
 	//rand_matrix_double(Q, N, K);
-	normalize_lines(Q, N, K);
+	normalize_lines(param->Q, N, K);
 	init_bar(&i,&j);
 
 	// allocate memory for the all algorithm
-	mem = allocate_memory(N, K);
+	n_param = allocate_nnlsm(N, K);
 
-	for (k = 0; k < maxiter; k++) {
-		print_bar(&i,&j,maxiter);
+	for (k = 0; k < param->maxiter; k++) {
+		print_bar(&i,&j, param->maxiter);
 
 		// update F
-		update_F(F, Q, X, N, M, nc, Mp, K, num_thrd, mem);
+		update_F(param); 
 		// check numerical issues
-		if (isnan(F[0])) {
+		if (isnan(param->F[0])) {
 			printf("ALS: Internal Error, F is NaN.\n");
 			exit(1);
 		}
-		normalize_F(F,M,nc, K);
+		normalize_F(param->F,M, param->nc, K);
 
 		// update Q
-		sum2 = update_nnlsm_Q(Q, F, X, N, M, nc, Mp, K, alpha,
-				mem, num_thrd);
+		sum2 = update_nnlsm_Q(param, n_param);
+
 		// check numerical issues
-		if (isnan(Q[0])) {
+		if (isnan(param->Q[0])) {
 			printf("ALS: Internal Error, Q is NaN.\n");
 			exit(1);
 		}
-		normalize_Q(Q,N,K);
+		normalize_Q(param->Q,N,K);
 
 		// stopping criteria
-                if (k > 15 && fabs(prec2-sum2)/fabs(prec2) < tol) {
+                if (k > 15 && fabs(prec2-sum2)/fabs(prec2) < param->tolerance) {
                         break;
                 }
                 prec2 = sum2;
-
-		
-		//prec2 = sum2;
-
 	}
 	final_bar();
-	printf("Number of iterations: %d\n",k);
-	normalize_F(F,M,nc, K);
-	//normalize_Q(Q,N,K);
 
-	// to avoid numerical issues
+	printf("Number of iterations: %d\n",k);
+	normalize_F(param->F, M, param->nc, K);
+
+	// to avoid numerical issues in crossEntropy calculation
 	for(l = 0; l < N*K; l++) {
 		if (fabs(Q[l]) < 0.0001)
 			Q[l] = 0.0001;
@@ -108,7 +111,7 @@ void ALS(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp, int K,
 	normalize_Q(Q,N,K);
 
 	// free memory
-	free_memory(mem);
-	free(mem);
+	free_nnlsm(n_param);
+	free(n_param);
 }
 

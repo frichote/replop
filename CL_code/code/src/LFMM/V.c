@@ -182,9 +182,9 @@ void rand_V(double *V, double *m_V, double *inv_cov_V, double alpha_R, int K,
 void update_V(LFMM_param param, LFMM_GS_param GS_param) 
 {
 	// m_V = U * (I.*(R - C*beta));                         (K,M)
-	create_m(param->U, param->dat, param->C, param->beta, 
+	create_m(param->U, param->dat, param->mC, param->beta, 
 		GS_param->m_V, param->L, param->n, param->mD, 
-		param->K, param->num_thrd);
+		param->K, param->num_thrd, 0);
 
 	// cov_V = alpha .* eye(K) + alpha_R .* U*U';           (K,K)
 	create_inv_cov(GS_param->inv_cov_V, param->alpha_V, 

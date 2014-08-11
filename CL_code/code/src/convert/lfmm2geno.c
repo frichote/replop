@@ -45,7 +45,7 @@ void lfmm2geno (char *input_file, char* output_file, int *N, int *M)
 	// write in geno format
 	write_geno(output_file, *N, *M, data);
 
-	// free memoy
+	// free memory
 	free(data);
 }
 

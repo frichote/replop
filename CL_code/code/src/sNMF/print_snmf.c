@@ -18,6 +18,7 @@
 
 
 #include "print_snmf.h"
+#include "sNMF.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -92,9 +93,7 @@ void print_help_snmf()
 
 // print_summary_snmf
 
-void print_summary_snmf (     int N, int M, int m, long long seed, int K, double alpha,
-                        double tol, int maxiter, char *input, int num_thread, double e, 
-                        char *input_Q, char *output_Q, char *output_F, int I)
+void print_summary_snmf (sNMF_param param)
 {
 
    printf("summary of the options:\n\n"
@@ -106,24 +105,26 @@ void print_summary_snmf (     int N, int M, int m, long long seed, int K, double
          "        -g (ancestral frequencies file)        %s\n"
          "        -i (number max of iterations)          %d\n"
          "        -a (regularization parameter)          %G\n"
-         "        -s (seed random init)                  %lu\n"
+         "        -s (seed random init)                  %llu\n"
          "        -e (tolerance error)                   %G\n"
-         "        -p (number of processes)               %d\n", N, M, K, input, output_Q, output_F,
-                                                                maxiter, alpha, (unsigned long)seed, 
-                                                                tol, num_thread);
+         "        -p (number of processes)               %d\n", 
+	 param->n, param->L, param->K, param->input_file, param->output_file_Q, 
+	 param->output_file_F, param->maxiter, param->alpha, 
+	 (long long)(param->seed), param->tolerance, param->num_thrd);
         
-        if (e != 0)
-                printf("        -c (cross-Entropy criterion)           %G\n", e);
-        if (strcmp(input_Q,""))
-                 printf("        -Q (admixture initialisation file)     %s\n", input_Q);
-        else if (I)
-                printf("        -I (number of SNPs used to init Q)     %d\n", I);
-        if (m == 1)
+        if (param->pourcentage != 0)
+                printf("        -c (cross-Entropy criterion)           %G\n", 
+			param->pourcentage);
+        if (strcmp(param->input_file_Q,""))
+                 printf("        -Q (admixture initialisation file)     %s\n", param->input_file_Q);
+        else if (param->I)
+                printf("        -I (number of SNPs used to init Q)     %d\n", param->I);
+        if (param->m == 1)
                 printf("        - haploid\n\n");
-        else if (m == 2)
+        else if (param->m == 2)
                 printf("        - diploid\n\n");
         else
-                printf("        - %d-ploid\n\n",m);
+                printf("        - %d-ploid\n\n",param->m);
 
 
 }

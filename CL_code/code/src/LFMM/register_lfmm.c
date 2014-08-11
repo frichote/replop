@@ -60,9 +60,11 @@ void analyse_param_lfmm(int argc, char *argv[], LFMM_param param)
 	for (i = 1; i < argc; i++) {
 		if (argv[i][0] == '-') {
 			switch (argv[i][1]) {
-			case 'a':	// global
+			// all 
+			case 'a':
 				param->all = 1;
 				break;
+			// nd-th variable
                         case 'd':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
@@ -70,6 +72,7 @@ void analyse_param_lfmm(int argc, char *argv[], LFMM_param param)
                                 param->nd = atoi(argv[i]);
 				g_d = 1;
                                 break;
+			// number of latent factors
 			case 'K':
 				i++;
 				if (argc == i || argv[i][0] == '-')
@@ -78,6 +81,7 @@ void analyse_param_lfmm(int argc, char *argv[], LFMM_param param)
 							 0);
 				param->K = atoi(argv[i]);
 				break;
+			// number of individuals (deprecated)
 			case 'n':
 				i++;
 				if (argv[i][0] == '-')
@@ -85,6 +89,7 @@ void analyse_param_lfmm(int argc, char *argv[], LFMM_param param)
 				printf("Warning: '-n' option is not necessary, (from LFMM v1.3)."
 					" The number of individuals is automatically computed.\n\n");
 				break;
+			// number of loci (deprecated)
 			case 'L':
 				i++;
 				if (argv[i][0] == '-')
@@ -92,6 +97,7 @@ void analyse_param_lfmm(int argc, char *argv[], LFMM_param param)
 				printf("Warning: '-L' option is not necessary, (from LFMM v1.3)."
 					" The number of loci is automatically computed.\n\n");
 				break;
+			// number of variables (deprecated)
 			case 'D':
 				i++;
 				if (argv[i][0] == '-')
@@ -99,6 +105,7 @@ void analyse_param_lfmm(int argc, char *argv[], LFMM_param param)
 				printf("Warning: '-D' option is not necessary (from LFMM v1.3)."
 				" The number of environmental variables is automatically computed.\n\n");
 				break;
+			// number of iterations in the GS
 			case 'i':
 				i++;
 				if (argc == i || argv[i][0] == '-')
@@ -107,23 +114,28 @@ void analyse_param_lfmm(int argc, char *argv[], LFMM_param param)
 							 0);
 				param->Niter = atoi(argv[i]);
 				break;
+			// seed
                         case 's':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
                                         print_error_lfmm("cmd","s (seed number)",0);
                                 param->seed = atoll(argv[i]);
                                 break;
+			// missing data
 			case 'm':	// global
 				param->missing_data = 1;
 				break;
+			// help
 			case 'h':	// global
 				print_help_lfmm();
 				exit(1);
 				break;
+			// licence
 			case 'l':	// global
 				print_licence_lfmm();
 				exit(1);
 				break;
+			// burnin
 			case 'b':
 				i++;
 				if (argc == i || argv[i][0] == '-')
@@ -132,6 +144,7 @@ void analyse_param_lfmm(int argc, char *argv[], LFMM_param param)
 							 0);
 				param->burn = atoi(argv[i]);
 				break;
+			// CPU
 			case 'p':
 				i++;
 				if (argc == i || argv[i][0] == '-')
@@ -140,6 +153,7 @@ void analyse_param_lfmm(int argc, char *argv[], LFMM_param param)
 							 0);
 				param->num_thrd = atoi(argv[i]);
 				break;
+			// output 
 			case 'o':
 				i++;
 				if (argc == i || argv[i][0] == '-')
@@ -148,6 +162,7 @@ void analyse_param_lfmm(int argc, char *argv[], LFMM_param param)
 							 0);
 				strcpy(param->output_file, argv[i]);
 				break;
+			// genotypes 
 			case 'x':
 				i++;
 				if (argc == i || argv[i][0] == '-')
@@ -157,6 +172,17 @@ void analyse_param_lfmm(int argc, char *argv[], LFMM_param param)
 				g_data = 1;
 				strcpy(param->input_file, argv[i]);
 				break;
+			// genotypes (previous version (maintained)
+			case 'g':
+				i++;
+				if (argc == i || argv[i][0] == '-')
+					print_error_lfmm("cmd",
+							 "x (genotype file)",
+							 0);
+				g_data = 1;
+				strcpy(param->input_file, argv[i]);
+				break;
+			// variables
 			case 'v':
 				i++;
 				if (argc == i || argv[i][0] == '-')

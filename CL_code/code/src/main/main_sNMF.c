@@ -27,37 +27,25 @@
 
 int main (int argc, char *argv[]) {
 	
+	// parameters allocation
+	sNMF_param param = (sNMF_param) calloc(1, sizeof(snmf_param));
+
 	//parameters initialization
-	int K = 0;			// number of ancestral populations
-	int maxiter = 200;		// max number of iterations
-	int num_thrd = 1;		// number of processes	
-	double alpha = 10;		// regularization parameter
-	double tol = 0.0001;		// tolerance criterion
-	char output_file_F[512] = "";	// output file for ancestral allele frequencies
-	char output_file_Q[512] = "";	// output file for ancestral admixture coefficents
-	char input_file_Q[512] = "";	// input file for ancestral admixture coefficents
-	char input_file[512];		// input file
-	long long seed = -1;			// random seed
-	int m = 2; 
-	double e = 0.0;
-	int I = 0;
-	double all_ce = 0, masked_ce = 0;
-	int n,L;
+	init_param_snmf(param);
 
+	// print
 	print_head_snmf();
-
 	print_options(argc, argv);
 
-	// analyse of the command line
-	analyse_param_snmf(argc,argv, &m, &seed,
-                       	&K, &alpha, &tol, &e, &maxiter,
-                        input_file, &num_thrd, input_file_Q,
-			output_file_Q, output_file_F, &I);
+	// analyse of the command line and fill param
+	analyse_param_snmf(argc,argv, param); 
 
 	// run function
-	sNMF(input_file, K, alpha, tol, e, maxiter, &seed, m, num_thrd, 
-		input_file_Q, output_file_Q, output_file_F, I,
-		&all_ce, &masked_ce, &n, &L);
+	sNMF(param); 
+
+	// free memory
+	free_param_snmf(param);
+	free(param);
 
 	return 0;
 }

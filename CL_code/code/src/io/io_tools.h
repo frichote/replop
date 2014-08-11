@@ -12,6 +12,15 @@
 #include <string.h>
 #include <stdio.h>
 
+/**
+ * change the extension of input into output with ext extension
+ *
+ * @param input		input file
+ * @param output	output file with ext extension
+ * @param ext		the extension
+ */
+void change_ext(char *input, char *output, char *ext);
+
 /** 
  * removes the "extension" from a file spec.
  *
@@ -56,7 +65,7 @@ int nb_cols_geno(char *file);
 int nb_cols_lfmm(char *file);
 
 /**
- * open a file to read it 
+ * open a file to read it and raise an error if necessary 
  * 
  * @param file_data	file to open
  *
@@ -65,7 +74,7 @@ int nb_cols_lfmm(char *file);
 FILE* fopen_read (char *file_data);
 
 /**
- * open a file to write 
+ * open a file to write and raise an error in necessary
  * 
  * @param file_data	file to open
  *

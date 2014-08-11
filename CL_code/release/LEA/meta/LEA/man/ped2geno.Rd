@@ -6,15 +6,15 @@
 A function that converts from the \code{\link{ped}} format to the \code{\link{geno}} format.
 }
 \usage{
-ped2geno(input_file, output_file = NULL)
+ped2geno(input.file, output.file = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{input_file}{
+  \item{input.file}{
 a character string containing a path to the input file,
 a genotypic matrix in the \code{\link{ped}} format. 
 }
-  \item{output_file}{
+  \item{output.file}{
 a character string containing a path to the output file,
 a genotypic matrix in the \code{\link{geno}} format. 
 By default, the name of the output file is the same name 
@@ -22,7 +22,7 @@ as the input file with a .geno extension.
 }
 }
 \value{
-\item{output_file}{
+\item{output.file}{
 a character string containing a path to the output file,
 a genotypic matrix in the \code{\link{geno}} format. 
 }
@@ -43,8 +43,8 @@ a genotypic matrix in the \code{\link{geno}} format.
 \examples{
 # Creation of a file called "example.ped"
 # with 4 SNPs for 3 individuals.
-data("example_ped")
-write.table(example_ped,"example.ped",
+data("example.ped")
+write.table(example.ped,"example.ped",
         col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 # Conversion   from the ped format ("example.ped") 

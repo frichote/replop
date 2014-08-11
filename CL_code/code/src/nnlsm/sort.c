@@ -23,10 +23,10 @@
 
 // sortCols
 
-void sortCols(int* breaks, int* sortIx, int* X, int K, int N, Memory mem)
+void sortCols(int* breaks, int* sortIx, int* X, int K, int N, Nnlsm_param param)
 {
 	int i;
-	int* tempSortIx = mem->tempSortIx;
+	int* tempSortIx = param->tempSortIx;
 	// init
 	for (i = 0; i < N; i++) {
 		breaks[i] = 0;
@@ -48,22 +48,21 @@ void sortColsRec(int* breaks, int* sortIx, int* X, int K, int N, int startN,
 	// special cases
 	if(startN >= endN)
 		return;
-	if (endN-startN == 1) { 	// only one element
+	if (endN - startN == 1) { 	// only one element
 		breaks[startN] = 1;
 		return;
 	}
-	// memory allocation
-	for (i=0;i<endN-startN;i++)
-		tempSortIx[i] = sortIx[startN+i];
+	for (i = 0; i < endN - startN; i++)
+		tempSortIx[i] = sortIx[startN + i];
 	// for all columns in our range
-	for(i=startN;i<endN;i++) { 
-		if (X[k*N+tempSortIx[i-startN]]) { 
+	for(i = startN; i < endN; i++) { 
+		if (X[k * N + tempSortIx[i - startN]]) { 
 			ir--;
 			// add the index on the right of sortIx
-			sortIx[ir] = tempSortIx[i-startN];	
+			sortIx[ir] = tempSortIx[i - startN];	
 		} else { 
 			// add the index on the left of sortIx
-			sortIx[il] = tempSortIx[i-startN];
+			sortIx[il] = tempSortIx[i - startN];
 			il++;
 		} 
 	}
@@ -78,8 +77,6 @@ void sortColsRec(int* breaks, int* sortIx, int* X, int K, int N, int startN,
 	//breaks[startN] = 1;
 	if (il != startN && ir != endN) 
 		breaks[ir] = 1;
-	// free memory
-	//free(tempSortIx);
 
 	k++;	// for next line
 	if (k < K) { // if not last line

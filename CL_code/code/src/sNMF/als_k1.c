@@ -22,18 +22,23 @@
 #include <string.h>
 #include <math.h>
 #include "als_k1.h"
+#include "sNMF.h"
 #include "../bituint/bituint.h"
 
 // ALS
 
-void ALS_k1(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp) 
+void ALS_k1(sNMF_param param)
 {
 	int i, j, c, jc, jd, jm;
-	int *count_nc = (int *) calloc(nc, sizeof(int));
+	int nc = param->nc;
+	int N = param->n;
+	int M = param->L;
+	int *count_nc = (int *) calloc(param->nc, sizeof(int));
+	double *F = param->F;
 
 	// calculate Q
 	for (i = 0; i < N; i++)
-		Q[i] = 1; 
+		param->Q[i] = 1; 
 
 	// calculate F
         // for all SNPs
@@ -47,7 +52,7 @@ void ALS_k1(bituint *X, double *Q, double *F, int N, int M, int nc, int Mp)
                                 jc = nc * j + c;
                                 jd = jc / SIZEUINT; // column in dat
                                 jm = jc % SIZEUINT; // mask element
-                                if (X[i * Mp + jd] & mask[jm])
+                                if (param->X[i * param->Mp + jd] & mask[jm])
 					count_nc[c]++;
                         }
                 }

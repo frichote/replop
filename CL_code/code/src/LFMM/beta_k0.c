@@ -46,7 +46,7 @@ void calc_beta_k0(double *C, float *R, double *beta, double *CCt,
 		// calculate C * R	
 		for (d = 0; d < D; d++) {
 			for (j = 0; j < M; j++)
-				m_beta[d * M + j] += C[i * D + d] * (double)(R[i * M + j]);   // C(N,D)
+				m_beta[d * M + j] += C[d * N + i] * (double)(R[i * M + j]);   // C(N,D)
 		}
 	}
 
@@ -70,7 +70,7 @@ void calc_beta_k0(double *C, float *R, double *beta, double *CCt,
 		for (i = 0; i < N; i++) {
 			tmp = 0.0;
 			for (d = 0; d < D; d++) 
-				tmp += C[i * D + d] * beta[d * M + j];
+				tmp += C[d * N + i] * beta[d * M + j];
 			res += ((double)R[i * M + j] - tmp) * ((double)R[i * M + j] - tmp);
 			*var_res += res;
 		}
@@ -108,11 +108,11 @@ void create_CCt(double *cov, double *C, int D, int N)
         for (d1 = 0; d1 < D; d1++) {
                 for (d2 = 0; d2 < d1; d2++) {
                         for (i = 0; i < N; i++)
-                                cov[d1 * D + d2] += C[i * D + d1] * C[i * D + d2];      // C(N,D)
+                                cov[d1 * D + d2] += C[d1 * N + i] * C[d2 * N + i];      // C(N,D)
                         cov[d2 * D + d1] = cov[d1 * D + d2];
                 }
                 for (i = 0; i < N; i++)
-                        cov[d1 * (D + 1)] += C[i * D + d1] * C[i * D + d1];     // C(N,D)
+                        cov[d1 * (D + 1)] += C[d1 * N + i] * C[d1 * N + i];     // C(N,D)
 
         }
 }

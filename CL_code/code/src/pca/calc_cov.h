@@ -7,7 +7,6 @@
  *	x and the standard deviation. 
  */
 
-
 #ifndef CALC_COV_H
 #define CALC_COV_H
 
@@ -32,7 +31,7 @@ void calc_sdev(double *val, int N);
 /**
  * calculate x from vect and val (in fact sdev), vec <-x = vec * val /sqrt(N)
  *
- * @param vec	in, vec matrix. out, x.
+ * @param vec	in, vec matrix. out, x (of size NxK)
  * @param val	sdev matrix
  * @param N	number of individuals
  * @param K	number of PCs

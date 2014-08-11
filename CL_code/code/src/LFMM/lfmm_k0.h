@@ -10,7 +10,7 @@
 #define lfmm_K0_H
 
 /**
- * calculate LFMM parameters
+ * calculate LFMM parameters for K=0 (ie lm parameters)
  *
  * @param param	parameter structure
  */

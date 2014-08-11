@@ -3,9 +3,18 @@
  * @ingroup bituint
  * @{
  *
- * @brief set of functions to store data in bit.
+ * @brief set of functions to manage data store and operations in bituint format.
  *
+ * The bituint format has been designed to store matrices containing only 0/1 information
+ * (ie binary matrices). The goal is to store each line of a binary matrix by setting
+ * the bits of bituint elements.
  * 
+ * In practice, 
+ * - N is the number of lines of a binary matrix
+ * - Mc is the number of binary elements stored in a line
+ * - Mp is the number of bituint elements per line 
+ * - SIZUINT is a constant containing the number of binary
+ *   elements that can be stored in a bituint element.
  */
 
 #ifndef BITUINT_H
@@ -14,6 +23,9 @@
 #include <stdint.h>
 #include "../io/read.h"
 
+/**
+ * @brief mask (not used) 
+ */
 #if defined(__i386__)
 // IA-32
 	typedef uint_fast32_t bituint;
@@ -133,10 +145,10 @@
 /**
  * allocate the memory to store data of size nxMc
  * 
- * @param[in, out] dat  bituint data matrix 
- * @param[in]  N	number of lines of the matrix
- * @param[in] Mc	number of elements to store per lines
- * @param[out] Mp	(output) number of columns of the matrix
+ * @param[in, out] dat  bituint data matrix.
+ * @param[in]  N	number of lines of the matrix.
+ * @param[in] Mc	number of elements to store per lines.
+ * @param[out] Mp	(output) number of columns of the matrix.
  */
 void init_mat_bituint(bituint** dat, int N, int Mc, int *Mp);
 

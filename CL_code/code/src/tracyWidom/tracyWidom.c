@@ -64,7 +64,7 @@ void tracyWidom(char* input_file, char *output_file)
 	effectn = (double *) malloc(N * sizeof(double));
 	percentage = (double *) malloc(N * sizeof(double));
 
-	// calculate  ....
+	// calculate  tracy-widom values
 	tw(values, pvalues, twstat, effectn, N);
 	
 	sum = 0.0;

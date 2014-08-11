@@ -69,7 +69,7 @@ void ancestrymap2lfmm (char *input_file, char* output_file, int *N, int *M)
 	int nb;
 	double tmp;
 
-	// number of lines and columns
+	// set the number of individuals (N) and the number of loci (M)
 	*N = nb_ind_ancestrymap(input_file);
 	nb = nb_lines(input_file, 1000);
 	tmp = (double)nb / (double)(*N);
@@ -124,7 +124,7 @@ void read_ancestrymap (char* input_file, int N, int M, int* data)
 
 		// new SNP
 		if (strcmp(ref, tmp) != 0) {
-			// test if the number indiviual for the line is ok
+			// test if the number individual for the line is ok
 			test_column (input_file, File, i, j+1, N, NULL);
 			// new line
 			i = 0;
@@ -153,25 +153,33 @@ void read_line_ancestrymap(char *szbuff, int *allele, char *name, int i, int j,
 {
 	char* token;
 
+	// read first column
 	token = strtok(szbuff, SEP);
 	if (token) {
+		// save SNP name
 		strcpy (name, token);
+		// read second column
 		token = strtok(NULL, SEP);
 		if (token) {	
+			// read the third column
 			token = strtok(NULL, SEP);
 			if (token) {
+				// save the genotype
 				*allele = (int)atoi(token);
 			} else {
+			// only 2 columns
 				printf("Error while reading %s file at individual %d,"
 						" SNP %d.\n\n", input, i, j);
 				exit(1);
 			}
 		} else {
+		// only 1 column
 			printf("Error while reading %s file at individual %d,"
 					" SNP %d.\n\n", input, i, j);
 			exit(1);
 		}
 	} else {
+	// no column
 		printf("Error while reading %s file at individual %d,"
 				" SNP %d.\n\n", input, i,j);
 		exit(1);

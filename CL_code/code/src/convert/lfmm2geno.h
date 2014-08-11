@@ -4,7 +4,7 @@
  * @{
  * @file lfmm2geno.h
  *
- * @brief functions to convert a file from geno to lfmm format.
+ * @brief functions to convert a file from lfmm to geno format.
  */
 
 #ifndef LFMM2GENO_H
@@ -15,8 +15,8 @@
 /**
  * convert a file from lfmm to geno format 
  *
- * @param input_file	input file in lfmm format
- * @param output_file	output file in geno format
+ * @param input_file	input file in the lfmm format
+ * @param output_file	output file in the geno format
  * @param N		number of lines of the input file
  * @param M		number of columns of the input file
  */

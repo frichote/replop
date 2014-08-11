@@ -42,6 +42,7 @@ void analyse_param_ce(	int argc, char *argv[], int* m,
 	for (i = 1; i < argc; i++) {
                 if (argv[i][0] == '-') {
                         switch (argv[i][1]) {
+			// the number of ancestral populations
                         case 'K':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
@@ -49,6 +50,7 @@ void analyse_param_ce(	int argc, char *argv[], int* m,
                                 *K = atoi(argv[i]);
 				strcpy(tmp,argv[i]);
                                 break;
+			// the ploidy
                         case 'm':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
@@ -56,14 +58,17 @@ void analyse_param_ce(	int argc, char *argv[], int* m,
                                 *m = atoi(argv[i]);
 				g_m = 1;
                                 break;
-                        case 'h':   // global
+			// help
+                        case 'h':  
                                 print_help_ce();
                                 exit(1);
                                 break;
-                        case 'l':   // global
+			// licence
+                        case 'l': 
                                 print_licence_snmf();
                                 exit(1);
                                 break;
+			// genotypic file
                         case 'x':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
@@ -71,18 +76,21 @@ void analyse_param_ce(	int argc, char *argv[], int* m,
                                 g_data = 0;
                                 strcpy(input,argv[i]);
                                 break;
+			// individual admixture file
                         case 'q':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_ce("cmd","q (individual admixture coefficients file)");
                                 strcpy(input_file_Q,argv[i]);
                                 break;
+			// ancestral genotype frequency file
                         case 'g':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
                                         print_error_ce("cmd","g (ancestral genotype frequencies file)");
                                 strcpy(input_file_F,argv[i]);
                                 break;
+			// genotypic file with masked data
                         case 'i':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
@@ -96,18 +104,20 @@ void analyse_param_ce(	int argc, char *argv[], int* m,
 		}
         }
 
+	// no genotypic file
         if (g_data == -1)
 		print_error_ce("option","-x genotype_file");
 
+	// ploidy and negative
         if (g_m && *m <= 0)
                 print_error_ce("missing", NULL);
 
+	// negative K
         if (*K <= 0)
 		print_error_ce("missing",NULL);
 
         // write output file names
         tmp_file = remove_ext(input,'.','/');
-	
 	if (!strcmp(input_file_F,"")) {
 		strcpy(input_file_F,tmp_file);
 		strcat(input_file_F,"_I.");

@@ -6,15 +6,15 @@
 A function that converts from the \code{\link{lfmm}} format to the \code{\link{geno}} format.
 }
 \usage{
-lfmm2geno(input_file, output_file = NULL)
+lfmm2geno(input.file, output.file = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{input_file}{
+  \item{input.file}{
 A character string containing a path to the input file,
 a genotypic matrix in the \code{\link{lfmm}} format. 
 }
-  \item{output_file}{
+  \item{output.file}{
 A character string containing a path to the output file,
 a genotypic matrix in the \code{\link{geno}} format. 
 By default, the name of the output file is the same name 
@@ -22,7 +22,7 @@ of the input file with a .geno extension.
 }
 }
 \value{
-\item{output_file}{
+\item{output.file}{
 A character string containing a path to the output file,
 a genotypic matrix in the \code{\link{geno}} format. 
 }

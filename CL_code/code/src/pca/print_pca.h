@@ -3,7 +3,7 @@
  * @ingroup pca
  * @{
  *
- * @brief set of printing functions
+ * @brief functions to print help and summary of the parameters
  */
 
 

@@ -24,9 +24,24 @@
 #include "read.h"
 #include "../matrix/error_matrix.h"
 
+// change_ext
+
+void change_ext(char *input, char *output, char *ext)
+{
+        char *tmp_file;
+
+        if (!strcmp(output, "")) {
+        	tmp_file = remove_ext(input,'.','/');
+                strcpy(output, tmp_file);
+                strcat(output, ext);
+        	free(tmp_file);
+        }
+}
+
 // remove_ext (from stackoverflow)
 
-char* remove_ext (char* mystr, char dot, char sep) {
+char* remove_ext (char* mystr, char dot, char sep) 
+{
         char *retstr, *lastdot, *lastsep;
 
         // Error checks and allocate string.
@@ -68,6 +83,7 @@ int nb_cols_geno (char *file)
         int cols = 0;
         int c;
 
+	// count the number of elements until EOF or "\n"
         c = fgetc(fp);
         while ((c != EOF) && (c != 10)) {
                 cols++;

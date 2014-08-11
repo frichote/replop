@@ -106,7 +106,7 @@ $(OBJ)/%.o: $(SRC)/%.c
 	$(CC) $(LDFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ)/*.o $(OBJ)/*/*.o $(LIB)/* $
+	rm -f $(OBJ)/*.o $(OBJ)/*/*.o $(LIB)/* $(BIN)/*
 
 doc:
 	doxygen docs/doxygen.cfg

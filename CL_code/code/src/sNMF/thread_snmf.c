@@ -61,7 +61,7 @@ void thread_fct_snmf(bituint *R, double *out, double *Q, double *F,
 	}
 
 	/* main thread works on slice 0 so everybody is busy
-	 * main thread does everything if threadd number is specified as 1*/
+	 * main thread does everything if thread number is specified as 1*/
 	Ma[0] = (Matrix_snmf) malloc(1 * sizeof(matrix_snmf));
 	Ma[0]->R = R;
 	Ma[0]->out = out;

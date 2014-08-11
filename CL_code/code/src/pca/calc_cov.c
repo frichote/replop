@@ -33,7 +33,7 @@ void calc_cov(double *data,  int N, int M, double *vect)
 
 	for (i1 = 0; i1 < N; i1++) {
 		for (i2 = 0; i2 < i1; i2++) {
-			// for each individual
+			// for each couple of individuals
 			tmp = 0.0;
 			nb = 0;
 			// calc covariance

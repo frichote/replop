@@ -4,6 +4,9 @@
  * @{
  *
  * @brief set of matrix operations
+ * 
+ * TODO:
+ * - check schur and sylvester decomposition.
  */
 
 #ifndef MATRIX_H
@@ -38,7 +41,7 @@ int compare (const void* a, const void* b);
  void sort_index(double *data, int *index, int n);
 
 /**
- * comput min(a, b)
+ * compute min(a, b)
  * 
  * @param a 	first int
  * @param b	second int
@@ -48,7 +51,7 @@ int compare (const void* a, const void* b);
 int imin(int a, int b);
 
 /**
- * comput max(a, b)
+ * compute max(a, b)
  * 
  * @param a 	first int
  * @param b	second int
@@ -114,6 +117,20 @@ void transpose_float (float *m, int w, int h);
  * @param h	number of lines
  */
 void transpose_int (int *m, int w, int h);
+
+/**
+ * compute transpose(B) * B + alpha
+ * The code is optimized in term of memory access, for K << N.
+ * Function multithreaded for large N.
+ *
+ * @param A	the output matrix (of size KxK)
+ * @param B	matrix (of size NxK)
+ * @param alpha	
+ * @param N
+ * @param K	
+ * @param num_thrd	number of CPUs used for multi-threading
+ */
+void tBB_alpha(double *A, double *B, double alpha, int N, int K, int num_thrd);
 
 #endif // MATRIX_H
 

@@ -22,8 +22,9 @@
  * @param X		input boolean matrix to order (of size KxN)
  * @param K		number of lines of X
  * @param N		number of columns of X
+ * @param param		parameter structure
  */
-void sortCols(int* breaks, int* sortIx, int* X, int K, int N, Memory mem);
+void sortCols(int* breaks, int* sortIx, int* X, int K, int N, Nnlsm_param param);
 
 /**
  * @brief 	recursive function to sort boolean matrix X by column order from 

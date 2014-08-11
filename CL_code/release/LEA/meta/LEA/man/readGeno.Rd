@@ -6,11 +6,11 @@
 Read a file in the \code{\link{geno}} format.
 }
 \usage{
-read.geno(input_file)
+read.geno(input.file)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-\item{input_file}{
+\item{input.file}{
 A character string containing a path to the input file,
 a genotypic matrix in the \code{geno} format.
 }

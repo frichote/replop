@@ -11,9 +11,10 @@
 #define ALS_Q_H
 
 #include "../bituint/bituint.h"
-#include "../nnlsm/blockpivot.h"
+#include "../nnlsm/nnlsm.h"
+#include "sNMF.h"
 
-/** @brief Update Q
+/** @brief Update Q (not used, out of date)
  *
  * @param Q 	admixture coefficients (of size NxK)
  * @param F 	ancestral frequencies (of size KxM)
@@ -24,27 +25,17 @@
  * @param Mp 	number of columns of X
  * @param K	number of clusters
  * @param alpha parameter of the algorithm
- * @param mem 	allocated memory
- */
+ * @param n_param 	allocated memory
 void update_Q(double *Q, double *F, bituint *X, int N, int M, int nc, int Mp, 
-			int K, double alpha, Memory mem);
+			int K, double alpha, Nnlsm_param n_param);
+ */
 
 /** @brief Update Q with non-negative least square method 
  *
- * @param Q 	admixture coefficients (of size NxK)
- * @param F 	ancestral frequencies (of size KxM)
- * @param X 	genome matrice (of size NxMc)
- * @param N 	number of individuals
- * @param M 	number of loci
- * @param nc	number of different values in X
- * @param Mp 	number of columns of X
- * @param K	number of clusters
- * @param alpha parameter of the algorithm
- * @param mem 	allocated memory
- * @param num_thrd number of CPU used
+ * @param param	sNMF parameter structure 
+ * @param n_param	NNLSM parameter structure 
  */
-double update_nnlsm_Q(double *Q, double *F, bituint *X, int N, int M, int nc,
-	int Mp,	int K, double alpha, Memory mem, int num_thrd);
+double update_nnlsm_Q(sNMF_param param, Nnlsm_param n_param);
 
 /** @brief normalize Q
  * 
@@ -66,9 +57,9 @@ void normalize_Q(double *Q, int N, int K);
  * @param N 	number of individuals
  * @param num_thrd	number of CPU used 
  * @param alpha regularization parameter of the algorithm
- */
 void F_tF_alpha(double *temp1, double *F, int nc, int K, int M, int Mp, int N,
         int num_thrd, double alpha);
+ */
 
 /** 
  * compute t(F) * t(X)
@@ -82,9 +73,9 @@ void F_tF_alpha(double *temp1, double *F, int nc, int K, int M, int Mp, int N,
  * @param Mp 	number of columns of X
  * @param N 	number of individuals
  * @param num_thrd	number of CPU used 
- */
 void tF_tX(double *temp3, bituint *X, double *F, int nc, int K, int M, int Mp,
         int N, int num_thrd);
+ */
 
 
 #endif // ALS_Q_H

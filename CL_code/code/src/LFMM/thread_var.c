@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "thread_var.h"
+#include "LFMM.h"
 #include <string.h>
 #include <math.h>
 #include <time.h>
@@ -35,11 +36,11 @@ void thrd_var(LFMM_param param, LFMM_GS_param GS_param,
 	int num_thrd = param->num_thrd;
 
 	thread = (pthread_t *) malloc(param->num_thrd * sizeof(pthread_t));
-	Mat *Ma = (Mat *) malloc(param->num_thrd * sizeof(Mat));
+	Multithreading_lfmm_var *Ma = (Multithreading_lfmm_var *) malloc(param->num_thrd * sizeof(Multithreading_lfmm_var));
 
 	/* this for loop not entered if threadd number is specified as 1 */
 	for (i = 1; i < param->num_thrd; i++) {
-		Ma[i] = (Mat) malloc(1 * sizeof(mat));
+		Ma[i] = (Multithreading_lfmm_var) malloc(1 * sizeof(multithreading_lfmm_var));
 		Ma[i]->R = param->dat;
 		Ma[i]->U = param->U;
 		Ma[i]->V = param->V;
@@ -65,7 +66,7 @@ void thrd_var(LFMM_param param, LFMM_GS_param GS_param,
 	/* main thread works on slice 0
 	 *          so everybody is busy
 	 *                   main thread does everything if threadd number is specified as 1*/
-	Ma[0] = (Mat) malloc(1 * sizeof(mat));
+	Ma[0] = (Multithreading_lfmm_var) malloc(1 * sizeof(multithreading_lfmm_var));
 	Ma[0]->R = param->dat;
 	Ma[0]->U = param->U;
 	Ma[0]->V = param->V;
@@ -106,7 +107,7 @@ void thrd_var(LFMM_param param, LFMM_GS_param GS_param,
 
 void slice_mean(void *G)
 {
-	Mat Ma = (Mat) G;
+	Multithreading_lfmm_var Ma = (Multithreading_lfmm_var) G;
 	double *C = Ma->C;
 	double *U = Ma->U;
 	double *V = Ma->V;
@@ -144,7 +145,7 @@ void slice_mean(void *G)
 
 void slice_var(void *G)
 {
-	Mat Ma = (Mat) G;
+	Multithreading_lfmm_var Ma = (Multithreading_lfmm_var) G;
 	double *C = Ma->C;
 	double *U = Ma->U;
 	double *V = Ma->V;

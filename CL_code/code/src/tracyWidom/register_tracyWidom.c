@@ -37,10 +37,12 @@ void analyse_param_tracyWidom(	int argc, char *argv[], char *input, char* output
 	for (i = 1; i < argc; i++) {
                 if (argv[i][0] == '-') {
                         switch (argv[i][1]) {
+			// help
                         case 'h':   // global
                                 print_help_tracyWidom();
                                 exit(1);
                                 break;
+			// input file
                         case 'i':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
@@ -48,6 +50,7 @@ void analyse_param_tracyWidom(	int argc, char *argv[], char *input, char* output
                                 g_data = 0;
                                 strcpy(input,argv[i]);
                                 break;
+			// output file
                         case 'o':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')

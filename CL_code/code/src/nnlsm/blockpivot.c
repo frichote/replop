@@ -24,103 +24,6 @@
 #include "solvenormaleqcomb.h"
 #include "../matrix/inverse.h"
 
-Memory allocate_memory(int N, int K)
-{
-	Memory mem = (Memory) malloc(1 * sizeof(memory));
-
-	mem->P = (int *)calloc(N,sizeof(int));
-	mem->Ninf = (int *)calloc(N,sizeof(int));
-	mem->PassiveSet = (int *)calloc(N*K,sizeof(int));
-	mem->NonOptSet = (int *)calloc(N*K,sizeof(int));
-	mem->InfeaSet = (int *)calloc(N*K,sizeof(int));
-	mem->NotGood = (int *)calloc(N,sizeof(int));
-	mem->Cols3Ix = (int *)calloc(N,sizeof(int));
-	mem->subX = (double *)calloc(N*K,sizeof(double));
-	mem->subY = (double *)calloc(N*K,sizeof(double));
-	mem->subAtB = (double *)calloc(N*K,sizeof(double));
-	mem->subPassiveSet = (int *)calloc(N*K,sizeof(int));
-	mem->selectK = (int *)calloc(K,sizeof(int));
-	mem->selectN = (int *)calloc(N,sizeof(int));
-	mem->breaks = (int *)calloc(N,sizeof(int));
-	mem->sortIx = (int *)calloc(N,sizeof(int));
-	mem->sAtA = (double *)calloc(K*K,sizeof(double));
-	mem->inVsAtA = (double *)calloc(K*K,sizeof(double));
-        mem->tempSortIx = (int *)calloc(N,sizeof(int));
-        mem->temp1 = (double *)calloc(K*K,sizeof(double));
-        mem->tempQ = (double *)calloc(K*N,sizeof(double));
-        mem->temp3 = (double *)calloc(K*N,sizeof(double));
-        mem->Y = (double *)calloc(K*N,sizeof(double));
-
-	return mem;
-}
-
-void free_memory(Memory mem)
-{
-	free(mem->P);
-	free(mem->Ninf);
-	free(mem->PassiveSet);
-	free(mem->NonOptSet);
-	free(mem->InfeaSet);
-	free(mem->NotGood);
-	free(mem->Cols3Ix);
-	free(mem->subX);
-	free(mem->subY);
-	free(mem->subAtB);
-	free(mem->subPassiveSet);
-	free(mem->selectK);
-	free(mem->selectN);
-	free(mem->breaks);
-	free(mem->sortIx);
-	free(mem->sAtA);
-	free(mem->inVsAtA);
-	free(mem->tempSortIx);
-	free(mem->temp1);
-	free(mem->tempQ);
-	free(mem->temp3);
-	free(mem->Y);
-}
-
-// nnlsm_blockpivot
-
-int nnlsm_blockpivot(double* AtA, double* AtB, int N, int K, double *X, double *Y,
-	Memory mem)
-{
-	int niter = 0, bigiter, zeros;
-	int maxiter = 5*K;
-	int* P = mem->P;
-	int* Ninf = mem->Ninf;
-	int* PassiveSet = mem->PassiveSet;
-	int* NonOptSet = mem->NonOptSet;
-	int* InfeaSet = mem->InfeaSet;
-	int* NotGood = mem->NotGood;
-	int* Cols3Ix = mem->Cols3Ix;
-	int NotOptCols_nb, pbar;
-
-	// init
-	pbar = 3;
-	zeros = parameter_init(PassiveSet, NotGood, Ninf, P, K, N, X);
-	if (!zeros)
-		niter += XY_update(AtA, AtB, PassiveSet, NotGood, N, N, K, X, Y, mem);
-	else 
-		update_Y(AtA, AtB, X, Y, N, K);
-	// opt_param
-	opt_param_update(PassiveSet, NotGood, NonOptSet, InfeaSet, X, Y,&NotOptCols_nb, N, K);
-	// main loop
-	bigiter = 1;
-	while (NotOptCols_nb && bigiter <= maxiter) {
-		bigiter ++;
-		// P and PassiveSet update
-		PassiveSet_update(NotGood, Ninf, P, pbar, NonOptSet, PassiveSet, InfeaSet, N, K, Cols3Ix);
-		// X and Y update
-		niter += XY_update(AtA, AtB, PassiveSet, NotGood, NotOptCols_nb, N, K, X, Y, mem);
-		// opt_param update
-		opt_param_update(PassiveSet, NotGood, NonOptSet, InfeaSet, X , Y, &NotOptCols_nb, N, K);
-		bigiter++;
-	}
-
-	return niter;
-}
-
 // update_Y
 
 void update_Y(double *AtA, double *AtB, double *X, double *Y, int N, int K)
@@ -246,26 +149,25 @@ void PassiveSet_update(int *NotGood, int *Ninf, int *P, int pbar,
 // XY_update
 
 int XY_update(double *AtA, double *AtB, int *PassiveSet, int *NotGood, 
-	int NotOptCols_nb, int N, int K, double *X, double *Y, Memory mem)
+	int NotOptCols_nb, int N, int K, double *X, double *Y, Nnlsm_param param)
 {
-	double *subX = mem->subX;
-	double *subY = mem->subY;
-	double *subAtB = mem->subAtB;
-	int *subPassiveSet = mem->subPassiveSet;
+	double *subX = param->subX;
+	double *subY = param->subY;
+	double *subAtB = param->subAtB;
+	int *subPassiveSet = param->subPassiveSet;
 	int k,i, subiter, si;
 	int sN = NotOptCols_nb;	
 
 	// if all columns have to be updated
 	if (NotOptCols_nb == N) {
 		// solve X
-		subiter = solveNormalEqComb(AtA, AtB, PassiveSet, NotOptCols_nb, K, X, mem);
+		subiter = solveNormalEqComb(AtA, AtB, PassiveSet, NotOptCols_nb, K, X, param);
 		// update Y
 		update_Y(AtA, AtB, X, Y, NotOptCols_nb, K);
 		
 		return subiter;
 	}
 
-	// memory allocation
 	// fill subAtB, subPassiveSet, subX, and subY
 	for (k=0;k<K;k++) {
 		si = 0;
@@ -280,7 +182,7 @@ int XY_update(double *AtA, double *AtB, int *PassiveSet, int *NotGood,
 	}
 
 	// solve X
-	subiter = solveNormalEqComb(AtA, subAtB, subPassiveSet, NotOptCols_nb, K, subX, mem);
+	subiter = solveNormalEqComb(AtA, subAtB, subPassiveSet, NotOptCols_nb, K, subX, param);
 
 	// for stability
 	for (k=0;k<K;k++) {

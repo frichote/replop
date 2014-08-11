@@ -6,7 +6,7 @@
 Write a file in the \code{\link{lfmm}} format.
 }
 \usage{
-write.lfmm(R, output_file)
+write.lfmm(R, output.file)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -14,7 +14,7 @@ write.lfmm(R, output_file)
         A matrix containing the genotypes with one line for each individual and one column for each SNP. 
 	The missing genotypes have to be encoded with the value 9.
 }
-\item{output_file}{
+\item{output.file}{
 A character string containing a path to the output file,
 a genotypic matrix in the \code{lfmm} format.
 }

@@ -4,7 +4,7 @@
  * @{
  * @file register_convert.h
  *
- * @brief functions to analyse command line
+ * @brief functions to the analyse command line and print informations
  */
 
 #ifndef REGISTER_LFMM_H

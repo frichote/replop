@@ -14,11 +14,15 @@
 #include "lfmm_algo.h"
 
 /**
- * structure to manage multithreading
+ * structure to manage multithreading to calculate the variance and the mean
  */
-typedef struct _mat *Mat;
+typedef struct _multithreading_lfmm_var *Multithreading_lfmm_var;
 
-typedef struct _mat {
+/**
+ * @brief Structure containing generic parameters for multithreading variance 
+ *	calculation in LFMM functions. 
+ */
+typedef struct _multithreading_lfmm_var {
 	float *R;
 	double *U;
 	double *V;
@@ -33,7 +37,7 @@ typedef struct _mat {
 	double res2;
 	int slice;
 	int num_thrd;
-} mat;
+} multithreading_lfmm_var;
 
 /**
  * general multithreading function manager. Some parameters can be NULL

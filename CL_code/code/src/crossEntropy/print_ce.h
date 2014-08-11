@@ -3,7 +3,7 @@
  * @ingroup crossEntropy
  * @{
  *
- * @brief set of printing functions
+ * @brief functions to print help and a summary of the parameters
  */
 
 
@@ -11,7 +11,7 @@
 #define PRINT_CE_H
 
 /**
- * print my header
+ * print the header
  */
 void print_head_ce();
 
@@ -29,7 +29,7 @@ void print_help_ce();
  * @param m     boolean param, true if missing values
  * @param input         genotype file
  * @param input.Q         admixture file
- * @param input.F         frequency file
+ * @param input.F         ancestral genotype frequency file
  * @param input_I         genotype file with masked genotypes
  */
 void print_summary_ce ( int N, int M, int K, 

@@ -1,4 +1,4 @@
-sNMF <- function(input_file, 
+sNMF <- function(input.file, 
 		K, 
 		alpha = 10, 
 		tolerance = 0.00001, 
@@ -8,17 +8,17 @@ sNMF <- function(input_file,
 		iterations = 200, 
 		ploidy = 2, 
 		seed = -1, 
-		num_CPU = 1, 
-		Q_input_file,
-	#	output_files, 
+		CPU = 1, 
+		Q.input.file,
+	#	output.files, 
 		repetitions = 1)
 {
 
         # test arguments and init
 	# input file
-	input_file = test_character("input_file", input_file, NULL)
+	input.file = test_character("input.file", input.file, NULL)
 	# check extension and convert if necessary 
-	input_file = test_input_file(input_file, "geno")
+	input.file = test_input_file(input.file, "geno")
 	# K
 	for (k in 1:length(K)) {
 		K[k] = test_integer("K", K[k], NULL)
@@ -53,17 +53,17 @@ sNMF <- function(input_file,
 	# seed
 	seed = test_integer("seed", seed, -1)
 	# CPU	
-	num_CPU = test_integer("num_CPU", num_CPU, 1)
-        if (num_CPU <= 0)
-                num_CPU = 1;
+	CPU = test_integer("CPU", CPU, 1)
+        if (CPU <= 0)
+                CPU = 1;
 	#ifdef windows
-		num_CPU = 1;
+		CPU = 1;
 	#endif
 	# input Q
-	Q_input_file = test_character("Q_input_file", Q_input_file, "")
+	Q.input.file = test_character("Q.input.file", Q.input.file, "")
 	# test extension
-	if (Q_input_file != "")
-		test_extension(Q_input_file, "Q")
+	if (Q.input.file != "")
+		test_extension(Q.input.file, "Q")
 	# I	
 	I = test_integer("I", I, 0)
         if (I < 0)
@@ -72,13 +72,13 @@ sNMF <- function(input_file,
 	repetitions = test_integer("repetitions", repetitions, 1)
 	
 	# project
-	tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.",input_file)	
+	tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.",input.file)	
 	projectName = paste(tmp, "snmfProject", sep="")
 	# creation of the project if it does not exist
 	if (!file.exists(projectName)) {
 		project = new("snmfProject")
-		project@input_file = input_file
-		project@snmfProject_file = paste(getwd(),"/", projectName, sep="")
+		project@input.file = input.file
+		project@snmfProject.file = paste(getwd(),"/", projectName, sep="")
 		project@directory = getwd();
 	# or load the existing project
 	} else {
@@ -96,29 +96,29 @@ sNMF <- function(input_file,
 
 			re = length(which(project@K == k)) + 1
 			# Q file 
-		        base = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1",input_file)
+		        base = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1",input.file)
 			# test si un run du meme nom n existe pas ?
-		        Q_output_file = paste(base,"_r", re ,".",k, ".Q", sep="")
+		        Q.output.file = paste(base,"_r", re ,".",k, ".Q", sep="")
 #			Q_output_file = test_character("Q_output_file", Q_output_file, tmp)
 			# G file
-		        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1",input_file)
-		        G_output_file = paste(tmp,"_r", re ,".",k, ".G", sep="")
+		        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1",input.file)
+		        G.output.file = paste(tmp,"_r", re ,".",k, ".G", sep="")
 			# G_output_file = test_character("G_output_file", G_output_file, tmp)
 
 			# TODO on peut aussi tester que le fichier n est pas déjà existant 
-		        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1",input_file)
-		        snmfClass_file = paste(tmp,"_r", re ,".",k, ".snmfClass", sep="")
+		        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1",input.file)
+		        snmfClass.file = paste(tmp,"_r", re ,".",k, ".snmfClass", sep="")
 
 			# creation of the res file
 			res = new("snmfClass")
 
-			all_ce = 0;
-			masked_ce = 0;
+			all.ce = 0;
+			masked.ce = 0;
 			seed = 0;
 			n = 0;
 			L = 0;
 		    	resC = .C("R_sNMF", 
-				as.character(input_file),
+				as.character(input.file),
 				as.integer(k),
 				as.double(alpha),
 				as.double(tolerance),
@@ -126,24 +126,24 @@ sNMF <- function(input_file,
 				as.integer(iterations),
 				seed = as.integer(seed),
 				as.integer(ploidy),
-				as.integer(num_CPU),
-				as.character(Q_input_file),
-				as.character(Q_output_file),
-				as.character(G_output_file),
+				as.integer(CPU),
+				as.character(Q.input.file),
+				as.character(Q.output.file),
+				as.character(G.output.file),
 				as.integer(I),
-				all_ce = as.double(all_ce),
-				masked_ce = as.double(masked_ce),
+				all.ce = as.double(all.ce),
+				masked.ce = as.double(masked.ce),
 				n = as.integer(n),
 				L = as.integer(L)
 			);
 		
 			res@directory = getwd();
-			res@input_file = input_file;
-			res@snmfClass_file  = snmfClass_file;
+			res@input.file = input.file;
+			res@snmfClass.file  = snmfClass.file;
 			res@n = resC$n;
 			res@L = resC$L;
 			res@K = as.integer(k);
-			res@CPU = as.integer(num_CPU);
+			res@CPU = as.integer(CPU);
 			res@seed = as.integer(resC$seed);
 			res@alpha = alpha;
 			res@percentage = percentage;
@@ -151,12 +151,12 @@ sNMF <- function(input_file,
 			res@iterations = as.integer(iterations);
 			res@entropy = entropy;
 			res@tolerance = tolerance;
-			res@crossEntropy = resC$masked_ce;
+			res@crossEntropy = resC$masked.ce;
 			res@ploidy = as.integer(ploidy);
-			res@Q_input_file = Q_input_file;
-			res@Q_output_file = Q_output_file;
-			res@G_output_file = G_output_file;
-			save.snmfClass(res, res@snmfClass_file)
+			res@Q.input.file = Q.input.file;
+			res@Q.output.file = Q.output.file;
+			res@G.output.file = G.output.file;
+			save.snmfClass(res, res@snmfClass.file)
 
 			project = addRun.snmfProject(project, res);
 		}

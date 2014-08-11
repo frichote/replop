@@ -3,32 +3,16 @@
 [1;36m # Make [0;39m
 rm -f *.o test_sort
 colorgcc -lm -lpthread -Wall -Wextra   -c -o test_sort.o test_sort.c
+test_sort.c: In function ‘test_matrix’:
+test_sort.c:51:2: error: unknown type name ‘Memory’
+test_sort.c:54:2: warning: implicit declaration of function ‘allocate_memory’ [-Wimplicit-function-declaration]
+test_sort.c:55:9: warning: passing argument 6 of ‘sortCols’ makes pointer from integer without a cast [enabled by default]
+../../../src/nnlsm/sort.h:27:6: note: expected ‘Nnlsm_param’ but argument is of type ‘int’
+test_sort.c:61:2: warning: implicit declaration of function ‘free_memory’ [-Wimplicit-function-declaration]
 test_sort.c: In function ‘main’:
 test_sort.c:70:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
 test_sort.c:70:27: warning: unused parameter ‘argv’ [-Wunused-parameter]
-colorgcc test_sort.o -o test_sort ../../../obj/bituint/*.o ../../../obj/convert/*.o ../../../obj/createDataSet/*.o ../../../obj/crossEntropy/*.o ../../../obj/io/*.o ../../../obj/lapack/*.o ../../../obj/LFMM/*.o ../../../obj/matrix/*.o ../../../obj/nnlsm/*.o ../../../obj/sNMF/*.o -lm -lpthread -Wall -Wextra -g -O3 -Wall -Wextra
+make: *** [test_sort.o] Error 1
 [1;36m # Tests [0;39m
-\033[1;32m [OK] \033[0;39m test file: files/test_K1N1_0.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K1N1_1.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K1N10_0.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K1N10_1.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K1N10_rand.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N10_0.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N10_1.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N10_rand.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N1_0.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N1_1.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N1_rand.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K100N10_rand.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N100_rand-1.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N100_rand-2.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N100_rand-3.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N100_rand-4.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N100_rand-5.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N100_rand-6.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N100_rand-7.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N100_rand-8.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N100_rand-9.txt
-\033[1;32m [OK] \033[0;39m test file: files/test_K10N100_rand-10.txt
-\033[1;32m [OK] \033[0;39m test file: files/plop.txt
+description.sh: 20: description.sh: ./test_sort: not found
 

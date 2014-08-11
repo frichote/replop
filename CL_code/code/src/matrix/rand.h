@@ -188,7 +188,7 @@ int rand_vector(double *Pi, int size);
 double rand_gamma(int alpha, double beta);
 
 /**
- * compute the (approximated) pvalue associated a positive zscore (normality)
+ * compute the (approximated) pvalue associated a positive zscore (normal)
  * 
  * @param z	zscore 
  * 

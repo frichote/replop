@@ -35,7 +35,7 @@ void print_help_pca()
          "        -a eigenvalue_file    -- output eigenvalues file (default: genotype_file.eigenvalues)\n"
          "        -e eigenvector_file   -- output eigenvectors file (default: genotype_file.eigenvectors)\n"
          "        -d sdev_file          -- output standard deviation file (default: genotype_file.sdev)\n"
-         "        -p projection_file   -- output eigenvectors file (default: genotype_file.projections)\n"
+         "        -p projection_file    -- output projection file (default: genotype_file.projections)\n"
          "        -c                    -- data centered (default: FALSE)\n"
          "        -s                    -- data centered and scaled (default: FALSE)\n\n"
         );

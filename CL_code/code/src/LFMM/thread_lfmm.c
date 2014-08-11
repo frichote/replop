@@ -29,17 +29,17 @@
 
 void thread_fct_lfmm(float *R, double *A, double *B, double *C, double *m,
 	double *inv_cov, double *L, int J, int K, int N, int M, double *alpha,
-	double alpha_R, int num_thrd, void (*fct) ())
+	double alpha_R, int num_thrd, int mode, void (*fct) ())
 {
 	pthread_t *thread;	// pointer to a group of threads
 	int i;
 
 	thread = (pthread_t *) malloc(num_thrd * sizeof(pthread_t));
-	Matrix_lfmm *Ma = (Matrix_lfmm *) malloc(num_thrd * sizeof(Matrix_lfmm));
+	Multithreading_lfmm *Ma = (Multithreading_lfmm *) malloc(num_thrd * sizeof(Multithreading_lfmm));
 
 	/* this for loop not entered if threadd number is specified as 1 */
 	for (i = 1; i < num_thrd; i++) {
-		Ma[i] = (Matrix_lfmm) malloc(1 * sizeof(matrix_lfmm));
+		Ma[i] = (Multithreading_lfmm) malloc(1 * sizeof(multithreading_lfmm));
 		Ma[i]->R = R;
 		Ma[i]->A = A;
 		Ma[i]->B = B;
@@ -51,6 +51,7 @@ void thread_fct_lfmm(float *R, double *A, double *B, double *C, double *m,
 		Ma[i]->K = K;
 		Ma[i]->N = N;
 		Ma[i]->M = M;
+		Ma[i]->mode = mode;
 		Ma[i]->alpha = alpha;
 		Ma[i]->alpha_R = alpha_R;
 		Ma[i]->num_thrd = num_thrd;
@@ -66,7 +67,7 @@ void thread_fct_lfmm(float *R, double *A, double *B, double *C, double *m,
 
 	/* main thread works on slice 0 so everybody is busy
 	 * main thread does everything if threadd number is specified as 1*/
-	Ma[0] = (Matrix_lfmm) malloc(1 * sizeof(matrix_lfmm));
+	Ma[0] = (Multithreading_lfmm) malloc(1 * sizeof(multithreading_lfmm));
 	Ma[0]->R = R;
 	Ma[0]->A = A;
 	Ma[0]->B = B;
@@ -78,6 +79,7 @@ void thread_fct_lfmm(float *R, double *A, double *B, double *C, double *m,
 	Ma[0]->K = K;
 	Ma[0]->N = N;
 	Ma[0]->M = M;
+	Ma[0]->mode = mode;
 	Ma[0]->alpha = alpha;
 	Ma[0]->alpha_R = alpha_R;
 	Ma[0]->num_thrd = num_thrd;

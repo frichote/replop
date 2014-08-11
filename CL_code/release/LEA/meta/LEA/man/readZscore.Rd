@@ -6,11 +6,11 @@
 Read the output file from \code{\link{LFMM}}.
 }
 \usage{
-read.zscore(input_file)
+read.zscore(input.file)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-\item{input_file}{
+\item{input.file}{
 a character string containing a path to the output of \code{\link{LFMM}}.
 }
 }
@@ -39,7 +39,7 @@ write.env(C, "tuto.env")
 res = LFMM("tuto.lfmm", "tuto.env", 2, d = 1)
 
 # read of the zscore output file
-z = read.zscore(res@runs[[1]]@zscore_file)
+z = read.zscore(res@runs[[1]]@zscore.file)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

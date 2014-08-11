@@ -4,7 +4,12 @@
  * @{
  *
  * @brief compute a pca of a matrix. It computes eigenvalues,
- *	eigenvectors, x (as prcomp in R), and standard deviation
+ *	eigenvectors, projection/x (as prcomp in R), and standard deviation
+ * 
+ * With the scaled option, data are scaled using the variance. 
+ * 
+ * TODO: 
+ * - scale as Patterson suggested it (Eigenanalysis paper).
  */
 
 
@@ -22,6 +27,7 @@
  * @param n			number of individuals
  * @param L			number of loci
  * @param K			number of PCs
+ * @param c			boolean: TRUE centered data, 
  * @param s			boolean: FALSE centered data, 
  * 					 TRUE scaled and centered data
  */

@@ -51,6 +51,7 @@ void diagonalize(double *cov, int N, int K, double *val, double *vect)
         (doublereal *) vectp, (integer *) (&n), (integer *)supp, (doublereal *)work,
         (integer *) (&lwork), (integer *)iwork, (integer *) (&liwork), (integer *) (&info));
 
+	// copy results
 	for (k = 0; k < K; k++) {
 		val[k] = valp[K-(k+1)];
 		if (val[k] < 0 && abs(val[k]) < 1e-10) 

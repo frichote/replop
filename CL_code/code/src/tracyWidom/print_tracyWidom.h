@@ -3,7 +3,7 @@
  * @ingroup tracyWidom
  * @{
  *
- * @brief set of printing functions
+ * @brief functions to print help and a summary of the parameters
  */
 
 

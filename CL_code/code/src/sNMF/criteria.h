@@ -11,22 +11,14 @@
 #define CRITERIA_H
 
 #include "../bituint/bituint.h"
+#include "sNMF.h"
 
 /** 
  * calculate least square criteria with regularization
  *
- * @param X	data matrix
- * @param Q	Q matrix (of size NxK)
- * @param F	F matrix (of size M*ncxK)
- * @param N	number of individuals
- * @param M	number of SNPs
- * @param nc	number of alleles
- * @param Mp	number of columns of X
- * @param K	number of ancestral populations
- * @param alpha regularization parameter
+ * @param alpha	sNMF parameter structure
  */
-double least_square(bituint *X, double *Q, double *F, int N, int M, int nc, 
-	int Mp, int K, double alpha); 
+double least_square(sNMF_param param);
 
 #endif // CRITERIA_H
 

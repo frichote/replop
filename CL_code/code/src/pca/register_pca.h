@@ -3,7 +3,7 @@
  * @ingroup pca
  * @{
  *
- * @brief functions to read data matrices
+ * @brief functions to analyze the command-line
  */
 
 #ifndef REGISTER_PCA_H

@@ -1,6 +1,6 @@
 \name{ped}
 \alias{ped}
-\alias{example_ped}
+\alias{example.ped}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{\code{ped} format description}
 \description{

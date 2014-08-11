@@ -66,6 +66,11 @@ void LFMM(LFMM_param param)
         param->D = nb_cols_lfmm(param->cov_file);
         N2 = nb_lines(param->cov_file, param->D);
 
+	n = param->n;
+	L = param->L;
+	K = param->K;
+	D = param->D;
+
 	// check the number of lines and columns
 	if (N2 != param->n) {
 		printf("The number of individuals of %s (%d) is different from the number"
@@ -83,8 +88,9 @@ void LFMM(LFMM_param param)
         print_summary_lfmm(param);
 
 	// allocate data memory
-	param->U = (double *)calloc(K * n, sizeof(double));	// (N,K)
-	param->V = (double *)calloc(K * L, sizeof(double));	// (N,K)
+	// the memory is free with free_param_lfmm in the main 
+	param->U = (double *)calloc(K * n, sizeof(double));	
+	param->V = (double *)calloc(K * L, sizeof(double));
 	param->alpha_U = (double *)calloc(K, sizeof(double));
 	param->alpha_V = (double *)calloc(K, sizeof(double));
 	if (param->all) {
@@ -97,23 +103,23 @@ void LFMM(LFMM_param param)
 	param->alpha_beta = (double *)calloc(mD, sizeof(double));
 	perc_var = (double *)calloc(mD + K + 1, sizeof(double));
 
-	// read of covariable file
-	param->C = (double *)calloc(L * D, sizeof(double));	
+	// read of the variable file
+	param->C = (double *)calloc(n * D, sizeof(double));	
 	read_data_double(param->cov_file, n, D, param->C);
 	normalize_cov(param->C, n, D);
 	printf("Read variable file:\n \t%s\t\tOK.\n\n", param->cov_file);
 
-	// read of data file
+	// read of the data file
 	param->dat = (float *)calloc(n * L, sizeof(float));
 	read_data_float(param->input_file, n, L, param->dat);
 
-	// creation on the missing data matrix
+	// creation of the missing data matrix
 	if (param->missing_data) {
 		param->I = (int *)calloc(n * L, sizeof(int));
 		create_I(param->dat, param->I, n, L);
 	}
 
-	// warnings about the covariables
+	// warnings about the variables
 	if (param->all) {
 		printf("WARNING: You launched LFMM command line with several"
 		       " covariables with '-a' option."
@@ -133,8 +139,8 @@ void LFMM(LFMM_param param)
 		param->mC = (double *)calloc(n * mD, sizeof(double));	
 
 		printf("\n<<<<\n\t Analyse for all covariables.\n\n");
-		// create C
-		modify_C(param->C, n, mD, param->mC, param->nd, param->all);
+		// create mC from C
+		modify_C(param->C, n, D, param->mC, param->nd, param->all);
 
 		// run LFMM
 		if (K)
@@ -155,8 +161,8 @@ void LFMM(LFMM_param param)
 		param->nd -= 1;	// modify nd to be the index of C column 
 
 		printf("\n<<<<\n\t Analyse for covariable %d\n\n", param->nd + 1);
-		// create C
-		modify_C(param->C, n, mD, param->mC, param->nd, param->all);
+		// create mC from C
+		modify_C(param->C, n, D, param->mC, param->nd, param->all);
 
 		// run LFMM
 		if (K) 
@@ -174,12 +180,12 @@ void LFMM(LFMM_param param)
 	} else {
 		// allocate memory
 		param->zscore = (double *)calloc(L, sizeof(double));
-		param->mC = (double *)calloc(n * D, sizeof(double));	// (N,K)
+		param->mC = (double *)calloc(n * mD, sizeof(double));	// (N,K)
 		// for each variable
 		for (d = 0; d < param->D; d++) {
 			printf("\n<<<<\n\t Analyse for covariable %d\n\n", d + 1);
-			// create C
-			modify_C(param->C, n, mD, param->mC, d, param->all);
+			// create mC from C
+			modify_C(param->C, n, D, param->mC, d, param->all);
 
 			// run LFMM
 			if (K)
@@ -194,4 +200,7 @@ void LFMM(LFMM_param param)
 				"\n>>>>\n\n", d + 1);
 		}
 	}
+
+	// free memory
+	free(perc_var);
 }

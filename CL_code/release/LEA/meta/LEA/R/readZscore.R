@@ -1,11 +1,11 @@
-read.zscore <- function(input_file) {
+read.zscore <- function(input.file) {
 
 	# test arguments
-	test_character("input_file", input_file, NULL)
+	test_character("input.file", input.file, NULL)
 	# check extension 
-	test_extension(input_file, "zscore")
+	test_extension(input.file, "zscore")
 
-	R = as.matrix(read.table(input_file));
+	R = as.matrix(read.table(input.file));
 
 	return(list(zscores=R[,1],mlog10pvalues=R[,2],pvalues=R[,3]))
 }

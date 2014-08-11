@@ -40,6 +40,7 @@ void analyse_param_pca(	int argc, char *argv[], char *input, char* output_eva,
 	for (i = 1; i < argc; i++) {
                 if (argv[i][0] == '-') {
                         switch (argv[i][1]) {
+			// the number of principal component
                         case 'K':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
@@ -47,44 +48,52 @@ void analyse_param_pca(	int argc, char *argv[], char *input, char* output_eva,
                                 *K = atoi(argv[i]);
 				strcpy(tmp,argv[i]);
                                 break;
+			// help
                         case 'h':   // global
                                 print_help_pca();
                                 exit(1);
                                 break;
+			// the genotypic file
                         case 'x':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_pca("cmd","x (genotype file)");
                                 g_data = 0;
-                                strcpy(input,argv[i]);
+                                strcpy(input, argv[i]);
                                 break;
+			// output eigenvalue file
                         case 'a':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_pca("cmd","a (output eigenvalues file)");
                                 strcpy(output_eva, argv[i]);
                                 break;
+			// output eigenvector file
                         case 'e':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_pca("cmd","a (output eigenvalues file)");
-                                strcpy(input,argv[i]);
+                                strcpy(output_eve, argv[i]);
                                 break;
+			// output standard deviation file
                         case 'd':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_pca("cmd","d (output standard deviation file)");
-                                strcpy(input,argv[i]);
+                                strcpy(output_sdev, argv[i]);
                                 break;
+			// output projection file
                         case 'p':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_pca("cmd","p (output projection file)");
-                                strcpy(input,argv[i]);
+                                strcpy(output_x, argv[i]);
                                 break;
+			// center
                         case 'c':
 				*c = 1;
 				break;
+			// scale
                         case 's':
 				*s = 1;
 				break;
@@ -95,15 +104,16 @@ void analyse_param_pca(	int argc, char *argv[], char *input, char* output_eva,
 		}
         }
 
+	// no input file
         if (g_data == -1)
 		print_error_pca("option","-x genotype_file");
 
+	// negative K
         if (*K <= 0)
 		*K = 0;
 
         // write output file names
         tmp_file = remove_ext(input,'.','/');
-	
 	if (!strcmp(output_eva,"")) {
 		strcpy(output_eva,tmp_file);
 		strcat(output_eva,".eigenvalues");
@@ -120,7 +130,6 @@ void analyse_param_pca(	int argc, char *argv[], char *input, char* output_eva,
 		strcpy(output_x,tmp_file);
 		strcat(output_x,".projection");
 	}
-
 	free(tmp_file);
 }
 

@@ -48,6 +48,7 @@ nav,nav ul {
 }
 
 nav {
+        background:url(../images/bg-menu.png) no-repeat center top;
 	background-color:white;
 	height:50px;
 	left:0;
@@ -60,7 +61,6 @@ nav li {
 	z-index:10;
 }
 nav li a {
-	background:url(../images/bg-menu.png) no-repeat center top;
 	color:#fff;
 	display:block;
 	float:left;
@@ -73,19 +73,23 @@ nav li a {
 	z-index:20;
 }
 nav li:first-child a {
-	background:url(../images/bg-menu.png) no-repeat left top;
+/*	background:url(../images/bg-menu.png) no-repeat left top;
+	background-color:white;*/
 	padding-left:35px;
 }
 nav li ul li:first-child a {
 	background-image:none;
 	padding-left:10px;
 }
+/*
 nav li.pad {
 	background:url(../images/bg-menu.png) no-repeat right top;
+	background-color:white;
 	display:block;
 	height:51px;
 	width:60px;
 }
+*/
 /*
 nav ul {
 	background:#009900;

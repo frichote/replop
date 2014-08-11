@@ -183,9 +183,9 @@ void rand_beta(double *beta, double *m_beta, double *inv_cov_beta,
 void update_beta(LFMM_param param, LFMM_GS_param GS_param) 
 {
 	// m_beta = C' * (R - U'*V);                       (D,M)
-	create_m(param->C, param->dat, param->U, param->V, 
-		GS_param->m_beta, param->L, param->n, param->mD, 
-		param->K, param->num_thrd);
+	create_m(param->mC, param->dat, param->U, param->V, 
+		GS_param->m_beta, param->L, param->n, param->K, 
+		param->mD, param->num_thrd, 0);
 
 	// cov_beta = alpha_beta .* eye(D) + alpha_R .* C'*C;   (D,D)
 	create_inv_cov(GS_param->inv_cov_beta, param->alpha_beta, 

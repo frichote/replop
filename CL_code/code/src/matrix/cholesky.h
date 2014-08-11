@@ -10,7 +10,7 @@
 #define CHOLESKY_H
 
 /**
- * compute the lower cholesky decomposite L of A
+ * compute the lower cholesky decomposite L of A, A = LL^T
  *
  * @param A	the matrix to decompose (of size nxn)
  * @param n	the size of columns/lines of A

@@ -23,16 +23,12 @@
 #include <math.h>
 #include "register_snmf.h"
 #include "print_snmf.h"
-#include "error_nmf.h"
+#include "error_snmf.h"
 #include "../io/io_tools.h"
 
 // analyse_param_snmf
 
-void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
-			int* K, double* alpha, double* tol, double *e,
-			int *iter, char *input, int* num_thrd,
-			char* input_Q, char* output_Q, char* output_F, 
-			int* I) 
+void analyse_param_snmf(int argc, char *argv[], sNMF_param param) 
 {
       	int i;
 	int g_data = -1;
@@ -48,29 +44,29 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_nmf("cmd","K (number of clusters)",0);
-                                *K = atoi(argv[i]);
+                                param->K = atoi(argv[i]);
                                 strcpy(tmp,argv[i]);
                                 break;
                         case 's':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_nmf("cmd","s (seed number)",0);
-                                *s = atoi(argv[i]);
+                                param->seed= atoll(argv[i]);
                                 break;
                         case 'm':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_nmf("cmd","m (number of alleles)",0);
-                                *m = atoi(argv[i]);
+                                param->nc = atoi(argv[i]);
 				g_m = 1;
                                 break;
 			case 'a':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_nmf("cmd","alpha (regularization parameter)",0);
-                                *alpha = (double) atof(argv[i]);
-				if (*alpha < 0) {
-					*alpha = 0;
+                                param->alpha = (double) atof(argv[i]);
+				if (param->alpha < 0) {
+					param->alpha = 0;
 				}
                                 break;
                         case 'h':   // global
@@ -85,18 +81,18 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_nmf("cmd","e (tolerance error in the algorithm)",0);
-                                *tol = (double) atof(argv[i]);
-				if (*tol < 0) {
-					*tol = 0;
+                                param->tolerance = (double) atof(argv[i]);
+				if (param->tolerance < 0) {
+					param->tolerance = 0;
 				}
                                 break;
 			case 'c':
                                 i++;
                                 if (argc == i || argv[i][0] == '-') {
-					*e = 0.05;
+					param->pourcentage = 0.05;
 					i--;
 				} else  {
-                                	*e = (double) atof(argv[i]);
+                                	param->pourcentage = (double) atof(argv[i]);
 				}
 				g_c = 1;
                                 break;
@@ -104,46 +100,46 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_nmf("cmd","i (number of iterations)",0);
-                                *iter = atoi(argv[i]);
+                                param->maxiter = atoi(argv[i]);
                                 break;
 			case 'I':
                                 i++;
                                 if (argc == i || argv[i][0] == '-') {
-					*I = -1;	
+					param->I = -1;	
 					i--;
 				} else
-                                	*I = (int) atoi(argv[i]);
+                                	param->I = (int) atoi(argv[i]);
 				break;
                         case 'x':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_nmf("cmd","x (genotype file)",0);
                                 g_data = 0;
-                                strcpy(input,argv[i]);
+                                strcpy(param->input_file,argv[i]);
                                 break;
                         case 'q':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
                                         print_error_nmf("cmd","q (individual admixture coefficients file)",0);
-                                strcpy(output_Q,argv[i]);
+                                strcpy(param->output_file_Q,argv[i]);
                                 break;
                         case 'Q':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
                                         print_error_nmf("cmd","Q (admixture coefficients initialization file)",0);
-                                strcpy(input_Q,argv[i]);
+                                strcpy(param->input_file_Q,argv[i]);
                                 break;
                         case 'g':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
                                         print_error_nmf("cmd","g (ancestral genotype frequencies file)",0);
-                                strcpy(output_F,argv[i]);
+                                strcpy(param->output_file_F,argv[i]);
                                 break;
 			case 'p':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_nmf("cmd","p (number of processes)",0);
-                              	*num_thrd = atoi(argv[i]);
+                              	param->num_thrd = atoi(argv[i]);
                                 break;
                         default:    print_error_nmf("basic",NULL,0);
                         }
@@ -155,35 +151,87 @@ void analyse_param_snmf(int argc, char *argv[], int* m, long long* s,
         if (g_data == -1)
 		print_error_nmf("option","-x genotype_file",0);
 
-        if (*K <= 0)
+        if (param->K <= 0)
 		print_error_nmf("missing",NULL,0);
 
-        if (*num_thrd <= 0)
+        if (param->num_thrd <= 0)
 		print_error_nmf("missing",NULL,0);
 
-        if (g_m && *m <= 0)
+        if (g_m && param->nc <= 0)
 		print_error_nmf("missing",NULL,0);
 
-        if (*iter <= 0)
+        if (param->maxiter <= 0)
 		print_error_nmf("missing",NULL,0);
 
-        if (g_c && (*e <= 0 || *e >= 1))
+        if (g_c && (param->pourcentage <= 0 || param->pourcentage >= 1))
                 print_error_nmf("missing",NULL,0);
 
         // write output file name
-        tmp_file = remove_ext(input,'.','/');
-	if (!strcmp(output_Q,"")) {
-                strcpy(output_Q,tmp_file);
-                strcat(output_Q,".");
-                strcat(output_Q,tmp);
-                strcat(output_Q,".Q");
+        tmp_file = remove_ext(param->input_file,'.','/');
+	if (!strcmp(param->output_file_Q,"")) {
+                strcpy(param->output_file_Q,tmp_file);
+                strcat(param->output_file_Q,".");
+                strcat(param->output_file_Q,tmp);
+                strcat(param->output_file_Q,".Q");
 	}
-	if (!strcmp(output_F,"")) {
-                strcpy(output_F,tmp_file);
-                strcat(output_F,".");
-                strcat(output_F,tmp);
-                strcat(output_F,".G");
+	if (!strcmp(param->output_file_F,"")) {
+                strcpy(param->output_file_F,tmp_file);
+                strcat(param->output_file_F,".");
+                strcat(param->output_file_F,tmp);
+                strcat(param->output_file_F,".G");
 	}
         free(tmp_file);
+}
+
+// init_param_snmf
+
+void init_param_snmf(sNMF_param param)
+{
+        // default values 
+        param->K = 0;                    
+        param->maxiter = 200;           
+        param->num_thrd = 1;           
+        param->alpha = 10;            
+        param->tolerance = 0.0001;         
+        strcpy(param->output_file_F, "");   
+        strcpy(param->output_file_Q, "");   
+        strcpy(param->input_file_Q, "");   
+        param->seed = -1;             
+        param->nc = 3;
+        param->m = 2;
+        param->pourcentage = 0.0;
+        param->I = 0;
+        param->all_ce = 0; 
+	param->masked_ce = 0;
+}
+
+// free_param_snmf 
+
+void free_param_snmf (sNMF_param param)
+{
+	// Q
+	if (param->Q)
+		free(param->Q);
+	// F
+	if (param->F)
+		free(param->F);
+	// X
+	if (param->X)
+		free(param->X);
+	// Xi
+	if (param->Xi)
+		free(param->Xi);
+	// temp1
+	if (param->temp1)
+		free(param->temp1);
+	// tempQ
+	if (param->tempQ)
+		free(param->tempQ);
+	// temp3
+	if (param->temp3)
+		free(param->temp3);
+	// Y
+	if (param->Y)
+		free(param->Y);
 }
 

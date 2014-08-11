@@ -3,13 +3,13 @@
  * @ingroup nnlsm
  * @{
  *
- * @brief functions to solve AtA*Z() = AtB conditionned to PassiveSet
+ * @brief functions to solve AtA*Z() = AtB conditionned for PassiveSet
  */
 
 #ifndef SOLVENORMALEQCOMB_H
 #define SOLVENORMALEQCOMB_H
 
-#include "blockpivot.h"
+#include "nnlsm.h"
 
 /* @brief solve AtA*Z() = AtB conditionned to PassSet 
  *
@@ -19,10 +19,11 @@
  * @param N     number of columns of AtB
  * @param K     number of columns and lines of AtA
  * @param Z     output matrix of size (KxN)
+ * @param param	parameter memory and structure
  * 
  * return niter
  */
-int solveNormalEqComb (double* AtA, double* AtB, int *PassSet, int N, int K, double* Z, Memory mem);
+int solveNormalEqComb (double* AtA, double* AtB, int *PassSet, int N, int K, double* Z, Nnlsm_param param);
 
 /* @brief solve AtA*Z() = AtB conditionned for lines of selectK and columns of selectN 
  *

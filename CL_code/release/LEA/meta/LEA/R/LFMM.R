@@ -1,30 +1,30 @@
-LFMM <- function(input_file, 
-		variable_file, 
+LFMM <- function(input.file, 
+		variable.file, 
 		K,
 		d = 0,
 		all = FALSE,
-		missing_data = FALSE,
-		num_CPU = 1,
-		num_iterations = 1000,
-		num_burnin = 100,
+		missing.data = FALSE,
+		CPU = 1,
+		iterations = 1000,
+		burnin = 100,
 		seed = -1, 
 		repetitions = 1,
-		epsilon_noise = 1e-3,
-		epsilon_b = 1000,
-		random_init = TRUE) 
+		epsilon.noise = 1e-3,
+		epsilon.b = 1000,
+		random.init = TRUE) 
 {
 
 
 
         # test arguments and init
 	# input file
-	input_file = test_character("input_file", input_file, NULL)
+	input.file = test_character("input.file", input.file, NULL)
 	# check extension and convert if necessary
-	input_file = test_input_file(input_file, "lfmm")
+	input.file = test_input_file(input.file, "lfmm")
 	# cov file
-	variable_file = test_character("variable_file", variable_file, NULL)
+	variable.file = test_character("variable.file", variable.file, NULL)
 	# check extension
-	test_extension(variable_file, "env")
+	test_extension(variable.file, "env")
 	# K
 	for (k in 1:length(K)) {
 		K[k] = test_integer("K", K[k], NULL)
@@ -39,59 +39,59 @@ LFMM <- function(input_file,
 				d[ndd] = 1;
 		}
 	} else {
-		v = dim(read.env(variable_file))
+		v = dim(read.env(variable.file))
 		nD = v[2]
 		d=1:nD
 	}
 	# all
 	all = test_logical("all",all, FALSE)
-	# output_file
-	output_file = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1", input_file)
-	# missing_data  
-	missing_data = test_logical("missing_data", missing_data, FALSE)
+	# output.file
+	output.file = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1", input.file)
+	# missing.data  
+	missing.data = test_logical("missing.data", missing.data, FALSE)
 	# CPU	
-	num_CPU = test_integer("num_CPU", num_CPU, 1)
-	if (num_CPU <= 0)
-                num_CPU = 1;
+	CPU = test_integer("CPU", CPU, 1)
+	if (CPU <= 0)
+                CPU = 1;
 	#ifdef windows
-		num_CPU = 1;
+		CPU = 1;
 	#endif
-        # num_iterations
-	num_iterations = test_integer("num_iterations", num_iterations, 1000)
-	if (num_iterations <= 0)
-                stop("'num_iterations' argument has to be positive.")
-        # num_burnin
-	num_burnin = test_integer("num_burnin", num_burnin, 100)
-	if (num_burnin <= 0)
-                	stop("'num_burnin' argument has to be positive.")
-	if (num_burnin >= num_iterations) {
-                stop("the number of iterations for burnin (num_burnin) is greater than the number total of iterations (num_iterations)")
+        # iterations
+	iterations = test_integer("iterations", iterations, 1000)
+	if (iterations <= 0)
+                stop("'iterations' argument has to be positive.")
+        # burnin
+	burnin = test_integer("burnin", burnin, 100)
+	if (burnin <= 0)
+                	stop("'burnin' argument has to be positive.")
+	if (burnin >= iterations) {
+                stop("the number of iterations for burnin (burnin) is greater than the number total of iterations (iterations)")
 	}
 	# seed
 	seed = test_integer("seed", seed, -1)
         # repetitions
         repetitions = test_integer("repetitions", repetitions, 1)
-        # epsilon_noise
-        epsilon_noise = test_double("epsilon_noise", epsilon_noise, 1e-3)
-        if (epsilon_noise < 0)
-                epsilon_noise = 1e-3;
-        # b_epsilon
-        epsilon_b = test_double("epsilon_b", epsilon_b, 1000)
-        if (epsilon_b < 0)
-                epsilon_b = 1000;
-	# random_init 
-	random_init = test_logical("random_init", random_init, TRUE)
+        # epsilon.noise
+        epsilon.noise = test_double("epsilon.noise", epsilon.noise, 1e-3)
+        if (epsilon.noise < 0)
+                epsilon.noise = 1e-3;
+        # b.epsilon
+        epsilon.b = test_double("epsilon.b", epsilon.b, 1000)
+        if (epsilon.b < 0)
+                epsilon.b = 1000;
+	# random.init 
+	random.init = test_logical("random.init", random.init, TRUE)
 
         # project
-        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1",input_file)
-        tmp2 = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.",variable_file)
+        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1",input.file)
+        tmp2 = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.",variable.file)
         projectName = paste(tmp, "_", tmp2 , "lfmmProject", sep="")
         # creation of the project if it does not exist
 	if (!file.exists(projectName)) {
                 project = new("lfmmProject")
-                project@input_file = input_file
-                project@variable_file = variable_file
-                project@lfmmProject_file = paste(getwd(),"/", projectName, sep="")
+                project@input.file = input.file
+                project@variable.file = variable.file
+                project@lfmmProject.file = paste(getwd(),"/", projectName, sep="")
                 project@directory = getwd();
         # or load the existing project
         } else {
@@ -110,7 +110,7 @@ LFMM <- function(input_file,
 	                        	re = length(which(project@K == k & project@all == all)) + 1
 				else 
 					re = 1
-				output_prefix = paste(output_file,"_r", re, sep="")
+				output.prefix = paste(output.file,"_r", re, sep="")
 
 				dic = 0
 				dev = 0
@@ -118,55 +118,55 @@ LFMM <- function(input_file,
 				n = 0
 				D = 0
 				resC = 	.C("R_LFMM", 
-					as.character(input_file),
-					as.character(output_prefix),
-					as.character(variable_file),
+					as.character(input.file),
+					as.character(output.prefix),
+					as.character(variable.file),
 					n = as.integer(n),
 					L = as.integer(L),
 					D = as.integer(D),
 					as.integer(d),
 					as.integer(k),
-					as.integer(num_iterations),
-					as.integer(num_burnin),
-					as.integer(num_CPU),
+					as.integer(iterations),
+					as.integer(burnin),
+					as.integer(CPU),
 					seed = as.integer(seed),
-					as.integer(missing_data),
+					as.integer(missing.data),
 					as.integer(all),
 					dic = as.double(dic),
 					dev = as.double(dev),
-					epsilon_noise,
-					epsilon_b,
-					random_init
+					epsilon.noise,
+					epsilon.b,
+					random.init
 				);
 
 				for (nd in 1:nD) { 
 					# creation of the res file
 					res = new("lfmmClass");
-					res@zscore_file = paste(output_prefix,"_a",nd,".",k,".zscore",sep="");
-					res@lfmmClass_file = paste(output_prefix, "_a",nd,".",k,".lfmmClass",sep="");
+					res@zscore.file = paste(output.prefix,"_a",nd,".",k,".zscore",sep="");
+					res@lfmmClass.file = paste(output.prefix, "_a",nd,".",k,".lfmmClass",sep="");
 					res@directory = getwd();
 					res@K = as.integer(k);
-					res@input_file = input_file; 
-					res@variable_file = variable_file; 
+					res@input.file = input.file; 
+					res@variable.file = variable.file; 
         	                	res@d = as.integer(nd);
-                	        	res@Niter = as.integer(num_iterations);
-                        		res@burn = as.integer(num_burnin);
-                        		res@CPU = as.integer(num_CPU);
+                	        	res@Niter = as.integer(iterations);
+                        		res@burn = as.integer(burnin);
+                        		res@CPU = as.integer(CPU);
 	                        	res@seed = as.integer(seed);
-        	                	res@missing_data = missing_data;
+        	                	res@missing.data = missing.data;
                 	        	res@all = all;
 					res@n = as.integer(resC$n);
 					res@L = as.integer(resC$L);
 					res@D = as.integer(resC$D);
-					res@epsilon_noise = epsilon_noise;
-					res@epsilon_b = epsilon_b;
-					res@random_init = random_init;
+					res@epsilon.noise = epsilon.noise;
+					res@epsilon.b = epsilon.b;
+					res@random.init = random.init;
 					res@seed = resC$seed
 					res@inflationFactor = inflationFactor(res)
 					res@deviance = resC$dev;
 					res@DIC = resC$dic;
 					seed = resC$seed
-		                        save.lfmmClass(res, res@lfmmClass_file)
+		                        save.lfmmClass(res, res@lfmmClass.file)
 
 					project = addRun.lfmmProject(project, res);
 				}
@@ -181,7 +181,7 @@ LFMM <- function(input_file,
 	                        		re = length(which(project@K == k & project@d == nd & project@all == all)) + 1
 					else 
 						re = 1
-					output_prefix = paste(output_file,"_r", re, sep="")
+					output.prefix = paste(output.file,"_r", re, sep="")
 	
 					dic = 0
 					dev = 0
@@ -189,54 +189,54 @@ LFMM <- function(input_file,
 					n = 0
 					D = 0
 					resC = 	.C("R_LFMM", 
-						as.character(input_file),
-						as.character(output_prefix),
-						as.character(variable_file),
+						as.character(input.file),
+						as.character(output.prefix),
+						as.character(variable.file),
 						n = as.integer(n),
 						L = as.integer(L),
 						D = as.integer(D),
 						as.integer(nd),
 						as.integer(k),
-						as.integer(num_iterations),
-						as.integer(num_burnin),
-						as.integer(num_CPU),
+						as.integer(iterations),
+						as.integer(burnin),
+						as.integer(CPU),
 						seed = as.integer(seed),
-						as.integer(missing_data),
+						as.integer(missing.data),
 						as.integer(all),
 						dic = as.double(dic),
 						dev = as.double(dev),
-						epsilon_noise,
-						epsilon_b,
-						random_init
+						epsilon.noise,
+						epsilon.b,
+						random.init
 					);
 
 					# creation of the res file
 					res = new("lfmmClass");
-					res@zscore_file = paste(output_prefix,"_s",nd,".",k,".zscore",sep="");
-					res@lfmmClass_file = paste(output_prefix, "_s",nd,".",k,".lfmmClass",sep="");
+					res@zscore.file = paste(output.prefix,"_s",nd,".",k,".zscore",sep="");
+					res@lfmmClass.file = paste(output.prefix, "_s",nd,".",k,".lfmmClass",sep="");
 					res@directory = getwd();
 					res@K = as.integer(k);
-					res@input_file = input_file; 
-					res@variable_file = variable_file; 
+					res@input.file = input.file; 
+					res@variable.file = variable.file; 
         	                	res@d = as.integer(nd);
-                	        	res@Niter = as.integer(num_iterations);
-                        		res@burn = as.integer(num_burnin);
-                        		res@CPU = as.integer(num_CPU);
+                	        	res@Niter = as.integer(iterations);
+                        		res@burn = as.integer(burnin);
+                        		res@CPU = as.integer(CPU);
 	                        	res@seed = as.integer(seed);
-        	                	res@missing_data = missing_data;
+        	                	res@missing.data = missing.data;
                 	        	res@all = all;
 					res@n = as.integer(resC$n);
 					res@L = as.integer(resC$L);
 					res@D = as.integer(resC$D);
-					res@epsilon_noise = epsilon_noise;
-					res@epsilon_b = epsilon_b;
-					res@random_init = random_init;
+					res@epsilon.noise = epsilon.noise;
+					res@epsilon.b = epsilon.b;
+					res@random.init = random.init;
 					res@seed = resC$seed
 					res@inflationFactor = inflationFactor(res)
 					res@deviance = resC$dev;
 					res@DIC = resC$dic;
 					seed = resC$seed
-					save.lfmmClass(res, res@lfmmClass_file);
+					save.lfmmClass(res, res@lfmmClass.file);
 
 					project = addRun.lfmmProject(project, res);
 				} 

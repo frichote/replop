@@ -35,10 +35,10 @@ int main (int argc, char *argv[]) {
 	
 	// analyse of the command line
         print_head_snmf();
-	analyse_param_cds(argc,argv, &m, &seed, &e, input_file, output_file);
+	analyse_param_cds(argc, argv, &seed, &e, input_file, output_file);
 
 	// run function
-        createDataSet(input_file, m, (long long) seed, e, output_file);
+        createDataSet(input_file, (long long) seed, e, output_file);
 
 	return 0;
 }

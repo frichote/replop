@@ -22,17 +22,24 @@
 #include <string.h>
 #include <math.h>
 #include "criteria.h"
+#include "sNMF.h"
 #include "../bituint/bituint.h"
 
 // least_square
 
-double least_square(bituint *X, double *Q, double *F, int N, int M, int nc, 
-	int Mp, int K, double alpha) 
+double least_square(sNMF_param param)
 {
 	int i, k;
 	double like = 0.0;
 	double tmp;
-	int Mc = nc*M;
+	double *Q = param->Q;
+	double *F = param->F;
+	bituint *X = param->X;
+
+	int N = param->n;
+	int K = param->K;
+	int Mc = param->Mc;
+	int Mp = param->Mp;
 	bituint value;
         int Md = Mc / SIZEUINT;
         int Mm = Mc % SIZEUINT;

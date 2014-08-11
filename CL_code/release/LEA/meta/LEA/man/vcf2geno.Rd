@@ -6,15 +6,15 @@
 A function that converts from the \code{\link{vcf}} format to the \code{\link{geno}} format.
 }
 \usage{
-vcf2geno(input_file, output_file = NULL)
+vcf2geno(input.file, output.file = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{input_file}{
+  \item{input.file}{
 A character string containing a path to the input file,
 a genotypic matrix in the \code{\link{vcf}} format. 
 }
-  \item{output_file}{
+  \item{output.file}{
 A character string containing a path to the output file,
 a genotypic matrix in the \code{\link{geno}} format. 
 By default, the name of the output file is the same name 
@@ -22,7 +22,7 @@ as the input file with a .geno extension.
 }
 }
 \value{
-\item{output_file}{
+\item{output.file}{
 A character string containing a path to the output file,
 a genotypic matrix in the \code{\link{geno}} format. 
 }
@@ -43,8 +43,8 @@ a genotypic matrix in the \code{\link{geno}} format.
 \examples{
 # Creation of a file called "example.vcf"
 # with 4 SNPs for 3 individuals.
-data("example_vcf")
-write.table(example_vcf,"example.vcf",col.names =
+data("example.vcf")
+write.table(example.vcf,"example.vcf",col.names =
 c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO",
   "FORMAT", "SAMPLE0", "SAMPLE1", "SAMPLE2"),
 row.names = FALSE, quote = FALSE)

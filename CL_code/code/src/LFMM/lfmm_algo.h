@@ -4,6 +4,7 @@
  * @{
  *
  * @brief functions to compute lfmm parameters (zscores)
+ * 
  */
 
 #ifndef lfmm_ALGO_H
@@ -21,21 +22,23 @@ typedef struct _lfmm_GS_param *LFMM_GS_param;
  */
 typedef struct _lfmm_GS_param {
 	// beta
-	double *m_beta;		/**< @brief conditional mean for beta */	
+	double *m_beta;		/**< @brief conditional mean for beta (DxL)*/	
 	double *inv_cov_beta;	/**< @brief conditional inverse covariance matrix for beta */ 
 	double *sum;		/**< @brief sum value for b*/
 	double *sum2;		/**< @brief sum of square values of b*/
 	// U
-	double *m_U;		/**< @brief conditional mean for U */	
+	double *m_U;		/**< @brief conditional mean for U (Kxn)*/	
 	double *mean_U;		/**< @brief mean value for U*/
 	double *inv_cov_U;	/**< @brief conditional inverse covariance matrix for U */ 
 	// V
-	double *m_V;		/**< @brief conditional mean for V */	
+	double *m_V;		/**< @brief conditional mean for V (KxL)*/	
 	double *mean_V;		/**< @brief mean value for V*/
 	double *inv_cov_V;	/**< @brief conditional inverse covariance matrix for V */ 
 
 	// ?
-	double thrd_m2;
+	double thrd_m2; 	/**< @brief It contains ||G-UV^T -XB^T||_F^2. It is updated at each
+				 * iteration in var_data through update_alpha_R.
+				 * It is used to calculate the deviance and the DIC criterion */
 
 } lfmm_GS_param;
 

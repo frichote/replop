@@ -113,7 +113,7 @@ void read_ped (char* input_file, int N, int M, int* data)
 	szbuff = (char *) malloc(max_char_per_line * sizeof(char));
 	ref = (char *) malloc(M * sizeof(char));
 
-	// init ref
+	// init reference allele
 	for (i = 0; i < M; i++)
 		ref[i] = '0';
 
@@ -167,21 +167,27 @@ void fill_line_ped (int *data, char* szbuff, int M, int i, char* input_file, FIL
 
 		tmp = 0;
 		// process genotype
+		// if no ref
 		if (ref[j] == '0') {
+			// if both missing
 			if (token1[0] == '0' && token2[0] == '0') {
 				tmp = 9;
+			// if token1 missing
 			} else if (token2[0] != '0' && token1[0] == '0') {
 				ref[j] = token2[0];
 				tmp = 9;
+			// if token2 missing
 			} else if (token1[0] != '0' && token2[0] == '0') {
 				ref[j] = token1[0];
 				tmp = 9;
+			// if no missing
 			} else {
 				ref[j] = token2[0];
 				tmp = 1;
 				if (token1[0] == ref[j])
 					tmp ++;			
 			}
+		// if ref allele already set
 		} else {
 			if(token1[0] == '0' || token2[0] == '0')
 				tmp = 9;		

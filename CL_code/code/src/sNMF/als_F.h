@@ -12,26 +12,17 @@
 
 #include "../bituint/bituint.h"
 #include "../nnlsm/blockpivot.h"
+#include "sNMF.h"
 
 /** 
  * @brief Update F
  *
- * @param F 	ancestral frequencies (of size KxM)
- * @param Q 	admixture coefficients (of size NxK)
- * @param X 	genome matrice (of size NxM)
- * @param N 	number of individuals
- * @param M 	number of loci
- * @param nc	number of different values in X
- * @param Mp 	number of columns of X
- * @param K 	number of clusters
- * @param num_thrd 	number of threads used
- * @param mem	previously allocated memory
+ * @param param	sNMF parameters structure
  */
-void update_F(double *F, double *Q, bituint *X, int N, int M, int nc, int Mp, 
-	int K, int num_thrd, Memory mem);
+void update_F(sNMF_param param); 
 
 /** 
- * @brief Update F with nnlsm method
+ * @brief Update F with nnlsm method (out of date)
  *
  * @param F 	ancestral frequencies (of size KxM)
  * @param Q 	admixture coefficients (of size NxK)
@@ -42,10 +33,10 @@ void update_F(double *F, double *Q, bituint *X, int N, int M, int nc, int Mp,
  * @param Mp 	number of columns of X
  * @param K 	number of clusters
  * @param num_thrd 	number of threads used
- * @param mem	previously allocated memory
- */
+ * @param n_param	previously allocated memory
 double update_nnlsm_F(double *F, double *Q, bituint *X, int N, int M, int nc, 
-	int Mp, int K, int num_thrd, Memory mem);
+	int Mp, int K, int num_thrd, sNMF_param param);
+ */
 
 /** @brief normalize F 
  * 

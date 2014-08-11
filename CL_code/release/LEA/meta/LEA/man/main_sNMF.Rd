@@ -13,14 +13,14 @@
 	Matrix Factorization algorithms, and provide STRUCTURE-like outputs.
 }
 \usage{
-sNMF (input_file, K, 
+sNMF (input.file, K, 
       alpha = 10, tolerance = 0.00001, entropy = FALSE, percentage = 0.05, I,
-      iterations = 200, ploidy = 2, seed = -1, num_CPU = 1,
-      Q_input_file, repetitions = 1)
+      iterations = 200, ploidy = 2, seed = -1, CPU = 1,
+      Q.input.file, repetitions = 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-\item{input_file}{
+\item{input.file}{
 	A character string containing a the path to the input file, a genotypic 
 	matrix in the \code{\link{geno}} format.
 }
@@ -47,7 +47,7 @@ sNMF (input_file, K,
 	(see \code{\link{crossEntropy}}).
 }
 \item{I}{
-	the number of SNPs to initialize the algorithm. It starts the algorithm with a run of sNMF using a subset of nb_SNPs random SNPs. If this option is set with nb\_SNPs, the number of randomly chosen SNPs is the minimum between 10000 and 10 \% of all SNPs. This option can considerably speeds up sNMF estimation for very large data sets.
+	the number of SNPs to initialize the algorithm. It starts the algorithm with a run of sNMF using a subset of nb.SNPs random SNPs. If this option is set with nb.SNPs, the number of randomly chosen SNPs is the minimum between 10000 and 10 \% of all SNPs. This option can considerably speeds up sNMF estimation for very large data sets.
 }
 \item{iterations}{
 	An integer for the maximum number of iterations in algorithm. 
@@ -60,18 +60,18 @@ sNMF (input_file, K,
 	By default, the seed is randomly chosen.
 }
 #ifndef windows
-\item{num_CPU}{
+\item{CPU}{
 	A number of CPUs to run the parallel version of the 
 	algorithm. By default, the number of CPUs is 1.
 }
 #endif
 #ifdef windows
-\item{num_CPU}{
+\item{CPU}{
 	The windows version is not parallelized. By consequence, 
-	num_CPU is always 1.
+	CPU is always 1.
 }
 #endif
-\item{Q_input_file}{
+\item{Q.input.file}{
 	A character string containing a path to an initialization file for Q, 
 	the individual admixture coefficient matrix.
 }
@@ -128,7 +128,7 @@ write.geno(R, "tuto.geno")
 #		alpha: the regularization parameter, 
 #		entropy: calculate the cross-entropy criterion, 
 #		tolerance: the stopping criterion. 
-#		num_CPU: the number of CPUs.
+#		CPU: the number of CPUs.
 
 # Runs with K between 1 and 5 with cross-entropy and 2 repetitions.
 project = sNMF("tuto.geno", K=1:5, entropy = TRUE, repetitions = 2)
@@ -192,17 +192,17 @@ res = G(project, K = 3, run = 2)
 project = sNMF("tuto.geno",K = c(1,2), entropy = TRUE)
 summary(project)
 
-# Q_input_file: init a run with a given ancestry coefficient matrix Q. 
+# Q.input.file: init a run with a given ancestry coefficient matrix Q. 
 # Here, it is initialized with the Q matrix from the first run with K=3
-project = sNMF("tuto.geno", K = 3, Q_input_file = "tuto_r1.3.Q")
+project = sNMF("tuto.geno", K = 3, Q.input.file = "tuto_r1.3.Q")
 
 # I: init the Q matrix of a run from a smaller run with 10% randomly chosen SNPs. 
 project = sNMF("tuto.geno", 3, I)
 # or 5% randomly chosen SNPs.
 project = sNMF("tuto.geno", 3, I = 0.05)
 
-# num_CPU: run sNMF with 2 CPUs. 
-project = sNMF("tuto.geno", 3, num_CPU=2, project)
+# CPU: run sNMF with 2 CPUs. 
+project = sNMF("tuto.geno", 3, CPU=2, project)
 
 # percentage: run sNMF and calculate the cross-entropy criterion with 10% of masked
 # genotypes, instead of 5% of masked genotypes. 

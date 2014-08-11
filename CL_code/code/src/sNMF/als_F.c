@@ -29,110 +29,60 @@
 #include "../matrix/normalize.h"
 #include "../io/print_bar.h"
 #include "als_Q.h"
-#include "../bituint/bituint.h"
+#include "../bituint/calc_bituint.h"
 
 #ifndef WIN32
 	#include "thread_F.h"
 	#include "thread_snmf.h"
 #endif
+
 // update_F
 
-void update_F(double *F, double *Q, bituint *X, int N, int M, int nc, int Mp, int K, 
-		int num_thrd, Memory mem) 
+void update_F(sNMF_param param) 
 {
 	int i, j, k1, k2;
-	double *temp1 = mem->temp1;
-	double *temp2 = mem->tempQ;
-	double *temp3 = mem->temp3;
+	double *temp1 = param->temp1;
+	double *temp2 = param->tempQ;
+	double *temp3 = param->temp3;
+	int K = param->K;
+	int N = param->n;
+	int Mc = param->Mc;
 
-	int Mc = nc*M;
-	int Md = Mc / SIZEUINT; 
-	int Mm = Mc % SIZEUINT;
-	int jm, jd;
-	bituint value;
+	//computation of temp1 = transpose(Q)*Q
+	tBB_alpha(param->temp1, param->Q, 0.0, N, K, 1);
 
-	//computation of transpose(Q)*Q					(N K2)
-	zeros(temp1,K*K);
-	for (i = 0; i < N; i++) {
-		for (k1 = 0; k1 < K; k1++) {
-			for (k2 = 0; k2 <= k1; k2++) {
-				temp1[k1*K+k2] += Q[i*K+k1] * Q[i*K+k2];
-			}
-		}
-	}
-
-	for (k1 = 0; k1 < K; k1++) 
-		for (k2 = 0; k2 < k1; k2++)
-			temp1[k2 * K + k1] = temp1[k1 * K + k2];
-
-	
-
-	//computation of inverse(transpose(Q)*Q)			()
+	//computation of temp2 = inverse(transpose(Q)*Q)
 	fast_inverse(temp1, K, temp2);
 
-	//computation of temp2*transpose(Q) 				(N K2)
+	//computation of temp3 = temp2*transpose(Q) 
 	for (k1 = 0; k1 < K; k1++) {
 		for (i = 0; i < N; i++) {
 			temp3[k1*N+i] = 0;
 			for (k2 = 0; k2 < K; k2++) {
-				temp3[k1*N+i] += temp2[k1*K+k2] * Q[i*K+k2];
+				temp3[k1*N+i] += temp2[k1*K+k2] * param->Q[i*K+k2];
 			}
 		}
 	}
 
-	// F = temp3*X							(M N K)
-	zeros(F,K*Mc);
-
-#ifndef WIN32
-        // multi-threaded non windows version
-	if (num_thrd > 1) {
-		thread_fct_snmf(X, temp3, NULL, F, nc, K, M, Mp, N, num_thrd, slice_temp3_X);
-	} else {
-#endif
-                // uni-threaded or windows version
-                // TODO: check time
-                // allocate memory 
-		for (jd = 0; jd<Md; jd++) {
-			for (i = 0; i < N; i++) {
-				value = X[i*Mp+jd];
-				for (jm = 0; jm<SIZEUINT; jm++) {
-					if (value % 2) {
-						for (k1 = 0; k1 < K; k1++)
-							F[(jd*SIZEUINT+jm)*K+k1] += temp3[k1*N+i];
-					}
-					value >>= 1;
-				}
-			}
-		}
-#ifndef WIN32
-	}
-#endif
-	// last line
-	for (i = 0; i < N; i++) {
-		value = X[i*Mp+Md];
-		for (jm = 0; jm<Mm; jm++) {
-			if (value % 2) {
-				for (k1 = 0; k1 < K; k1++) 
-					F[(Md*SIZEUINT+jm)*K+k1] += temp3[k1*N+i];
-			}
-			value >>= 1;
-		}
-	}
+	// calculate t(F) = temp3 * X
+	BX(param->F, param->X, param->temp3, K, param->Mp, param->Mc,
+		N, param->num_thrd);
 
 	// projection on F >= 0
 	for (j = 0; j<K*Mc; j++)
-		F[j] = fmax(F[j],0);
+		param->F[j] = fmax(param->F[j],0);
 }
 
 // update_nnlsm_F (not used)
 
+/*
 double update_nnlsm_F(double *F, double *Q, bituint *X, int N, int M, int nc, 
-		int Mp, int K, int num_thrd, Memory mem) 
+		int Mp, int K, int num_thrd, sNMF_param mem) 
 {
 	int i,j,k1,k2;
 	double res;
 
-	int Mc = nc*M;
+	int Mc = mem->Mc;
 	int Md = Mc / SIZEUINT;
 	int Mm = Mc % SIZEUINT;
 	int jd, jm;
@@ -175,7 +125,7 @@ double update_nnlsm_F(double *F, double *Q, bituint *X, int N, int M, int nc,
 	}
 
 	// solve F
-	nnlsm_blockpivot(temp1,temp3,Mc,K,F,Y,mem);
+	nnlsm_blockpivot(temp1,temp3,Mc,K,F,Y,NULL);
 
 	// update criteria
 	res = 0.0;
@@ -185,6 +135,7 @@ double update_nnlsm_F(double *F, double *Q, bituint *X, int N, int M, int nc,
 
 	return res;
 }
+*/
 
 // normalize_F
 

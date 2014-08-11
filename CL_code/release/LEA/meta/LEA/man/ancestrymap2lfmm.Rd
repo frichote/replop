@@ -6,15 +6,15 @@
 A function that converts from the \code{\link{ancestrymap}} format to the \code{\link{lfmm}} format.
 }
 \usage{
-ancestrymap2lfmm(input_file, output_file = NULL)
+ancestrymap2lfmm(input.file, output.file = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-\item{input_file}{
+\item{input.file}{
 A character string containing a path to the input file, 
 a genotypic matrix in the \code{\link{ancestrymap}} format. 
 }
-\item{output_file}{
+\item{output.file}{
 A character string containing a path to the output file,
 a genotypic matric in the \code{\link{lfmm}} format. 
 By default, the name of the output file is the same name 
@@ -22,7 +22,7 @@ as the input file with a .lfmm extension.
 }
 }
 \value{
-\item{output_file}{
+\item{output.file}{
 A character string containing a path to the output file,
 a genotypic matric in the \code{\link{lfmm}} format. 
 }
@@ -46,8 +46,8 @@ a genotypic matric in the \code{\link{lfmm}} format.
 \examples{
 # Creation of a file called "example.ancestrymap"
 # containing 4 SNPs for 3 individuals.
-data("example_ancestrymap")
-write.table(example_ancestrymap,"example.ancestrymap",
+data("example.ancestrymap")
+write.table(example.ancestrymap,"example.ancestrymap",
 col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 # Conversion   from the ancestrymap format ("example.ancestrymap") 

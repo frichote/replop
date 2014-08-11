@@ -1,4 +1,4 @@
-write.env <- function(R, output_file) 
+write.env <- function(R, output.file) 
 {
 
         if(missing(R))
@@ -10,13 +10,13 @@ write.env <- function(R, output_file)
 	else if (is.data.frame(R))
 		R = as.matrix(R)
 
-	output_file = test_character("output_file", output_file, NULL)
+	output.file = test_character("output.file", output.file, NULL)
 
 	if(is.na(R) || is.nan(R)) {
 		stop("'R' matrix contains Na.")
 	}
 
-	write.table(R,output_file, col.names=FALSE,row.names=FALSE);
+	write.table(R,output.file, col.names=FALSE,row.names=FALSE);
 	
-	return(output_file);
+	return(output.file);
 }

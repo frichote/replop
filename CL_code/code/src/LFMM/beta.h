@@ -70,7 +70,7 @@ void create_m_beta(double *C, float *R, double *U, double *V, double *m_beta,
 //	       double alpha_R, int D, int M, int num_thrd);
 
 /**
- * update beta matrix
+ * sample new values for the beta matrix given its conditional distribution
  *
  * @param param 	parameter structure
  * @param GS_param 	GS parameter structure 
@@ -78,7 +78,8 @@ void create_m_beta(double *C, float *R, double *U, double *V, double *m_beta,
 void update_beta(LFMM_param param, LFMM_GS_param GS_param);
 
 /**
- * update alpha_beta hyperparameters
+ * sample new values for the alpha_beta hyperparameters given its conditional 
+ * distribution
  *
  * @param param 	parameter structure
  */

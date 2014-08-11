@@ -3,7 +3,7 @@
  * @ingroup matrix
  * @{
  *
- * @brief set of functions to manage data
+ * @brief set of functions to manage data matrices
  */
 
 #ifndef DATA_H

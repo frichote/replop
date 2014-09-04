@@ -4,9 +4,19 @@
 \alias{eigenvectors}
 \alias{projections}
 \alias{sdev}
-\alias{load.pcaClass}
-\alias{save.pcaClass}
-\alias{remove.pcaClass}
+\alias{load.pcaProject}
+\alias{eigenvalues,pcaProject-method}
+\alias{eigenvectors,pcaProject-method}
+\alias{projections,pcaProject-method}
+\alias{sdev,pcaProject-method}
+\alias{load.pcaProject,character-method}
+\alias{tracy.widom,pcaProject-method}
+\alias{$,pcaProject-method}
+\alias{remove.pcaProject}
+\alias{remove.pcaProject,character-method}
+\alias{plot,pcaProject-method}
+\alias{show,pcaProject-method}
+\alias{summary,pcaProject-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Principal Component Analysis}
 \description{
@@ -16,7 +26,7 @@ of a genotypic matrix using the \code{\link{lfmm}}, \code{\link{geno}},
 The function computes eigenvalue, eigenvector, and standard deviation 
 for each principal component and the projection of each individual 
 on each component. The function pca returns an object of class 
-"pca-class" containing the output data and the input parameters. 
+"pcaProject" containing the output data and the input parameters. 
 }
 \usage{
 pca (input.file, K, center = TRUE, scale = FALSE)
@@ -39,40 +49,37 @@ a genotypic matrix in the \code{\link{lfmm}} format.
 }
 }
 \value{
-\code{pca} returns an object of class \code{pcaClass} containing the following components:
+\code{pca} returns an object of class \code{pcaProject} containing the following components:
 \item{eigenvalues}{
-        the vector of eigenvalues.
+        The vector of eigenvalues.
 }
 \item{eigenvectors}{
-        the matrix of eigenvectors (one column for each eigenvector). 
+        The matrix of eigenvectors (one column for each eigenvector). 
 }
 \item{sdev}{
-        the vector of standard deviations. 
+        The vector of standard deviations. 
 }
 \item{projections}{
-               the matrix of projections (one column for each projection).
+        The matrix of projections (one column for each projection).
 }
-The following methods can be applied to the object of class pcaClass returned by \code{pca}: 
+The following methods can be applied to the object of class pcaProject returned by \code{pca}: 
 \item{plot}{ 
-        plot the eigenvalues.
+        Plot the eigenvalues.
 }
 \item{show}{
-        display information about the analysis.
+        Display information about the analysis.
 }
 \item{summary}{
-        summarize the analysis.
+        Summarize the analysis.
 }
-\item{tracyWidom}{
-        perform Tracy-Widom tests on the eigenvalues.
+\item{tracy.widom}{
+        Perform Tracy-Widom tests on the eigenvalues.
 }
-\item{save.pcaClass}{\code{signature(x = "pcaClass", file = "character")}}{
-        save a pcaClass object into a file.
+\item{load.pcaProject(file.pcaProject)}{
+        Load the file containing a pcaProject object and return the pcaProject object.
 }
-\item{load.pcaClass}{\code{signature(file = "character")}}{
-        load the file containing a pcaClass object and return the pcaClass object.
-}
-\item{remove.pcaClass}{\code{signature(file = "character")}}{
-        Erase a \code{pcaClass} object. Caution: All the files associated with the 
+\item{remove.pcaProject(file.pcaProject)}{
+        Erase a \code{pcaProject} object. Caution: All the files associated with the 
         object will be removed.
 }
 }
@@ -80,17 +87,16 @@ The following methods can be applied to the object of class pcaClass returned by
         Eric Frichot
 }
 \seealso{
-\code{\link{geno}}
+\code{\link{lfmm}}
 \code{\link{sNMF}}
 \code{\link{LFMM}}
-\code{\link{createDataSet}}
-\code{\link{crossEntropyEstimation}}
+\code{\link{tutorial}}
 }
 \examples{
-# Creation of the genotype file "tuto.lfmm"
-# with 10000 SNPs for 50 individuals.
-data("tuto")
-write.lfmm(R, "tuto.lfmm")
+# Creation of the genotype file "genotypes.lfmm"
+# with 5000 SNPs for 165 individuals.
+data("tutorial")
+write.lfmm(R, "genotypes.lfmm")
 
 #################
 # Perform a PCA #
@@ -99,13 +105,14 @@ write.lfmm(R, "tuto.lfmm")
 # run of PCA
 # Available options, K (the number of PCs calculated), 
 #                    center and scale. 
-# Create files: tuto.eigenvalues - eigenvalues,        
-#               tuto.eigenvectors - eigenvectors,
-#               tuto.sdev - standard deviations,
-#               tuto.projections - projections,
-#               tuto.pcaClass - the pcaClass object.
-# Create a pca-class object: pc.
-pc = pca("tuto.lfmm", scale = TRUE)
+# Creation of   genotypes.pcaProject - the pcaProject object.
+#               a directory genotypes.pca containing:
+# Create files: genotypes.eigenvalues - eigenvalues,        
+#               genotypes.eigenvectors - eigenvectors,
+#               genotypes.sdev - standard deviations,
+#               genotypes.projections - projections,
+# Create a pcaProject object: pc.
+pc = pca("genotypes.lfmm", scale = TRUE)
 
 #######################
 # Display Information #
@@ -139,8 +146,9 @@ plot(pc$sdev)
 #############################
 
 # Perfom Tracy-Widom tests on all eigenvalues.
-# Create file: tuto.tracyWidom - tracy-widom test information.        
-tw = tracyWidom(pc)
+# Create file: genotypes.tracyWidom - tracy-widom test information, 
+#              in the directory genotypes.pca/.
+tw = tracy.widom(pc)
 
 # Plot the percentage of variance explained by each component.
 plot(tw$percentage)
@@ -151,3 +159,4 @@ tw$pvalues
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{pca}
+\keyword{tutorial}

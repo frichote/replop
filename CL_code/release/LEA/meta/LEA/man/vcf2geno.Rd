@@ -6,7 +6,7 @@
 A function that converts from the \code{\link{vcf}} format to the \code{\link{geno}} format.
 }
 \usage{
-vcf2geno(input.file, output.file = NULL)
+vcf2geno(input.file, output.file = NULL, force = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,6 +19,10 @@ A character string containing a path to the output file,
 a genotypic matrix in the \code{\link{geno}} format. 
 By default, the name of the output file is the same name 
 as the input file with a .geno extension.
+}
+\item{force}{
+        A boolean option. If FALSE, the input file is converted only if the output
+        file does not exist. If TRUE, convert the file anyway.
 }
 }
 \value{
@@ -43,15 +47,15 @@ a genotypic matrix in the \code{\link{geno}} format.
 \examples{
 # Creation of a file called "example.vcf"
 # with 4 SNPs for 3 individuals.
-data("example.vcf")
-write.table(example.vcf,"example.vcf",col.names =
+data("example_vcf")
+write.table(example_vcf,"example.vcf",col.names =
 c("#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO",
   "FORMAT", "SAMPLE0", "SAMPLE1", "SAMPLE2"),
 row.names = FALSE, quote = FALSE)
 
 # Conversion    from the vcf format ("example.vcf") 
 #               to the geno format ("example.geno").
-# By defaul,    the name of the output file is the same name
+# By default,   the name of the output file is the same name
 #               as the input file with a .geno extension.
 # Create files: "example.geno",
 #               "example.vcfsnp" - SNP informations,
@@ -64,8 +68,11 @@ output = vcf2geno("example.vcf")
 #               "plop.vcfsnp" - SNP informations,
 #               "plop.removed" - removed lines. 
 output = vcf2geno("example.vcf", "plop.geno")
+
+# As force = false and the file "example.geno" already exists,
+# nothing happens.
+output = vcf2geno("example.vcf", force = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{format}
-\keyword{sNMF}
+\keyword{conversion}

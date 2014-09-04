@@ -30,8 +30,6 @@ int main (int argc, char *argv[]) {
 	char output_file[512] = "";	// output file with missing data
 	double e = 0.05;		// output percentage of missing data
 	long long seed = -1;
-	int m = 2;
-	
 	
 	// analyse of the command line
         print_head_snmf();

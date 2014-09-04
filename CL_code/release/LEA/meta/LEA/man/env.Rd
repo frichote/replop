@@ -30,4 +30,3 @@ Here is an example of an environmental file using the \code{env} format with 3 i
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{format}
-\keyword{LFMM}

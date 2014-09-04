@@ -37,25 +37,13 @@
 
 void sNMF(sNMF_param param) 
 {	
-	//parameters initialization
-	
-/*
-	int N = 0;			// number of individuals
-	int M = 0;			// number of SNPs
-	double *Q_res;			// matrix for ancestral admixture coefficients (of size NxK)
-	double *F_res;			// matrix for ancestral allele frequencies (of size M x nc xK)
-	double *F_I;			// matrix for ancestral allele frequencies (of size M x nc xK)
-	int Mc, Mci;				// size of memory allocation for one individual
-	int Mp, Mi, Mpi;				// ???
-*/
-
 	// temporary variables
 	double like = 0.0;
         int K = param->K;
         int n = param->n;
         int L = param->L;
 	char *tmp_file; 
-	int Mc, Mci, Mp, Mi;
+	int Mc, Mci, Mp;
 	bituint* X;
 
 	//  random init
@@ -64,8 +52,10 @@ void sNMF(sNMF_param param)
 	// fix the number of possible factors 
 	if (param->m)
 		param->nc = param->m + 1;
-	else 
+	else { 
+		param->nc = 3;
 		param->m = 2;
+	}
 
 	// count the number of lines and columns
 	param->n = nb_cols_geno(param->input_file);
@@ -93,7 +83,7 @@ void sNMF(sNMF_param param)
 	        free(tmp_file);
 		// create file with masked genotypes
 		printf("\n <<<<<< createDataSet program\n\n");
-		createDataSet(param->input_file, param->m, param->pourcentage, 
+		createDataSet(param->input_file, param->seed, param->pourcentage, 
 			param->data_file);
 		printf("\n >>>>>>\n\n");
 	} else 
@@ -120,20 +110,28 @@ void sNMF(sNMF_param param)
 			Mp = param->Mp;
 			X = param->X;
 			// init subset matrices
-			printf("Initialization of Q with a random subset of SNPs:\n");
-			Mci = param->nc * Mi;
+			printf("Initialization of Q with a random subset of %d SNPs:\n", param->I);
+			Mci = param->nc * param->I;
 			init_mat_bituint(&(param->X), n, Mci, &(param->Mp));
-        		//F = (double *) calloc(K * Mci, sizeof(double));     // of size McxK
+        		param->F = (double *) calloc(K * Mci, sizeof(double));     // of size McxK
+			// save L
+			L = param->L;
+			param->L = param->I;
+			// save Mc
+			Mc = param->Mc;
+			param->Mc = Mci;
 			// select a subset of SNPs
-			select_geno_bituint(X, param->X, n, L, Mi, param->nc, param->Mp, Mp);
+			select_geno_bituint(X, param->X, n, L, param->I, param->nc, param->Mp, Mp);
 			// calc init of Q_res
 			ALS(param);
 			// free memory
 			free(param->F);
 			free(param->X);
-			// put back X
+			// put back the parameters
 			param->X = X;
 			param->Mp = Mp;
+			param->L = L;
+			param->Mc = Mc; 
 		}
 	} 
 
@@ -159,11 +157,11 @@ void sNMF(sNMF_param param)
 	// write F
 	write_data_double(param->output_file_F, Mc, K ,param->F);
         printf("Write ancestral allele frequency coefficient file %s:"
-		"\tOK.\n",param->output_file_F);
+		"\tOK.\n\n",param->output_file_F);
 
 	// cross-entropy
 	if (param->pourcentage) {
-		printf("\n <<<<<< crossEntropy program\n\n");
+		printf("<<<<<< crossEntropy program\n\n");
 		crossEntropy(param->input_file, param->data_file, param->output_file_Q, 
 		param->output_file_F, K, param->m, &(param->all_ce), &(param->masked_ce));	
 		printf("\n >>>>>>\n\n");

@@ -10,7 +10,7 @@ read.env(input.file)
 }
 \arguments{
 \item{input.file}{
-a character string containing a path to the input file,
+A character string containing a path to the input file,
 an environmental data matrix in the \code{\link{env}} format.
 }
 }
@@ -30,18 +30,18 @@ an environmental data matrix in the \code{\link{env}} format.
 \code{\link{LFMM}}
 }
 \examples{
-# Creation of an environmental matrix C 
+# Creation of an environmental matrix, C 
 # containing 2 environmental variables for 3 individuals.
 # C contains one line for each individual and one column for each variable.
 C = matrix(runif(6), ncol=2, nrow=3)
 
-# Write C in a file called "tuto.env".
-# Create file:	"tuto.env".
-write.env(C,"tuto.env")
+# Write C in a file called "example.env".
+# Create file:	"example.env".
+write.env(C,"example.env")
 
-# Read the file "tuto.env".
-C = read.env("tuto.env")
+# Read the file "example.env".
+C = read.env("example.env")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{LFMM}
+\keyword{read/write}

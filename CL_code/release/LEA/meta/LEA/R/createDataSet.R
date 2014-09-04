@@ -1,5 +1,5 @@
 
-createDataSet <- function(input.file, output.file, ploidy = 2, seed = -1, percentage = 0.05) 
+create.dataset <- function(input.file, output.file, seed = -1, percentage = 0.05) 
 {
 	# test arguments and init
 	# input file
@@ -9,10 +9,6 @@ createDataSet <- function(input.file, output.file, ploidy = 2, seed = -1, percen
 	# output file	
 	tmp = sub("([^.]+)\\.[[:alnum:]]+$", "\\1_I.geno",input.file)
 	output.file = test_character("output.file", output.file, tmp)
-	# ploidy	
-	ploidy = test_integer("ploidy", ploidy, 2)
-	if (ploidy <= 0)
-		stop("'ploidy' argument has to be positive.")
 	# seed
 	seed = test_integer("seed", seed, -1)
 	# percentage
@@ -20,10 +16,13 @@ createDataSet <- function(input.file, output.file, ploidy = 2, seed = -1, percen
 	if (percentage <= 0 || percentage >= 1)
 			stop("'percentage' argument has to be of type double and between 0 and 1.")
 
+	print("*************************************");
+	print("*          create.dataset            *");
+	print("*************************************");
+
 	# run method
     .C("R_createDataSet", 
 	as.character(input.file),
-	as.integer(ploidy),
 	as.integer(seed),
 	as.double(percentage),
 	as.character(output.file)

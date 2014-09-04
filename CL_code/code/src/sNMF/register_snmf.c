@@ -57,7 +57,7 @@ void analyse_param_snmf(int argc, char *argv[], sNMF_param param)
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
 					print_error_nmf("cmd","m (number of alleles)",0);
-                                param->nc = atoi(argv[i]);
+                                param->m = atoi(argv[i]);
 				g_m = 1;
                                 break;
 			case 'a':
@@ -157,7 +157,7 @@ void analyse_param_snmf(int argc, char *argv[], sNMF_param param)
         if (param->num_thrd <= 0)
 		print_error_nmf("missing",NULL,0);
 
-        if (g_m && param->nc <= 0)
+        if (g_m && param->m <= 0)
 		print_error_nmf("missing",NULL,0);
 
         if (param->maxiter <= 0)
@@ -197,8 +197,7 @@ void init_param_snmf(sNMF_param param)
         strcpy(param->output_file_Q, "");   
         strcpy(param->input_file_Q, "");   
         param->seed = -1;             
-        param->nc = 3;
-        param->m = 2;
+        param->m = 0;
         param->pourcentage = 0.0;
         param->I = 0;
         param->all_ce = 0; 

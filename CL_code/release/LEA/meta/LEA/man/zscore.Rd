@@ -19,4 +19,3 @@ The \code{zscore} format has one row for each SNP. Each row contains three value
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{format}
-\keyword{LFMM}

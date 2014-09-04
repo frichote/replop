@@ -25,10 +25,10 @@
 
 #include "R_createDataSet.h" 
 
-void R_createDataSet (char** R_input_file, int* R_ploidy, int* R_seed, double* R_percentage, 
+void R_createDataSet (char** R_input_file, int* R_seed, double* R_percentage, 
 	char **R_output_file) 
 {
-	createDataSet(*R_input_file, *R_ploidy, (long long)(*R_seed), *R_percentage, *R_output_file); 
+	createDataSet(*R_input_file, (long long)(*R_seed), *R_percentage, *R_output_file); 
 }
 	/*
 	// parameter initialization

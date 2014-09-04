@@ -7,7 +7,7 @@
 #ifndef R_createDataSet_H
 #define R_createDataSet_H
 
-void R_createDataSet (char** R_input_file, int* R_ploidy, int* R_seed, double* R_percentage,
+void R_createDataSet (char** R_input_file, int* R_seed, double* R_percentage,
 	char** R_output_file);
 
 #endif // R_createDataSet_H

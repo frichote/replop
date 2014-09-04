@@ -6,7 +6,7 @@
 A function that converts from the \code{\link{ancestrymap}} format to the \code{\link{lfmm}} format.
 }
 \usage{
-ancestrymap2lfmm(input.file, output.file = NULL)
+ancestrymap2lfmm(input.file, output.file = NULL, force = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,6 +19,10 @@ A character string containing a path to the output file,
 a genotypic matric in the \code{\link{lfmm}} format. 
 By default, the name of the output file is the same name 
 as the input file with a .lfmm extension.
+}
+\item{force}{
+        A boolean option. If FALSE, the input file is converted only if the output
+        file does not exist. If TRUE, convert the file anyway.
 }
 }
 \value{
@@ -46,8 +50,8 @@ a genotypic matric in the \code{\link{lfmm}} format.
 \examples{
 # Creation of a file called "example.ancestrymap"
 # containing 4 SNPs for 3 individuals.
-data("example.ancestrymap")
-write.table(example.ancestrymap,"example.ancestrymap",
+data("example_ancestrymap")
+write.table(example_ancestrymap,"example.ancestrymap",
 col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 # Conversion   from the ancestrymap format ("example.ancestrymap") 
@@ -56,16 +60,17 @@ col.names = FALSE, row.names = FALSE, quote = FALSE)
 #              as the input file with a .lfmm extension.
 # Create file: "example.lfmm".
 output = ancestrymap2lfmm("example.ancestrymap")
-                        
-# Conversion   from the ancestrymap format ("example.ancestrymap") 
-#              to the geno format ("example.geno").
-# By default,  the name of the output file is the same name
-#              as the input file with a .geno extension.
-# Create file: "example.geno".
-output = ancestrymap2geno("example.ancestrymap")
+
+# Conversion    from the ancestrymap format (example.ancestrymap) 
+#               to the geno format with the output file called plop.lfmm.
+# Create file:  "plop.lfmm".
+output = ancestrymap2lfmm("example.ancestrymap", "plop.lfmm")
+
+# As force = false and the file "example.lfmm" already exists,
+# nothing happens.
+output = ancestrymap2lfmm("example.ancestrymap", force = FALSE)
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{format}
-\keyword{LFMM}
+\keyword{conversion}

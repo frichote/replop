@@ -37,4 +37,3 @@ Here is an example of a genotypic matrix using the lfmm format with 3 individual
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{format}
-\keyword{LFMM}

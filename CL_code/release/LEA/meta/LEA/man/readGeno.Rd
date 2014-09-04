@@ -34,17 +34,18 @@ A matrix containing the genotypes with one line for each individual and one colu
 \code{\link{vcf2geno}}
 }
 \examples{
-# Creation of a genotypic matrix G with 1000 loci for 100 individuals.
-# The G matrix is composed of one individual per line and one locus per column.
-G = matrix(sample(c(0,1,2), replace=TRUE, size=1000*100), ncol=1000, nrow=100)
+# Creation of a file called "genotypes.geno" in the working directory,
+# with 5000 SNPs for 165 individuals.
+("tutorial")
+write.geno(R, "genotypes.geno")
 
-# Write G in a file called "tuto.geno".
-# Create file:	"tuto.geno".
-write.geno(G, "tuto.geno")
+# Write G in a file called "genotypes.geno".
+# Create file:	"genotypes.geno".
+write.geno(G, "genotypes.geno")
 
-# Read the file "tuto.geno".
-G = read.geno("tuto.geno")
+# Read the file "genotypes.geno".
+G = read.geno("genotypes.geno")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{sNMF}
+\keyword{read/write}

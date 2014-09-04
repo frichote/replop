@@ -3,7 +3,7 @@
 # parameters
 prog="LEA"
 dir="LEA_v$1"
-src_list="io matrix LFMM bituint convert createDataSet crossEntropy nnlsm sNMF pca spfa thread tracyWidom stats"
+src_list="io matrix LFMM bituint convert createDataSet crossEntropy nnlsm sNMF pca tracyWidom stats"
 main_list="LFMM createDataSet crossEntropy sNMF ancestrymap2geno ancestrymap2lfmm geno2lfmm lfmm2geno pca ped2geno ped2lfmm vcf2geno tracyWidom"
 
 # color definition

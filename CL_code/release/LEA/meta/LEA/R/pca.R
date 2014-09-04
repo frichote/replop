@@ -2,10 +2,6 @@ pca <- function(input.file,
 		K, 
 		center = TRUE, 
 		scale  = FALSE) 
-#		eigenvalue.file, 
-#		eigenvector.file, 
-#		sdev.file, 
-#		projection.file) 
 {
 
         # test arguments and init
@@ -13,6 +9,7 @@ pca <- function(input.file,
 	input.file = test_character("input.file", input.file, NULL)
 	# check extension and convert if necessary
 	input.file = test_input_file(input.file, "lfmm")
+	input.file = normalizePath(input.file)
 	#K
 	K = test_integer("K", K, 0);
         if (K < 0)
@@ -21,25 +18,28 @@ pca <- function(input.file,
 	center = test_logical("center", center, 1);
 	# scaled
 	scale = test_logical("scale", scale, 0);
+	# dir 
+        dir = setExtension(paste(dirname(normalizePath(input.file)), "/",
+  		basename(input.file), sep=""), ".pca/")
+	dir.create(dir, showWarnings = FALSE, recursive = TRUE)
+	dir = normalizePath(dir)
+
+	tmp = basename(setExtension(basename(input.file), ""))
 	# eigenvalues file 
-        eigenvalue.file = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.eigenvalues",input.file)
-	#eigenvalue_file = test_character("eigenvalue_file", eigenvalue_file, tmp)
+        eigenvalue.file = paste(dir, "/", tmp, ".eigenvalues", sep="")
 	# eigenvectors file 
-        eigenvector.file = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.eigenvectors",input.file)
-	#eigenvector_file = test_character("eigenvector_file", eigenvector_file, tmp)
+        eigenvector.file = paste(dir, "/", tmp, ".eigenvectors", sep="")
 	# standard deviation file 
-        sdev.file = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.sdev",input.file)
-	#sdev_file = test_character("sdev_file", sdev_file, tmp)
+        sdev.file = paste(dir, "/", tmp, ".sdev", sep="")
 	# x file 
-        projection.file = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.projections",input.file)
-	#projection_file = test_character("projection_file", projection_file, tmp)
+        projection.file = paste(dir, "/", tmp, ".projections", sep="")
 
 	print("******************************");
 	print(" Principal Component Analysis ");
 	print("******************************");
 
-	L = 0;
-	n = 0
+	# run
+	L = 0; n = 0;
     	resC = .C("R_pca", 
 		as.character(input.file),
 		as.character(eigenvalue.file),
@@ -53,22 +53,23 @@ pca <- function(input.file,
 		as.integer(scale)
 	);
 
-	res = new("pcaClass");
-	res@directory = getwd();
+	# save res 
+	res = new("pcaProject");
+	res@directory = dir;
 	res@n = as.integer(resC$n);
 	res@L = as.integer(resC$L);
 	res@K = as.integer(resC$K);
 	res@center = center;
 	res@scale = scale;
 	res@input.file = input.file;
-	res@eigenvalue.file = eigenvalue.file;
-	res@eigenvector.file = eigenvector.file;
-	res@sdev.file = sdev.file;
-	res@projection.file = projection.file;
+	res@eigenvalue.file = normalizePath(eigenvalue.file);
+	res@eigenvector.file = normalizePath(eigenvector.file);
+	res@sdev.file = normalizePath(sdev.file);
+	res@projection.file = normalizePath(projection.file);
 
-        tmp = gsub("([^.]+)\\.[[:alnum:]]+$", "\\1.pcaClass",input.file)
-	res@pcaClass.file = tmp
-	save.pcaClass(res, tmp); 
+        res@pcaProject.file = setExtension(paste(dirname(normalizePath(input.file)), "/",
+                basename(input.file), sep=""), ".pcaProject")
+	save.pcaProject(res, res@pcaProject.file); 
 
 	res
 }

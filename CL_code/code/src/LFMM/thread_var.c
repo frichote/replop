@@ -50,8 +50,8 @@ void thrd_var(LFMM_param param, LFMM_GS_param GS_param,
 		Ma[i]->K = param->K;
 		Ma[i]->N = param->n;
 		Ma[i]->M = param->L;
-		Ma[i]->res = 0;
-		Ma[i]->res2 = 0;
+		Ma[i]->res = 0.0;
+		Ma[i]->res2 = 0.0;
 		Ma[i]->num_thrd = param->num_thrd;
 		Ma[i]->slice = i;
 		/* creates each thread working on its own slice of i */
@@ -76,8 +76,8 @@ void thrd_var(LFMM_param param, LFMM_GS_param GS_param,
 	Ma[0]->K = param->K;
 	Ma[0]->N = param->n;
 	Ma[0]->M = param->L;
-	Ma[0]->res = 0;
-	Ma[0]->res2 = 0;
+	Ma[0]->res = 0.0;
+	Ma[0]->res2 = 0.0;
 	Ma[0]->num_thrd = param->num_thrd;
 	Ma[0]->slice = 0;
 	/* creates each thread working on its own slice of i */
@@ -87,12 +87,12 @@ void thrd_var(LFMM_param param, LFMM_GS_param GS_param,
 	for (i = 1; i < num_thrd; i++)
 		pthread_join(thread[i], NULL);
 
-	*res = 0;
+	*res = 0.0;
 	for (i = 0; i < num_thrd; i++)
 		*res += Ma[i]->res;
 
 	if (res2) {
-		*res2 = 0;
+		*res2 = 0.0;
 		for (i = 0; i < num_thrd; i++)
 			*res2 += Ma[i]->res2;
 	}
@@ -163,16 +163,16 @@ void slice_var(void *G)
 	int i, j, k, d;
 	double tmp1, tmp2, var, var2, tmp;
 
-	var = 0;
-	var2 = 0;
+	var = 0.0;
+	var2 = 0.0;
 	for (i = from; i < to; i++) {
 		for (j = 0; j < M; j++) {
 			// tmp1 = C B
-			tmp1 = 0;
+			tmp1 = 0.0;
 			for (d = 0; d < D; d++)
-				tmp1 += C[i * D + d] * beta[d * M + j];
+				tmp1 += C[d * N + i] * beta[d * M + j];
 			// tmp2 = U V
-			tmp2 = 0;
+			tmp2 = 0.0;
 			for (k = 0; k < K; k++)
 				tmp2 += U[k * N + i] * V[k * M + j];
 			// tmp = R - UV - C B

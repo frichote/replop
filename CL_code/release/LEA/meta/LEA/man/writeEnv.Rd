@@ -16,7 +16,7 @@ write.env(R, output.file)
 	encoded with the value 9.
 }
 \item{output.file}{
-a character string containing a path to the output file,
+A character string containing a path to the output file,
 an environmental data matrix in the \code{env} formt.
 }
 }
@@ -43,4 +43,4 @@ C = read.env("tuto.env")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{LFMM}
+\keyword{read/write}

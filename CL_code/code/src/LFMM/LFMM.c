@@ -122,12 +122,12 @@ void LFMM(LFMM_param param)
 	// warnings about the variables
 	if (param->all) {
 		printf("WARNING: You launched LFMM command line with several"
-		       " covariables with '-a' option."
-		       " The model will be\n\tlaunched with all covariables at the same time.\n\n");
+		       " variables with '-a' option."
+		       " The model will be\n\tlaunched with all variables at the same time.\n\n");
 	} else if (!param->nd && D > 1) {
 		printf("WARNING: You launched LFMM command line with several"
-		       " covariables. The model will be\n\tlaunched sequentially"
-		       " (independently) for each covariable.\n\n");
+		       " variables. The model will be\n\tlaunched sequentially"
+		       " (independently) for each variable.\n\n");
 	}
 
 	printf("Read genotype file:\n \t%s\t\tOK.\n", param->input_file);
@@ -138,7 +138,7 @@ void LFMM(LFMM_param param)
 		param->zscore = (double *)calloc(L * D, sizeof(double));
 		param->mC = (double *)calloc(n * mD, sizeof(double));	
 
-		printf("\n<<<<\n\t Analyse for all covariables.\n\n");
+		printf("\n<<<<\n\t Analyse for all variables.\n\n");
 		// create mC from C
 		modify_C(param->C, n, D, param->mC, param->nd, param->all);
 
@@ -151,7 +151,7 @@ void LFMM(LFMM_param param)
 		// write zscore
 	        write_zscore_double(param->output_file, L, param->zscore, 
 			mD-1, 1, 0, K, n, param->dev, param->DIC);
-		printf("\tThe execution for all covariables worked without error.\n>>>>\n\n");
+		printf("\tThe execution for all variables worked without error.\n>>>>\n\n");
 
 	// only with covariable nd
 	} else if (param->nd) {
@@ -160,7 +160,7 @@ void LFMM(LFMM_param param)
 		param->mC = (double *)calloc(n * mD, sizeof(double));	// (N,K)
 		param->nd -= 1;	// modify nd to be the index of C column 
 
-		printf("\n<<<<\n\t Analyse for covariable %d\n\n", param->nd + 1);
+		printf("\n<<<<\n\t Analyse for variable %d\n\n", param->nd + 1);
 		// create mC from C
 		modify_C(param->C, n, D, param->mC, param->nd, param->all);
 
@@ -173,7 +173,7 @@ void LFMM(LFMM_param param)
 		// write zscore
 	        write_zscore_double(param->output_file, L, param->zscore, 
 		1, 0, param->nd, K, n, param->dev, param->DIC);
-		printf("\tThe execution for covariable %d worked without error."
+		printf("\tThe execution for variable %d worked without error."
 			"\n>>>>\n\n", param->nd + 1);
 
 	// each covariable sequentially
@@ -183,7 +183,7 @@ void LFMM(LFMM_param param)
 		param->mC = (double *)calloc(n * mD, sizeof(double));	// (N,K)
 		// for each variable
 		for (d = 0; d < param->D; d++) {
-			printf("\n<<<<\n\t Analyse for covariable %d\n\n", d + 1);
+			printf("\n<<<<\n\t Analyse for variable %d\n\n", d + 1);
 			// create mC from C
 			modify_C(param->C, n, D, param->mC, d, param->all);
 
@@ -196,7 +196,7 @@ void LFMM(LFMM_param param)
 			// write zscore
 	        	write_zscore_double(param->output_file, L, param->zscore, 
 			1, 0, d, K, n, param->dev, param->DIC);
-			printf("\tThe execution for covariable %d worked without error."
+			printf("\tThe execution for variable %d worked without error."
 				"\n>>>>\n\n", d + 1);
 		}
 	}

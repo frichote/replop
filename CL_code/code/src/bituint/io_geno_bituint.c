@@ -104,7 +104,8 @@ void fill_line_geno_bituint(bituint* dat, int Mp, int N,
 				nb[c] ++ ;
 				// if unknown element >= nc
 			} else {
-				printf("Error: Unknown element '%d' in data file: %s.\n",value,file_data);
+				printf("Error: Unknown element '%d' in the data file: %s.\n",
+					value,file_data);
 				exit(1);
 			}
 			jd = jc / SIZEUINT; // column in dat

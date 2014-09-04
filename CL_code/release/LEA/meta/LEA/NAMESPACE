@@ -22,18 +22,18 @@ export(ancestrymap2lfmm)
 export(ancestrymap2geno)
 
 # classes
-#exportClasses(	#pcaClass,
+#exportClasses(	#pcaProject,
 		#snmfClass,
 		#snmfProject,
 #		lfmmClass,
 #		lfmmProject)
 
 # main functions
-export(createDataSet)
+export(create.dataset)
 export(sNMF)
-export(crossEntropyEstimation)
+export(cross.entropy.estimation)
 export(pca)
-# export(tracyWidom) <-- added as a method in pcaClass
+# export(tracyWidom) <-- added as a method in pcaProject
 export(LFMM)
 
 # method associated with the classes
@@ -44,22 +44,21 @@ exportMethods(
 		remove.snmfProject,
 		load.lfmmProject,
 		remove.lfmmProject,
-		load.pcaClass,
-		remove.pcaClass,
+		load.pcaProject,
+		remove.pcaProject,
 		Q,
 		G,
 		plot,
-		zscores,
-		pvalues,
-		mlog10pvalues,
-		ecdf,
-		crossEntropy,
-		inflationFactor,
-		cFDR,
-		tracyWidom
+		z.scores,
+		p.values,
+		mlog10p.values,
+		cross.entropy,
+#		inflationFactorEstimation,
+#		cFDR,
+		tracy.widom
 )
 
-#export(.DollarNames.pcaClass)
+export(.DollarNames.pcaProject)
 #export(.DollarNames.snmfClass)
 #export(.DollarNames.snmfProject)
 #export(.DollarNames.lfmmClass)

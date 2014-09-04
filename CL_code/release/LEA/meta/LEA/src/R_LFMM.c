@@ -22,6 +22,7 @@
 #include <time.h>
 #include <math.h>
 #include "LFMM/LFMM.h"
+#include "LFMM/register_lfmm.h"
 
 #include "R_LFMM.h" 
 
@@ -32,23 +33,39 @@ void R_LFMM(char** R_input_file, char** R_output_file, char** R_cov_file,
 	double *R_dic, double *R_dev, double *noise_epsilon, double *b_epsilon,
 	int *init)
 {
-	LFMM(	*R_input_file, 
-		*R_output_file, 
-		*R_cov_file,
-		R_n,
-		R_L,
-		R_D,
-		*R_nd, 
-		*R_K, 
-		*R_Niter, 
-		*R_burn,
-		*R_num_CPU, 
-		R_seed, 
-		*R_missing_data, 
-		*R_all,
-		R_dic,
-		R_dev,
-		*noise_epsilon,
-		*b_epsilon,
-		*init);
+        // parameters allocation
+        lfmm_param *param = (lfmm_param *) calloc(1, sizeof(lfmm_param));
+
+        // Parameters initialization
+	init_param_lfmm(param);
+	param->K = *R_K;
+	param->nd = *R_nd;
+	param->Niter = *R_Niter;
+	param->burn = *R_burn;
+	param->num_thrd = *R_num_CPU;
+	param->init = *init;
+	param->noise_epsilon = *noise_epsilon;
+	param->b_epsilon = *b_epsilon;
+	param->missing_data = *R_missing_data;
+	param->seed = *R_seed;
+	param->all = *R_all;
+	strcpy(param->output_file, *R_output_file);
+	strcpy(param->input_file, *R_input_file);
+	strcpy(param->cov_file, *R_cov_file);
+	param->n = *R_n;
+	param->L = *R_L;
+
+	// run
+	LFMM(param);	
+
+	// output
+	*R_D = param->D;
+	*R_n = param->n;
+	*R_L = param->L;
+	*R_dic = param->DIC;
+	*R_dev = param->dev;
+
+	// free memory
+	free_param_lfmm(param);
+	free(param);
 }

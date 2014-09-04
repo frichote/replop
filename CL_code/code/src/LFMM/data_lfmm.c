@@ -69,15 +69,16 @@ void rand_matrix(double *A, double *m_A, double *inv_cov_A, double alpha_R,
                                 mu[k] = 0;
                                 for (kp = 0; kp < K; kp++) {
                                         mu[k] +=
-                                                inv_cov_A[k * K + kp] * m_A[i * K + kp];
+                                                inv_cov_A[k * K + kp] * m_A[kp * N + i];
                                 }
                                 // times alpha_R
                                 mu[k] *= alpha_R;
                         }
                         // rand A
                         mvn_rand(mu, L, K, y);
-                        for (k = 0; k < K; k++)
+                        for (k = 0; k < K; k++) {
                                 A[k * N + i] = y[k];
+			}
                 }
                 // free memory
                 free(mu);
@@ -107,6 +108,7 @@ void create_inv_cov(double *inv_cov, double* alpha, double alpha_R,
         } else {
 #endif
                 // calculate cov = alphaR A %*% t(A) + diag(alpha)
+
                 for (k1 = 0; k1 < K; k1++) {
                         for (k2 = 0; k2 < k1; k2++) {
                                 tmp2[k1 * K + k2] = 0;
@@ -177,9 +179,8 @@ void create_m(double *A, float *R, double *B, double *C, double *m,
                         	}
 			} else {
                         	for (k = 0; k < K; k++) {
-                                	m[k * N + i] = 0;
                                 	for (j = 0; j < M; j++)
-                                        	m[k * N + j] += A[k * N + i] * tmp_i[j];
+                                        	m[k * M + j] += A[k * N + i] * tmp_i[j];
                         	}
 			}
                 }
@@ -284,8 +285,6 @@ void zscore_calc(double *zscore, double *sum, double *sum2, int n, int cur, int 
 		r[i-n] = var;
 		m[i-n] = sum[i]/cur;
 	}
-	write_data_double("var.txt", n, D-1, r);
-	write_data_double("mean.txt", n, D-1, m);
 
 	free(r);
 	free(m);
@@ -391,7 +390,7 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 		} else
 			fprintf(file_dic, "Deviance\t\tNa\nDIC\t\t\tNa\n");
 
-		printf("\tThe statitistics for the run are registered in:\n \t\t%s.\n"
+		printf("\tThe statistics for the run are registered in:\n \t\t%s.\n"
 			"\n", dic_file);
 
 		printf("\t-------------------------\n");
@@ -414,7 +413,7 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 			// and write 
 			file = fopen_write(zscore_file);
 			for (j = 0; j < M; j++) {
-				fprintf(file, "%3.6G %3.6G %3.6G", (double)fabs(zscore[d*M+j]),
+				fprintf(file, "%3.6G %3.6G %3.6G", (double)zscore[d*M+j],
 						(double)(-log10(pvalues[j])), pvalues[j]);
 		//				(double)(-log10(qvalues[j])), qvalues[j]);
 				fprintf(file, "\n");
@@ -452,7 +451,7 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 		// calculate qvalues
 		//	pvalue_qvalue(pvalues, qvalues, M);
 
-		printf("\tThe statitistics for the run are registered in:\n \t\t%s.\n"
+		printf("\tThe statistics for the run are registered in:\n \t\t%s.\n"
 			"\n", dic_file);
 
 		// calculate lambda
@@ -477,7 +476,7 @@ void write_zscore_double(char *output_file, int M, double *zscore, int D, int al
 		// and write it
 		file = fopen_write(zscore_file);
 		for (j = 0; j < M; j++) {
-			fprintf(file, "%3.6G %3.6G %3.6G", (double)fabs(zscore[j]),
+			fprintf(file, "%3.6G %3.6G %3.6G", (double)zscore[j],
 					(double)(-log10(pvalues[j])), pvalues[j]);
 		//			(double)(-log10(qvalues[j])), qvalues[j]);
 			fprintf(file, "\n");

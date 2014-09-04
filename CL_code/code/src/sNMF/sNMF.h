@@ -35,9 +35,9 @@ typedef struct _snmf_param {
         int K;                  /**< @brief the number of ancestral populations */
         int n;                  /**< @brief the number of individuals */
         int L;                  /**< @brief the number of loci */
-	int nc;			/**< @brief ploidy, 3 if 0,1,2 , 2 if 0,1 (number of factors) */
+	int nc;			/**< @brief ploidy + 1, 3 if 0,1,2 , 2 if 0,1 (number of factors) */
 	int Mc;			/**< @brief number of binary elements per line */
-	int m;
+	int m;			/**< @brief ploidy + 1, 3 if 0,1,2 , 2 if 0,1 (number of factors) */
 	int Mp;			/**< @brief the number of columns of X */
 	int Mpi;		/**< @brief the number of columns of Xi */
 
@@ -54,7 +54,6 @@ typedef struct _snmf_param {
 
         // init parameters
         int I;                  /**< @brief if not nul, init with a sNMF rum of a random subset of SNPs */ 
-        int missing_data;       /**< @brief boolean: true if missing data */
         long long seed;         /**< @brief seed values */
 
         // matrix parameters

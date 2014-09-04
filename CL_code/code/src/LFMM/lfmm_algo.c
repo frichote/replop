@@ -73,6 +73,7 @@ void lfmm_emcmc(LFMM_param param)
 
 	n = 0;
 	while (n < param->Niter) {
+
 		// print shell
 		print_bar(&i, &j, param->Niter);
 
@@ -93,6 +94,7 @@ void lfmm_emcmc(LFMM_param param)
 
 		// update alpha_R
 		param->alpha_R = update_alpha_R (param, GS_param);
+
 
 		// update sums
 		if (n >= param->burn) 
@@ -158,12 +160,24 @@ void calc_dp_deviance(LFMM_param param, LFMM_GS_param GS_param,
 	int M = param->L;
 	int N = param->n;
 	int K = param->K;
+	double *beta, *U, *V;
 
 	update_m(GS_param->sum, D * M, size);
 	update_m(GS_param->mean_U, K * N, size);
 	update_m(GS_param->mean_V, K * M, size);
-	update_m(&(param->dev), 1, size);
+	param->dev /= size;
+
+	// temporary update of U, V, beta by mean_U, mean_V, sum;
+	V = param->V;
+	U = param->U;
+	beta = param->beta;
+	param->V = GS_param->mean_V; 
+	param->U = GS_param->mean_U; 
+	param->beta = GS_param->sum; 
 	tmp = var_data(param, GS_param);
+	param->V = V; 
+	param->U = U; 
+	param->beta = beta; 
 
 	*dp = GS_param->thrd_m2 / tmp;
 	*deviance = param->dev;

@@ -3,7 +3,8 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Read the output files of \code{\link{LFMM}}}
 \description{
-Read the output file from \code{\link{LFMM}}.
+Read the output file from \code{\link{LFMM}}. This is an internal function.
+Zscores of a run can be accessed using the function \code{\link{z.scores}}.
 }
 \usage{
 read.zscore(input.file)
@@ -29,18 +30,6 @@ a character string containing a path to the output of \code{\link{LFMM}}.
 \code{\link{zscore}}
 \code{\link{LFMM}}
 }
-\examples{
-# creation of the data set
-data(tuto)
-write.lfmm(R, "tuto.lfmm")
-write.env(C, "tuto.env")
-
-# run of LFMM
-res = LFMM("tuto.lfmm", "tuto.env", 2, d = 1)
-
-# read of the zscore output file
-z = read.zscore(res@runs[[1]]@zscore.file)
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{LFMM}
+\keyword{read/write}

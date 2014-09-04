@@ -6,7 +6,7 @@
 A function that converts from the \code{\link{geno}} format to the \code{\link{lfmm}} format.
 }
 \usage{
-geno2lfmm(input.file, output.file = NULL)
+geno2lfmm(input.file, output.file = NULL, force = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,6 +19,10 @@ A character string containing a path to the output file,
 a genotypic matrix in the \code{\link{lfmm}} format. 
 By default, the name of the output file is the same name 
 as the input file with a .lfmm extension.
+}
+\item{force}{
+        A boolean option. If FALSE, the input file is converted only if the output
+        file does not exist. If TRUE, convert the file anyway.
 }
 }
 \value{
@@ -43,25 +47,27 @@ a genotypic matrix in the \code{\link{lfmm}} format.
 \code{\link{write.geno}}
 }
 \examples{
-# Creation of a file called "tuto.geno" in the working directory
-# with 1000 SNPs for 100 individuals.
-G = matrix(sample(c(0,1,2),replace=TRUE, size=1000*100), ncol=1000, nrow=100)
-write.geno(G, "tuto.geno")
+# Creation of a file called "genotypes.geno" in the working directory
+# with 5000 SNPs for 165 individuals.
+data("tutorial")
+write.geno(R, "genotypes.geno")
 
-# Conversion   from the geno format ("tuto.geno") 
-#              to the lfmm format ("tuto.lfmm").
+# Conversion   from the geno format ("genotypes.geno") 
+#              to the lfmm format ("genotypes.lfmm").
 # By default,  the name of the output file is the same name 
 #              as the input file with a .lfmm extension.
-# Create file: "tuto.lfmm".
-output = geno2lfmm("tuto.geno")
+# Create file: "genotypes.lfmm".
+output = geno2lfmm("genotypes.geno")
 
-# Conversion   from the geno format ("tuto.geno") 
+# Conversion   from the geno format ("genotypes.geno") 
 #              to the lfmm format with the output file called "plop.lfmm".
 # Create file: "plop.lfmm".
-output = geno2lfmm("tuto.geno", "plop.lfmm")
+output = geno2lfmm("genotypes.geno", "plop.lfmm")
+
+# As force = false and the file "genotypes.lfmm" already exists,
+# nothing happens.
+output = geno2lfmm("genotypes.geno", force = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{format}
-\keyword{sNMF}
-\keyword{LFMM}
+\keyword{conversion}

@@ -41,4 +41,3 @@ Here is an example of a genotypic matrix using the \code{geno} format with 3 ind
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{format}
-\keyword{sNMF}

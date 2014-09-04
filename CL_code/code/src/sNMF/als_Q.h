@@ -46,39 +46,6 @@ double update_nnlsm_Q(sNMF_param param, Nnlsm_param n_param);
  */
 void normalize_Q(double *Q, int N, int K);
 
-/** 
- * compute t(F) * F + alpha
- *
- * @param temp1 output matrix (of size KxK)
- * @param F	input F matrix (of size McxK)
- * @param nc	number of different values in X
- * @param K	number of clusters
- * @param M 	number of loci
- * @param Mp 	number of columns of X
- * @param N 	number of individuals
- * @param num_thrd	number of CPU used 
- * @param alpha regularization parameter of the algorithm
-void F_tF_alpha(double *temp1, double *F, int nc, int K, int M, int Mp, int N,
-        int num_thrd, double alpha);
- */
-
-/** 
- * compute t(F) * t(X)
- *
- * @param temp3 output matrix (of size KxN)
- * @param X 	genotype matrice (of size NxMc)
- * @param F	input F matrix (of size McxK)
- * @param nc	number of different values in X
- * @param K	number of clusters
- * @param M 	number of loci
- * @param Mp 	number of columns of X
- * @param N 	number of individuals
- * @param num_thrd	number of CPU used 
-void tF_tX(double *temp3, bituint *X, double *F, int nc, int K, int M, int Mp,
-        int N, int num_thrd);
- */
-
-
 #endif // ALS_Q_H
 
 /** @} */

@@ -54,7 +54,7 @@ HEADER_crossEntropy = $(patsubst $(SRC)/%.c,$(SRC)/%.h,$(SRC_crossEntropy))
 
 
 # EXECUTABLE
-EXECUTABLE = $(LIB)/lapack.a $(BIN)/extract_lines $(BIN)/sNMF $(BIN)/crossEntropy $(BIN)/createDataSet $(BIN)/LFMM $(BIN)/vcf2geno $(BIN)/ancestrymap2geno $(BIN)/ancestrymap2lfmm $(BIN)/ped2geno $(BIN)/ped2lfmm $(BIN)/lfmm2geno $(BIN)/geno2lfmm $(BIN)/pca $(BIN)/tracyWidom
+EXECUTABLE = $(LIB)/lapack.a $(BIN)/sNMF $(BIN)/crossEntropy $(BIN)/createDataSet $(BIN)/LFMM $(BIN)/vcf2geno $(BIN)/ancestrymap2geno $(BIN)/ancestrymap2lfmm $(BIN)/ped2geno $(BIN)/ped2lfmm $(BIN)/lfmm2geno $(BIN)/geno2lfmm $(BIN)/pca $(BIN)/tracyWidom
 all: $(SRC_LAPACK) $(SRC_LFMM) $(SRC_sNMF) $(SRC_createDataSet) $(SRC_crossEntropy) $(SRC_convert) $(SRC_pca) $(SRC_main) $(EXECUTABLE) $(SRC_tracyWidom)
 
 $(LIB)/lapack.a: $(OBJ_LAPACK)
@@ -97,9 +97,6 @@ $(BIN)/lfmm2geno : $(OBJ_convert) $(LIB)/lapack.a $(OBJ)/main/main_lfmm2geno.o
 	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS)
 
 $(BIN)/geno2lfmm : $(OBJ_convert) $(LIB)/lapack.a $(OBJ)/main/main_geno2lfmm.o
-	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS)
-
-$(BIN)/extract_lines : $(OBJ_convert) $(LIB)/lapack.a $(OBJ)/main/main_extract_lines.o
 	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS)
 
 $(OBJ)/%.o: $(SRC)/%.c 

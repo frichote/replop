@@ -179,7 +179,7 @@ project = LFMM("genotypes.lfmm", "gradients.env", K=6:10, repetitions = 10)
 zs = z.scores(project, K = 5)
 
 # Combine the z-scores using the Stouffer method
-zs = apply(zs, MARGIN = 1, sum)/sqrt(10)
+zs = apply(abs(zs), MARGIN = 1, sum)/sqrt(10)
 
 lambda = median(zs^2)/.456
 
@@ -203,13 +203,13 @@ show(project)
 summary(project)
 
 # get the cross-entropy for all runs for K = 3 
-ce = cross.entropy(project, K = 3)
+#ce = cross.entropy(project, K = 3)
 
 # get the cross-entropy for the 2nd run for K = 3
-ce = cross.entropy(project, K = 3, run = 2)
+#ce = cross.entropy(project, K = 3, run = 2)
 
 # get the ancestral genotype frequency matrix, G, for the 2nd run for K = 3. 
-res = G(project, K = 3, run = 2)
+#res = G(project, K = 3, run = 2)
 
 #############################
 # Advanced LFMM run options #
@@ -217,26 +217,26 @@ res = G(project, K = 3, run = 2)
 
 # Q.input.file: init a run with a given ancestry coefficient matrix Q. 
 # Here, it is initialized with the Q matrix from the first run with K=3
-project = LFMM("genotypes.geno", K = 3, Q.input.file = "./genotypes.snmf/K3/run1/genotypes_r1.3.Q")
+#project = LFMM("genotypes.geno", K = 3, Q.input.file = "./genotypes.snmf/K3/run1/genotypes_r1.3.Q")
 
 # I: init the Q matrix of a run from a smaller run with 500 randomly chosen SNPs. 
-project = LFMM("genotypes.geno", K = 3, I = 500)
+#project = LFMM("genotypes.geno", K = 3, I = 500)
 
 # CPU: run LFMM with 2 CPUs. 
-project = LFMM("genotypes.geno", K = 3, CPU=2)
+#project = LFMM("genotypes.geno", K = 3, CPU=2)
 
 # percentage: run LFMM and calculate the cross-entropy criterion with 10% of masked
 # genotypes, instead of 5% of masked genotypes. 
-project = LFMM("genotypes.geno", K = 3, entropy= TRUE, percentage = 0.1)
+#project = LFMM("genotypes.geno", K = 3, entropy= TRUE, percentage = 0.1)
 
 # seed: choose the seed to init the randomization.
-project = LFMM("genotypes.geno", K = 3, seed=42)
+# project = LFMM("genotypes.geno", K = 3, seed=42)
 
 # alpha: choose the regularization parameter.
-project = LFMM("genotypes.geno", K = 3, alpha = 100)
+# project = LFMM("genotypes.geno", K = 3, alpha = 100)
 
 # tolerance: choose the tolerance parameter.
-project = LFMM("genotypes.geno", K = 3, tolerance = 0.00001)
+# project = LFMM("genotypes.geno", K = 3, tolerance = 0.00001)
 
 ##########################
 # Manage an LFMM project #
@@ -251,11 +251,11 @@ project = LFMM("genotypes.geno", K = 3, tolerance = 0.00001)
 # There is only one snmf Project for each input file including all the runs.
 
 # An snmfProject can be load in a different session.
-project = load.snmfProject("genotypes.snmfProject")
+#project = load.snmfProject("genotypes.snmfProject")
 
 # An snmfProject can be erased.
 # Caution: All the files associated with the project will be removed.
-remove.snmfProject("genotypes.snmfProject")
+#remove.snmfProject("genotypes.snmfProject")
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

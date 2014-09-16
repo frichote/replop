@@ -94,7 +94,7 @@ The following methods can be applied to the object of class pcaProject returned 
 }
 \examples{
 # Creation of the genotype file "genotypes.lfmm"
-# with 5000 SNPs for 165 individuals.
+# with 1000 SNPs for 165 individuals.
 data("tutorial")
 write.lfmm(R, "genotypes.lfmm")
 

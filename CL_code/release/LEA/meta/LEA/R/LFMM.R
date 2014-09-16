@@ -6,8 +6,8 @@ LFMM <- function(input.file,
 		all = FALSE,
 		missing.data = FALSE,
 		CPU = 1,
-		iterations = 1000,
-		burnin = 500,
+		iterations = 10000,
+		burnin = 5000,
 		seed = -1, 
 		repetitions = 1,
 		epsilon.noise = 1e-3,
@@ -59,11 +59,11 @@ LFMM <- function(input.file,
 	if(Sys.info()['sysname'] == "Windows")
 		CPU = 1;
         # iterations
-	iterations = test_integer("iterations", iterations, 1000)
+	iterations = test_integer("iterations", iterations, 10000)
 	if (iterations <= 0)
                 stop("'iterations' argument has to be positive.")
         # burnin
-	burnin = test_integer("burnin", burnin, 100)
+	burnin = test_integer("burnin", burnin, 5000)
 	if (burnin <= 0)
                 	stop("'burnin' argument has to be positive.")
 	if (burnin >= iterations) {

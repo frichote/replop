@@ -35,8 +35,8 @@ void init_param_lfmm(LFMM_param param)
 	param->mD = 0;
 	param->all = 0;
 	param->K = 0;
-	param->burn = 500;
-	param->Niter = 1000;
+	param->burn = 5000;
+	param->Niter = 10000;
 	param->num_thrd = 1;
         param->missing_data = 0;
         strcpy(param->output_file, "");

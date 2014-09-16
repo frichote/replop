@@ -26,6 +26,7 @@
 #include "../matrix/matrix.h"
 #include "../matrix/normalize.h"
 #include "beta.h"
+#include "../io/io_data_double.h"
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -21,7 +21,7 @@
 sNMF (input.file, K, 
       project = "continue",
       repetitions = 1, CPU = 1, 
-      alpha = 10, tolerance = 0.0001, entropy = FALSE, percentage = 0.05,
+      alpha = 10, tolerance = 0.00001, entropy = FALSE, percentage = 0.05,
       I, iterations = 200, ploidy = 2, seed = -1, Q.input.file)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -141,7 +141,7 @@ Frichot E, Mathieu F, Trouillon T, Bouchard G, Francois O. (2014). \emph{Fast an
 ### Example of analyses using sNMF ###
 
 # creation of the genotype file, genotypes.geno.
-# It contains 5000 SNPs for 165 individuals.
+# It contains 1000 SNPs for 165 individuals.
 data("tutorial")
 write.geno(R, "genotypes.geno")
 
@@ -159,14 +159,14 @@ project = sNMF("genotypes.geno", K=1:10, entropy = TRUE, repetitions = 2)
 # plot cross-entropy criterion of all runs of the project
 plot(project, lwd = 5, col = "red", pch=1)
 
-# get the cross-entropy of each run for K = 3
-ce = cross.entropy(project, K = 5)
+# get the cross-entropy of each run for K = 7
+ce = cross.entropy(project, K = 7)
 
 # select the run with the lowest cross-entropy
 best = which.min(ce)
 
-# plot the best run for K = 3 (ancestry coefficients).
-barplot(t(Q(project, K = 5, run = best)), col = c("red", "blue", "yellow", "green", "brown"))
+# plot the best run for K = 7 (ancestry coefficients).
+barplot(t(Q(project, K = 7, run = best)), col = c("red", "blue", "yellow", "green", "brown"))
 
 ###################
 # Post-treatments #
@@ -212,7 +212,7 @@ project = sNMF("genotypes.geno", K = 3, seed=42)
 project = sNMF("genotypes.geno", K = 3, alpha = 100)
 
 # tolerance: choose the tolerance parameter.
-project = sNMF("genotypes.geno", K = 3, tolerance = 0.00001)
+project = sNMF("genotypes.geno", K = 3, tolerance = 0.0001)
 
 ##########################
 # Manage an sNMF project #
@@ -222,7 +222,7 @@ project = sNMF("genotypes.geno", K = 3, tolerance = 0.00001)
 # automatically saved into a snmf project directory and a file.
 # The name of the snmfProject file is the same name as 
 # the name of the input file with a .snmfProject extension ("genotypes.snmfProject").
-# The name of the snmfProject file is the same name as
+# The name of the snmfProject directory is the same name as
 # the name of the input file with a .snmf extension ("genotypes.snmf/")
 # There is only one snmf Project for each input file including all the runs.
 

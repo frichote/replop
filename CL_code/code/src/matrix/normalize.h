@@ -10,6 +10,15 @@
 #ifndef NORMALIZE_H
 #define NORMALIZE_H
 
+/** check if there is not constant column in C (of size NxK)
+ * and return an error if there is a constant column
+ *
+ * @param C 	a matrix (of size, NxK)
+ * @param N	the number of lines of C
+ * @param K	the number of columns of C
+ */
+void check_constant_column(float *C, int N, int K);
+
 /**
  * normalize C (means equal 0, var = 1) for each column
  *

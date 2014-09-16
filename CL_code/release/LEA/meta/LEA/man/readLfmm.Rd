@@ -34,17 +34,16 @@ A matrix containing the genotypes with one line per individual and one column pe
 \code{\link{ped2lfmm}}
 }
 \examples{
-# Creation of a file called "genotypes.lfmm" in the working directory,
-# with 5000 SNPs for 165 individuals.
+# tutorial contains a matrix of genotypes R with 1000 SNPs for 165 individuals.
+# and a matrix with an environmental variable C.
 data("tutorial")
+
+# write R in a file called "genotypes.lfmm"
+# Create file:	"genotypes.lfmm".
 write.lfmm(R, "genotypes.lfmm")
 
-# write G in a file called "genotypes.lfmm"
-# Create file:	"genotypes.lfmm".
-write.lfmm(G, "genotypes.lfmm")
-
 # read the file "genotypes.lfmm".
-G = read.lfmm("genotypes.lfmm")
+R = read.lfmm("genotypes.lfmm")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

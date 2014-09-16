@@ -24,7 +24,7 @@ LFMM(input.file, environment.file, K,
         project = "continue", 
         d = 0, all = FALSE, 
         missing.data = FALSE, CPU = 1, 
-        iterations = 1000, burnin = 500, 
+        iterations = 10000, burnin = 5000, 
         seed = -1, repetitions = 1, 
         epsilon.noise = 1e-3, epsilon.b = 1000, 
         random.init = TRUE)
@@ -158,7 +158,7 @@ Frichot E, Schoville SD, Bouchard G, Francois O. (2013). \emph{Testing for assoc
 
 data("tutorial")
 # creation of the genotype file, genotypes.lfmm.
-# It contains 5000 SNPs for 165 individuals.
+# It contains 1000 SNPs for 165 individuals.
 write.lfmm(R, "genotypes.lfmm")
 # creation of the environment file, gradient.env.
 # It contains 1 environmental variable for 165 individuals.
@@ -168,30 +168,38 @@ write.env(C, "gradients.env")
 # runs of LFMM #
 ################
 
-# main options, K: (the number of ancestral populations), 
-#               entropy: calculate the cross-entropy criterion, 
+# main options, K: (the number of latent factors), 
 #               CPU: the number of CPUs.
 
-# Runs with K between 1 and 5 with cross-entropy and 2 repetitions.
-project = LFMM("genotypes.lfmm", "gradients.env", K=6:10, repetitions = 10)
+# Runs with K = 9 and 5 repetitions.
+project = LFMM("genotypes.lfmm", "gradients.env", K = 9, repetitions = 5)
 
-# get the zscores of each run for K = 5
-zs = z.scores(project, K = 5)
+# get the zscores of each run for K = 9
+zs = z.scores(project, K = 9)
 
 # Combine the z-scores using the Stouffer method
-zs = apply(abs(zs), MARGIN = 1, sum)/sqrt(10)
+zs.stouffer = apply(zs, MARGIN = 1, median)
 
-lambda = median(zs^2)/.456
+# calculate the inflation factor
+lambda = median(zs.stouffer^2)/.456
 
-cp.values = pchisq(zs^2/lambda, df = 1, lower = FALSE)
+# calculate adjusted p-values
+cp.values = pchisq(zs.stouffer^2/lambda, df = 1, lower = FALSE)
 
-L = length(cp.values)
-q = 0.1
-w = which(sort(cp.values) < q * (1:L) / L)
-candidates = order(cp.values)[w]
+for (alpha in c(.05,.1,.15,.2)) {
+  # expected FDR
+  print(paste("expected FDR:", alpha))
+  L = length(cp.values)
+  # return a list of candidates with an expected FDR of alpha = 0.1.
+  w = which(sort(cp.values) < alpha * (1:L) / L)
+  candidates = order(cp.values)[w]
 
-true.FDR = length(which(candidates <= 4500))/length(candidates)
-true.positive = length(which(candidates > 4500))/500
+  # estimated FDR and True Positif
+  estimated.FDR = length(which(candidates <= 900))/length(candidates)
+  estimated.TP = length(which(candidates > 900))/100
+  print(paste("FDR:", estimated.FDR, "True Positive:", estimated.TP))
+}
+
 ###################
 # Post-treatments #
 ###################
@@ -202,60 +210,34 @@ show(project)
 # summary of the project
 summary(project)
 
-# get the cross-entropy for all runs for K = 3 
-#ce = cross.entropy(project, K = 3)
+# get the z-scores for the 2nd run for K = 9
+z = z.scores(project, K = 9, run = 2)
 
-# get the cross-entropy for the 2nd run for K = 3
-#ce = cross.entropy(project, K = 3, run = 2)
+# get the p-values for the 2nd run for K = 9
+p = p.values(project, K = 9, run = 2)
 
-# get the ancestral genotype frequency matrix, G, for the 2nd run for K = 3. 
-#res = G(project, K = 3, run = 2)
-
-#############################
-# Advanced LFMM run options #
-#############################
-
-# Q.input.file: init a run with a given ancestry coefficient matrix Q. 
-# Here, it is initialized with the Q matrix from the first run with K=3
-#project = LFMM("genotypes.geno", K = 3, Q.input.file = "./genotypes.snmf/K3/run1/genotypes_r1.3.Q")
-
-# I: init the Q matrix of a run from a smaller run with 500 randomly chosen SNPs. 
-#project = LFMM("genotypes.geno", K = 3, I = 500)
-
-# CPU: run LFMM with 2 CPUs. 
-#project = LFMM("genotypes.geno", K = 3, CPU=2)
-
-# percentage: run LFMM and calculate the cross-entropy criterion with 10% of masked
-# genotypes, instead of 5% of masked genotypes. 
-#project = LFMM("genotypes.geno", K = 3, entropy= TRUE, percentage = 0.1)
-
-# seed: choose the seed to init the randomization.
-# project = LFMM("genotypes.geno", K = 3, seed=42)
-
-# alpha: choose the regularization parameter.
-# project = LFMM("genotypes.geno", K = 3, alpha = 100)
-
-# tolerance: choose the tolerance parameter.
-# project = LFMM("genotypes.geno", K = 3, tolerance = 0.00001)
+# get the -log10(p-values) for the 2nd run for K = 9
+mp = mlog10p.values(project, K = 9, run = 2)
 
 ##########################
 # Manage an LFMM project #
 ##########################
 
 # All the runs of LFMM for a given file are 
-# automatically saved into a snmf project directory and a file.
-# The name of the snmfProject file is the same name as 
-# the name of the input file with a .snmfProject extension ("genotypes.snmfProject").
-# The name of the snmfProject file is the same name as
-# the name of the input file with a .snmf extension ("genotypes.snmf/")
-# There is only one snmf Project for each input file including all the runs.
+# automatically saved into a lfmm project directory and a file.
+# The name of the lfmmProject file is a combination of 
+# the name of the input file and the environment file 
+# with a .lfmmProject extension ("genotypes_gradient.lfmmProject").
+# The name of the lfmmProject directory is the same name as
+# the lfmmProject file with a .lfmm extension ("genotypes_gradient.lfmm/")
+# There is only one lfmm Project for each input file including all the runs.
 
-# An snmfProject can be load in a different session.
-#project = load.snmfProject("genotypes.snmfProject")
+# An lfmmProject can be load in a different session.
+project = load.lfmmProject("genotypes_gradients.lfmmProject")
 
-# An snmfProject can be erased.
+# An lfmmProject can be erased.
 # Caution: All the files associated with the project will be removed.
-#remove.snmfProject("genotypes.snmfProject")
+remove.lfmmProject("genotypes_gradients.lfmmProject")
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

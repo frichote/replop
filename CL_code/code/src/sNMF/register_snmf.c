@@ -192,7 +192,7 @@ void init_param_snmf(sNMF_param param)
         param->maxiter = 200;           
         param->num_thrd = 1;           
         param->alpha = 10;            
-        param->tolerance = 0.0001;         
+        param->tolerance = 0.00001;         
         strcpy(param->output_file_F, "");   
         strcpy(param->output_file_Q, "");   
         strcpy(param->input_file_Q, "");   

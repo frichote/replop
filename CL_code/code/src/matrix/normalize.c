@@ -21,6 +21,45 @@
 #include <math.h>
 #include "normalize.h"
 
+// constant_column
+
+void check_constant_column(float *C, int N, int K)
+{
+	double mean, cov;
+	int i, k, count;
+
+	for (k = 0; k < K; k++) {
+		// calculate mean
+		mean = 0;
+		count = 0;
+		for (i = 0; i < N; i++) {
+			if (fabs(C[i * K + k]) != 9) {
+				mean += C[i * K + k];
+				count++;
+			}	
+		}
+		if (count)
+			mean /= count;
+		else {
+			printf("Error: columns '%d' contains only missing data.\n\n", k+1);
+			exit(1);
+		}
+		// calculate cov
+		cov = 0;
+		for (i = 0; i < N; i++) {
+			if (fabs(C[i * K + k]) != 9)
+				cov += (C[i * K + k] - mean) * (C[i * K + k] - mean);
+		}
+		cov /= (count - 1);
+		// error if constant column
+		if (!cov) {
+		        printf("Error: it seems that line or column %d is constant " 
+				"among individuals.\n\n",k+1);
+			exit(1);
+		}
+	}
+}
+
 // normalize_cov
 
 void normalize_cov(double *C, int N, int K)

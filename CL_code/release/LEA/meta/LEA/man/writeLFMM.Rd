@@ -33,7 +33,7 @@ a genotypic matrix in the \code{lfmm} format.
 }
 \examples{
 # Creation of a file called "genotypes.geno" in the working directory,
-# with 5000 SNPs for 165 individuals.
+# with 1000 SNPs for 165 individuals.
 data("tutorial")
 
 # write R in a file called "genotypes.lfmm"

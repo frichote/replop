@@ -78,7 +78,7 @@ void update_alpha_beta(LFMM_param param)
 
 	// update alpha_beta
 	//param->alpha_beta[0] = rand_gamma(a+ b_epsilon, 1.0/(double)(bb[0]+ b_epsilon));
-	param->alpha_beta[0] = rand_gamma(a+ b_epsilon, 1.0/(double)(bb[0]+ b_epsilon));
+	param->alpha_beta[0] = rand_gamma(a+ b_epsilon - 1.0, 1.0/(double)(bb[0]+ b_epsilon -1.0));
 	for (d = 1; d < D; d++)
 		param->alpha_beta[d] = rand_gamma(a, 1.0 / (double)(bb[d]));
 

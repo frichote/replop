@@ -72,8 +72,8 @@ void calc_beta_k0(double *C, float *R, double *beta, double *CCt,
 			for (d = 0; d < D; d++) 
 				tmp += C[d * N + i] * beta[d * M + j];
 			res += ((double)R[i * M + j] - tmp) * ((double)R[i * M + j] - tmp);
-			*var_res += res;
 		}
+		*var_res += res;
 		for (d = 0; d < D; d++) 
 			var_beta[d * M + j] = res / ((N - 2) * CCt[d * (D + 1)]);
 
@@ -94,7 +94,7 @@ void zscore_calc_k0(double *zscore, double *beta, double *var_beta, int D, int M
 
 	for (d = 1; d < D; d++)
 		for (j = 0; j < M; j++)
-			zscore[(d - 1) * M + j] = fabs(beta[d * M + j]) / sqrt(var_beta[d * M + j]);
+			zscore[(d - 1) * M + j] = beta[d * M + j] / sqrt(var_beta[d * M + j]);
 
 }
 

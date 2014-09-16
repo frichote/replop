@@ -34,17 +34,16 @@ A matrix containing the genotypes with one line for each individual and one colu
 \code{\link{vcf2geno}}
 }
 \examples{
-# Creation of a file called "genotypes.geno" in the working directory,
-# with 5000 SNPs for 165 individuals.
-("tutorial")
+# tutorial contains a matrix of genotypes R with 1000 SNPs for 165 individuals.
+# and a matrix with an environmental variable C.
+data("tutorial")
+
+# Write R in a file called "genotypes.geno".
+# Create file:	"genotypes.geno".
 write.geno(R, "genotypes.geno")
 
-# Write G in a file called "genotypes.geno".
-# Create file:	"genotypes.geno".
-write.geno(G, "genotypes.geno")
-
 # Read the file "genotypes.geno".
-G = read.geno("genotypes.geno")
+R = read.geno("genotypes.geno")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

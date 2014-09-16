@@ -154,32 +154,83 @@ If you need a summary of the options, you can use the \verb|-h| option by typing
 \noindent
 A full example is available at the end of this note.
 
-\section{How to choose $K$, the number of latent factors}
-The number of latent factors is the number of principal components (or latent factors) that is
-required to describe the neutral structure of the data. Several values should be tested.
-A too small value of $K$ leads to liberal tests and may generate False Positive results.
-A too large value of $K$ leads to conservative tests and may generate False Negative results.           
-We advise you to be really careful in the choice of $K$ and to test several values of $K$.
+\section{Using {\tt LFMM} in practice}
 
-\subsection{based on a population structure analysis}
-\paragraph{with a Principal Component Analysis approach}
-In our paper, we used the number of significative principal components in the
-Tracy-Widom test of {\tt SmartPCA} (http://helix.nih.gov/Applications/eigensoft.html)
-\cite{Patterson_2006}. This heuristic may be a bit too conservative.
+In this section, we give practical recommendations for analyzing real data sets using the {\tt LFMM} computer program. These recommendations should help users avoiding important mistakes when using the {\tt LFMM} algorithm. Note that the following comments should not be taken too literally. Several alternative options might work equally well. 
 
-\paragraph{with on a clustering approach}
-We also used the Bayesian clustering programs {\tt STRUCTURE}\\
-(http://pritch.bsd.uchicago.edu/software/structure2\_1.html) \cite{Pritchard_2000}, {\tt TESS}\\
-(http://membres-timc.imag.fr/Olivier.Francois/tess.html) \cite{Chen_2007, Durand_2009} and
-{\tt sNMF} (a fast program to estimate ancestry coefficients) \\
-(http://membres-timc.imag.fr/Olivier.Francoissnmff.html)
-to find K the number of components which could better describe our simulated data.
+\paragraph{Preparing the data.} Genotypic data must be prepared using the {\tt lfmm} format (any type of allelic data is allowed). The {\tt LFMM} program can handle missing data, but the algorithm used for genotype imputation is basic. We encourage users having more than $10\%$ missing genotypes in their data to fix the missing data issue by using {\it matrix completion} or {\it genotype imputation} programs such as {\tt IMPUTE2} or {\tt MENDEL-IMPUTE} before starting their analyses with {\tt LFMM}. 
+Ecological data must be prepared using the {\tt env} format. To decide which variables should be used among a large number of ecological indicators (eg, climatic variables), we suggest that users summarize their data using linear combinations of those indicators.  Considering principal component analysis (or similar approaches) and using the first components as new ecological variables is one of these approaches.
 
-\subsection{based on p-values distribution}
-coming soon...
+\paragraph{Setting run parameters.}  The {\tt LFMM} program is based on a stochastic algorithm (MCMC) which cannot provide exact results. We recommend using large number of cycles (e.g., {\tt -i 10000}) and the burn-in period should set at least to one-half of the total number of cycles ({\tt -b 5000}). We have noticed that the program results are sensitive to the run-length parameter when data sets have relatively small sizes (eg, a few hundreds of individuals, a few thousands of loci). We recommend increasing  the burn-in period and the total number of cycles in this situation.        
 
-\section{variance}
-coming soon an explanation of the percentage of variance explained by each variable.
+\paragraph{Deciding the number of latent factors.} Deciding an appropriate value for the number of latent factors in {\tt LFMM} can be based on the analysis of histograms of test $p$-values. Here, the objective is to control the false discovery rate while keeping reasonable power to reject the null hypothesis.  To choose the number of factors, we suggest using the genomic inflation factor. According to Devlin and Roeder (1999), this quantity is defined  as 
+$$
+\lambda = {\rm median}( z^2 ) /0.456 \, . 
+$$
+The inflation factor usually decreases with increasing values of $K$. To compute the genomic inflation facto, we recommend using several runs for each value of $K$ and taking the median or the mean of the  $\lambda$ values obtained from the above formula (use 5 to 10 runs, see our script below).  Choosing values of $K$ for which the estimate of $\lambda$ is close to (or slightly below) 1.0 warrants that the FDR can be controlled efficiently. 
+
+Testing all $K$ values in a large range, from 1 to 20 for example,  is generally useless. A careful analysis of population structure and estimates of the number of ancestral populations contributing to the genetic data indicates the range of values to be explored. If for example the {\tt sNMF} or {\tt ADMIXTURE} programs estimate 5 ancestral populations, then running {\tt LFMM} $K = 4-7$ often provides inflation factors close to 1.0.  
+
+\paragraph{Combining $z$-scores obtained from multiple runs.}  We suggest using the Fisher-Stouffer or a similar method to combine $z$-scores from multiple runs. In practice, we found that using the median $z$-scores of 5-10 runs and re-adjusting the $p$-values afterwards increase the power of {\tt LFMM} tests. This can be done by using the following sequence of {\tt R} commands. Assuming that results from 5 runs with a particular value of $K$ are recorded in external files named {\tt zscore.res1}, {\tt zscore.res2}, etc, we can compute $p$-values using the the following commands   
+{\tt 
+
+z.table = NULL
+
+for (i in 1:5)\{ 
+ 
+file.name = paste("zscore.res",i, sep="")
+
+z.table = cbind(z.table, read.table(file.name)[,1])
+
+\}
+    
+z.score = apply(z.table, MARGIN = 1, median)
+      
+lambda = median(z.score\^~2) /0.456
+
+p.values = pchisq(z.score\^~2 / lambda, df = 1, lower = F))
+
+}        
+                        
+                        
+                        
+\noindent For an expected value of the FDR equal to $q$  (set $q= 10 \%$ or $q = 15 \%$), a list of candidate loci stored in the object {\tt candidate} can be obtained by using the Benjamini-Hochberg procedure as follows
+ {\tt
+
+  L = length(p.values) 
+  
+  n = sum( sort(p.values) < q*(1:L)/L )
+  
+  candidates = which( p.values < q*n/L )
+
+}
+
+%\section{How to choose $K$, the number of latent factors}
+%The number of latent factors is the number of principal components (or latent factors) that is
+%required to describe the neutral structure of the data. Several values should be tested.
+%A too small value of $K$ leads to liberal tests and may generate False Positive results.
+%A too large value of $K$ leads to conservative tests and may generate False Negative results.           
+%We advise you to be really careful in the choice of $K$ and to test several values of $K$.
+%
+%\subsection{based on a population structure analysis}
+%\paragraph{with a Principal Component Analysis approach}
+%In our paper, we used the number of significative principal components in the
+%Tracy-Widom test of {\tt SmartPCA} (http://helix.nih.gov/Applications/eigensoft.html)
+%\cite{Patterson_2006}. This heuristic may be a bit too conservative.
+%
+%\paragraph{with on a clustering approach}
+%We also used the Bayesian clustering programs {\tt STRUCTURE}\\
+%(http://pritch.bsd.uchicago.edu/software/structure2\_1.html) \cite{Pritchard_2000}, {\tt TESS}\\
+%(http://membres-timc.imag.fr/Olivier.Francois/tess.html) \cite{Chen_2007, Durand_2009} and
+%{\tt sNMF} (a fast program to estimate ancestry coefficients) \\
+%(http://membres-timc.imag.fr/Olivier.Francoissnmff.html)
+%to find K the number of components which could better describe our simulated data.
+%
+%\subsection{based on p-values distribution}
+%coming soon...
+%
+%\section{variance}
+%coming soon an explanation of the percentage of variance explained by each variable.
 
 \section{Annex programs}
 

@@ -47,7 +47,7 @@ a genotypic matrix in the \code{\link{geno}} format.
 \examples{
 library(LEA)
 # Creation of a file called "genotypes.lfmm" in the working directory,
-# with 5000 SNPs for 165 individuals.
+# with 1000 SNPs for 165 individuals.
 data("tutorial")
 write.lfmm(R, "genotypes.lfmm")
 

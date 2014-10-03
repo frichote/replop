@@ -39,6 +39,7 @@ for i in $main_list; do
 	echo "\t\tCopy of $i in $dir"
 	cp ../../../code/src/main/$i.c code/src/main/
 done
+cp ../../../code/src/mainpage.h code/src/
 
 # README
 echo "$JAUNE" "\tWARNING: Do not FORGET to update the README files !!!"

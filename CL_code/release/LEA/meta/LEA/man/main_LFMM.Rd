@@ -172,6 +172,7 @@ write.env(C, "gradients.env")
 #               CPU: the number of CPUs.
 
 # Runs with K = 9 and 5 repetitions.
+# around 2/3 minutes per run.
 project = LFMM("genotypes.lfmm", "gradients.env", K = 9, repetitions = 5)
 
 # get the zscores of each run for K = 9

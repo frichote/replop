@@ -45,10 +45,10 @@ void R_vcf2geno (char** R_input_file, char **R_output_file, int *N, int *M)
 
         print_convert(*N, *M);
 
-        printf("For SNP info, please check %s.\n\n",snp_bp_file);
+        Rprintf("For SNP info, please check %s.\n\n",snp_bp_file);
 
-        printf("%d line(s) were removed because these are not SNPs.\n", removed);
-        printf("Please, check %s file, for more informations.\n\n",removed_bp_file);
+        Rprintf("%d line(s) were removed because these are not SNPs.\n", removed);
+        Rprintf("Please, check %s file, for more informations.\n\n",removed_bp_file);
 
         free(tmp);
 

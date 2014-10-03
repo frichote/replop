@@ -19,7 +19,8 @@
 }
 
 \author{
-        Eric Frichot\\efrichot@gmail.com\\
+        Eric Frichot (eric.frichot@imag.fr)\\
+	Olivier François (olivier.francois@imag.fr)\\
 }
 
 \newcommand{\bp}{\mathbf{p}}
@@ -36,6 +37,8 @@
 \noindent
 This short manual aims to help users to run LFMM command-line engine on Mac and Linux. 
 
+\tableofcontents
+
 \section{Description} 
 We proposed an integrated framework based on population genetics, ecological modeling and machine 
 learning techniques for screening genomes for signatures of local adaptation. We implemented fast 
@@ -50,15 +53,12 @@ Eric Frichot, Sean Schoville, Guillaume Bouchard, Olivier François, 2013. {\it 
 
 \section{Installation} 
 
-We provide a set of R and perl scripts and C programs to convert to LFMM format and to display manhattan plot.
-By consequence, R and perl are  mandatory to display manhattan plot. 
-\\
-\noindent
+We provide a set R scripts and C programs to perform LFMM analyses and to convert to LFMM format.
 To install LFMM CL version, you just have to execute the install script (install.sh) 
 in LFMM main directory.
 To execute it in a terminal shell, go to LFMM main directory and write "./install.sh".
 If the script is not executable, type "chmod +x install.sh" and then "./install.sh".
-A binary called \verb|LFMM| should be created in LFMM main directory.
+A binary called \verb|LFMM| should be created in the "./bin/" directory.
 
 \section{Data format}
 
@@ -78,6 +78,8 @@ Here is an example with 3 individuals and 4 SNPs:
 2 0 1 1
 \end{Verbatim}
 \end{center}
+The {\bf lfmm} format can also be used for allele frequency data. In this case, each population is an individual
+and the number of allele is replaced by the allele frequency.
 
 \noindent
 The {\bf env} format for the {\bf variable file} has one row for each individual. 
@@ -97,16 +99,15 @@ or all variables together (see command-line options).
 
 \noindent
 The {\bf zscore} format for the {\bf output file}
-has one row for each SNP. Each row contains three values: The first value is the zscore, the second value is the -log10(pvalue), the third value is the p-value, the forth value is the -log10(qvalue) (based on Benjaminy-Hochberg approach) and the fifth value is the qvalue (separated by spaces or tabulations).
+has one row for each SNP. Each row contains three values: The first value is the zscore, the second value is the -log10(pvalue), the third value is the p-value (separated by spaces or tabulations).
 Below, an example of output file for $L=4$ loci.
 
 \begin{center}
-\footnotesize
 \begin{Verbatim}[frame=single]
-0.698819 0.314558 0.484665 0.0676981 0.855661
-1.35961 0.759568 0.173953 0.224253 0.596688
-0.771135 0.355929 0.440627 0.0795791 0.83257
-0.879092 0.420959 0.379351 0.100315 0.793752
+0.698819 0.314558 0.484665
+1.35961 0.759568 0.173953
+0.771135 0.355929 0.440627 
+0.879092 0.420959 0.379351
 \end{Verbatim}
 \end{center}
 
@@ -136,20 +137,18 @@ Other options are not mandatory:
 parrallel. Be careful, the number of processes has to be lower or equal than the number of physical 
 processes available on your computer. By default, the number of processes is 1.
 \item \verb|-i iteration_number| is the number of iterations in the Gibbs Sampling algorithm. This number
-should be large enough (by default: 1000).
-\item \verb|-b burnin_number| is the number of burning iterations in the Gibbs Sampling algorithm (by default 100). 
+should be large enough (by default: 10000).
+\item \verb|-b burnin_number| is the number of burning iterations in the Gibbs Sampling algorithm (by default 5000). 
 \item \verb|-s seed| is the seed to initialize the randomization. By default, the seed is randomly chosen.
 \item \verb|-C dev_file| is the path for the file containing the DIC and the deviance criterion. By default, the name of the DIC file is the name of the input file with .dic extension. 
 \end{itemize}
 
 \noindent
 If you need a summary of the options, you can use the \verb|-h| option by typing the command line
-\footnotesize
 \begin{Verbatim}[frame=single]
-./LFMM -h
+./bin/LFMM -h
 \end{Verbatim}
 \noindent
-\normalsize
 
 \noindent
 A full example is available at the end of this note.
@@ -167,84 +166,235 @@ Ecological data must be prepared using the {\tt env} format. To decide which var
 $$
 \lambda = {\rm median}( z^2 ) /0.456 \, . 
 $$
-The inflation factor usually decreases with increasing values of $K$. To compute the genomic inflation facto, we recommend using several runs for each value of $K$ and taking the median or the mean of the  $\lambda$ values obtained from the above formula (use 5 to 10 runs, see our script below).  Choosing values of $K$ for which the estimate of $\lambda$ is close to (or slightly below) 1.0 warrants that the FDR can be controlled efficiently. 
-
+The inflation factor usually decreases with increasing values of $K$. To compute the genomic inflation factor, we recommend using several runs for each value of $K$ and taking the median or the mean of the  $\lambda$ values obtained from the above formula (use 5 to 10 runs, see our script below).  Choosing values of $K$ for which the estimate of $\lambda$ is close to (or slightly below) 1.0 warrants that the FDR can be controlled efficiently.\\
+\\
+\noindent
 Testing all $K$ values in a large range, from 1 to 20 for example,  is generally useless. A careful analysis of population structure and estimates of the number of ancestral populations contributing to the genetic data indicates the range of values to be explored. If for example the {\tt sNMF} or {\tt ADMIXTURE} programs estimate 5 ancestral populations, then running {\tt LFMM} $K = 4-7$ often provides inflation factors close to 1.0.  
 
-\paragraph{Combining $z$-scores obtained from multiple runs.}  We suggest using the Fisher-Stouffer or a similar method to combine $z$-scores from multiple runs. In practice, we found that using the median $z$-scores of 5-10 runs and re-adjusting the $p$-values afterwards increase the power of {\tt LFMM} tests. This can be done by using the following sequence of {\tt R} commands. Assuming that results from 5 runs with a particular value of $K$ are recorded in external files named {\tt zscore.res1}, {\tt zscore.res2}, etc, we can compute $p$-values using the the following commands   
-{\tt 
-
+\paragraph{Combining $z$-scores obtained from multiple runs.}  We suggest using the Fisher-Stouffer or a similar method to combine $z$-scores from multiple runs. In practice, we found that using the median $z$-scores of 5-10 runs and re-adjusting the $p$-values afterwards increase the power of {\tt LFMM} tests. This can be done by using the following sequence of {\tt R} commands. Assuming that results from 5 runs with a particular value of $K$ are recorded in external files named {\tt res1\_s1.9.zscore}, {\tt res2\_s1.9.zscore}, etc, we can compute ajusted $p$-values using the the following commands (see the tutorial for an example). 
+\begin{Verbatim} 
 z.table = NULL
-
-for (i in 1:5)\{ 
- 
-file.name = paste("zscore.res",i, sep="")
-
-z.table = cbind(z.table, read.table(file.name)[,1])
-
-\}
-    
-z.score = apply(z.table, MARGIN = 1, median)
-      
-lambda = median(z.score\^~2) /0.456
-
-p.values = pchisq(z.score\^~2 / lambda, df = 1, lower = F))
-
-}        
-                        
-                        
-                        
-\noindent For an expected value of the FDR equal to $q$  (set $q= 10 \%$ or $q = 15 \%$), a list of candidate loci stored in the object {\tt candidate} can be obtained by using the Benjamini-Hochberg procedure as follows
- {\tt
-
-  L = length(p.values) 
-  
-  n = sum( sort(p.values) < q*(1:L)/L )
-  
-  candidates = which( p.values < q*n/L )
-
+for (i in 1:5){ 
+	file.name = paste("res",i, "_s1.9.zscore", sep="")
+	z.table = cbind(z.table, read.table(file.name)[,1])
 }
+z.score = apply(z.table, MARGIN = 1, median)
+lambda = median(z.score^2) / 0.456
+ap.values = pchisq(z.score^2 / lambda, df = 1, lower = F))
+\end{Verbatim} 
+                        
+                        
+                        
+\noindent For an expected value of the FDR equal to $q$  (set $q= 10 \%$ or $q = 15 \%$), a list of candidate loci stored in the object {\tt candidates} can be obtained by using the Benjamini-Hochberg procedure as follows
 
-%\section{How to choose $K$, the number of latent factors}
-%The number of latent factors is the number of principal components (or latent factors) that is
-%required to describe the neutral structure of the data. Several values should be tested.
-%A too small value of $K$ leads to liberal tests and may generate False Positive results.
-%A too large value of $K$ leads to conservative tests and may generate False Negative results.           
-%We advise you to be really careful in the choice of $K$ and to test several values of $K$.
-%
-%\subsection{based on a population structure analysis}
-%\paragraph{with a Principal Component Analysis approach}
-%In our paper, we used the number of significative principal components in the
-%Tracy-Widom test of {\tt SmartPCA} (http://helix.nih.gov/Applications/eigensoft.html)
-%\cite{Patterson_2006}. This heuristic may be a bit too conservative.
-%
-%\paragraph{with on a clustering approach}
-%We also used the Bayesian clustering programs {\tt STRUCTURE}\\
-%(http://pritch.bsd.uchicago.edu/software/structure2\_1.html) \cite{Pritchard_2000}, {\tt TESS}\\
-%(http://membres-timc.imag.fr/Olivier.Francois/tess.html) \cite{Chen_2007, Durand_2009} and
-%{\tt sNMF} (a fast program to estimate ancestry coefficients) \\
-%(http://membres-timc.imag.fr/Olivier.Francoissnmff.html)
-%to find K the number of components which could better describe our simulated data.
-%
-%\subsection{based on p-values distribution}
-%coming soon...
-%
-%\section{variance}
-%coming soon an explanation of the percentage of variance explained by each variable.
+\begin{Verbatim} 
+q = 0.1
+L = length(ap.values) 
+w = which(sort(ap.values) < q * (1:L) / L)
+candidates = order(ap.values)[w]
+\end{Verbatim} 
 
-\section{Annex programs}
+\section{Tutorial}
 
-We provide a set of R and perl scripts and C programs convert to LFMM format and to plot manhattan plot.
+\subsection{Simulated data set}
+The data set is composed of 165 individuals for 1000 SNPs simulated with SPLACHE
+(see our note for LEA package for more informations). 
+In this data set, the last 100 SNPs are simulated as associated with the 
+environnemental gradient. 
+The data set is in the directory "examples/simulated\_example/".\\
+\\
+\noindent
+Here is a small script to run LFMM with 5 repetitions. 
+\begin{Verbatim}[frame=single]
+mkdir res;
+for i in 1 2 3 4 5; do
+	./bin/LFMM -x examples/simulated_example/genotypes.lfmm \ 
+	-v examples/simulated_example/gradients.env -K 9 -o res/res$i 
+done
+\end{Verbatim}
+
+\noindent
+Then, apply the following R script:
+\begin{Verbatim}[frame=single]
+z.table = NULL
+for (i in 1:5){ 
+        file.name = paste("res/res",i, "_s1.9.zscore", sep="")
+        z.table = cbind(z.table, read.table(file.name)[,1])
+}
+z.score = apply(z.table, MARGIN = 1, median)
+lambda = median(z.score^2) / 0.456
+ap.values = pchisq(z.score^2 / lambda, df = 1, lower = F)
+
+q = 0.1
+L = length(ap.values) 
+w = which(sort(ap.values) < q * (1:L) / L)
+candidates = order(ap.values)[w]
+
+# estimated FDR and True Positif
+estimated.FDR = length(which(candidates <= 900))/length(candidates)
+estimated.TP = length(which(candidates > 900))/100
+print(paste("expected FDR:", q))
+print(paste("FDR:", estimated.FDR, "True Positive:", estimated.TP))
+\end{Verbatim} 
+
+\subsection{Real data set}
+\subsubsection{Description}
+The data set that we analyze in this tutorial is an Asian human data set of SNPs data.
+This data is a worldwide sample of genomic DNA (10757 SNPs) from 388 individuals,
+taken from the Harvard Human Genome Diversity Project - Centre
+Etude Polymorphism Humain (Harvard HGDP-CEPH)2 . In those
+data, each marker has been ascertained in samples of Mongolian
+ancestry (referenced population HGDP01224) \cite{Patterson_2012}. We selected all
+samples from Asia.
+Using Tracy-Widom tests implemented in {\tt SmartPCA} \cite{Patterson_2006}, we found that the number of
+principal components with P-values smaller than $0.01$ was around $KTW = 10$. Using
+the Bayesian clustering programs {\tt STRUCTURE} \cite{Pritchard_2000} and 
+{\tt TESS} \cite{Chen_2007, Durand_2009}, we found that $K = 7$
+components could better describe our simulated data.
+We extracted climatic data population samples using the WorldClim
+data set at 30 arcsecond (1km2 ) resolution
+(Hijmans, Cameron, Parra, Jones, and Jarvis (2005)).
+We summarized the climatic variables by using the first axis of a
+principal component analysis for temperature variables and for
+precipitation variables.
+The data set is in directory \verb|examples/human_example/|. The genotypic information
+are in \verb|panel11_Asia.lfmm|. the SNPs information is in \verb|panel11.pedsnp|.
+The environmental file is \verb|cov_panel11_Asia.env|. There are 2 variables, one proxy
+for temperature and one for precipitation.
+
+\subsubsection{Run LFMM}
+Here is an example of command line to analyse our dataset
+
+\begin{Verbatim}[frame=single]
+./bin/LFMM -x examples/human_example/panel11_Asia.lfmm \ 
+-v examples/human_example/cov_panel11_Asia.env  -K 7 -d 1 
+\end{Verbatim}
+Output for LFMM
+\begin{Verbatim}[frame=single]
+LFMM  Copyright (C) 2012 Eric Frichot
+This program comes with ABSOLUTELY NO WARRANTY; for details type './LFMM -l'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; type './LFMM -l' for details.
+
+****                         LFMM Version 1.3                                   *****
+****           E. Frichot, S. Schoville, G. Bouchard, O. Francois               *****
+****                         Please cite our paper !                            *****
+****   Information at http://membres-timc.imag.fr/Olivier.Francois/lfmm/        *****
+
+./bin/LFMM -x examples/human_example/panel11_Asia.lfmm -v examples/human_example/cov_panel11_Asia.env -K 7 -d 1  
+Summary of the options:
+
+        -n (number of individuals)      388
+        -L (number of loci)             10757
+        -K (number of latent factors)   7
+        -o (output file)                /home/frichote/replop/CL_code/examples/LFMM/human_example/panel11_Asia
+        -i (number of iterations)       10000
+        -b (burnin)                     5000
+        -s (seed random init)           4769701177742658440
+        -p (number of processes (CPU))  1
+        -x (genotype file)              examples/human_example/panel11_Asia.lfmm
+        -v (variable file)              examples/human_example/cov_panel11_Asia.env
+        -D (number of covariables)      2
+        -d (the dth covariable)         1
+
+Read variable file:
+ 	examples/human_example/cov_panel11_Asia.env		OK.
+
+Read genotype file:
+ 	examples/human_example/panel11_Asia.lfmm		OK.
+
+<<<<
+	 Analyse for variable 1
+
+		Start of the Gibbs Sampler algorithm.
+
+	[                                                                           ]
+	[===========================================================================]
+
+		End of the Gibbs Sampler algorithm.
+
+	ED: 4173815.5	 DIC: 4173900.09 
+
+	The statistics for the run are registered in:
+ 		examples/LFMM/human_example/panel11_Asia_s1.7.dic.
+
+	The zscores for variable 1 are registered in:
+ 		examples/LFMM/human_example/panel11_Asia_s1.7.zscore.
+	The columns are: zscores, -log10(p-values), p-values.
+
+	-------------------------
+	The execution for variable 1 worked without error.
+>>>>
+\end{Verbatim}
+
+
+\section{Additional programs}
+
+We provide C programs to perform a PCA and tracy-widom tests and to convert to lfmm format.
+
+\subsection{Principal Component Analysis}
+
+The program is executed by a command line. The format is:
+\begin{Verbatim}[frame=single]
+./bin/pca -x genotype_file 
+\end{Verbatim}
+
+\noindent
+All the previous options are mandatory. There is no order for the options in the command line.
+Here is a more precise description of the options:
+\begin{itemize}
+\item \verb|-x genotype_file| is the path for the genotype file (in {\bf lfmm} format).
+\end{itemize}
+
+\noindent
+Other options are not mandatory:
+\begin{itemize}
+\item \verb|-K K| compute only K principal components (default: n, the number of individuals). 
+\item \verb|-a eigenvalue_file| output eigenvalues file (default: genotype\_file.eigenvalues). 
+\item \verb|-a eigenvector_file| output eigenvectors file (default: genotype\_file.eigenvectors). 
+\item \verb|-a sdev_file| output standard deviation file (default: genotype\_file.sdev). 
+\item \verb|-a projection_file| output projections file (default: genotype\_file.projections). 
+\item \verb|-c| boolean option, datat centered (default: FALSE)
+\item \verb|-s| boolean option, datat centered and scaled(default: FALSE)
+\end{itemize}
+
+\noindent
+If you need a summary of the options, you can use the \verb|-h| option by typing the command line
+\begin{Verbatim}[frame=single]
+./bin/pca -h
+\end{Verbatim}
+
+\noindent
+Here is a small example:
+\begin{Verbatim}[frame=single]
+./bin/pca -x examples/simulated_example/genotypes.lfmm
+\end{Verbatim}
+
+\noindent 
+A program is also available to perform Tracy-Widom tests on a set of eigenvalues.
+The program is executed by a command line. The format is:
+\begin{Verbatim}[frame=single]
+./bin/tracyWidom -i input_file.eigenvalues [output_file.tracywidom]
+\end{Verbatim}
+where
+\begin{itemize}
+\item \verb|input_file.eigenvalues| is the path for the input file containing the eigenvalues.
+\item \verb|output_file.tracywidom| is the path for the output\_file.
+By default, the name of the output file is the name of the input\_file with a .tracywidom extension.
+\end{itemize}
+
+\noindent
+Here is a small example:
+\begin{Verbatim}[frame=single]
+./bin/tracyWidom -i examples/simulated_example/genotypes.eigenvalues
+\end{Verbatim}
 
 \subsection{Data Format}
-Input files are composed of two mandatory files (a genotype file and an environmental variable file)
-and one optional file (the snp information file). The snp file is interesting to analyze zscore
-results and display results with manhattan plots.
+Input files are composed of two mandatory files (a genotype file and an environmental variable file). 
 It is not necessary to provide information about individuals.
 All data formats are described with the same
 example. These files are available in \verb|examples/format_example/|.
 
-\subsubsection{Genotype Data}
 \begin{itemize}
 \item lfmm (example.lfmm)\\
 The {\bf lfmm} format has one row for each individual. Each row contains
@@ -254,7 +404,6 @@ of derived alleles as long as it is the same choice for an entire SNP. The missi
 genotypes are encoded with the value -9 or 9.
 
 \begin{center}
-\footnotesize
 \begin{Verbatim}[frame=single]
 1 0 0 1
 1 1 9 2
@@ -268,7 +417,6 @@ The {\bf ped} format has one row for each individual. Each row contains 6 column
 The ped format is described here: http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml.
 
 \begin{center}
-\footnotesize
 \begin{Verbatim}[frame=single]
 1       SAMPLE0 0 0 2 2 1 2 3 3 1 1 2 1
 2       SAMPLE1 0 0 1 2 2 1 1 3 0 4 1 1
@@ -279,7 +427,6 @@ The ped format is described here: http://pngu.mgh.harvard.edu/~purcell/plink/dat
 \item ancestrymap (example.ancestrymap)\\
 The {\bf ancestrymap} format has one row for each genotype. Each row has 3 columns: the 1st column is the SNP name, the 2nd column is the sample ID, the 3rd column is th number of alleles. It is assumed that the genotypes for a given SNP name are written in consecutive lines. It is also assumed that the genotypes for a set of individuals are given in the same order as lines. The number of alleles can be the number of reference alleles or the number of derived alleles as long as it is the same choice for an entire SNP. It is assumed that the missing genotypes are encoded with the value 9.
 \begin{center}
-\footnotesize
 \begin{Verbatim}[frame=single]
               rs0000              SAMPLE0   1
               rs0000              SAMPLE1   1
@@ -305,7 +452,6 @@ Each row contains 1 character per individual:
         9 means missing data.
 
 \begin{center}
-\footnotesize
 \begin{Verbatim}[frame=single]
 112
 010
@@ -319,7 +465,6 @@ The {\bf vcf} The vcf format is described here\\
 http://www.1000genomes.org/wiki/Analysis/Variant\%20Call\%20Format/vcf-variant-call-format-version-41
 
 \begin{center}
-\footnotesize
 \begin{Verbatim}[frame=single]
 ##fileformat=VCFv4.1
 ##FORMAT=<ID=GM,Number=1,Type=Integer,Description="Genotype meta">
@@ -340,65 +485,6 @@ http://www.1000genomes.org/wiki/Analysis/Variant\%20Call\%20Format/vcf-variant-c
 {\it Tips:} As LFMM does not model allele frequencies, genotype file can be
 the number of copy of either the reference allele or the derived allele.
 
-\subsubsection{Snp Data}
-Warning: SNP data information has to be in the same order as in genotypic data file.
-
-\begin{itemize}
-\item pedsnp (example.pedsnp or example.map) \\
-The snp file contains 1 line per SNP.  There are 6 columns (last 2 optional):
-  1st column is chromosome.  Use X for X chromosome,
-  2nd column is SNP name,
-  3rd column is genetic position (in Morgans),
-  4th column is physical position (in bases),
-  Optional 5th and 6th columns are reference and variant alleles.
-
-\begin{center}
-\footnotesize
-\begin{Verbatim}[frame=single]
-11       rs0000     0.000000            0 A C
-11       rs1111     0.001000       100000 A G
-11       rs2222     0.002000       200000 A T
-11       rs3333     0.003000       300000 C A
-\end{Verbatim}
-\end{center}
-
-\item snp (example.snp) \\
-The snp file contains 1 line per SNP.  There are 6 columns (last 2 optional):
-  1st column is SNP name,
-  2nd column is chromosome.  Use X for X chromosome,
-  2nd column is SNP name,
-  3rd column is genetic position (in Morgans)  (If unknown, ok to set to 0.0),
-  4th column is physical position (in bases),
-  Optional 5th and 6th columns are reference and variant alleles.
-\begin{center}
-\footnotesize
-\begin{Verbatim}[frame=single]
-              rs0000  11        0.000000               0 A C
-              rs1111  11        0.001000          100000 A G
-              rs2222  11        0.002000          200000 A T
-              rs3333  11        0.003000          300000 C A
-\end{Verbatim}
-\end{center}
-
-\item lfmmsnp (example.lfmmsnp) \\
-The snp file contains 1 line per SNP.  There are 3 columns:
-  1st column is SNP name,
-  2nd column is chromosome,
-  3th column is physical position (in bases).
-\begin{center}
-\footnotesize
-\begin{Verbatim}[frame=single]
-              rs0000  11        0
-              rs1111  11        100000
-              rs2222  11        200000
-              rs3333  11        300000
-\end{Verbatim}
-\end{center}
-\end{itemize}
-\noindent
-{\it Tips:} SNP data information is not mandatory. But if you have it, we advise you to provide it.
-It is useful for post-treatment of LFMM analysis.
-
 \subsection{Data conversion}
 
 The LFMM command-line engine allows data in lfmm format. You can convert from ped, eigenstratgeno,
@@ -410,7 +496,7 @@ The format of the command-line is (replacing <format> by ped, ancestrymap, or ge
 \end{Verbatim}
 where
 \begin{itemize}
-\item \verb|input_file| is the path for the input file (in <format> format).
+\item \verb|input_file| is the path for the input file.
 \item \verb|output_file| is the path for the output\_file (in lfmm format).
 By default, the name of the output file is the name of the input\_file with .lfmm extension.
 \end{itemize}
@@ -433,174 +519,14 @@ For examples,
 \item example.vcf
 \begin{Verbatim}[frame=single]
 ./bin/vcf2geno examples/format_example/example.vcf
-./bin/geno2lfmm examples/format_example/example.geno
-\end{Verbatim}
-\end{itemize}
-
-\subsection{Transform LFMM results}
-
-The LFMM command line engine outputs results without taking into account snp data informations.
-You can add these informations and display results in a table similar as the one in the GUI
-by using perl scripts. The output format will be called .res.
-The format is ($L$ the number of loci):
-\begin{itemize}
-\item without snp data
-\begin{Verbatim}[frame=single]
-perl ./scripts/nothing2lfmm.pl zscore.txt zscore.res L
-\end{Verbatim}
-\item for example.pedsnp
-\begin{Verbatim}[frame=single]
-perl ./scripts/pedsnp2lfmm.pl zscore.txt example.pedsnp zscore.res L
-\end{Verbatim}
-\item for example.snp
-\begin{Verbatim}[frame=single]
-perl ./scripts/snp2lfmm.pl zscore.txt example.snp zscore.res L
-\end{Verbatim}
-\item for example.lfmmsnp
-\begin{Verbatim}[frame=single]
-perl ./scripts/lfmmsnp2lfmm.pl zscore.txt example.lfmmsnp zscore.res L
 \end{Verbatim}
 \end{itemize}
 
 \subsection{Manhattan plot}
 
-You can create a manhattan plot in the pdf format using a provided R script. If you want, you can
-highlight a list of specific snps in green. 
-The list of SNPs you want to display should be written in file \verb|manhattan_table.txt|. The list of
-SNPs you want to highlight in green should be written in file \verb|toHighlight_table.txt|.
-\begin{Verbatim}[frame=single]
-Rscript scripts/manhattan.R manhattan_table.txt toHighlight_table.txt manhattan_plot.pdf
-\end{Verbatim}
-The format of these files is the same as the export format of a zscore table (\verb|zscore.res|).
-Here is an example of format:
-\begin{center}
-\footnotesize
-\begin{Verbatim}[frame=single]
-Name	Chr	Position	Zscore	-log10(p-value) p-value
-rs0000	11	0	0.070834	0.0252502	0.943517
-rs1111	11	100000	0.0534096	0.0189187	0.957373
-rs2222	11	200000	0.0126014	0.00440559	0.989907
-rs3333	11	300000	0.0261071	0.00915623	0.979138
-rs4444	11	400000	0.0181521	0.00635249	0.985479
-rs5555	11	500000	0.00728521	0.00253695	0.994175
-rs6666	11	600000	0.00500635	0.00175344	0.995971
-\end{Verbatim}
-\end{center}
-
-\section{Tutorial}
-
-\subsection{Data set}
-The data set that we analyze in this tutorial is an Asian human data set of SNPs data.
-This data is a worldwide sample of genomic DNA (10757 SNPs) from 388 individuals,
-taken from the Harvard Human Genome Diversity Project - Centre
-Etude Polymorphism Humain (Harvard HGDP-CEPH)2 . In those
-data, each marker has been ascertained in samples of Mongolian
-ancestry (referenced population HGDP01224) \cite{Patterson_2012}. We selected all
-samples from Asia.
-Using Tracy-Widom tests implemented in {\tt SmartPCA} \cite{Patterson_2006}, we found that the number of
-principal components with P-values smaller than $0.01$ was around $KTW = 10$. Using
-the Bayesian clustering programs {\tt STRUCTURE} \cite{Pritchard_2000} and 
-{\tt TESS} \cite{Chen_2007, Durand_2009}, we found that $K = 7$
-components could better describe our simulated data.
-We extracted climatic data population samples using the WorldClim
-data set at 30 arcsecond (1km2 ) resolution
-(Hijmans, Cameron, Parra, Jones, and Jarvis (2005)).
-We summarized the climatic variables by using the first axis of a
-principal component analysis for temperature variables and for
-precipitation variables.
-The data set is in directory \verb|examples/human_example/|. The genotypic information
-are in \verb|panel11_Asia.lfmm|. the SNPs information is in \verb|panel11.pedsnp|.
-The environmental file is \verb|cov_panel11_Asia.env|. There are 2 variables, one proxy
-for temperature and one for precipitation.
-
-\subsection{Run LFMM}
-Here is an example of command line to analyse our dataset
-
-\begin{Verbatim}[frame=single]
-./bin/LFMM -x examples/human_example/panel11_Asia.lfmm -v examples/human_example/cov_panel11_Asia.env 
--K 7 -d 1 
-\end{Verbatim}
-Output for LFMM
-\begin{Verbatim}[frame=single]
-LFMM  Copyright (C) 2012 Eric Frichot
-This program comes with ABSOLUTELY NO WARRANTY; for details type './LFMM -l'.
-This is free software, and you are welcome to redistribute it
-under certain conditions; type './LFMM -l' for details.
-
-****                         LFMM Version 2.0                                   *****
-****           E. Frichot, S. Schoville, G. Bouchard, O. Francois               *****
-****                         Please cite our paper !                            *****
-****   Information at http://membres-timc.imag.fr/Olivier.Francois/lfmm/        *****
-
-./bin/LFMM -x examples/human_example/panel11_Asia.lfmm -v examples/human_example/cov_panel11_Asia.env -K 7 -d 1 
-Summary of the options:
-
-        -n (number of individuals)      388
-        -L (number of loci)             10757
-        -K (number of latent factors)   7
-        -o (output file)                examples/human_example/panel11_Asia
-        -i (number of iterations)       1000
-        -b (burnin)                     100
-        -s (seed random init)           11071964616852227840
-        -p (number of processes (CPU))  1
-        -x (genotype file)              examples/human_example/panel11_Asia.lfmm
-        -v (variable file)              examples/human_example/cov_panel11_Asia.env
-        -D (number of covariables)      2
-        -d (the dth covariable)         1
-        -C (DIC file)                   examples/human_example/panel11_Asia.dic
-
-Read variable file:
- 	examples/human_example/cov_panel11_Asia.env		OK.
-
-Read genotype file:
- 	examples/human_example/panel11_Asia.lfmm		OK.
-
-<<<<
-	 Analyse for covariable 1
-
-		Start of the Gibbs Sampler algorithm.
-
-[                                                                           ]
-[===========================================================================]
-
-		End of the Gibbs Sampler algorithm.
-
-	ED:4173727.18	 DIC: 4173727.955 
-
-	The zscores for variable 1 were registered in:
- 		examples/human_example/panel11_Asia_s1.7.zscore.
-	The columns are: zscore, -log10(p-value), p-value, -log10(q-value), q-value.
-
-
-	The execution for covariable 1 worked without error.
->>>>
-\end{Verbatim}
-
-\noindent
-Here is an example of command line to create \verb|zscore.res| for the variable.
-\begin{Verbatim}[frame=single]
- perl ./scripts/pedsnp2zscore.pl examples/human_example/panel11_Asia_s1.7.zscore 
-examples/human_example/panel11.pedsnp examples/human_example/panel11_Asia_s1.7.res 10757
-\end{Verbatim}
-\noindent
-Then, we created a file \verb|examples/human_example/toHiglight_table.txt| as follows:
-\begin{Verbatim}[frame=single]
-Name Chr Position Zscore -log10(p-value) p-value -log10(q-value) q-value
-Affx-3561055 10 67583134 7.55076 13.3638 4.32731e-14 9.33209 4.65489e-10
-Affx-3235806 10 4518973 7.25392 12.3927 4.04887e-13 8.66201 2.17768e-09
-\end{Verbatim}
-\noindent
-Here is an example of command line to create a manhattan plot (in \verb|examples/human_example/manhattan_plot_2.pdf|) with all SNPs and the two previous SNPs highlighted in green:
-\begin{Verbatim}[frame=single]
-Rscript scripts/manhattan.R examples/human_example/panel11_Asia_s1.7.res 
-examples/human_example/toHighlight_table.txt examples/human_example/panel11_Asia_s1.7.pdf
-\end{Verbatim}
-
-\centerline{\includegraphics[width=18cm,height=18cm]{manhattan.pdf}}
+To display a manhattan plot of the results, you may consider the package {\tt qqman}.
 
 \section{Contact}
-If you need assistance, do not hesitate to send me an
-email (efrichot@gmail.com). 
 A FAQ (Frequently Asked Questions) section is available 
 on our webpage (ttp://membres-timc.imag.fr/Olivier.Francois/lfmm.html). 
 LFMM software is still under development. 

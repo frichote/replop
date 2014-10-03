@@ -110,16 +110,16 @@
 			<div class="box">
 			<pre><code>library(LEA)
 
-# Creation of a genotypic matrix G with 1000 SNPs for 100 individuals.
-# The G matrix contains one individual per line and one locus per column.
-G = matrix(sample(c(0,1,2),replace=TRUE, size=1000*100), ncol=1000, nrow=100)
+# tutorial contains a matrix of genotypes R with 1000 SNPs for 165 individuals.
+# and a matrix with an environmental variable C.
+data("tutorial")
 
-# write G in a file called "tuto.lfmm"
-# Create file:	"tuto.lfmm".
-write.lfmm(G, "tuto.lfmm")
+# write R in a file called "genotypes.lfmm"
+# Create file:	"genotypes.lfmm".
+write.lfmm(R, "genotypes.lfmm")
 
-# read the file "tuto.lfmm".
-G = read.lfmm("tuto.lfmm")</code></pre></div>
+# read the file "genotypes.lfmm".
+R = read.lfmm("genotypes.lfmm")</code></pre></div>
 <br/>
 </li>
 <li>
@@ -127,22 +127,22 @@ Conversion from the lfmm format to the geno format
 <div class="box">
 <pre><code>library(LEA)
 
-# Creation of a file called "tuto.lfmm" in the working directory,
-# with 1000 SNPs for 100 individuals.
-G = matrix(sample(c(0,1,2),replace=TRUE, size=1000*100), ncol=1000, nrow=100)
-write.lfmm(G, "tuto.lfmm")
+# tutorial contains a matrix of genotypes R with 1000 SNPs for 165 individuals.
+# and a matrix with an environmental variable C.
+data("tutorial")
+write.lfmm(R, "genotypes.lfmm")
 
-# Conversion 	from the lfmm format ("tuto.lfmm") 
-#		to the geno format ("tuto.geno").
+# Conversion 	from the lfmm format ("genotypes.lfmm") 
+#		to the geno format ("genotypes.geno").
 # By default, 	the name of the output file is the same name 
 #		as the input file with a .geno extension.
-# Create file:	"tuto.geno".
-output = lfmm2geno("tuto.lfmm")
+# Create file:	"genotypes.geno".
+output = lfmm2geno("genotypes.lfmm")
 
-# Conversion 	from the lfmm format ("tuto.lfmm") 
+# Conversion 	from the lfmm format ("genotypes.lfmm") 
 #		to the geno format with the output file called "plop.geno".
 # Create file:	"plop.geno".
-output = lfmm2geno("tuto.lfmm", "plop.geno")</code></pre></div>
+output = lfmm2geno("genotypes.lfmm", "plop.geno")</code></pre></div>
 </li>
 </ul>
 			</p>
@@ -210,38 +210,38 @@ C = read.env("tuto.env")</code></pre></div>
                         <div class="box">
                         <pre><code>library(LEA)
 
-# Creation of a genotypic matrix G with 1000 loci for 100 individuals.
-# The G matrix is composed of one individual per line and one locus per column.
-G = matrix(sample(c(0,1,2), replace=TRUE, size=1000*100), ncol=1000, nrow=100)
+# tutorial contains a matrix of genotypes R with 1000 SNPs for 165 individuals.
+# and a matrix with an environmental variable C.
+data("tutorial")
 
-# Write G in a file called "tuto.geno".
-# Create file:	"tuto.geno".
-write.geno(G, "tuto.geno")
+# Write R in a file called "genotypes.geno".
+# Create file:  "genotypes.geno".
+write.geno(R, "genotypes.geno")
 
-# Read the file "tuto.geno".
-G = read.geno("tuto.geno")</code></pre></div>
+# Read the file "genotypes.geno".
+R = read.geno("genotypes.geno")</code></pre></div>
 			<br/>
 			</li>
 			<li>Conversion from the geno format to the lfmm format
                         <div class="box">
 			<pre><code>library(LEA)
 
-# Creation of a file called "tuto.geno" in the working directory,
-# with 1000 SNPs for 100 individuals.
-G = matrix(sample(c(0,1,2),replace=TRUE, size=1000*100), ncol=1000, nrow=100)
-write.geno(G, "tuto.geno")
+reation of a file called "genotypes.geno" in the working directory
+# with 1000 SNPs for 165 individuals.
+data("tutorial")
+write.geno(R, "genotypes.geno")
 
-# Conversion 	from the geno format ("tuto.geno") 
-#		to the lfmm format ("tuto.lfmm").
-# By default, 	the name of the output file is the same name 
-#		as the input file with a .lfmm extension.
-# Create file:	"tuto.lfmm".
-output = geno2lfmm("tuto.geno")
+# Conversion   from the geno format ("genotypes.geno") 
+#              to the lfmm format ("genotypes.lfmm").
+# By default,  the name of the output file is the same name 
+#              as the input file with a .lfmm extension.
+# Create file: "genotypes.lfmm".
+output = geno2lfmm("genotypes.geno")
 
-# Conversion 	from the geno format ("tuto.geno") 
-#		to the lfmm format with the output file called "plop.lfmm".
-# Create file:	"plop.lfmm".
-output = geno2lfmm("tuto.geno", "plop.lfmm")</code></pre></div>
+# Conversion   from the geno format ("genotypes.geno") 
+#              to the lfmm format with the output file called "plop.lfmm".
+# Create file: "plop.lfmm".
+output = geno2lfmm("genotypes.geno", "plop.lfmm")</code></pre></div>
 			</li>
 			</ul>
                         </p>
@@ -456,27 +456,27 @@ output = vcf2geno("example.vcf", "plop.geno")</code></pre></div>
                         <div class="box">
                         <pre><code>library(LEA)
 
-# Creation of the genotype file "tuto.lfmm"
-# with 10000 SNPs for 50 individuals.
-data("tuto")
-write.lfmm(R, "tuto.lfmm")
+# Creation of the genotype file "genotypes.lfmm"
+# with 1000 SNPs for 165 individuals.
+data("tutorial")
+write.lfmm(R, "genotypes.lfmm")
 
 # run of PCA
-# Available options, 	K (the number of PCs calculated), 
-#			center and scale. 
-# Create files: tuto.eigenvalues - eigenvalues,	
-#		 tuto.eigenvectors - eigenvectors,
-#		 tuto.sdev - standard deviations,
-#		 tuto.projections - projections,
-#		 tuto.pcaClass - the pcaClass object.
-# Create a pca-class object: pc.
-pc = pca("tuto.lfmm", scale = TRUE)</code></pre></div>
+# Available options, K (the number of PCs calculated), 
+#                    center and scale. 
+# Creation of   genotypes.pcaProject - the pcaProject object.
+#               a directory genotypes.pca containing:
+# Create files: genotypes.eigenvalues - eigenvalues,        
+#               genotypes.eigenvectors - eigenvectors,
+#               genotypes.sdev - standard deviations,
+#               genotypes.projections - projections,
+# Create a pcaProject object: pc.
+pc = pca("genotypes.lfmm", scale = TRUE)</code></pre></div>
 			<br/>
                         </li>
                         <li> Display information 
                         <div class="box">
                         <pre><code># Display information about the analysis.
-show(pc)
 
 # Summarize the analysis.
 summary(pc)</code></pre></div>
@@ -502,7 +502,7 @@ plot(pc$sdev)</code></pre></div>
  <div class="box">
                         <pre><code># Perfom Tracy-Widom tests on all eigenvalues.
 # create file: tuto.tracyWidom - tracy-widom test information.	
-tw = tracyWidom(pc)
+tw = tracy.widom(pc)
 
 # plot the percentage of variance explained by each component
 plot(tw$percentage)
@@ -522,7 +522,7 @@ tw$pvalues</code></pre></div>
 		It is interesting to perform several runs for several number of ancestral populations (K).
                 <br/>
                 <br/>
-		This tutorial describe how to: analyze a dataset, manage a snmf project, run sNMF with advanced
+		This tutorial describes how to: analyze a dataset, manage an snmf project, run sNMF with advanced
 		optinons, and perform post-treatment of the results.
                 </p>
 
@@ -536,68 +536,49 @@ tw$pvalues</code></pre></div>
                         <div class="box">
                         <pre><code>library(LEA)
 
-# creation of the genotype file, tuto.geno.
-# It contains 10000 SNPs for 50 individuals.
-# It is composed of three non-admixed populations
-# with respectively 20, 10, and 20 indiviuals. 
-data("tuto")
-write.geno(R, "tuto.geno")
+# creation of the genotype file, genotypes.geno.
+# It contains 1000 SNPs for 165 individuals.
+data("tutorial")
+write.geno(R, "genotypes.geno")
 
-###  rnns of sNMF ####
+################
+# runs of sNMF #
+################
+
 # main options, K: (the number of ancestral populations), 
-#		alpha: the regularization parameter, 
-#		entropy: calculate the cross-entropy criterion, 
-#		tolerance: the stopping criterion. 
-#		CPU: the number of CPUs.
+#               entropy: calculate the cross-entropy criterion, 
+#               CPU: the number of CPUs.
 
 # Runs with K between 1 and 5 with cross-entropy and 2 repetitions.
-project = sNMF("tuto.geno", K=1:5, entropy = TRUE, repetitions = 2)
+project = sNMF("genotypes.geno", K=1:10, entropy = TRUE, repetitions = 2)
 
 # plot cross-entropy criterion of all runs of the project
 plot(project, lwd = 5, col = "red", pch=1)
 
-# get the cross-entropy of each run for K = 3
-ce = crossEntropy(project, K = 3)
+# get the cross-entropy of each run for K = 7
+ce = cross.entropy(project, K = 7)
 
 # select the run with the lowest cross-entropy
 best = which.min(ce)
 
-# plot the best run for K = 3 (ancestry coefficients).
-barplot(t(Q(project, K = 3, run = best)), col = c("red", "blue", "yellow"))</code></pre></div>
+# plot the best run for K = 7 (ancestry coefficients).
+barplot(t(Q(project, K = 7, run = best)))</code></pre></div>
 			<br/>
                         </li>
-			<li> Manage a snmf project
-                        <div class="box">
-                        <pre><code># All the runs of sNMF for a given file are 
-# automatically saved into a snmf project. 
-# The name of the snmfProject file is the same name as 
-# the name of the input file with a .snmfProject extension ("tuto.snmfProject").
-# There is only one snmf Project for each input file including all the runs.
-
-# A snmfProject can be load in a different session.
-project = load.snmfProject("tuto.snmfProject") 
-
-# A snmfProject can be erased.
-# Caution: All the files associated with the project will be removed.
-project = remove.snmfProject("tuto.snmfProject")</code></pre></div>
-                        <br/>
                         </li>
                         <li> Post-treatments
                         <div class="box">
                         <pre><code># show the project
 show(project)
 
-# plot cross-entropy criterion of all runs of the project 
-plot(project, lwd = 5, col = "red", pch=1)
-
 # summary of the project
 summary(project)
 
 # get the cross-entropy for all runs for K = 3 
-ce = crossEntropy(project, K = 3)
+ce = cross.entropy(project, K = 3)
 
 # get the cross-entropy for the 2nd run for K = 3
-ce = crossEntropy(project, K = 2, run = 1)
+ce = cross.entropy(project, K = 3, run = 2)
 
 # get the ancestral genotype frequency matrix, G, for the 2nd run for K = 3. 
 res = G(project, K = 3, run = 2)</code></pre></div>
@@ -605,30 +586,48 @@ res = G(project, K = 3, run = 2)</code></pre></div>
 			</li>
 			<li> Advanced sNMF run options
                         <div class="box">
-                        <pre><code>#Add of one run for K=1 and K=2 with cross-entropy to project
-project = sNMF("tuto.geno",K = c(1,2), entropy = TRUE)
-summary(project)
-
-# Q.input.file: init a run with a given ancestry coefficient matrix Q. 
+                        <pre><code>
+# Q.input.file: init a run with a given ancestry coefficient matrix Q. 
 # Here, it is initialized with the Q matrix from the first run with K=3
-project = sNMF("tuto.geno", K = 3, Q.input.file = "tuto_r1.3.Q")
+project = sNMF("genotypes.geno", K = 3, Q.input.file = "./genotypes.snmf/K3/run1/genotypes_r1.3.Q")
 
-# I: init the Q matrix of a run from a smaller run with 10% randomly chosen SNPs. 
-project = sNMF("tuto.geno", 3, I)
-# or 5% randomly chosen SNPs.
-project = sNMF("tuto.geno", 3, I = 0.05)
+# I: init the Q matrix of a run from a smaller run with 500 randomly chosen SNPs. 
+project = sNMF("genotypes.geno", K = 3, I = 500)
 
 # CPU: run sNMF with 2 CPUs. 
-project = sNMF("tuto.geno", 3, CPU=2, project)
+project = sNMF("genotypes.geno", K = 3, CPU=2)
 
 # percentage: run sNMF and calculate the cross-entropy criterion with 10% of masked
 # genotypes, instead of 5% of masked genotypes. 
-project = sNMF("tuto.geno", 3, entropy= TRUE, percentage = 0.1)
+project = sNMF("genotypes.geno", K = 3, entropy= TRUE, percentage = 0.1)
 
 # seed: choose the seed to init the randomization.
-project = sNMF("tuto.geno", 3, seed=42)
-</code></pre></div>
+project = sNMF("genotypes.geno", K = 3, seed=42)
+
+# alpha: choose the regularization parameter.
+project = sNMF("genotypes.geno", K = 3, alpha = 100)
+
+# tolerance: choose the tolerance parameter.
+project = sNMF("genotypes.geno", K = 3, tolerance = 0.0001)</code></pre></div>
 			</li>
+			<br/>
+			<li> Manage a snmf project
+                        <div class="box">
+                        <pre><code># All the runs of sNMF for a given file are 
+# automatically saved into a snmf project directory and a file.
+# The name of the snmfProject file is the same name as 
+# the name of the input file with a .snmfProject extension ("genotypes.snmfProject").
+# The name of the snmfProject directory is the same name as
+# the name of the input file with a .snmf extension ("genotypes.snmf/")
+# There is only one snmf Project for each input file including all the runs.
+
+# An snmfProject can be load in a different session.
+project = load.snmfProject("genotypes.snmfProject")
+
+# An snmfProject can be erased.
+# Caution: All the files associated with the project will be removed.
+remove.snmfProject("genotypes.snmfProject")</code></pre></div>
+                        <br/>
 			</ul>
 		</p>
                 </div>
@@ -657,78 +656,86 @@ project = sNMF("tuto.geno", 3, seed=42)
                         <div class="box">
                         <pre><code>library(LEA)
 
-# creation of the genotype file, tuto.lfmm
-# 	  and the variable file, tuto.env.
-# It contains 10000 SNPs for 50 individuals and 2 variables.
-data("tuto")
-write.lfmm(R, "tuto.lfmm")
-write.env(C, "tuto.env")
+data("tutorial")
+# creation of the genotype file, genotypes.lfmm.
+# It contains 1000 SNPs for 165 individuals.
+write.lfmm(R, "genotypes.lfmm")
+# creation of the environment file, gradient.env.
+# It contains 1 environmental variable for 165 individuals.
+write.env(C, "gradients.env")
 
 ###  runs of LFMM ####
 # main options, K: (the number of latent factors), 
-#		d: run for the d-th variable
-#		CPU: the number of CPUs.
+#               CPU: the number of CPUs.
 
-# Runs with K = 1 and K = 2 and 3 repetitions.
-project = LFMM("tuto.lfmm", "tuto.env", K = 1:2, d = 1, repetitions = 3)
+# Runs with K = 9 and 5 repetitions.
+# around 2/3 minutes per run.
+project = LFMM("genotypes.lfmm", "gradients.env", K = 9, repetitions = 5)
 
-# plot lambda criterion of all runs of the project
-plot(project, lwd = 5, col = "red", pch=1)
+# get the zscores of each run for K = 9
+zs = z.scores(project, K = 9)
 
-# return a list controled for the False Discovery Rate for K = 2 and d = 1
-res = cFDR(project, K = 2, d = 1)</code></pre></div>
+# Combine the z-scores using the Stouffer method
+zs.stouffer = apply(zs, MARGIN = 1, median)
+
+# calculate the inflation factor
+lambda = median(zs.stouffer^2)/.456
+
+# calculate adjusted p-values
+cp.values = pchisq(zs.stouffer^2/lambda, df = 1, lower = FALSE)
+
+for (alpha in c(.05,.1,.15,.2)) {
+  # expected FDR
+  print(paste("expected FDR:", alpha))
+  L = length(cp.values)
+  # return a list of candidates with an expected FDR of alpha = 0.1.
+  w = which(sort(cp.values) < alpha * (1:L) / L)
+  candidates = order(cp.values)[w]
+
+  # estimated FDR and True Positif
+  estimated.FDR = length(which(candidates <= 900))/length(candidates)
+  estimated.TP = length(which(candidates > 900))/100
+  print(paste("FDR:", estimated.FDR, "True Positive:", estimated.TP))
+}</code></pre></div>
 			<br/>
 			</li>
-			<li> Manage a lfmm project
-                        <div class="box">
-                        <pre><code># All the runs of LFMM for a given 
-# input file and a given variable file  are 
-# automatically saved into a lfmm project. 
-# The name of the lfmmProject file is the same name as 
-# the name of the input file with a .lfmmProject extension ("tuto.lfmmProject").
-# There is only one lfmm Project for each input file, gathering all the runs.
-
-# A lfmmProject can be load in a different session.
-project = load.lfmmProject("tuto.lfmmProject") 
-
-# A lfmmProject can be erased.
-# Caution: All the files associated with the project will be removed.
-project = remove.lfmmProject("tuto.lfmmProject")</code></pre></div>
-                        <br/>
-                        </li>
                         <li> Post-treatments
                         <div class="box">
                         <pre><code># show the project
 show(project)
 
-# plot the lambda criterion of all runs of the project 
-plot(project, lwd = 5, col = "red", pch=1)
-
-# get a plot of the empirical cumulative distribution function.
-ecdf(project)
-
 # summary of the project
 summary(project)
-		
-# get the z-scores for the 2nd run for K = 2 and d = 1
-z = zscores(project, K = 2, d = 1, run = 2) 
 
-# get the -log10(pvalues) for the 2nd run for K = 2 and d = 1
-mp = mlog10pvalues(project, K = 2, d = 1, run = 2) 
+# get the z-scores for the 2nd run for K = 9
+z = z.scores(project, K = 9, run = 2)
 
-# get the pvalues for the 2nd run for K = 2 and d = 1
-p = pvalues(project, K = 2, d = 1, run = 2) </code></pre></div>
+# get the p-values for the 2nd run for K = 9
+p = p.values(project, K = 9, run = 2)
+
+# get the -log10(p-values) for the 2nd run for K = 9
+mp = mlog10p.values(project, K = 9, run = 2)</code></pre></div>
 			<br/>
 			</li>
-                        <li> Advanced LFMM run options
+			<li> Manage a lfmm project
                         <div class="box">
-                        <pre><code># show the project
-show(project)
+                        <pre><code># All the runs of LFMM for a given 
+# automatically saved into a lfmm project directory and a file.
+# The name of the lfmmProject file is a combination of 
+# the name of the input file and the environment file 
+# with a .lfmmProject extension ("genotypes_gradient.lfmmProject").
+# The name of the lfmmProject directory is the same name as
+# the lfmmProject file with a .lfmm extension ("genotypes_gradient.lfmm/")
+# There is only one lfmm Project for each input file including all the runs.
 
+# An lfmmProject can be load in a different session.
+project = load.lfmmProject("genotypes_gradients.lfmmProject")
 
-			</code></pre></div>
-			<br/>
-			</li>
+# An lfmmProject can be erased.
+# Caution: All the files associated with the project will be removed.
+remove.lfmmProject("genotypes_gradients.lfmmProject")</code></pre></div>
+                        <br/>
+                        </li>
 			</ul>
 		</p>
 	</div>

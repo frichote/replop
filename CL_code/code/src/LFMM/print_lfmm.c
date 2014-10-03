@@ -55,7 +55,7 @@ void print_head_licence_lfmm()
 void print_head_lfmm()
 {
         print_head_licence_lfmm();
-        printf("****                         LFMM Version 2.0                                   *****\n"
+        printf("****                         LFMM Version 1.3                                   *****\n"
                "****           E. Frichot, S. Schoville, G. Bouchard, O. Francois               *****\n"
                "****                         Please cite our paper !                            *****\n"
                "****   Information at http://membres-timc.imag.fr/Olivier.Francois/lfmm/        *****\n\n");

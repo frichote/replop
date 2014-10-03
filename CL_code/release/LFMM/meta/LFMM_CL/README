@@ -1,5 +1,5 @@
-LFMM CL Mac and Linux version 2.0, 05/24/13
-by Eric Frichot (efrichot@gmail.com)
+LFMM CL Mac and Linux version 1.3, 16/09/14
+by Eric Frichot (eric.frichot@imag.fr)
 
 *******************
 *   INSTALLATION   *
@@ -22,7 +22,6 @@ It is organized in 5 folders:
 - documentation
 - examples
 - bin
-- scripts
 
 PLEASE, read the documentation before using our software. It provides
 examples and information on the model and the software.
@@ -37,3 +36,5 @@ PLEASE, if you find a bug, contact us. We will fix it as soon as possible.
 
 1.2: 	- Bug fixed on the transformation of zscore in p-values.
 
+1.3:	- new practical examples to control the FDR, C programs for data
+	conversion, PCA and tracyWidom tests. Few bugs fixed. Code factorization.

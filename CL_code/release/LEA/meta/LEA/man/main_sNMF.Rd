@@ -166,7 +166,7 @@ ce = cross.entropy(project, K = 7)
 best = which.min(ce)
 
 # plot the best run for K = 7 (ancestry coefficients).
-barplot(t(Q(project, K = 7, run = best)), col = c("red", "blue", "yellow", "green", "brown"))
+barplot(t(Q(project, K = 7, run = best)))
 
 ###################
 # Post-treatments #

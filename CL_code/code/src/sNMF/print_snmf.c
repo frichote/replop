@@ -59,7 +59,7 @@ void print_head_licence_snmf()
 void print_head_snmf() 
 {
         print_head_licence_snmf();
-        printf("****                      sNMF Version 1.1                                     *****\n"
+        printf("****                      sNMF Version 1.2                                     *****\n"
                "****   E. Frichot , F. Mathieu, T. Trouillon, G. Bouchard, O. Francois         *****\n"
                "****                    Please cite our paper !                                *****\n"
                "****   Information at http://membres-timc.imag.fr/Olivier.Francois/snmf.html   *****\n\n");

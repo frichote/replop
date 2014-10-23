@@ -10,6 +10,8 @@
 #ifndef THREAD_SNMF_H
 #define THREAD_SNMF_H
 
+#ifndef WIN32
+
 #include "../bituint/bituint.h"
 
 /**
@@ -48,6 +50,8 @@ typedef struct _matrix_snmf {
  */
 void thread_fct_snmf(bituint *R, double *out, double *Q, double *F,
                 int nc, int K, int M, int Mp, int N, int num_thrd, void (*fct) ());
+
+#endif
 
 #endif // THREAD_H
 

@@ -15,6 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <R.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -28,7 +29,13 @@
 void R_createDataSet (char** R_input_file, int* R_seed, double* R_percentage, 
 	char **R_output_file) 
 {
+	// for random in R
+	GetRNGstate();
+
 	createDataSet(*R_input_file, (long long)(*R_seed), *R_percentage, *R_output_file); 
+
+	// for random in R
+	PutRNGstate(); 
 }
 	/*
 	// parameter initialization

@@ -38,7 +38,7 @@ data("tutorial")
 
 # write R in a file called "genotypes.lfmm"
 # Create file:	"genotypes.lfmm".
-write.lfmm(R, "genotypes.lfmm")
+write.lfmm(tutorial.R,"genotypes.lfmm")
 
 # read the file "genotypes.lfmm".
 R = read.lfmm("genotypes.lfmm")

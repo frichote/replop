@@ -12,12 +12,15 @@
 #ifndef SLICE_MATRIX_H
 #define SLICE_MATRIX_H
 
+#ifndef WIN32
 /**
  * compute a slice of the lines of A = transpose(B) * B
  *
  * @param G     a specific structure for multi-threading
  */
 void slice_tBB(void *G);
+
+#endif
 
 #endif // SLICE_MATRIX_H
 

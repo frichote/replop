@@ -156,13 +156,13 @@ Frichot E, Schoville SD, Bouchard G, Francois O. (2013). \emph{Testing for assoc
 \examples{
 ### Example of analyses using LFMM ###
 
-data("tutorial")
+data("example")
 # creation of the genotype file, genotypes.lfmm.
-# It contains 1000 SNPs for 165 individuals.
-write.lfmm(R, "genotypes.lfmm")
+# It contains 500 SNPs for 83 individuals.
+write.lfmm(example.R, "genotypes.lfmm")
 # creation of the environment file, gradient.env.
 # It contains 1 environmental variable for 165 individuals.
-write.env(C, "gradients.env")
+write.env(example.C, "gradients.env")
 
 ################
 # runs of LFMM #
@@ -196,8 +196,8 @@ for (alpha in c(.05,.1,.15,.2)) {
   candidates = order(cp.values)[w]
 
   # estimated FDR and True Positif
-  estimated.FDR = length(which(candidates <= 900))/length(candidates)
-  estimated.TP = length(which(candidates > 900))/100
+  estimated.FDR = length(which(candidates <= 450))/length(candidates)
+  estimated.TP = length(which(candidates > 450))/50
   print(paste("FDR:", estimated.FDR, "True Positive:", estimated.TP))
 }
 

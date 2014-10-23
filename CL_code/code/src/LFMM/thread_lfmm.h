@@ -10,6 +10,8 @@
 #ifndef THREAD_LFMM_H
 #define THREAD_LFMM_H
 
+#ifndef WIN32
+
 typedef struct _multithreading_lfmm *Multithreading_lfmm;
 
 /**
@@ -43,6 +45,8 @@ typedef struct _multithreading_lfmm {
 void thread_fct_lfmm(float *R, double *A, double *B, double *C, double *m,
 	double *inv_cov, double *L, int J, int K, int N, int M, double *alpha,
 	double alpha_R, int num_thrd, int mode, void (*fct) ());
+
+#endif
 
 #endif // THREAD_H
 

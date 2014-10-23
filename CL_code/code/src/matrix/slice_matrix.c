@@ -16,6 +16,8 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef WIN32
+
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -53,3 +55,4 @@ void slice_tBB(void *G)
         }
 }
 
+#endif

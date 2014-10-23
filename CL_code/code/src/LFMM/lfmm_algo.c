@@ -74,6 +74,12 @@ void lfmm_emcmc(LFMM_param param)
 	n = 0;
 	while (n < param->Niter) {
 
+#ifdef USING_R
+		// tout est dans le titre de la fonction,
+		// check si l'utilisateur a essayé d'interrompre le programme 
+		R_CheckUserInterrupt();
+#endif
+
 		// print shell
 		print_bar(&i, &j, param->Niter);
 

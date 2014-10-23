@@ -16,6 +16,8 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef WIN32
+
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -154,3 +156,5 @@ void slice_inv_cov(void *G)
 		tmp2[k1 * (K + 1)] += alpha[k1];
 	}
 }
+
+#endif

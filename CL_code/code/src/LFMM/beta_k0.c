@@ -92,9 +92,14 @@ void zscore_calc_k0(double *zscore, double *beta, double *var_beta, int D, int M
 {
 	int d, j;
 
-	for (d = 1; d < D; d++)
-		for (j = 0; j < M; j++)
-			zscore[(d - 1) * M + j] = beta[d * M + j] / sqrt(var_beta[d * M + j]);
+	for (d = 1; d < D; d++) {
+		for (j = 0; j < M; j++) {
+			if (var_beta[d * M + j]) 
+				zscore[(d - 1) * M + j] = beta[d * M + j] / sqrt(var_beta[d * M + j]);
+			else
+				zscore[(d - 1) * M + j] = 0;
+		}
+	}
 
 }
 

@@ -31,14 +31,14 @@ done
 
 echo "$VERT" "\tReplace malloc"
 #sed -i '1icolumn1, column2, column3' testfile.csv
-files=`egrep -rl 'fflush|printf|malloc|calloc|realloc|free|exit\(1\)|warning|printf' src/*/*.c` 
+files=`egrep -rl 'fflush|printf|malloc|calloc|realloc|free|exit\(1\)|warning|printf|RCODE' src/*/*.c` 
 for f in $files; do
 	echo "$NORMAL" "$f"
 	sed -i '18 i\#include <R.h>' $f
 	# malloc
 	sed -i 's/calloc\(.*\),\s*sizeof(\(.*\)));/Calloc\1 * sizeof(\2), \2);/g' $f
 	sed -i 's/malloc\(.*\)\s*sizeof(\(.*\)));/Calloc\1 sizeof(\2), \2);/g' $f
-#	sed -i 's/malloc\(.* \)\*\(\s*sizeof\)/R_alloc\1, \2/g' $f
+	sed -i 's/#define RCODE 0/#define RCODE 1/g' $f
 	sed -i 's/realloc\(.*\),\s*sizeof(\(.*\)));/Realloc\1 * sizeof(\2), \2);/g' $f
 	sed -i 's/free(/Free(/g' $f
 	sed -i 's/\([^fn]\)printf(/\1Rprintf(/g' $f

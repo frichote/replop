@@ -16,6 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef WIN32
+
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -82,3 +84,5 @@ void thread_fct_bituint(bituint *X, double *A, double *B, int K, int Mc, int Mp,
 	free(Ma);
 	free(thread);
 }
+
+#endif

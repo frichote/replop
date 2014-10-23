@@ -36,6 +36,10 @@ a pcaProject object.
 \author{
         Eric Frichot
 }
+\references{
+Tracy CA and Widom H. (1994). \emph{Level spacing distributions and the bessel kernel}. Commun Math Phys. 161 :289--309.
+Patterson N, Price AL and Reich D. (2006). \emph{Population structure and eigenanalysis}. PLoS Genet. 2 :20.
+}
 \seealso{
 \code{\link{pca}}
 \code{\link{lfmm}}

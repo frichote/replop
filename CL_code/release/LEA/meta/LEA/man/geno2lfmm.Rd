@@ -50,7 +50,7 @@ a genotypic matrix in the \code{\link{lfmm}} format.
 # Creation of a file called "genotypes.geno" in the working directory
 # with 1000 SNPs for 165 individuals.
 data("tutorial")
-write.geno(R, "genotypes.geno")
+write.geno(tutorial.R, "genotypes.geno")
 
 # Conversion   from the geno format ("genotypes.geno") 
 #              to the lfmm format ("genotypes.lfmm").

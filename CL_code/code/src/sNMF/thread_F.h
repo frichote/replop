@@ -11,12 +11,16 @@
 #ifndef THREAD_F_H
 #define THREAD_F_H
 
+#ifndef WIN32
+
 /**
  * compute a slice of temp3 X
  *
  * @param G     a specific structure for multi-threading
  */
 void slice_temp3_X(void *G);
+
+#endif
 
 #endif // THREAD_F_H
 

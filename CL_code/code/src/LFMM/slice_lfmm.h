@@ -12,6 +12,8 @@
 #ifndef SLICE_LFMM_H
 #define SLICE_LFMM_H
 
+#ifndef WIN32
+
 /**
  * compute a slice of the lines of the conditional mean 
  *
@@ -32,6 +34,8 @@ void slice_rand(void *G);
  * @param G     a specific structure for multi-threading
  */
 void slice_inv_cov(void *G);
+
+#endif
 
 #endif // SLICE_LFMM_H
 

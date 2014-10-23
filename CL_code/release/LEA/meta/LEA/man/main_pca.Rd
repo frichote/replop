@@ -96,7 +96,7 @@ The following methods can be applied to the object of class pcaProject returned 
 # Creation of the genotype file "genotypes.lfmm"
 # with 1000 SNPs for 165 individuals.
 data("tutorial")
-write.lfmm(R, "genotypes.lfmm")
+write.lfmm(tutorial.R,"genotypes.lfmm")
 
 #################
 # Perform a PCA #

@@ -16,6 +16,8 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef WIN32
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "thread_snmf.h"
@@ -65,3 +67,4 @@ void slice_temp3_X(void *G)
 	}
 }
 
+#endif

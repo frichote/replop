@@ -82,6 +82,7 @@ double median(double *p, int n)
 
 }
 
+// mix
 // Don t forget to initialize the random (init_random)
 
 unsigned long mix(unsigned long a, unsigned long b, unsigned long c)
@@ -104,10 +105,16 @@ unsigned long mix(unsigned long a, unsigned long b, unsigned long c)
 void init_random(long long *seed)
 {
 	unsigned long s = (unsigned long)(*seed);
+
+// dans le cas d'un code R, l'initialisation de la seed est gérée par
+// la partie R du code (avant l'appelle à la fonction en C .C(...))
+// Dans le cas du code R, il est nécessaire que seed > 0
+#ifdef USING_R
 	if (*seed < 0)
 		s = (unsigned long) mix(clock(), time(NULL), getpid());
 
 	srand(s);
+#endif
 
 	*seed = s;
 }
@@ -116,14 +123,30 @@ void init_random(long long *seed)
 
 double drand()
 {				/* uniform distribution, (0..1] */
+#ifdef USING_R
+	double r;
+
+	r = unif_rand();
+
+	return r;
+#else
 	return (rand() + 1.0) / (RAND_MAX + 1.0);
+#endif
 }
 
 // frand
 
 float frand()
 {				/* uniform distribution, (0..1] */
+#ifdef USING_R
+	double r;
+
+	r = unif_rand();
+
+	return (float)r;
+#else
 	return (float)(rand() + 1.0) / (RAND_MAX + 1.0);
+#endif
 }
 
 // rand_binary

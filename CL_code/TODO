@@ -1,2 +1,11 @@
 TODO
 ----
+- LFMM: add an option to follow the log-likelihood along the run for 
+convergence.
+
+- LFMM: an NA can appear for a long run for 940 individuals and 220000 SNPs, 
+sometimes.
+
+- sNMF: check that the disjonctive code 100, 010, 001 is really necessary. 
+In practice, coding 00, 10, 01 is faster because the number of columns in
+the genotypic matrice will be 2*L instead of 3*L.

@@ -45,11 +45,10 @@ a genotypic matrix in the \code{\link{geno}} format.
 \code{\link{vcf2geno}}
 }
 \examples{
-library(LEA)
 # Creation of a file called "genotypes.lfmm" in the working directory,
 # with 1000 SNPs for 165 individuals.
 data("tutorial")
-write.lfmm(R, "genotypes.lfmm")
+write.lfmm(tutorial.R, "genotypes.lfmm")
 
 # Conversion   from the lfmm format ("genotypes.lfmm") 
 #              to the geno format ("genotypes.geno").

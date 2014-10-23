@@ -58,7 +58,11 @@ void ALS(sNMF_param param)
 
 	for (k = 0; k < param->maxiter; k++) {
 		print_bar(&i,&j, param->maxiter);
-
+#ifdef USING_R
+		// tout est dans le titre de la fonction,
+		// check si l'utilisateur a essayé d'interrompre le programme 
+		R_CheckUserInterrupt();
+#endif
 		// update F
 		update_F(param); 
 		// check numerical issues

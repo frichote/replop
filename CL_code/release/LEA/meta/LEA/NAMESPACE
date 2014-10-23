@@ -1,6 +1,7 @@
 import(methods)
 
 useDynLib(LEA)
+R_CMethodDef
 
 # read and write functions
 export(read.geno)

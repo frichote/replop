@@ -100,7 +100,11 @@ void crossEntropy(char* input_file, char* input_file_I, char* input_file_Q, char
 	niE = 0;
 	while (fgets(szbuff, max_char_per_line, m_File) && 
 		fgets(szbuffI, max_char_per_line, m_FileI) &&  (j < M)) {
-
+#ifdef USING_R 
+	        // tout est dans le titre de la fonction,
+        	// check si l'utilisateur a essayé d'interrompre le programme 
+	        R_CheckUserInterrupt();
+#endif
 		// read of the X line
                 i = 0;
                 token = szbuff[i];

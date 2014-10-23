@@ -11,6 +11,7 @@
 #ifndef THREAD_MATRIX_H
 #define THREAD_MATRIX_H
 
+#ifndef WIN32
 
 /**
  * structure to manage multithreading
@@ -48,6 +49,8 @@ typedef struct _multithreading_matrix {
  */
 void thread_fct_matrix(double *A, double *B, double *C, int K, int M,
 	int N, double alpha, int num_thrd, void (*fct) ());
+
+#endif
 
 #endif // THREAD_H
 

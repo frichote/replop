@@ -11,6 +11,8 @@
 #ifndef THREAD_VAR_H
 #define THREAD_VAR_H
 
+#ifndef WIN32
+
 #include "register_lfmm.h"
 #include "lfmm_algo.h"
 
@@ -69,3 +71,5 @@ void slice_var(void *G);
 #endif // THREAD_VAR_H
 
 /** @} */
+
+#endif

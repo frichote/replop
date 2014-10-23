@@ -4,8 +4,6 @@ OBJECTS = R_LFMM.o R_crossEntropy.o R_createDataSet.o R_sNMF.o R_ancestrymap2gen
 
 PKG_CPPFLAGS=-I.
 
-# PKG_CXXFLAGS=-fno-omit-frame-pointer
-
 PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 
 all: $(SHLIB)

@@ -7,8 +7,11 @@
  * @brief general function and structure to manage multithreading
  */
 
+
 #ifndef THREAD_BITUINT_H
 #define THREAD_BITUINT_H
+
+#ifndef WIN32
 
 #include "../bituint/bituint.h"
 
@@ -49,6 +52,9 @@ typedef struct _multithreading_bituint {
 void thread_fct_bituint(bituint *X, double *A, double *B, int K, int Mc, int Mp,
 	int N, int num_thrd, void (*fct) ());
 
+#endif
+
 #endif // THREAD_H
 
 /** @} */
+

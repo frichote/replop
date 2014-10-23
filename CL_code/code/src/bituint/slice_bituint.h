@@ -11,6 +11,8 @@
 #ifndef SLICE_BITUINT_H
 #define SLICE_BITUINT_H
 
+#ifndef WIN32
+
 /**
  * compute a slice of the lines of A = transpose(B) * transpose(X) 
  *
@@ -24,6 +26,8 @@ void slice_tBtX(void *G);
  * @param G     a specific structure for multi-threading
  */
 void slice_BX(void *G);
+
+#endif
 
 #endif // SLICE_BITUINT_H
 

@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-
+#include <R.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -31,6 +31,9 @@ void R_sNMF (char** R_genotype_file, int* R_K, double* R_alpha, double* R_tol, d
 	char** R_input_file_Q, char** R_output_file_Q, char** R_output_file_G, int* I,
 	double *all_ce, double *masked_ce, int *n, int *L) 
 {
+        // for random in R
+        GetRNGstate();
+
         // parameters allocation
         sNMF_param param = (sNMF_param) calloc(1, sizeof(snmf_param));
 
@@ -64,4 +67,6 @@ void R_sNMF (char** R_genotype_file, int* R_K, double* R_alpha, double* R_tol, d
         free_param_snmf(param);
         free(param);
 
+        // for random in R
+        PutRNGstate();
 }	

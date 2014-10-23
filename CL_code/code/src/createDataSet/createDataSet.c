@@ -68,7 +68,11 @@ void createDataSet(char* input_file, long long seed, double e, char* output_file
 	// read and write at the same time
         j = 0;
       	while (!feof(in_File) & (j < M)) {
-
+#ifdef USING_R 
+	        // tout est dans le titre de la fonction,
+        	// check si l'utilisateur a essayé d'interrompre le programme 
+	        R_CheckUserInterrupt();
+#endif
                 // read a line
                 i = 0;
 	        token = (char)fgetc(in_File);

@@ -75,7 +75,11 @@ void pca(char* input_file, char *output_eva_file, char *output_eve_file,
 
 	// calculate covariance matrix
 	calc_cov(data, N, M, cov); 
-
+#ifdef USING_R
+	// tout est dans le titre de la fonction,
+	// check si l'utilisateur a essayé d'interrompre le programme 
+	R_CheckUserInterrupt();
+#endif
 	// calculate eva and eve
 	diagonalize(cov, N, *K, val, vect);
 

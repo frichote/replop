@@ -11,6 +11,7 @@
 #ifndef THREAD_Q_H
 #define THREAD_Q_H
 
+#ifndef WIN32
 /**
  * compute a slice of F transpose(X)
  *
@@ -24,6 +25,8 @@ void slice_F_TX(void *G);
  * @param G     a specific structure for multi-threading
  */
 void slice_F_TF(void *G);
+
+#endif
 
 #endif // THREAD_Q_H
 

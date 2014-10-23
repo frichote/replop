@@ -16,6 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef WIN32
+
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -96,3 +98,5 @@ void thread_fct_lfmm(float *R, double *A, double *B, double *C, double *m,
 	free(Ma);
 	free(thread);
 }
+
+#endif

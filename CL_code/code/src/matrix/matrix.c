@@ -21,10 +21,12 @@
 #include <string.h>
 #include <math.h>
 #include "matrix.h"
-#include "slice_matrix.h"
-#include "thread_matrix.h"
 #include "data.h"
 
+#ifndef WIN32
+	#include "slice_matrix.h"
+	#include "thread_matrix.h"
+#endif
 // variance
 
 double variance(double *x, int n)

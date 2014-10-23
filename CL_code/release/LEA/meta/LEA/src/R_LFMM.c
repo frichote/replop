@@ -15,6 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <R.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,6 +34,9 @@ void R_LFMM(char** R_input_file, char** R_output_file, char** R_cov_file,
 	double *R_dic, double *R_dev, double *noise_epsilon, double *b_epsilon,
 	int *init)
 {
+        // for random in R
+        GetRNGstate();
+
         // parameters allocation
         lfmm_param *param = (lfmm_param *) calloc(1, sizeof(lfmm_param));
 
@@ -68,4 +72,7 @@ void R_LFMM(char** R_input_file, char** R_output_file, char** R_cov_file,
 	// free memory
 	free_param_lfmm(param);
 	free(param);
+
+        // for random in R
+        PutRNGstate();
 }

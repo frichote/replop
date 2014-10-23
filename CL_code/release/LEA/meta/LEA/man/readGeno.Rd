@@ -40,7 +40,7 @@ data("tutorial")
 
 # Write R in a file called "genotypes.geno".
 # Create file:	"genotypes.geno".
-write.geno(R, "genotypes.geno")
+write.geno(tutorial.R,"genotypes.geno")
 
 # Read the file "genotypes.geno".
 R = read.geno("genotypes.geno")

@@ -6,7 +6,7 @@ Phd project: a set of tools for population genetics
 Description
 -----------
 
-This repository contains the a set of codes used 
+This repository contains a set of codes used 
 to develop the softwares of my Phd project. 
 
 Organization
@@ -44,4 +44,12 @@ The software **webpage** is [here](http://membres-timc.imag.fr/Olivier.Francois/
 
 The **paper** is available [here](http://www.genetics.org/content/early/2014/02/02/genetics.113.160572.abstract?sid=8d0577ff-bbb4-430d-a898-f6e4929d9c7f).
 
+### LEA
+**LEA** is an R package dedicated to landscape genomics and ecological 
+association tests. LEA can run analyses of population structure and genome 
+scans for local adaptation. 
+
+The software **webpage** is [here](http://membres-timc.imag.fr/Olivier.Francois/lea.html). 
+
+The **paper** is under review. 
 

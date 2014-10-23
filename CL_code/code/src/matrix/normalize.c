@@ -41,7 +41,7 @@ void check_constant_column(float *C, int N, int K)
 		if (count)
 			mean /= count;
 		else {
-			printf("Error: columns '%d' contains only missing data.\n\n", k+1);
+			printf("Error: SNP '%d' contains only missing data.\n\n", k+1);
 			exit(1);
 		}
 		// calculate cov
@@ -53,9 +53,8 @@ void check_constant_column(float *C, int N, int K)
 		cov /= (count - 1);
 		// error if constant column
 		if (!cov) {
-		        printf("Error: it seems that line or column %d is constant " 
+		        printf("Warning: SNP %d is constant " 
 				"among individuals.\n\n",k+1);
-			exit(1);
 		}
 	}
 }
@@ -80,7 +79,7 @@ void normalize_cov(double *C, int N, int K)
 		cov /= (N - 1);
 		// error if constant column
 		if (!cov) {
-		        printf("Error: it seems that line or column %d is constant " 
+		        printf("SNP %d is constant " 
 				"among individuals.\n\n",k+1);
 			exit(1);
 		}
@@ -110,7 +109,7 @@ void normalize_cov_I(double *C, int N, int K)
 		if (count)
 			mean /= count;
 		else 
-			printf("Error: columns '%d' contains only missing data.\n\n", k+1);
+			printf("Error: SNP '%d' contains only missing data.\n\n", k+1);
 		// calculate cov
 		cov = 0;
 		for (i = 0; i < N; i++) {
@@ -120,7 +119,7 @@ void normalize_cov_I(double *C, int N, int K)
 		cov /= (count - 1);
 		// error if constant column
 		if (!cov) {
-		        printf("Error: it seems that line or column %d is constant " 
+		        printf("Error: SNP %d is constant " 
 				"among individuals.\n\n",k+1);
 			exit(1);
 		}

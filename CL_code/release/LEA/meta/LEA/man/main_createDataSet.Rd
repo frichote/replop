@@ -51,7 +51,7 @@ This is an internal function, automatically called by \code{\link{sNMF}} with th
 # Creation of tuto.geno
 # A file containing 10000 SNPs for 50 individuals.
 data("tutorial")
-write.geno(R, "genotypes.geno")
+write.geno(tutorial.R,"genotypes.geno")
 
 # Creation      of the masked data file
 # Create file:  "genotypes_I.geno"

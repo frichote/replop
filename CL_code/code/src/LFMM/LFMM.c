@@ -114,7 +114,7 @@ void LFMM(LFMM_param param)
 	read_data_float(param->input_file, n, L, param->dat);
 
 	// check that the data matrix has no constant column
-	check_constant_column(param->dat, param->n, param->L);
+	// check_constant_column(param->dat, param->n, param->L);
 
 	// creation of the missing data matrix
 	if (param->missing_data) {

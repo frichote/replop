@@ -23,6 +23,17 @@
 #include "data.h"
 #include "error_matrix.h"
 #include "rand.h"
+#include "../io/io_data_double.h"
+
+// print_debug_NaN
+
+void print_debug_NaN(double *A, int n, int L, char *name)
+{
+	printf("%s\n", name); 
+	write_data_double(name, n, L, A); 
+        if (any_NaN(A, n, L))
+               exit(1);
+} 
 
 // zeros
 
@@ -32,6 +43,19 @@ void zeros(double *A, int n)
 
 	for (i = 0; i < n; i++)
 		A[i] = 0;
+}
+
+// any_NaN
+
+int any_NaN(double *A, int n, int L)
+{
+	int i;
+
+	for (i = 0; i < n * L; i++) {
+		if (isnan(A[i]))
+			return 1;
+	}
+	return 0;
 }
 
 // check_mat

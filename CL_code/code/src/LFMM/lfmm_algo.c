@@ -64,12 +64,22 @@ void lfmm_emcmc(LFMM_param param)
 		zeros(param->U, K*N);
 		zeros(param->V, K*M);
 	}
-
+#ifdef DEBUG
+	print_debug_NaN(param->beta, D, M, "beta");
+	print_debug_NaN(param->U, K, N, "U");
+	print_debug_NaN(param->V, K, M, "V");
+#endif
 	// update alpha_R
 	param->alpha_R = update_alpha_R (param, GS_param);
+#ifdef DEBUG
+	print_debug_NaN(&(param->alpha_R), 1, 1, "alpha_R");
+	print_data_double(&(param->alpha_R), 1, 1);
+#endif
 
+#ifndef DEBUG
 	// shell print
 	init_bar(&i, &j);
+#endif
 
 	n = 0;
 	while (n < param->Niter) {
@@ -80,14 +90,24 @@ void lfmm_emcmc(LFMM_param param)
 		R_CheckUserInterrupt();
 #endif
 
+#ifndef DEBUG
 		// print shell
 		print_bar(&i, &j, param->Niter);
-
+#else 
+		printf("iteration %d\n", n);	
+#endif
 		// update_alpha_U
 		update_alpha_U(param);
-
+#ifdef DEBUG
+		print_debug_NaN(param->alpha_U, K, 1, "alpha_U");
+		print_data_double(param->alpha_U, K, 1);
+#endif
 		// update_alpha_beta
 		update_alpha_beta(param);
+#ifdef DEBUG
+		print_debug_NaN(param->alpha_beta, D, 1, "alpha_beta");
+		print_data_double(param->alpha_beta, D, 1);
+#endif
 
 		// update_beta
 		update_beta(param, GS_param); 
@@ -100,7 +120,10 @@ void lfmm_emcmc(LFMM_param param)
 
 		// update alpha_R
 		param->alpha_R = update_alpha_R (param, GS_param);
-
+#ifdef DEBUG
+		print_debug_NaN(&(param->alpha_R), 1, 1, "alpha_R");
+		print_data_double(&(param->alpha_R), 1, 1);
+#endif
 
 		// update sums
 		if (n >= param->burn) 

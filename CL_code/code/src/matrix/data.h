@@ -19,6 +19,27 @@
 void zeros(double *A, int n);
 
 /**
+ * print A in a file called name and stop if any_NaN in A
+ *
+ * @param A	the matrix (of size nxL)
+ * @param n	the number of lines of A
+ * @param L	the number of columns of A
+ * @param name	name of A
+ */
+void print_debug_NaN(double *A, int n, int L, char *name);
+
+/**
+ * check if any Nan in a a matrix A
+ *
+ * @param A	the matrix (of size nxL)
+ * @param n	the number of lines of A
+ * @param L	the number of columns of A
+ *
+ * return true if at leas an NaN in A
+ */
+int any_NaN(double *A, int n, int L);
+
+/**
  * check if column nd of A contains NaN elements
  * 
  * @param A	the matrix A (of size nxnD)

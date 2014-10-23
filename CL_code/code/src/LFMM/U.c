@@ -35,18 +35,24 @@ void update_U(LFMM_param param, LFMM_GS_param GS_param)
 	create_m(param->V, param->dat, param->mC, param->beta, 
 		GS_param->m_U, param->L, param->n, param->mD, 
 		param->K, param->num_thrd, 1);
-
+#ifdef DEBUG
+        print_debug_NaN(GS_param->m_U, param->K, param->n, "m_U");
+#endif
 	// cov_U = alpha .* eye(K) + alpha_R .* V*V';           (K,K)
 	create_inv_cov(GS_param->inv_cov_U, param->alpha_U, param->alpha_R, 
 		param->V, param->K, param->L, param->num_thrd);
-
+#ifdef DEBUG
+        print_debug_NaN(GS_param->inv_cov_U, param->K, param->K, "inv_cov_U");
+#endif
 	/*      mu_U = alpha_R .* inv(cov_U) * m_U';                    (N,K)
 		for i=1:N
 		U(:,i) = mvnrnd(mu_U(:,i),inv(cov_U));
 		end                                                             */
 	rand_matrix(param->U, GS_param->m_U, GS_param->inv_cov_U, 
 		param->alpha_R, param->K, param->n, param->num_thrd);
-
+#ifdef DEBUG
+        print_debug_NaN(param->U, param->K, param->n, "U");
+#endif
 	if (isnan(param->U[0]))
 		print_error_global("nan", NULL, 0);
 }

@@ -1,0 +1,25 @@
+by E.Frichot
+date 22/10/2014
+
+HOW TO, add a new independent program:
+**************************************
+
+- create a new directory in src and the same in obj. 
+The src directory has to contain a principal function that will be called a
+main located in the main directory
+
+- create a main function in the directory main. 
+
+- update the makefile, with the SRC_newprogram, the OBJ_newprogram , the 
+executable, a rule to create the executable. 
+
+- update the doxygen documentation in the mainpage.h
+
+HOW TO, add a tool directory:
+*****************************
+
+- create a new directory in src and the same in obj.
+
+- update the makefile, add the src in SRC_TOOLS
+
+- update the doxygen documentation in the mainpage.h

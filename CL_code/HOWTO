@@ -1,0 +1,13 @@
+by E.Frichot
+Date 22/10/2014
+
+HOWTO, add a new program
+************************
+
+- code: read code/HOWTO
+
+- documentation, add a documentation directory
+
+- example, add specific example.
+
+- add a release directory, read release/HOWTO.

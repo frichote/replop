@@ -10,6 +10,6 @@ To create a new release version for LFMM, execute the following command:
 It will automatically add the code, the example and the documentation 
 from CL_code.
 
-For example to create the release v0-1:
+For example to create the release v0.1:
 
-./create_LFMM_release.sh 0-1
+sh create_LFMM_release.sh 0.1

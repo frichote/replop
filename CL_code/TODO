@@ -11,3 +11,5 @@ In practice, coding 00, 10, 01 is faster because the number of columns in
 the genotypic matrice will be 2*L instead of 3*L.
 
 - Makefile: the makefil can probably be improved.
+
+- test: ... create long-term usable test structure...

@@ -1,14 +1,28 @@
 #!/bin/sh
 
-# parameters
-prog="LEA"
+# command line:
+# sh create_LEA_release.sh version_number
+
+##################
+#   parameters   #
+##################
+
+# name of the program
+prog="LEA" 
+# name of the directory to create 
 dir="LEA_v$1"
+# list of the src directory to copy from replop/CL_code/code/src/
 src_list="io matrix LFMM bituint convert createDataSet crossEntropy nnlsm sNMF pca tracyWidom stats"
+# list of the executable to add
 main_list="LFMM createDataSet crossEntropy sNMF ancestrymap2geno ancestrymap2lfmm geno2lfmm lfmm2geno pca ped2geno ped2lfmm vcf2geno tracyWidom"
 
 # color definition
 VERT="\\033[1;32m" NORMAL="\\033[0;39m" ROUGE="\\033[1;31m" JAUNE="\\033[1;33m"
-# creation of the directory
+
+#############################
+# creation of the directory #
+#############################
+
 echo "$VERT" "Creation of the directory $dir for $prog." "$NORMAL"
 if [ -d $dir ]; then
 	echo "$ROUGE" "A directory called $dir already exists !"
@@ -21,16 +35,19 @@ fi
 echo "$VERT" "Entering $dir"
 cd $dir
 
-# add src files
+#############################
+#  add of the src files     #
+#############################
 echo "\tAdd src files"
 
+# copy files
 for i in $src_list; do 
 	echo "\t\tCopy of $i in $dir"
 	cp -r ../../../code/src/$i/ src/ 
 done
 
-echo "$VERT" "\tReplace malloc"
-#sed -i '1icolumn1, column2, column3' testfile.csv
+# Replace C function with specific R Function
+echo "$VERT" "\tReplace C function with specific R Function"
 files=`egrep -rl 'fflush|printf|malloc|calloc|realloc|free|exit\(1\)|warning|printf|RCODE' src/*/*.c` 
 for f in $files; do
 	echo "$NORMAL" "$f"
@@ -46,6 +63,7 @@ for f in $files; do
 	sed -i 's/fflush(stdout)//g' $f
 done
 
+# remove lapack, already present in R
 files=`egrep -rl 'lapack' src/*/*.c` 
 for f in $files; do
 	echo $f
@@ -55,45 +73,30 @@ for f in $files; do
 	sed -i 's/doublereal/double/g' $f
 done
 
+##############################
+# WARNING: UPDATE the README #
+##############################
 
-#for i in $main_list; do 
-#	echo "\t\tCopy of $i in $dir"
-#	cp ../../../code/src/$i.c src/R_$i.c 
-#	sed -i s/"int main"/"#include \"R_$i.h\" \n\nint main_$i"/g src/R_$i.c
-#done
-
-# README
 echo "$JAUNE" "\tWARNING: Do not FORGET to update the README files !!!"
 
 # documentation
-echo "$VERT" "\tCompilation of the documentation" "$NORMAL"
-#cd  ../../../documentation/$prog/obj/
-#rm note.pdf
-#pdflatex -interaction=batchmode note.tex
-#bibtex note.aux
-#pdflatex -interaction=batchmode note.tex
-#cp note.pdf ../note_$prog.pdf 
-#cp ../note_$prog.pdf ../../../release/$prog/$dir/documentation/
-#cd  ../../../release/$prog/$dir/
+# echo "$VERT" "\tCompilation of the documentation" "$NORMAL"
 
-# example
-#echo "$VERT" "\tAdd examples files" "$NORMAL"
-#cp -r ../../../examples/$prog/* examples/
-
+# end
 echo "$VERT" "Leaving $dir" "$NORMAL"
 cd ..
 
-# creation of the archive
-#echo "$VERT" "creation of the archive" "$NORMAL"
 
-#if [ -f $dir.tar.gz ]; then
-#        echo "$ROUGE" "An archive called $dir.tar.gz already exists !"
-#        echo "$ROUGE" "Creation Aborted." "$NORMAL"
-#	rm -rf $dir
-#        exit 1
-#else
-#	tar -czf $dir.tar.gz $dir/
-#	rm -rf $dir
-#fi
-echo "$VERT" "Succesful creation of $prog release v$1" "$NORMAL"
+###########################
+# creation of the archive #
+###########################
+
+echo "$VERT" "creation of the archive" "$NORMAL"
+R CMD build $dir
+
+
+# Advise about how to check the package
+echo "To check the package, use:\nR CMD check --as-cran <package.tar.gz>\n R CMD BicCheck <package.tar.gz>\n 
+
+
 

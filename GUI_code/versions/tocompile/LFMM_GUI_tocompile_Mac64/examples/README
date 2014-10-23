@@ -1,0 +1,13 @@
+Examples 04/12/13
+by Eric Frichot (efrichot@gmail.com)
+
+We provide two set of example files:
+
+- format example: examples of genotype, environmental,
+	and snp files for ped, geno, ancestrymap and
+	lfmm format.
+
+- human example: real human data set in lfmm format.
+	This data set is used in the tutorial.
+
+These data sets are described in the documentation.

@@ -1,0 +1,2 @@
+Name	Chr	Position	Zscore	-log10(p-value) p-value
+Affx-31112057	7	93534304	5.00553	6.24162	5.73303E-07

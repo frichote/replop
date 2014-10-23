@@ -1,0 +1,27 @@
+#!/bin/sh
+
+
+cd ../../../code
+make clean
+make
+if [ ! -e "LFMM" ]; then
+        echo "\nERROR: an error occured during the compilation of LFMM command-line program."
+	cd ..
+	exit 1
+fi
+cd ..
+
+# Error a ne pas oublier.
+cp -r code/LFMM_GUI.app ./ #2> tmp.txt
+#cp code_GUI/LFMM_GUI.app/Contents/MacOS/LFMM_GUI ./ 2> tmp.txt
+#rm tmp.txt
+if [ ! -e "LFMM_GUI.app" ]; then
+        echo "\nERROR: an error occured during the creation of LFMM GUI program."
+	exit 1
+fi
+
+command -v R >/dev/null 2>&1 || { echo >&2 "WARNING: R is not detected. R is required to display manhattan plot."; }
+
+echo "\nSUCCESS: LFMM GUI program was created without error."
+exit 0
+

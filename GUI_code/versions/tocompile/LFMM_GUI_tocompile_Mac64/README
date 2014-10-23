@@ -1,0 +1,36 @@
+LFMM GUI to compile version 1.1, 04/12/13
+by Eric Frichot (efrichot@gmail.com or eric.frichot@imag.fr)
+
+*******************
+*   INSTALLATION   *
+*******************
+R is mandatory to display Manhattan plot.
+
+Qt (version >=4) is necessary to compile the LFMM GUI.
+
+1. go to code_GUI directory and compile the LFMM GUI
+To do this, execute the following list of commands:
+	a. qmake (Linux) or qmake -spec macx-g++ (Mac)
+	b. make clean
+	c. make
+1. execute the script install.sh in the main directory (by double-clicking 
+   or in a terminal). You may need to allow the script to be executable
+   by typing chmod +x install.sh.
+2. execute LFMM_GUI (by double-clicking or in a terminal)
+
+******************
+*  ORGANIZATION  *
+******************
+
+It is organized in 6 folders:
+- code_GUI
+- code
+- documentation
+- examples
+- scripts
+- images
+
+PLEASE, read the documentation before using our software. It provides
+examples and information on the model and the software.
+
+PLEASE, if you find a bug, contact us. We will fix it as soon as possible.

@@ -1,0 +1,27 @@
+LFMM GUI to compile version 1.2, 05/24/13
+by Eric Frichot (efrichot@gmail.com or eric.frichot@imag.fr)
+
+*******************
+*   INSTALLATION   *
+*******************
+R is mandatory to display Manhattan plot.
+
+1. Just double-click on LFMM_GUI.install 
+
+2. Double-click on LFMM_GUI in LFMM main directory.
+
+******************
+*  ORGANIZATION  *
+******************
+
+It is organized in 4 folders:
+- code
+- documentation
+- examples
+- scripts
+
+
+PLEASE, read the documentation before using our software. It provides
+examples and information on the model and the software.
+
+PLEASE, if you find a bug, contact us. We will fix it as soon as possible.

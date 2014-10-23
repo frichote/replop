@@ -1,0 +1,31 @@
+\begin{thebibliography}{1}
+
+\bibitem{Chen_2007}
+Chibiao Chen, Eric Durand, Florence Forbes, and Olivier Fran\c{c}ois.
+\newblock Bayesian clustering algorithms ascertaining spatial population
+  structure: a new computer program and a comparison study.
+\newblock {\em Molecular Ecology Notes}, 7(5):747--756, 2007.
+
+\bibitem{Durand_2009}
+E~Durand, F~Jay, O~E Gaggiotti, and O~Fran\c{c}ois.
+\newblock Spatial inference of admixture proportions and secondary contact
+  zones.
+\newblock {\em Molecular Biology and Evolution}, 26(9):1963--1973, 2009.
+
+\bibitem{Patterson_2006}
+N~Patterson, A~L Price, and D~Reich.
+\newblock Population structure and eigenanalysis.
+\newblock {\em PLoS Genetics}, 2:20, 2006.
+
+\bibitem{Patterson_2012}
+Nick~J. Patterson, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland,
+  Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich.
+\newblock Ancient admixture in human history.
+\newblock {\em Genetics, doi:10.1534/genetics.112.145037}, 2012.
+
+\bibitem{Pritchard_2000}
+J~K Pritchard, M~Stephens, and P~Donnelly.
+\newblock Inference of population structure using multilocus genotype data.
+\newblock {\em Genetics}, 155(2):945--959, 2000.
+
+\end{thebibliography}

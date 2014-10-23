@@ -1,0 +1,16 @@
+by E.Frichot
+Date 22/10/2014
+
+HOWTO, create a new release directory
+*************************************
+
+- create the directory
+
+- create a script sh create_XXX_release.sh (see LFMM/create_XXX_release.sh for example)
+
+- create a meta directory, (see LFMM/meta for example).
+This meta directory contains all the common structure of the release.
+Usually, there are directories code, examples, documentation, bin 
+and files for install and README.
+
+Do not foget to update the README and the makefile if necessary.

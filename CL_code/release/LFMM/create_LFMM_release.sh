@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # command line:
-# sh create_LEA_release.sh version_number
+# sh create_LFMM_release.sh version_number
 
 ##################
 #   parameters   #

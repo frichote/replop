@@ -2,8 +2,8 @@
 CFLAGS = -lm -lpthread
 LDFLAGS += -g -O3 -Wall -Wextra
 
-CC = colorgcc
-## CC = gcc
+##CC = colorgcc
+CC = gcc
 
 ### DIRECTORIES ####
 BIN = bin
@@ -13,49 +13,76 @@ SRC = src
 MAIN = main
 
 ### SOURCES FILES ####
-SRC_LAPACK = $(wildcard $(SRC)/lapack/*.c)
-SRC_TOOLS = $(wildcard $(SRC)/bituint/*.c) $(wildcard $(SRC)/matrix/*.c) $(wildcard $(SRC)/nnlsm/*.c) $(wildcard $(SRC)/io/*.c) $(wildcard $(SRC)/stats/*.c)
-SRC_convert = $(wildcard $(SRC)/convert/*.c) $(SRC_TOOLS) 
-SRC_LFMM = $(wildcard $(SRC)/LFMM/*.c) $(SRC_TOOLS)
-#SRC_LFMM3 = $(wildcard $(SRC)/LFMM3/*.c) $(SRC_TOOLS)
-#SRC_LFMM4 = $(wildcard $(SRC)/LFMM4/*.c) $(SRC_TOOLS)
-#SRC_LFMM2 = $(wildcard $(SRC)/LFMM2/*.c) $(SRC_TOOLS)
-SRC_createDataSet = $(wildcard $(SRC)/createDataSet/*.c) $(SRC_TOOLS) 
-SRC_crossEntropy = $(wildcard $(SRC)/crossEntropy/*.c) $(SRC_TOOLS)
-SRC_sNMF =  $(wildcard $(SRC)/crossEntropy/*.c) $(wildcard $(SRC)/createDataSet/*.c) $(wildcard $(SRC)/sNMF/*.c) $(SRC_TOOLS)
-#SRC_sNMF_pop =  $(wildcard $(SRC)/crossEntropy/*.c) $(wildcard $(SRC)/createDataSet/*.c) $(wildcard $(SRC)/sNMF_pop/*.c) $(SRC_TOOLS)
-SRC_pca = $(wildcard $(SRC)/pca/*.c) $(SRC_TOOLS)
-SRC_tracyWidom = $(wildcard $(SRC)/tracyWidom/*.c) $(SRC_TOOLS)
+SRC_LAPACK = 	$(wildcard $(SRC)/lapack/*.c)
+SRC_TOOLS = 	$(wildcard $(SRC)/bituint/*.c)		\
+		$(wildcard $(SRC)/matrix/*.c) 		\
+		$(wildcard $(SRC)/nnlsm/*.c) 		\
+		$(wildcard $(SRC)/io/*.c) 		\
+		$(wildcard $(SRC)/stats/*.c)		
+SRC_convert = 	$(wildcard $(SRC)/convert/*.c) 		\
+		$(SRC_TOOLS) 
+SRC_LFMM = 	$(wildcard $(SRC)/LFMM/*.c) 		\
+		$(SRC_TOOLS)
+SRC_createDataSet = $(wildcard $(SRC)/createDataSet/*.c) \
+		$(SRC_TOOLS) 
+SRC_crossEntropy = $(wildcard $(SRC)/crossEntropy/*.c) 	\
+		$(SRC_TOOLS)
+SRC_sNMF =  	$(wildcard $(SRC)/crossEntropy/*.c) 	\
+		$(wildcard $(SRC)/createDataSet/*.c) 	\
+		$(wildcard $(SRC)/sNMF/*.c) 		\
+		$(SRC_TOOLS)
+SRC_pca = 	$(wildcard $(SRC)/pca/*.c) 		\
+		$(SRC_TOOLS)
+SRC_tracyWidom = $(wildcard $(SRC)/tracyWidom/*.c) 	\
+		$(SRC_TOOLS)
+SRC_main = 	$(wildcard $(SRC)/main/*.c)
 
-SRC_main = $(wildcard $(SRC)/main/*.c)
-
-### OBJECTS FILES ###
-OBJ_LAPACK = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LAPACK)) 
-OBJ_LFMM = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LFMM)) 
-#OBJ_LFMM3 = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LFMM3)) 
-#OBJ_LFMM4 = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LFMM4)) 
-#OBJ_LFMM2 = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LFMM2)) 
-OBJ_sNMF = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_sNMF)) 
-#OBJ_sNMF_pop = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_sNMF_pop)) 
-OBJ_convert = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_convert)) 
+### OBJECTS FILES ###
+OBJ_LAPACK = 	$(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LAPACK)) 
+OBJ_LFMM = 	$(patsubst $(SRC)/%.c,obj/%.o,$(SRC_LFMM)) 
+OBJ_sNMF = 	$(patsubst $(SRC)/%.c,obj/%.o,$(SRC_sNMF)) 
+OBJ_convert = 	$(patsubst $(SRC)/%.c,obj/%.o,$(SRC_convert)) 
 OBJ_createDataSet = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_createDataSet)) 
 OBJ_crossEntropy = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_crossEntropy)) 
-OBJ_pca = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_pca)) 
-OBJ_tracyWidom = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_tracyWidom)) 
+OBJ_pca = 	$(patsubst $(SRC)/%.c,obj/%.o,$(SRC_pca)) 
+OBJ_tracyWidom =$(patsubst $(SRC)/%.c,obj/%.o,$(SRC_tracyWidom)) 
 
 OBJ_main = $(patsubst $(SRC)/%.c,obj/%.o,$(SRC_main)) 
 
 ### HEADER FILES ###
-HEADER_LFMM = $(patsubst $(SRC)/%.c,$(SRC)/%.h,$(SRC_LFMM))
-HEADER_sNMF = $(patsubst $(SRC)/%.c,$(SRC)/%.h,$(SRC_sNMF))
+HEADER_LFMM = 	$(patsubst $(SRC)/%.c,$(SRC)/%.h,$(SRC_LFMM))
+HEADER_sNMF = 	$(patsubst $(SRC)/%.c,$(SRC)/%.h,$(SRC_sNMF))
 HEADER_convert = $(patsubst $(SRC)/%.c,$(SRC)/%.h,$(SRC_convert))
 HEADER_createDataSet = $(patsubst $(SRC)/%.c,$(SRC)/%.h,$(SRC_createDataSet))
 HEADER_crossEntropy = $(patsubst $(SRC)/%.c,$(SRC)/%.h,$(SRC_crossEntropy))
 
 
 # EXECUTABLE
-EXECUTABLE = $(LIB)/lapack.a $(BIN)/sNMF $(BIN)/crossEntropy $(BIN)/createDataSet $(BIN)/LFMM $(BIN)/vcf2geno $(BIN)/ancestrymap2geno $(BIN)/ancestrymap2lfmm $(BIN)/ped2geno $(BIN)/ped2lfmm $(BIN)/lfmm2geno $(BIN)/geno2lfmm $(BIN)/pca $(BIN)/tracyWidom
-all: $(SRC_LAPACK) $(SRC_LFMM) $(SRC_sNMF) $(SRC_createDataSet) $(SRC_crossEntropy) $(SRC_convert) $(SRC_pca) $(SRC_main) $(EXECUTABLE) $(SRC_tracyWidom)
+EXECUTABLE = 	$(LIB)/lapack.a 	\
+		$(BIN)/sNMF		\
+		$(BIN)/crossEntropy 	\
+		$(BIN)/createDataSet 	\
+		$(BIN)/LFMM 		\
+		$(BIN)/vcf2geno 	\
+		$(BIN)/ancestrymap2geno \
+		$(BIN)/ancestrymap2lfmm \
+		$(BIN)/ped2geno 	\
+		$(BIN)/ped2lfmm 	\
+		$(BIN)/lfmm2geno 	\
+		$(BIN)/geno2lfmm 	\
+		$(BIN)/pca 		\
+		$(BIN)/tracyWidom
+
+all: 	$(SRC_LAPACK) 		\
+	$(SRC_LFMM) 		\
+	$(SRC_sNMF) 		\
+	$(SRC_createDataSet) 	\
+	$(SRC_crossEntropy) 	\
+	$(SRC_convert) 		\
+	$(SRC_pca) 		\
+	$(SRC_main) 		\
+	$(EXECUTABLE) 		\
+	$(SRC_tracyWidom)
 
 $(LIB)/lapack.a: $(OBJ_LAPACK)
 	ar rcs $@ $^

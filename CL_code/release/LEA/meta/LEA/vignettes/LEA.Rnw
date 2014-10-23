@@ -1,0 +1,212 @@
+\documentclass[a4paper]{article}
+
+%\VignetteIndexEntry{Introduction}
+
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage[francais,english]{babel}
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage{lineno}
+\usepackage[latin1]{inputenc}
+\usepackage[table]{xcolor}
+\usepackage[]{natbib}
+\usepackage[]{multirow}
+\usepackage[]{a4wide}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{ulem}
+
+
+\title{The LEA Package}
+\author{Eric Frichot and Olivier Fran\c{c}ois\\
+Universite Joseph Fourier, Grenoble, France\\
+\url{http://membres-timc.imag.fr/Olivier.Francois/lea.html}
+}
+\date{\today}
+
+\begin{document}
+\setkeys{Gin}{width=1.0\textwidth}
+@
+\maketitle
+\section*{Overview}
+
+Based on population genomic and environmental data, genome-wide
+ecological association studies aim at detecting allele frequencies that
+exhibit significant statistical association with ecological gradients.
+Ecological association studies can provide lists of genetic
+polymorphisms that are potentially involved in local adaptation to
+environmental conditions through natural selection.
+Here, we present the {\tt R} package {\tt LEA} that enables users to run
+ecological association studies from the {\tt R} command line. The
+package can perform analyses of population structure and genome scans
+for adaptive alleles from large genomic data sets. It derives advantages
+from {\tt R} programming functionalities to adjust significance values
+for multiple testing issues and to visualize results. This note also
+illustrates the main steps of ecological association studies and the
+typical use of {\tt LEA} for analyzing data sets based on {\tt R} commands.
+
+
+The goal of this tutorial is to give an overview of LEA functionalities.
+
+One specifity of the LEA package is to be able to handle very lage population genetic data sets. Genomic data are never loaded into the R memory, and they are processed using fast C codes wrapped into the R code. For this reason, most of the LEA functions use character strings containing paths to input files as arguments.
+
+As some functions may take several hours for very large datasets, nobody wants to erase their results when quitting R. That is why output files are written into text files that can be read by LEA after each run. We advise creating a working directory containing your data when you start using LEA. It is assumed that two files with the same name and a different extension in the same directory contain the same data matrix in different formats.
+
+
+\section{Program implementation, materials and methods}
+% introduction
+
+Genome-wide ecological association studies include two main steps. The first step consists of assessing population genetic structure from the genomic data, and evaluating the factors that could influence the interpretation of results. The second step consists of testing association of allele frequencies to specific ecological gradients. This step includes correction for biases due to population structure and other  -- often unobserved -- confounding factors.  The {\tt R} package {\tt LEA} enables performing the two analytical steps within a unified framework based on factor models and on the {\tt R} statistical program. The package optimizes algorithmic speed and memory allocation while preserving the flexibility of statistical analysis using {\tt R}. Functions implemented in {\tt LEA} call functions written in the C programming language. These functions are able to process massive genomic data from the {\tt R} command line without loading the program memory. Thus the strength of the {\tt LEA} package is to allow its users to perform computer intensive analyses, while benefiting of the statistical and visualization methods available from {\tt R}.
+
+
+\paragraph{Data format.} The {\tt R} package {\tt LEA} can handle several classical formats for input files of genotypic matrices. More specifically, the package uses the {\tt lfmm} and {\tt geno} formats, and provides functions  to convert from {\tt ped}, {\tt vcf}, and {\tt ancestrymap} formats. While the {\tt lfmm} and {\tt geno} formats usually encode SNP data, those formats can also be used for coding amplification fragment length polymorphisms and microsatellite markers. In addition to genotypic matrices, {\tt LEA} can also process allele frequency data when they are encoded in the {\tt lfmm} formats. Ecological variables must be formatted in the {\tt env} format used by the computer program {\tt LFMM} \citep{Frichot_2013}.
+
+
+\paragraph{Analysis of population structure.}
+
+The {\tt R} package {\tt LEA} implements two classical approaches for the estimation of population genetic structure: principal component analysis (PCA) and admixture analysis \citep{Patterson_2006, Pritchard_2000a}. The algorithms programmed in {\tt LEA} are improved versions of PCA and admixture analysis able to process very large genotypic matrices efficiently.
+
+The {\tt LEA} function {\tt pca} computes the scores of a PCA for a genotypic matrix, and returns a scree-plot for the eigenvalues of the sample covariance matrix. Using {\tt pca}, an object of class {\tt pcaProject} is created. This object contains a path to the files storing eigenvectors, eigenvalues and projections. The number of significant components can be evaluated using graphical methods based on the scree-plot or computing Tracy-Widom tests with the {\tt LEA} function {\tt tracy.widom} \citep{Patterson_2006}.
+
+Similar to Bayesian clustering programs, {\tt LEA} includes an {\tt R} function to estimate individual admixture coefficients from the genotypic matrix \citep{Pritchard_2000a, Francois_2010}. Assuming $K$ ancestral populations, the {\tt R} function {\tt sNMF} provides least-squares estimates of ancestry proportions \citep{Frichot_2014}. The {\tt sNMF} function also estimates an entropy criterion that evaluates the quality of fit of the statistical model to the data using a cross-validation technique. The entropy criterion can help choosing the number of ancestral populations that best explains the genotypic data \citep{Alexander_2011, Frichot_2014}. The number of ancestral population is closely linked to the number of principal components that explain variation in the genomic data. Both numbers can help determining the number of latent factors when correcting for confounding effects due to population structure in ecological association tests.
+
+
+\paragraph{Ecological association tests.} The {\tt R} package {\tt LEA} performs ecological association tests based on latent factor mixed models (LFMM, \citealt{Frichot_2013}). Let $G$ denote the genotypic matrix, storing allele frequencies for each individual at each locus, and let $X$ denote a set of $d$ ecological variables. LFMMs consider genotypic matrix entries as response variables in a linear regression model
+\begin{equation}
+ G_{i\ell} = \mu_\ell + \beta_{\ell}^TX_{i} + U_i^TV_\ell + \epsilon_{i\ell} \, ,
+ \end{equation}
+
+
+The \texttt{pcaMethods} package \cite{stacklies07} provides a set of
+s a locus specific effect, $\beta_\ell$ is a $d$-dimensional vector of regression coefficients, $U_i$ contains $K$ latent factors, and $V_\ell$ contains their corresponding loadings ($i$ stands for an individual and $\ell$ for a locus). The residual terms, $\epsilon_{i\ell}$, are statistically independent Gaussian variables with mean zero and variance $\sigma^2$.
+ In latent factor models, associations between ecological variables and allele frequencies can be tested while estimating unobserved latent factors that model confounding effects. In principle, the latent factors include levels of population structure due to shared demographic history or background genetic variation. After correction for confounding effects, significant association between allele frequencies and an observed ecological variable is often interpreted as evidence for selection at a particular locus.
+
+The {\tt R} package {\tt LEA} implements an improved version of the LFMM estimation algorithm proposed by \citet{Frichot_2013}. The {\tt R} function {\tt LFMM} computes the posterior distribution of the regression coefficients corresponding to each ecological factor using a Gibbs sampler algorithm. The {\tt LFMM} function  allows users to perform multiple runs of the LFMM estimation algorithm for distinct values of $K$. It creates an object of class {\tt lfmmProject} that contains the $z$-scores and $p$-values for locus-specific effects in each run. The $p$-values are obtained from the Student $t$-distribution using $n-d-1$ degrees of freedom, and can be re-calibrated using {\tt R} commands.
+
+
+\paragraph{Latent factor mixed models in practice.} A correct calibration of LFMM tests assumes that the test $p$-values have uniform distribution when the ecological variables have no effect on genetic variation. Running LFMM with distinct numbers of latent factors is the way by which users could choose models that check this condition. LFMM association tests exhibit better performances for values close to the number of significant components in a PCA, or close to  the number of clusters obtained from a clustering analysis \citep{Frichot_2013}.  We suggest that the values obtained from analyses using the {\tt R} functions {\tt pca} or {\tt sNMF} could define a range to explore when running  {\tt LFMM} analyses.
+Deciding the best values for the number of latent factors in LFMM can then be based on the analysis of the histograms of test $p$-values. For multiple runs using a same value of $K$, $z$-scores can be combined with the Stouffer or similar methods \citep{Liptak_1958}. To decide which test should be applied (and choose $K$, the number of latent factors), we use the genomic inflation factor, $\lambda$, defined by \citet{Devlin_1999} as
+$$
+\lambda = \frac{{\rm median}( z^2 ) }{0.456} \, , 
+$$
+where $z$ is a vector that contains $z$-scores for all loci, and 0.456 corresponds to the median of the chi-square distribution.  $P$-values are correctly calibrated  when the inflation factor is close to one. We then modify the $z$-scores by dividing them by the square root of $\lambda$. With this method, standard algorithms implemented in {\tt R} can be used to produce  lists of candidate loci based on the control of the false discovery rate \citep{Benjamini_1995}.
+
+
+\section{Ecological association studies using {\tt LEA}}
+
+In this section, we illustrate the use of the {\tt R} package {\tt LEA} for analyzing ecological genomic data from simulated populations and from Scandinavian populations of the plant species {\it Arabidopsis thaliana} \citep{Atwell_2010}.
+
+\paragraph{Analysis of simulated data.}  We started our analysis of the data by evaluating population genetic structure with the function {\tt sNMF}. For number of factors ranging from 1 to 10, we estimated ancestry coefficients for each individual in the sample,  and we computed the cross-entropy criterion as follows
+{\tt
+
+project.snmf = sNMF("genotypes.geno", K = 1:10, entropy = TRUE)
+
+}
+The cross-entropy criterion quickly decreased when the number of factors increased from $1$ to $6$. A minimum value was obtained when $K = 8$ clusters were considered, indicating that genetic contribution from 8 ancestral populations optimally predicts masked individual genotypes (Figure 1A).  Population structure was also assessed using principal component analysis using the {\tt LEA} function {\tt pca}. In agreement with {\tt sNMF} results,  substantial drops in the distribution of the empirical covariance matrix eigenvalues were observed for components $1--6$. Thus the functions {\tt pca} and {\tt sNMF} provided congruent evidence of complex population genetic structure in the data.
+
+We continued our analysis by performing ecological association tests on the genotypic matrix.  We used the {\tt LEA} function {\tt LFMM} to fit latent factors mixed models to the data and test association between loci and and a simulated ecological gradient. Based on our analysis of population structure, we computed locus-specific $z$-scores and $p$-values for numbers of latent factors ranging between $K = 4$ and  $K = 10$. For each value of $K$, a gibbs sampler algorithm was run 10 times for a period of 5,000 cycles following a burn-in period of 5,000 cycles. The corresponding {\tt LEA} command with $K=6$ latent factors is
+\begin{verbatim}
+project.lfmm = LFMM(input.file="genotypes.lfmm", environment.file="gradients.env",
+K = 6, iterations = 10000, burnin = 5000, repetitions = 10)
+zs.table = z.scores(project.lfmm)
+\end{verbatim}
+
+Each run took approximately 20 minutes of a 2.4 GHz Intel Xeon 64 bit computer processing unit. The created object {\tt project} contained paths to external files recording the results of LFMM runs, and the function {\tt z.scores} extracted $z$-scores from those external files. Using a standard {\tt R} command, $z$-scores were combined using the median value
+{\tt
+
+ zs = apply(zs.table, MARGIN = 1, median)
+
+}
+\noindent and a genomic inflation factor was computed as follows
+
+\begin{verbatim}
+ lambda = median(zs^2)/.456
+\end{verbatim}
+
+\noindent The genomic inflation factor indicated that a good choice for
+the number of latent factors was $K=6$ (Figure 1B), and $p$-values were
+adjusted as follows
+
+\begin{verbatim}
+ adj.p.values = pchisq(zs^2/lambda, df = 1, lower = F)
+\end{verbatim}
+
+Figure 2 shows that , the adjusted $p$-values were correctly calibrated for $K=6$ factors.
+To adjust $p$-values for multiple testing issues, we used the Benjamini-Hochberg procedure with expected levels of FDR equal to $q = 5 \%$, $10 \%$, $15 \%$ and $20 \%$ respectively \citep{Benjamini_1995}. For an expected level of FDR equal to $q = 10 \%$, a list of candidate loci is given by
+\begin{verbatim}
+L = length(adj.p.values) 
+q = 0.1
+w = which(sort(adj.p.values) < q * (1:L) / L)
+candidates = order(adj.p.values)[w]
+\end{verbatim}
+For $K=6$, the genomic inflation factor was equal to $\lambda = 0.91$. The observed FDRs were equal to $4.9 \%$, $ 8 \% $, $10 \% $, and $13 \%$ for $q=5 \%$, $q=10 \%$, $q=15 \%$ and $q=20 \%$ respectively. These results suggest that values of the inflation factor less than 1 provide better calibration of LFMM tests that values greater than $1$. In addition, the power to reject neutrality was equal to $70 \%$, $85 \%$, $91 \%$ and 94 \% for $q = 5\%$, $q=10\% $, $q=15 \%$, and $q=20\%$ respectively.
+For $K=9$,  the genomic inflation factor was equal to $\lambda = 0.44$. The observed FDRs were equal to $7.7 \%$, $ 11 \% $, $15 \% $, and $19 \%$ for $q=5 \%$, $q=10 \%$, $q=15 \%$ and $q=20 \%$ respectively. The power to reject neutrality was equal to $81 \%$, $91 \%$, $96 \%$ and 99 \% for $q = 5\%$, $q=10\% $, $q=15 \%$, and $q=20\%$ respectively.
+
+
+
+%<<results=hide, echo=false>>=
+%library(pcaMethods)
+%x <- c(-4,7); y <- c(-3,4)
+%distX <- rnorm(100, sd=0.3)*3
+%distY <- rnorm(100, sd=0.3) + distX * 0.3
+%mat <- cbind(distX, distY)
+%res <- pca(mat, nPcs=2, method="svd", center=F)
+%loading <- loadings(res)[1,]
+%grad <- loading[2] / loading[1]
+%if (grad < 0)
+%   grad <- grad * -1
+%lx <- c(-4,7)
+%ly <- c(grad * -4, grad * 7)
+%@
+%\begin{figure}
+%	\centering
+%<<fig=true, width=8, height=5, results=hide, echo=false>>=
+%par(mar=c(2, 3, 2, 2))
+%plot(x,y, type="n", xlab="", ylab="")
+%abline(v=0, col="dark gray", lwd = 2); abline(h=0, col = "dark gray", lwd = 2)
+%points(distX, distY, type = 'p', col = "blue")
+%lines(lx,ly, lwd = 2)
+%points(-1, -1 * grad + 0.5, pch = 19, col = "red", lwd=4)
+%points(6, 6 * grad + 0.5, pch = 19, col = "red", lwd=4)
+%@
+%\caption{Normal distributed data with the first loading plotted in black.
+%The two red points have the same reconstruction error because PCA does
+%not define a density model. Thus the only measure of how well new data fits
+%the model is the distance from the principal subspace. Data points far from
+%the bulk of data but still close to the principal subspace will have a low
+%reconstruction error. \label{fig:pcaSubspace}}
+%\end{figure}
+
+%\cleardoublepage
+%\begin{thebibliography}{2006}
+%\bibitem{stacklies07} Stacklies W., Redestig H., Scholz M., and
+%  Walther D., and Selbig J. {\sl pcaMethods -- a Bioconductor package
+%    providing PCA methods for incomplete data}
+%Bioinformatics. 2007, 23, 1164-1167.
+%{\sl Non-linear PCA: a missing data approach.}
+%Bioinformatics. 2005, 21, 3887-3895.
+%\bibitem{scholz05} Scholz, M. , Kaplan, F., Guy, C.L., Kopka, J. and Selbig, J.
+%{\sl Non-linear pca: a missing data approach.}
+%Bioinformatics. 2005, 21, 3887-3895.
+%\bibitem{troyanskaya01} Troyanskaya O. and Cantor M. and Sherlock G. and Brown
+%P. and Hastie T. and Tibshirani R. and Botstein D. and Altman RB.
+%{\sl Missing value estimation methods for DNA microarrays.}
+%Bioinformatics. 2001 Jun;17(6):520-525.
+%\bibitem{feten05} Feten G. and Almoy T. and Aastveit A.H.
+%{\sl Prediction of Missing Values in Microarray and Use of
+%Mixed Models to Evaluate the Predictors.}, Stat. Appl. Genet. Mol. Biol.
+%2005;4(1):Article 10
+%\bibitem{oba03} Oba S. and Sato MA. and Takemasa I. and Monden M. and
+%Matsubara K. and Ishii S. {\sl A Bayesian missing value estimation method for gene expression profile data.} Bioinformatics. 2003 Nov 1;19(16):2088-96.
+%\bibitem{wold66} Wold H. {Estimation of principal components and
+%related models by iterative least squares.} In Multivariate Analysis (Ed. P.R.
+%Krishnaiah), Academic Press, NY, 391-420.
+%\bibitem{kim05} Kim H. and Golub G.H. and Park H.
+%{\sl Missing value estimation for DNA microarray gene expression data: local least
+%squares imputation}
+%Bioinformatics. 2005 21(2) :187-198
+%\end{thebibliography}
+
+\end{document}

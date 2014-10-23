@@ -1,0 +1,32 @@
+by E.Frichot
+Date: 22/10/2014
+
+HOW TO, add a new function to LEA
+*********************************
+
+In meta/LEA/, add:
+
+- export(<the function>) in the namespace
+
+- an R man page, in the man/ directory
+
+- the C function link, R_<the function>.c, in the src/ directory.
+This function wrap the principal C function of program. It is the equivalent
+of the main_<the function>.c in C.
+
+- update the Makevars with your new src directory.
+
+- the R function, in the R/ directory.
+Usually, this function check the argument, create a new class if necessary
+and call associated C function, R_<the function>.c.
+
+- the R class for the result, in the R/ directory.
+Usually, the major program (LFMM, sNMF, ...) registers their runs in a class
+(ex: snmfClass) and the project in an other class (ex: snmfProject)
+Some methods are linked with these classes.
+
+- update the vignette with the new function.
+
+- update the inst/citation if it is necessary.
+
+c

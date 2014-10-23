@@ -1,0 +1,21 @@
+by E.Frichot
+Date 22/10/2014
+
+HOW TO, release a new gui version:
+*********************************
+
+- copy CL_code/code into LFMM_GUI_toCompile
+
+- update the commands in the lfmm_gui.cpp file:
+tr("code\\LFMM.exe -n %1 -L %2 -K %3 -i %4 -b %5 -g \"%7\" 
+-v \"%8\" -o \"%9\" -p %10 -C \"%11\" -D %12 -d %13 -m")
+
+- follow the README to create a new executable for each OS,
+	WIN, linux32, linux64, MacOS.
+
+- for windows, compile the CL-code to add it in the directory.
+
+- for mac, create an installer (if necessary)
+
+- create a different release for each OS, based on the previous
+version of the release. Each one is different.

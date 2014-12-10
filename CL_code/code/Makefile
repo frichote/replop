@@ -1,6 +1,9 @@
 ### OPTIONS ####
 CFLAGS = -lm -lpthread
-LDFLAGS += -g -O3 -Wall -Wextra
+LDFLAGS += -g -O3 -Wall -Wextra -DDEBUG
+
+# debug mode for LFMM
+LDFLAGS += -DDEBUG
 
 ##CC = colorgcc
 CC = gcc

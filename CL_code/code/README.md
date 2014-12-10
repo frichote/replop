@@ -13,3 +13,8 @@ The directory is organized as follows:
 * src: source files directory. The src files are divided in subdirectories to order the code.
 * test: test files directory.
 * Makefile: to compile the package, we provide a makefile. To compile all the package, type "make". 
+
+There is a debug mode for LFMM (see the makefile). It writes the current value 
+of each matrice in a file called with the name of the variable and it prints the current value 
+of each alpha*.
+

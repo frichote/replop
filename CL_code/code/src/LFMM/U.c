@@ -69,15 +69,17 @@ void update_alpha_U(LFMM_param param)
 	double tmp;
 	int k;
 
-	int a = (int)epsilon + N * K / 2;
+	// int a = (int)epsilon + N * K / 2;
+	int a = (int)epsilon + N / 2;
 	// b = 1/2*sum(sum(U.^2)) + 1/2*sum(sum(V.^2));
 	// WARNING: ceci est une erreur dans le code (ca devrait etre un double et non un int)
-	int b = 0.5 * dble_sum(U, N * K) + epsilon;	// U(D,N) V(D,M)
+	int b; // = 0.5 * dble_sum(U, N * K) + epsilon;	// U(D,N) V(D,M)
 
 	// update alpha_U
 	tmp = rand_gamma(a, 1.0 / b);
 	for (k = 0; k < K; k++) {
-		param->alpha_U[k] = tmp; 
+		b = 0.5 * dble_sum(&(U[k*N]), N) + epsilon;
+		param->alpha_U[k] = rand_gamma(a, 1.0 / b); 
 		param->alpha_V[k] = 1.0; 
 	}
 }

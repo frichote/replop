@@ -1,6 +1,6 @@
 ### OPTIONS ####
 CFLAGS = -lm -lpthread
-LDFLAGS += -g -O3 -Wall -Wextra -DDEBUG
+LDFLAGS += -g -O3 -Wall -Wextra
 
 # debug mode for LFMM
 LDFLAGS += -DDEBUG

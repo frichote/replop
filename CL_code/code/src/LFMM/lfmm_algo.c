@@ -72,7 +72,7 @@ void lfmm_emcmc(LFMM_param param)
 	// update alpha_R
 	param->alpha_R = update_alpha_R (param, GS_param);
 #ifdef DEBUG
-	print_debug_NaN(&(param->alpha_R), 1, 1, "alpha_R");
+	print_debug_NaN_negative(&(param->alpha_R), 1, 1, "alpha_R");
 	print_data_double(&(param->alpha_R), 1, 1);
 #endif
 
@@ -99,13 +99,13 @@ void lfmm_emcmc(LFMM_param param)
 		// update_alpha_U
 		update_alpha_U(param);
 #ifdef DEBUG
-		print_debug_NaN(param->alpha_U, K, 1, "alpha_U");
+		print_debug_NaN_negative(param->alpha_U, K, 1, "alpha_U");
 		print_data_double(param->alpha_U, K, 1);
 #endif
 		// update_alpha_beta
 		update_alpha_beta(param);
 #ifdef DEBUG
-		print_debug_NaN(param->alpha_beta, D, 1, "alpha_beta");
+		print_debug_NaN_negative(param->alpha_beta, D, 1, "alpha_beta");
 		print_data_double(param->alpha_beta, D, 1);
 #endif
 
@@ -121,7 +121,7 @@ void lfmm_emcmc(LFMM_param param)
 		// update alpha_R
 		param->alpha_R = update_alpha_R (param, GS_param);
 #ifdef DEBUG
-		print_debug_NaN(&(param->alpha_R), 1, 1, "alpha_R");
+		print_debug_NaN_negative(&(param->alpha_R), 1, 1, "alpha_R");
 		print_data_double(&(param->alpha_R), 1, 1);
 #endif
 

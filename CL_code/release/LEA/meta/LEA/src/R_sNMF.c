@@ -47,6 +47,7 @@ void R_sNMF (char** R_genotype_file, int* R_K, double* R_alpha, double* R_tol, d
 	param->pourcentage = *R_percentage;
 	param->alpha = *R_alpha;
 	param->I = *I;
+	param->m = *R_ploidy;
 	// param->missing_data = R_;
 	param->seed = *R_seed;
 	strcpy(param->input_file, *R_genotype_file);

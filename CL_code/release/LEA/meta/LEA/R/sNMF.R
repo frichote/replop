@@ -120,6 +120,7 @@ sNMF <- function(input.file,
             # TODO on peut aussi tester que le fichier n est pas déjà existant 
                 snmfClass.file = paste(dir, tmp, "_r", re ,".",k, ".snmfClass", sep="")
 
+	    print(ploidy);
             all.ce = 0;
             masked.ce = 0;
             n = 0;

@@ -76,7 +76,7 @@ void update_alpha_U(LFMM_param param)
 	int b; // = 0.5 * dble_sum(U, N * K) + epsilon;	// U(D,N) V(D,M)
 
 	// update alpha_U
-	tmp = rand_gamma(a, 1.0 / b);
+	//tmp = rand_gamma(a, 1.0 / b);
 	for (k = 0; k < K; k++) {
 		b = 0.5 * dble_sum(&(U[k*N]), N) + epsilon;
 		param->alpha_U[k] = rand_gamma(a, 1.0 / b); 

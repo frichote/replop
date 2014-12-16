@@ -49,6 +49,7 @@ void lfmm_emcmc(LFMM_param param)
 	int D = param->mD;
 	int K = param->K;
 
+	printf("D mD %d %d \n", D, param->mD);
 	// allocate memory
 	allocate_all(GS_param, N, M, K, D);
 

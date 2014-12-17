@@ -101,7 +101,7 @@ void create_inv_cov(double *inv_cov, double* alpha, double alpha_R,
 
 #ifndef WIN32
         // multi-threaded non windows version
-        if (num_thrd > 1) {
+        if (num_thrd < 1) {
                 thread_fct_lfmm(NULL, A, NULL, NULL, NULL, tmp2, NULL, 
 			0, K, 0, M, alpha, alpha_R, num_thrd, 0, slice_inv_cov);
         // uni-threaded or windows version

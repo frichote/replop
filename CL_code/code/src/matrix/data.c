@@ -55,7 +55,7 @@ void zeros(double *A, int n)
 		A[i] = 0;
 }
 
-// any_NaN
+// any_negative
 
 int any_negative(double *A, int n, int L)
 {

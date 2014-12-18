@@ -46,6 +46,7 @@ void slice_m(void *G)
 	int nb_data, s, num_thrd, from, to; 
 	int i, j, k, d;
 	double *tmp_i;
+	double *tmp_j;
 	/*
 	int nb_data = N;
 	int s = Ma->slice;
@@ -105,6 +106,10 @@ void slice_m(void *G)
                				m[k * N + i] += A[k * M + j] * tmp_i[j];
                 	}
                 }
+
+		// free memory
+		free(tmp_i);
+
 	} else {
 		nb_data = M;
 		s = Ma->slice;
@@ -112,27 +117,28 @@ void slice_m(void *G)
 		from = (s * nb_data) / num_thrd;	// note that this 'slicing' works fine
 		to = ((s + 1) * nb_data) / num_thrd;	// even if SIZE is not divisible by num_thrd
 
-		tmp_i = (double *) malloc(N * sizeof(double));
+		tmp_j = (double *) malloc(N * sizeof(double));
 
 	       	for (j = from; j < to; j++) {
 	                // calculate tmp_i = R - B'C
         	        for (i = 0; i < N; i++)
-                	        tmp_i[i] = (double)(R[i * M + j]);
+                	        tmp_j[i] = (double)(R[i * M + j]);
                 	for (d = 0; d < J; d++) {
                         	for (i = 0; i < N; i++)
-                                	tmp_i[i] -= B[d * N + i] * C[d * M + j];
+                                	tmp_j[i] -= B[d * N + i] * C[d * M + j];
 	                }
         	        // calculate tmp_i * A'
                 	for (k = 0; k < K; k++) {
                         	m[k * M + j] = 0;
                         	for (i = 0; i < N; i++)
-               				m[k * M + j] += A[k * N + i] * tmp_i[i];
+               				m[k * M + j] += A[k * N + i] * tmp_j[i];
                 	}
                 }
+
+		// free memory
+		free(tmp_j);
 	}
 
-	// free memory
-	free(tmp_i);
 }
 
 // slice_rand

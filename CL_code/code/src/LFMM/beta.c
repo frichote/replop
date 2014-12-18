@@ -35,7 +35,7 @@ void update_beta(LFMM_param param, LFMM_GS_param GS_param)
 	// m_beta = C' * (R - U'*V);                       (D,M)
 	create_m(param->mC, param->dat, param->U, param->V, 
 		GS_param->m_beta, param->L, param->n, param->K, 
-		param->mD, param->num_thrd, 0);
+		param->mD, 1, 0); // param->num_thrd, 0);
 #ifdef DEBUG
         print_debug_NaN(GS_param->m_beta, param->mD, param->L, "m_beta");
 #endif

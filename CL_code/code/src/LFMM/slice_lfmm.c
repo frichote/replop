@@ -126,7 +126,7 @@ void slice_m(void *G)
                 	for (k = 0; k < K; k++) {
                         	m[k * M + j] = 0;
                         	for (i = 0; i < N; i++)
-               				m[k * M + j] += A[k * N + i] * tmp_i[j];
+               				m[k * M + j] += A[k * N + i] * tmp_i[i];
                 	}
                 }
 	}

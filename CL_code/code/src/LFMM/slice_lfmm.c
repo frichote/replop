@@ -43,6 +43,10 @@ void slice_m(void *G)
 	int K = Ma->K;
 	int J = Ma->J;
 	int mode = Ma->mode;
+	int nb_data, s, num_thrd, from, to; 
+	int i, j, k, d;
+	double *tmp_i;
+	/*
 	int nb_data = N;
 	int s = Ma->slice;
 	int num_thrd = Ma->num_thrd;
@@ -52,7 +56,9 @@ void slice_m(void *G)
 
 	// allocate memory
 	double *tmp_i = (double *) malloc(M * sizeof(double));
+	*/
 
+	/*
 	for (i = from; i < to; i++) {
 		// calculate tmp_i = R - B'C
 		for (j = 0; j < M; j++)
@@ -74,7 +80,57 @@ void slice_m(void *G)
 					m[k * M + j] += A[k * N + i] * tmp_i[j];
 			}
 		}
+	} */
+	if (mode) {
+		nb_data = N;
+		s = Ma->slice;
+		num_thrd = Ma->num_thrd;
+		from = (s * nb_data) / num_thrd;	// note that this 'slicing' works fine
+		to = ((s + 1) * nb_data) / num_thrd;	// even if SIZE is not divisible by num_thrd
+
+		tmp_i = (double *) malloc(M * sizeof(double));
+
+	       	for (i = from; i < to; i++) {
+	                // calculate tmp_i = R - B'C
+        	        for (j = 0; j < M; j++)
+                	        tmp_i[j] = (double)(R[i * M + j]);
+                	for (d = 0; d < J; d++) {
+                        	for (j = 0; j < M; j++)
+                                	tmp_i[j] -= B[d * N + i] * C[d * M + j];
+	                }
+        	        // calculate tmp_i * A'
+                	for (k = 0; k < K; k++) {
+                        	m[k * N + i] = 0;
+                        	for (j = 0; j < M; j++)
+               				m[k * N + i] += A[k * M + j] * tmp_i[j];
+                	}
+                }
+	} else {
+		nb_data = M;
+		s = Ma->slice;
+		num_thrd = Ma->num_thrd;
+		from = (s * nb_data) / num_thrd;	// note that this 'slicing' works fine
+		to = ((s + 1) * nb_data) / num_thrd;	// even if SIZE is not divisible by num_thrd
+
+		tmp_i = (double *) malloc(N * sizeof(double));
+
+	       	for (j = from; j < to; j++) {
+	                // calculate tmp_i = R - B'C
+        	        for (i = 0; i < N; i++)
+                	        tmp_i[i] = (double)(R[i * M + j]);
+                	for (d = 0; d < J; d++) {
+                        	for (i = 0; i < N; i++)
+                                	tmp_i[i] -= B[d * N + i] * C[d * M + j];
+	                }
+        	        // calculate tmp_i * A'
+                	for (k = 0; k < K; k++) {
+                        	m[k * M + j] = 0;
+                        	for (i = 0; i < N; i++)
+               				m[k * M + j] += A[k * N + i] * tmp_i[j];
+                	}
+                }
 	}
+
 	// free memory
 	free(tmp_i);
 }

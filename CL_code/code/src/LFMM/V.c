@@ -34,7 +34,7 @@ void update_V(LFMM_param param, LFMM_GS_param GS_param)
 	// m_V = U * (I.*(R - C*beta));                         (K,M)
 	create_m(param->U, param->dat, param->mC, param->beta, 
 		GS_param->m_V, param->L, param->n, param->mD, 
-		param->K, param->num_thrd, 0);
+		param->K, 1, 0); //param->num_thrd, 0);
 #ifdef DEBUG
         print_debug_NaN(GS_param->m_V, param->K, param->L, "m_V");
 #endif

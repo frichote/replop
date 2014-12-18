@@ -153,7 +153,7 @@ void create_m(double *A, float *R, double *B, double *C, double *m,
 
 #ifndef WIN32
         // multi-threaded non windows version
-        if (num_thrd < 1) {
+        if (num_thrd > 1) {
                 thread_fct_lfmm(R, A, B, C, m, NULL, NULL,
                 	J, K, N, M, NULL, 0, num_thrd, mode, slice_m);
         } else {

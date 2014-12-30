@@ -18,8 +18,9 @@
  * @param input		the input file
  * @param output	the output file	
  */
-void analyse_param_tracyWidom( int argc, char *argv[], char *input, char* output);
+void analyse_param_tracyWidom(int argc, char *argv[], char *input,
+                              char *output);
 
-#endif // REGISTER_TRACYWIDOM_H
+#endif                          // REGISTER_TRACYWIDOM_H
 
 /** @} */

@@ -27,8 +27,8 @@
  * @param var_res	variance of the residual	
  */
 void calc_beta_k0(double *C, float *R, double *beta,
-		 double *CCt, double *var_beta, int M, int N,
-		 int D, double *var_res);
+                  double *CCt, double *var_beta, int M, int N,
+                  int D, double *var_res);
 
 /**
  * calculate zscores 
@@ -39,7 +39,8 @@ void calc_beta_k0(double *C, float *R, double *beta,
  * @param D		number of lines of each
  * @param M		number of columns of each
  */
-void zscore_calc_k0(double *zscore, double *beta, double *var_beta, int D, int M);
+void zscore_calc_k0(double *zscore, double *beta, double *var_beta, int D,
+                    int M);
 
 /**
  * compute the C'*C in tmp
@@ -51,7 +52,6 @@ void zscore_calc_k0(double *zscore, double *beta, double *var_beta, int D, int M
  */
 void create_CCt(double *cov, double *C, int D, int N);
 
-
-#endif // BETA_K0_H
+#endif                          // BETA_K0_H
 
 /** @} */

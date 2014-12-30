@@ -3,7 +3,7 @@ ancestrymap2geno <- function(input.file, output.file = NULL, force = TRUE)
 {
     # test arguments and init
     # input file
-        if(missing(input.file)) 
+    if(missing(input.file)) 
         stop("'input.file' argument is missing.")
     else if (!is.character(input.file))
         stop("'input.file' argument has to be of type character.")

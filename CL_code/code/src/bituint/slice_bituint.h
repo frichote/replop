@@ -29,6 +29,6 @@ void slice_BX(void *G);
 
 #endif
 
-#endif // SLICE_BITUINT_H
+#endif                          // SLICE_BITUINT_H
 
 /** @} */

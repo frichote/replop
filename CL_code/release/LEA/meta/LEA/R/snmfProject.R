@@ -7,19 +7,23 @@ setClass("snmfProject",
 
 # addRun
 
-setGeneric("addRun.snmfProject", function(project="snmfProject", run="snmfClass") attributes("snmfProject"));
-setMethod("addRun.snmfProject", signature(project="snmfProject", run="snmfClass"),
+setGeneric("addRun.snmfProject", function(project="snmfProject", 
+    run="snmfClass") attributes("snmfProject"));
+setMethod("addRun.snmfProject", signature(project="snmfProject", 
+    run="snmfClass"),
     function(project, run) {
         project@runs[[length(project@runs) + 1]] = run
         project@K = c(project@K, run@K)
         project@snmfClass.files = c(project@snmfClass.files, run@snmfClass.file)
+
         return(project)
     }
 )
 
 # getRuns
 
-setGeneric("getRuns.snmfProject", function(object, ...) standardGeneric("getRuns.snmfProject"));
+setGeneric("getRuns.snmfProject", function(object, ...) 
+    standardGeneric("getRuns.snmfProject"));
 setMethod("getRuns.snmfProject", "snmfProject",
     function(object, K) {
         # check of K
@@ -43,23 +47,24 @@ setMethod("getRuns.snmfProject", "snmfProject",
 
 # display lambda for a value of d, and a Manhattan plot for a value of K. 
 setMethod("plot", "snmfProject",
-         function(x, ...){
+    function(x, ...){
         s = summary(x);
         axe = NULL
         K = sort(unique(x@K))
         
-            for (k in 1:length(K)) {
+        for (k in 1:length(K)) {
             tK = FALSE
-                        for (w in which(x@K == K[k])) {
-                                if (x@runs[[w]]@entropy)
-                tK = TRUE;
-                        }
+            for (w in which(x@K == K[k])) {
+                if (x@runs[[w]]@entropy)
+                    tK = TRUE;
+            }
             if (tK)
                 axe = c(axe, K[k])        
-                }
+        }
 
-            plot(s$crossEntropy[1,], ylab="Minimal Cross-Entropy", xlab="Number of ancestral populations", ...)
-          }
+        plot(s$crossEntropy[1,], ylab="Minimal Cross-Entropy", 
+            xlab="Number of ancestral populations", ...)
+    }
 )
 
 # G
@@ -74,7 +79,8 @@ setMethod("G", "snmfProject",
             if (length(unique(object@K)) == 1) {
                 K = unique(object@K)
             } else {
-                stop("Please, choose a value of K among: ", paste(unique(object@K), collapse=" "))
+                stop("Please, choose a value of K among: ", 
+                    paste(unique(object@K), collapse=" "))
             }
         } else {
             if (length(K) > 1) {
@@ -82,8 +88,9 @@ setMethod("G", "snmfProject",
             }
             K = test_integer("K", K, NULL)
             if (!(K %in% unique(object@K))) {
-                stop(paste("No run exists for K = ", K,". Please, choose a value of K among: ", 
-                paste(unique(object@K), collapse=" "),sep=""))
+                stop(paste("No run exists for K = ", K,
+                    ". Please, choose a value of K among: ", 
+                    paste(unique(object@K), collapse=" "),sep=""))
             }
         }
 
@@ -91,8 +98,8 @@ setMethod("G", "snmfProject",
         r = which(object@K == K)
         if (missing(run)) {
             if (length(r) > 1) {
-                stop(paste(length(r)," runs have been performed for K =", K,".\n",
-                "Please choose one with the paramater 'run'"))
+                stop(paste(length(r)," runs have been performed for K =", K,
+                    ".\n", "Please choose one with the paramater 'run'"))
             } else {
                 run = 1;
             }
@@ -122,21 +129,23 @@ setMethod("Q", "snmfProject",
             if (length(unique(object@K)) == 1) {
                 K = unique(object@K)
             } else {
-                stop("Please, choose a value of K among: ", paste(unique(object@K), collapse=" "))
+                stop("Please, choose a value of K among: ", 
+                    paste(unique(object@K), collapse=" "))
             }
         } else {
             K = test_integer('K', K, NULL)
             if (!(K %in% unique(object@K))) {
-                stop(paste("No run exists for K = ", K,". Please, choose a value of K among: ", 
-                paste(unique(object@K), collapse=" "),sep=""))
+                stop(paste("No run exists for K = ", K,
+                    ". Please, choose a value of K among: ", 
+                    paste(unique(object@K), collapse=" "),sep=""))
             }
         }
         # check of run
         r = which(object@K == K)
         if (missing(run)) {
             if (length(r) > 1) {
-                stop(paste(length(r)," runs have been performed for K =", K,".\n",
-                "Please choose one with the paramater 'run'", sep=""))
+                stop(paste(length(r)," runs have been performed for K =", K,
+                    ".\n","Please choose one with the paramater 'run'", sep=""))
             } else {
                 run = 1;
             }
@@ -170,7 +179,8 @@ setMethod("cross.entropy", "snmfProject",
                     paste(unique(object@K), collapse=" "), sep=""))
             }
         } else if (!(K %in% unique(object@K))) {
-            stop(paste("No run exists for K = ", K,". Please, choose a value of K among: ", 
+            stop(paste("No run exists for K = ", K,
+                ". Please, choose a value of K among: ", 
                 paste(unique(object@K), collapse=" "),sep=""))
         }
 
@@ -195,7 +205,8 @@ setMethod("cross.entropy", "snmfProject",
         } 
             
         if (length(res) == 0) {
-            cat("The selected runs are without cross-entropy criterion estimation!\n")
+            cat(paste("The selected runs are without cross-entropy", 
+                "criterion estimation!\n"))
             return(NULL);
         } else {
             return(matrix(res, dimnames = list(rownames, colnames)));
@@ -215,11 +226,11 @@ setMethod("show", "snmfProject",
         cat("number of loci:                  ", object@L, "\n")
         cat("number of ancestral populations: ", object@K, "\n")
         if (length(object@runs)) {
-        for (i in 1:length(object@runs)) {
-            cat("\n")
-            cat("***** run *****\n");
-            show(object@runs[[i]])
-        }
+            for (i in 1:length(object@runs)) {
+                cat("\n")
+                cat("***** run *****\n");
+                show(object@runs[[i]])
+            }
         }
     }
 )
@@ -232,7 +243,8 @@ setMethod("summary", "snmfProject",
         K = sort(unique(object@K))
         rownames=c("with cross-entropy", "without cross-entropy", "total")
         colnames=paste("K =", K)
-        rep = matrix(NA, ncol=length(K), nrow=3, dimnames= list(rownames, colnames))
+        rep = matrix(NA, ncol=length(K), nrow=3, 
+            dimnames= list(rownames, colnames))
         for (k in 1:length(K)) {
             rep[3,k] = length(which(object@K == K[k]))
             rep[1,k] = 0;
@@ -243,8 +255,9 @@ setMethod("summary", "snmfProject",
             rep[2,k] = rep[3,k] - rep[1,k]
         }
         
-              rownames = c("min", "mean", "max");
-        ce = matrix(NA, ncol=length(K), nrow=3, dimnames= list(rownames, colnames)); 
+        rownames = c("min", "mean", "max");
+        ce = matrix(NA, ncol=length(K), nrow=3, 
+            dimnames= list(rownames, colnames)); 
         for (k in 1:length(K)) {
             ceK = cross.entropy(object, K[k])
             if (!is.null(ceK)) { 
@@ -263,12 +276,15 @@ setMethod("summary", "snmfProject",
 
 # load
 
-setGeneric("load.snmfProject", function(file="character") attributes("snmfProject"))
+setGeneric("load.snmfProject", function(file="character") 
+    attributes("snmfProject"))
 setMethod("load.snmfProject", "character",
     function(file) {
         res = dget(file);
-        for (r in 1:length(res@snmfClass.files)) {
-            res@runs[[r]] = load.snmfClass(res@snmfClass.files[r])
+        if (length(res@snmfClass.files) > 0) {
+            for (r in 1:length(res@snmfClass.files)) {
+                res@runs[[r]] = load.snmfClass(res@snmfClass.files[r])
+            }
         }
         return(res);
     }
@@ -288,8 +304,10 @@ setMethod("save.snmfProject", signature(object="snmfProject"),
         object@runs = list()
         dput(object, file) 
         cat("The project is saved into :\n",currentDir(file),"\n\n");
-        cat("To load the project, use:\n project = load.snmfProject(\"",currentDir(file),"\")\n\n",sep="");
-        cat("To remove the project, use:\n remove.snmfProject(\"",currentDir(file),"\")\n\n",sep="");
+        cat("To load the project, use:\n project = load.snmfProject(\"",
+            currentDir(file),"\")\n\n",sep="");
+        cat("To remove the project, use:\n remove.snmfProject(\"",
+            currentDir(file),"\")\n\n",sep="");
     
         object@snmfProject.file;
     }

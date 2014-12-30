@@ -42,8 +42,8 @@ void read_geno(char *input_file, int *data, int N, int M);
  * @param warning	Boolean: true if a warning has already been diplayed.
  *				 false otherwise
  */
-void fill_line_geno (int* data, int M, int N, int j, char *file_data, FILE* m_File, 
-	char *szbuff, int *warning);
+void fill_line_geno(int *data, int M, int N, int j, char *file_data,
+                    FILE * m_File, char *szbuff, int *warning);
 
 /**
  * write the file in the geno format from data (of size NxM)
@@ -53,7 +53,7 @@ void fill_line_geno (int* data, int M, int N, int j, char *file_data, FILE* m_Fi
  * @param M     	the number of lines
  * @param data  	the data set (of size NxM)
  */
-void write_geno(char* output_file, int N, int M, int *data);
+void write_geno(char *output_file, int N, int M, int *data);
 
 /**
  * write a line of a geno data into geno file (not used by write_geno)
@@ -62,6 +62,6 @@ void write_geno(char* output_file, int N, int M, int *data);
  * @param line		geno line data
  * @param N		size of line
  */
-void write_geno_line(FILE* File, int* line, int N);
+void write_geno_line(FILE * File, int *line, int N);
 
 #endif /** @} GENO_H */

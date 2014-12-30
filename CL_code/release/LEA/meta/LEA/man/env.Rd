@@ -9,10 +9,11 @@ can be used as an input format for the environmental variables
 in the \code{\link{LFMM}} function. 
 }
 \details{
-The \code{env} format has one row for each individual. Each row contains one value for
-each environmental variable (separated by spaces or tabulations).
+The \code{env} format has one row for each individual. Each row contains one 
+value for each environmental variable (separated by spaces or tabulations).
 
-Here is an example of an environmental file using the \code{env} format with 3 individuals and 2 variable:
+Here is an example of an environmental file using the \code{env} format with 
+3 individuals and 2 variable:
 \preformatted{
 0.252477 0.95250639
 0.216618 0.10902647

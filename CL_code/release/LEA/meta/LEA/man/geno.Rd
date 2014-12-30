@@ -12,12 +12,13 @@ for genotypic matrices in the functions \code{\link{sNMF}},
 \details{
 The \code{geno} format has one row for each SNP.
 Each row contains 1 character for each individual:
-  	0 means zero copy of the reference allele.
-  	1 means one copy of the reference allele.
-  	2 means two copies of the reference allele.
-  	9 means missing data.
+    0 means zero copy of the reference allele.
+    1 means one copy of the reference allele.
+    2 means two copies of the reference allele.
+    9 means missing data.
 
-Here is an example of a genotypic matrix using the \code{geno} format with 3 individuals and 4 loci: 
+Here is an example of a genotypic matrix using the \code{geno} format with 3 
+individuals and 4 loci: 
 \preformatted{
 112
 010

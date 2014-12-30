@@ -16,33 +16,29 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "print_tracyWidom.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 // print_help
 
-void print_help_tracyWidom() 
+void print_help_tracyWidom()
 {
-   printf("\nHELP: ./tracyWidom options \n\n"
-         "mandatory:\n"
-         "        -i input_file         -- eigenvalues file (one column)\n\n"
-
-         "optional:\n"
-         "        -h                    -- help\n"
-         "        -o output_file        -- output file (default: input_file.tracywidom)\n"
-        );
+        printf("\nHELP: ./tracyWidom options \n\n"
+               "mandatory:\n"
+               "        -i input_file         -- eigenvalues file (one column)\n\n"
+               "optional:\n"
+               "        -h                    -- help\n"
+               "        -o output_file        -- output file (default: input_file.tracywidom)\n");
 }
 
 // print_summary
 
-void print_summary_tracyWidom(int M, char *input, char *output) 
+void print_summary_tracyWidom(int M, char *input, char *output)
 {
-           printf("summary of the options:\n\n"
-                "        -n (number of eigenvalues)          %d\n"  
-                "        -i (input file)                     %s\n"
-                "        -o (output file)                    %s\n"
-                , M, input, output);
+        printf("summary of the options:\n\n"
+               "        -n (number of eigenvalues)          %d\n"
+               "        -i (input file)                     %s\n"
+               "        -o (output file)                    %s\n", M, input,
+               output);
 }
-

@@ -20,9 +20,9 @@
  * @param[out] input	the input file
  * @param[out] output_file	the output file
  */
-void analyse_param_cds(	int argc, char *argv[], long long *s,
-			double *e, char *input, char* output_file);
+void analyse_param_cds(int argc, char *argv[], long long *s,
+                       double *e, char *input, char *output_file);
 
-#endif // REGISTER_CDS_H
+#endif                          // REGISTER_CDS_H
 
 /** @} */

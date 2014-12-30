@@ -1,13 +1,12 @@
 #include "blaswrap.h"
 #include "f2c.h"
 
-/* Subroutine */ int dlassq_(integer *n, doublereal *x, integer *incx, 
-	doublereal *scale, doublereal *sumsq)
+/* Subroutine */ int dlassq_(integer * n, doublereal * x, integer * incx,
+                             doublereal * scale, doublereal * sumsq)
 {
 /*  -- LAPACK auxiliary routine (version 3.1) --   
        Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..   
        November 2006   
-
 
     Purpose   
     =======   
@@ -52,41 +51,39 @@
 
    =====================================================================   
 
-
        Parameter adjustments */
-    /* System generated locals */
-    integer i__1, i__2;
-    doublereal d__1;
-    /* Local variables */
-    static integer ix;
-    static doublereal absxi;
+        /* System generated locals */
+        integer i__1, i__2;
+        doublereal d__1;
+        /* Local variables */
+        static integer ix;
+        static doublereal absxi;
 
-    --x;
+        --x;
 
-    /* Function Body */
-    if (*n > 0) {
-	i__1 = (*n - 1) * *incx + 1;
-	i__2 = *incx;
-	for (ix = 1; i__2 < 0 ? ix >= i__1 : ix <= i__1; ix += i__2) {
-	    if (x[ix] != 0.) {
-		absxi = (d__1 = x[ix], abs(d__1));
-		if (*scale < absxi) {
+        /* Function Body */
+        if (*n > 0) {
+                i__1 = (*n - 1) * *incx + 1;
+                i__2 = *incx;
+                for (ix = 1; i__2 < 0 ? ix >= i__1 : ix <= i__1; ix += i__2) {
+                        if (x[ix] != 0.) {
+                                absxi = (d__1 = x[ix], abs(d__1));
+                                if (*scale < absxi) {
 /* Computing 2nd power */
-		    d__1 = *scale / absxi;
-		    *sumsq = *sumsq * (d__1 * d__1) + 1;
-		    *scale = absxi;
-		} else {
+                                        d__1 = *scale / absxi;
+                                        *sumsq = *sumsq * (d__1 * d__1) + 1;
+                                        *scale = absxi;
+                                } else {
 /* Computing 2nd power */
-		    d__1 = absxi / *scale;
-		    *sumsq += d__1 * d__1;
-		}
-	    }
+                                        d__1 = absxi / *scale;
+                                        *sumsq += d__1 * d__1;
+                                }
+                        }
 /* L10: */
-	}
-    }
-    return 0;
+                }
+        }
+        return 0;
 
 /*     End of DLASSQ */
 
-} /* dlassq_ */
-
+}                               /* dlassq_ */

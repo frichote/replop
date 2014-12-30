@@ -32,6 +32,6 @@ void print_bar(int *i, int *j, int Niter);
  */
 void final_bar();
 
-#endif // PRINT_BAR_H
+#endif                          // PRINT_BAR_H
 
 /** @} */

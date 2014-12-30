@@ -23,21 +23,21 @@
 #include "../sNMF/print_snmf.h"
 #include "../io/io_tools.h"
 
-int main (int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 
-	// local parameters
-	char input_file[512];		// input file "without" missing data
-	char output_file[512] = "";	// output file with missing data
-	double e = 0.05;		// output percentage of missing data
-	long long seed = -1;
-	
-	// analyse of the command line
+        // local parameters
+        char input_file[512];   // input file "without" missing data
+        char output_file[512] = "";     // output file with missing data
+        double e = 0.05;        // output percentage of missing data
+        long long seed = -1;
+
+        // analyse of the command line
         print_head_snmf();
-	analyse_param_cds(argc, argv, &seed, &e, input_file, output_file);
+        analyse_param_cds(argc, argv, &seed, &e, input_file, output_file);
 
-	// run function
-        createDataSet(input_file, (long long) seed, e, output_file);
+        // run function
+        createDataSet(input_file, (long long)seed, e, output_file);
 
-	return 0;
+        return 0;
 }
-

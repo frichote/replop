@@ -23,9 +23,8 @@
 
 // init_mat
 
-void init_mat_bituint(bituint** dat, int N, int Mc, int *Mp)
+void init_mat_bituint(bituint ** dat, int N, int Mc, int *Mp)
 {
-	*Mp = ceil(((double)Mc)/ SIZEUINT);
-	*dat = (bituint *) calloc(N*(*Mp),sizeof(bituint));
+        *Mp = ceil(((double)Mc) / SIZEUINT);
+        *dat = (bituint *) calloc(N * (*Mp), sizeof(bituint));
 }
-

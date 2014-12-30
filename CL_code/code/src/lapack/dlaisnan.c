@@ -13,11 +13,10 @@
 #include "f2c.h"
 #include "blaswrap.h"
 
-logical dlaisnan_(doublereal *din1, doublereal *din2)
+logical dlaisnan_(doublereal * din1, doublereal * din2)
 {
-    /* System generated locals */
-    logical ret_val;
-
+        /* System generated locals */
+        logical ret_val;
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */
 /*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. */
@@ -53,6 +52,6 @@ logical dlaisnan_(doublereal *din1, doublereal *din2)
 /*  ===================================================================== */
 
 /*  .. Executable Statements .. */
-    ret_val = *din1 != *din2;
-    return ret_val;
-} /* dlaisnan_ */
+        ret_val = *din1 != *din2;
+        return ret_val;
+}                               /* dlaisnan_ */

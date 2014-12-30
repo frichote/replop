@@ -30,59 +30,65 @@
 
 // thread_fct_bituint
 
-void thread_fct_bituint(bituint *X, double *A, double *B, int K, int Mc, int Mp, 
-	int N, int num_thrd, void (*fct) ())
+void thread_fct_bituint(bituint * X, double *A, double *B, int K, int Mc,
+                        int Mp, int N, int num_thrd, void (*fct) ())
 {
-	pthread_t *thread;	// pointer to a group of threads
-	int i;
+        pthread_t *thread;      // pointer to a group of threads
+        int i;
 
-	thread = (pthread_t *) malloc(num_thrd * sizeof(pthread_t));
-	Multithreading_bituint *Ma = (Multithreading_bituint *) malloc(num_thrd * sizeof(Multithreading_bituint));
+        thread = (pthread_t *) malloc(num_thrd * sizeof(pthread_t));
+        Multithreading_bituint *Ma =
+            (Multithreading_bituint *) malloc(num_thrd *
+                                              sizeof(Multithreading_bituint));
 
-	/* this for loop not entered if threadd number is specified as 1 */
-	for (i = 1; i < num_thrd; i++) {
-		Ma[i] = (Multithreading_bituint) malloc(1 * sizeof(multithreading_bituint));
-		Ma[i]->X = X;
-		Ma[i]->A = A;
-		Ma[i]->B = B;
-		Ma[i]->K = K;
-		Ma[i]->N = N;
-		Ma[i]->Mc = Mc;
-		Ma[i]->Mp = Mp;
-		Ma[i]->num_thrd = num_thrd;
-		Ma[i]->slice = i;
-		/* creates each thread working on its own slice of i */
-		if (pthread_create
-		    (&thread[i], NULL, (void *)fct, (void *)Ma[i])) {
-			perror("Can't create thread");
-			free(thread);
-			exit(1);
-		}
-	}
+        /* this for loop not entered if threadd number is specified as 1 */
+        for (i = 1; i < num_thrd; i++) {
+                Ma[i] =
+                    (Multithreading_bituint) malloc(1 *
+                                                    sizeof
+                                                    (multithreading_bituint));
+                Ma[i]->X = X;
+                Ma[i]->A = A;
+                Ma[i]->B = B;
+                Ma[i]->K = K;
+                Ma[i]->N = N;
+                Ma[i]->Mc = Mc;
+                Ma[i]->Mp = Mp;
+                Ma[i]->num_thrd = num_thrd;
+                Ma[i]->slice = i;
+                /* creates each thread working on its own slice of i */
+                if (pthread_create
+                    (&thread[i], NULL, (void *)fct, (void *)Ma[i])) {
+                        perror("Can't create thread");
+                        free(thread);
+                        exit(1);
+                }
+        }
 
-	/* main thread works on slice 0 so everybody is busy
-	 * main thread does everything if thread number is specified as 1*/
-	Ma[0] = (Multithreading_bituint) malloc(1 * sizeof(multithreading_bituint));
-	Ma[0]->X = X;
-	Ma[0]->A = A;
-	Ma[0]->B = B;
-	Ma[0]->K = K;
-	Ma[0]->N = N;
-	Ma[0]->Mc = Mc;
-	Ma[0]->Mp = Mp;
-	Ma[0]->num_thrd = num_thrd;
-	Ma[0]->slice = 0;
-	/* creates each thread working on its own slice of i */
-	fct(Ma[0]);
+        /* main thread works on slice 0 so everybody is busy
+         * main thread does everything if thread number is specified as 1*/
+        Ma[0] =
+            (Multithreading_bituint) malloc(1 * sizeof(multithreading_bituint));
+        Ma[0]->X = X;
+        Ma[0]->A = A;
+        Ma[0]->B = B;
+        Ma[0]->K = K;
+        Ma[0]->N = N;
+        Ma[0]->Mc = Mc;
+        Ma[0]->Mp = Mp;
+        Ma[0]->num_thrd = num_thrd;
+        Ma[0]->slice = 0;
+        /* creates each thread working on its own slice of i */
+        fct(Ma[0]);
 
-	/*main thead waiting for other thread to complete */
-	for (i = 1; i < num_thrd; i++)
-		pthread_join(thread[i], NULL);
+        /*main thead waiting for other thread to complete */
+        for (i = 1; i < num_thrd; i++)
+                pthread_join(thread[i], NULL);
 
-	for (i = 0; i < num_thrd; i++)
-		free(Ma[i]);
-	free(Ma);
-	free(thread);
+        for (i = 0; i < num_thrd; i++)
+                free(Ma[i]);
+        free(Ma);
+        free(thread);
 }
 
 #endif

@@ -16,7 +16,7 @@ setClass("pcaProject",
 
 listMethods_pcaProject <- function()
 {
-c(    "eigenvalues",
+c(  "eigenvalues",
     "eigenvectors",
     "sdev",
     "projections"
@@ -51,18 +51,20 @@ c(    "eigenvalues",
 # $
 
 setMethod("$", "pcaProject",
-           function(x, name) {
+    function(x, name) {
 
-       nb = grep(paste("^",name,sep=""), listMethods_pcaProject(), value = TRUE) 
-       if (length(nb) == 0) {
-               stop(paste("no $ attribute '", name, "' for the object of class ",class(x)[1] ,".",sep=""))
-       } else if (length(nb) == 1) {
-        do.call(nb, list(x));
-       } else {
-        stop(paste("Several $ attributes for object of class", class(x)[1],"start with", name, ":\n",
-            paste(nb,collapse=" "), sep=""))
-       }
-       }
+        nb = grep(paste("^",name,sep=""), listMethods_pcaProject(), 
+            value = TRUE) 
+        if (length(nb) == 0) {
+            stop(paste("no $ attribute '", name, "' for the object of class ",
+                class(x)[1] ,".",sep=""))
+        } else if (length(nb) == 1) {
+            do.call(nb, list(x));
+        } else {
+            stop(paste("Several $ attributes for object of class", class(x)[1],
+                "start with", name, ":\n", paste(nb,collapse=" "), sep=""))
+        }
+    }
 )
 
 # eigenvalues
@@ -104,9 +106,10 @@ setMethod("projections", "pcaProject",
 # plot
 
 setMethod("plot", "pcaProject",
-          function(x, y, ...){
-            plot(eigenvalues(x), ...)
-          })
+    function(x, y, ...){
+        plot(eigenvalues(x), ...)
+    }
+)
 
 # show
 
@@ -115,11 +118,16 @@ setMethod("show", "pcaProject",
         cat("* pca class *\n\n")
         cat("file directory:                 ", object@directory, "\n")
         cat("input file:                     ", object@input.file, "\n")
-        cat("eigenvalue file:                ", basename(object@eigenvalue.file), "\n")
-        cat("eigenvector file:               ", basename(object@eigenvector.file), "\n")
-        cat("standard deviation file:        ", basename(object@sdev.file), "\n")
-        cat("projection file:                ", basename(object@projection.file), "\n")
-        cat("pcaProject file:                  ", basename(object@pcaProject.file), "\n")
+        cat("eigenvalue file:                ", 
+            basename(object@eigenvalue.file), "\n")
+        cat("eigenvector file:               ", 
+            basename(object@eigenvector.file), "\n")
+        cat("standard deviation file:        ", 
+            basename(object@sdev.file), "\n")
+        cat("projection file:                ", 
+            basename(object@projection.file), "\n")
+        cat("pcaProject file:                  ", 
+            basename(object@pcaProject.file), "\n")
         cat("number of individuals:          ", object@n, "\n")
         cat("number of loci:                 ", object@L, "\n")
         cat("number of principal components: ", object@K, "\n")
@@ -133,22 +141,25 @@ setMethod("show", "pcaProject",
 setGeneric("summary", function(object) NULL)
 setMethod("summary", "pcaProject",
     function(object) {
-                   cat("Importance of components:\n");
-                rownames = c("Standard deviation", "Proportion of Variance", "Cumulative Proportion");
-                colnames = paste("PC", 1:object@n, sep="");
-                R = matrix(NA, ncol=object@K, nrow=3, dimnames= list(rownames, colnames));
-                R[1,] = sdev(object);
-                e = eigenvalues(object);
-                R[2,] = e/sum(e);
-                R[3,] = cumsum(R[2,]);
+        cat("Importance of components:\n");
+        rownames = c("Standard deviation", "Proportion of Variance", 
+            "Cumulative Proportion");
+        colnames = paste("PC", 1:object@n, sep="");
+        R = matrix(NA, ncol=object@K, nrow=3, 
+            dimnames= list(rownames, colnames));
+        R[1,] = sdev(object);
+        e = eigenvalues(object);
+        R[2,] = e/sum(e);
+        R[3,] = cumsum(R[2,]);
 
-                R
+        R
     }
 )
 
 # load
 
-setGeneric("load.pcaProject", function(file="character") attributes("pcaProject"))
+setGeneric("load.pcaProject", function(file="character") 
+    attributes("pcaProject"))
 setMethod("load.pcaProject", "character",
     function(file) {
         res = dget(file);
@@ -170,26 +181,26 @@ setMethod("save.pcaProject", signature(x="pcaProject", file="character"),
 
 setGeneric("remove.pcaProject", function(file="character")NULL)
 setMethod("remove.pcaProject", signature(file="character"),
-        function(file) {
-                cl = load.pcaProject(file)
+    function(file) {
+        cl = load.pcaProject(file)
         # remove eigenvalues
-                file.remove(cl@eigenvalue.file)
+        file.remove(cl@eigenvalue.file)
         # remove eigenvectors
-                file.remove(cl@eigenvector.file)
+        file.remove(cl@eigenvector.file)
         # remove standard deviations
-                file.remove(cl@sdev.file)
+        file.remove(cl@sdev.file)
         # remove projections
-                file.remove(cl@projection.file)
+        file.remove(cl@projection.file)
         # remove tracyWidom file if it exists
-            tracywidom.file = setExtension(cl@eigenvalue.file, "tracywidom")
+        tracywidom.file = setExtension(cl@eigenvalue.file, "tracywidom")
         if (file.exists(tracywidom.file)) {
             file.remove(tracywidom.file)
         }
         # remove directory
-                unlink(cl@directory, recursive = TRUE)
+        unlink(cl@directory, recursive = TRUE)
         # remove pcaProject file
-                file.remove(file)
-        }
+        file.remove(file)
+    }
 )
 
 # tracyWidom
@@ -200,8 +211,8 @@ setMethod("tracy.widom", "pcaProject",
 
     eigenvalue.input.file = object@eigenvalue.file;
 
-        # output file 
-        tracywidom.output.file = setExtension(eigenvalue.input.file, "tracywidom")
+    # output file 
+    tracywidom.output.file = setExtension(eigenvalue.input.file, "tracywidom")
 
     if (!file.exists(tracywidom.output.file)) {
 
@@ -211,21 +222,20 @@ setMethod("tracy.widom", "pcaProject",
 
         # test arguments and init
         # input file
-        eigenvalue.input.file = test_character("input.file", eigenvalue.input.file, NULL)
+        eigenvalue.input.file = test_character("input.file", 
+            eigenvalue.input.file, NULL)
         # check extension 
         test_extension(eigenvalue.input.file, "eigenvalues")
-        # K
         # output file 
-        tracywidom.output.file = setExtension(eigenvalue.input.file,".tracywidom")
-        #tracywidom_output_file = test_character("output_file.tracywidom", tracywidom_output_file, tmp)
+        tracywidom.output.file = setExtension(eigenvalue.input.file,
+            ".tracywidom")
 
         .C("R_tracyWidom",
-                as.character(eigenvalue.input.file),
-                as.character(tracywidom.output.file)
+            as.character(eigenvalue.input.file),
+            as.character(tracywidom.output.file)
         );
     }
-
-        read.table(tracywidom.output.file, header = TRUE)
+    read.table(tracywidom.output.file, header = TRUE)
         
     }
 )

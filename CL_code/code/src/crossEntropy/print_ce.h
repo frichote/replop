@@ -7,7 +7,6 @@
  * @brief functions to print help and a summary of the parameters
  */
 
-
 #ifndef PRINT_CE_H
 #define PRINT_CE_H
 
@@ -33,10 +32,10 @@ void print_help_ce();
  * @param input.F         ancestral genotype frequency file
  * @param input_I         genotype file with masked genotypes
  */
-void print_summary_ce ( int N, int M, int K, 
-                        int m, char *input, char *input_Q, 
-			char *input_F, char *input_I);
+void print_summary_ce(int N, int M, int K,
+                      int m, char *input, char *input_Q,
+                      char *input_F, char *input_I);
 
-#endif // PRINT_CE_H
+#endif                          // PRINT_CE_H
 
 /** @} */

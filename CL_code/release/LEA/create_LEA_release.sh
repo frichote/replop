@@ -58,7 +58,7 @@ for f in $files; do
 	sed -i 's/#define RCODE 0/#define RCODE 1/g' $f
 	sed -i 's/realloc\(.*\),\s*sizeof(\(.*\)));/Realloc\1 * sizeof(\2), \2);/g' $f
 	sed -i 's/free(/Free(/g' $f
-	sed -i 's/\([^fn]\)printf(/\1Rprintf(/g' $f
+	sed -i 's/\([^fn]\)printf/\1Rprintf/g' $f
 	sed -i 's/exit(1)/error(NULL)/g' $f
 	sed -i 's/fflush(stdout)//g' $f
 done
@@ -96,7 +96,6 @@ R CMD build $dir
 
 
 # Advise about how to check the package
-echo "To check the package, use:\nR CMD check --as-cran <package.tar.gz>\n R CMD BicCheck <package.tar.gz>\n 
-
+echo "$VERT" "To check the package, use:\nR CMD check --as-cran <package.tar.gz>\nR CMD BiocCheck <package.tar.gz>\n" 
 
 

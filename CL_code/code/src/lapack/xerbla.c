@@ -2,13 +2,12 @@
 //#include <stdlib.h>
 //#include <stdio.h>
 
-/* Subroutine */ int xerbla_(char *srname, integer *info)
+/* Subroutine */ int xerbla_(char *srname, integer * info)
 {
 /*  -- LAPACK auxiliary routine (version 2.0) --   
        Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,   
        Courant Institute, Argonne National Lab, and Rice University   
        September 30, 1994   
-
 
     Purpose   
     =======   
@@ -35,11 +34,9 @@
 */
 
 //    printf("** On entry to %6s, parameter number %2i had an illegal value\n",
-//		srname, *info);
+//              srname, *info);
 
 /*     End of XERBLA */
 
-    return 0;
-} /* xerbla_ */
-
-
+        return 0;
+}                               /* xerbla_ */

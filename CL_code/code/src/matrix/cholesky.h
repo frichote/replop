@@ -19,6 +19,6 @@
  */
 void cholesky(double *A, int n, double *L);
 
-#endif // CHOLESKY_H
+#endif                          // CHOLESKY_H
 
 /** @} */

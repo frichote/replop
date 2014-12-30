@@ -13,10 +13,8 @@
  * A supplementary material of the article describes the Gibbs Sampler algorithm.
  */
 
-
 #ifndef LFMM_H
 #define LFMM_H
-
 
 /**
  * pointer to lfmm_param struct
@@ -84,7 +82,6 @@ typedef struct _lfmm_param {
  */
 void LFMM(LFMM_param param);
 
-#endif // LFMM_H
-
+#endif                          // LFMM_H
 
 /** @} */

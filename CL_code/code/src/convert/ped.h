@@ -22,7 +22,7 @@
  *
  * @return token
  */
-char* next_token(char* input_file, int i, int j);
+char *next_token(char *input_file, int i, int j);
 
 /**
  * test if a token is correct (ie equal 0,1,2,3,4, A, C, T, G)
@@ -32,7 +32,7 @@ char* next_token(char* input_file, int i, int j);
  * @param i		number of the individual
  * @param input_file	file name
  */
-void test_token_ped(char token, int j, int i, char* input_file);
+void test_token_ped(char token, int j, int i, char *input_file);
 
 /**
  * read a file of N individuals and M SNPs in ped format and fill data (of size NxM)
@@ -45,7 +45,7 @@ void test_token_ped(char token, int j, int i, char* input_file);
  * @param data		output data set (of size NxM)
  *
  */
-void read_ped (char* input_file, int N, int M, int* data);
+void read_ped(char *input_file, int N, int M, int *data);
 
 /**
  * read a line (stored in szbuff) in the ped format and fill data
@@ -61,9 +61,8 @@ void read_ped (char* input_file, int N, int M, int* data);
  * @param File		opened file
  * @param ref		reference allele
  */
-void fill_line_ped (int *data, char* szbuff, int M, int i, char* input_file, FILE *File,
-        char *ref);
-
+void fill_line_ped(int *data, char *szbuff, int M, int i, char *input_file,
+                   FILE * File, char *ref);
 
 /**
  * read a file of N individuals and M SNPs in ped format and write it in the geno format.
@@ -73,7 +72,7 @@ void fill_line_ped (int *data, char* szbuff, int M, int i, char* input_file, FIL
  * @param N		output number of individuals 
  * @param M		output number of SNPs
  */
-void ped2geno (char *input_file, char* output_file, int *N, int *M);
+void ped2geno(char *input_file, char *output_file, int *N, int *M);
 
 /**
  * read a file of N individuals and M SNPs in ped format and write it in the lfmm format.
@@ -83,8 +82,8 @@ void ped2geno (char *input_file, char* output_file, int *N, int *M);
  * @param N		output number of individuals 
  * @param M		output number of SNPs
  */
-void ped2lfmm (char *input_file, char* output_file, int *N, int *M);
+void ped2lfmm(char *input_file, char *output_file, int *N, int *M);
 
-#endif // PED_H
+#endif                          // PED_H
 
 /** @} */

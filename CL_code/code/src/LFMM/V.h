@@ -17,8 +17,8 @@
  * @param param         parameter structure
  * @param GS_param      GS parameter structure
  */
-void update_V(LFMM_param param, LFMM_GS_param GS_param); 
+void update_V(LFMM_param param, LFMM_GS_param GS_param);
 
-#endif // V_H
+#endif                          // V_H
 
 /** @} */

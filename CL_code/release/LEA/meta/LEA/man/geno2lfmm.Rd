@@ -3,32 +3,33 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Convert from \code{\link{geno}} to \code{\link{lfmm}} format}
 \description{
-A function that converts from the \code{\link{geno}} format to the \code{\link{lfmm}} format.
+A function that converts from the \code{\link{geno}} format to the 
+\code{\link{lfmm}} format.
 }
 \usage{
 geno2lfmm(input.file, output.file = NULL, force = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{input.file}{
-A character string containing a path to the input file,
-a genotypic matrix in the \code{\link{geno}} format. 
+\item{input.file}{
+    A character string containing a path to the input file,
+    a genotypic matrix in the \code{\link{geno}} format. 
 }
-  \item{output.file}{
-A character string containing a path to the output file,
-a genotypic matrix in the \code{\link{lfmm}} format. 
-By default, the name of the output file is the same name 
-as the input file with a .lfmm extension.
+\item{output.file}{
+    A character string containing a path to the output file,
+    a genotypic matrix in the \code{\link{lfmm}} format. 
+    By default, the name of the output file is the same name 
+    as the input file with a .lfmm extension.
 }
 \item{force}{
-        A boolean option. If FALSE, the input file is converted only if the output
-        file does not exist. If TRUE, convert the file anyway.
+    A boolean option. If FALSE, the input file is converted only if the output
+    file does not exist. If TRUE, convert the file anyway.
 }
 }
 \value{
 \item{output.file}{
-A character string containing a path to the output file,
-a genotypic matrix in the \code{\link{lfmm}} format. 
+    A character string containing a path to the output file,
+    a genotypic matrix in the \code{\link{lfmm}} format. 
 }
 }
 \author{
@@ -48,20 +49,20 @@ a genotypic matrix in the \code{\link{lfmm}} format.
 }
 \examples{
 # Creation of a file called "genotypes.geno" in the working directory
-# with 1000 SNPs for 165 individuals.
+# with 400 SNPs for 50 individuals.
 data("tutorial")
 write.geno(tutorial.R, "genotypes.geno")
 
-# Conversion   from the geno format ("genotypes.geno") 
-#              to the lfmm format ("genotypes.lfmm").
-# By default,  the name of the output file is the same name 
-#              as the input file with a .lfmm extension.
-# Create file: "genotypes.lfmm".
+# Conversion    from the geno format ("genotypes.geno") 
+#               to the lfmm format ("genotypes.lfmm").
+# By default,   the name of the output file is the same name 
+#               as the input file with a .lfmm extension.
+# Create file:  "genotypes.lfmm".
 output = geno2lfmm("genotypes.geno")
 
-# Conversion   from the geno format ("genotypes.geno") 
-#              to the lfmm format with the output file called "plop.lfmm".
-# Create file: "plop.lfmm".
+# Conversion    from the geno format ("genotypes.geno") 
+#               to the lfmm format with the output file called "plop.lfmm".
+# Create file:  "plop.lfmm".
 output = geno2lfmm("genotypes.geno", "plop.lfmm")
 
 # As force = false and the file "genotypes.lfmm" already exists,

@@ -9,7 +9,7 @@
 /* Common Block Declarations */
 
 struct {
-    doublereal ops, itcnt;
+        doublereal ops, itcnt;
 } latime_;
 
 #define latime_1 latime_
@@ -20,57 +20,78 @@ static integer c__2 = 2;
 static integer c__1 = 1;
 static integer c_n1 = -1;
 
-/* Subroutine */ int dstein_(integer *n, doublereal *d__, doublereal *e, 
-	integer *m, doublereal *w, integer *iblock, integer *isplit, 
-	doublereal *z__, integer *ldz, doublereal *work, integer *iwork, 
-	integer *ifail, integer *info)
+/* Subroutine */ int dstein_(integer * n, doublereal * d__, doublereal * e,
+                             integer * m, doublereal * w, integer * iblock,
+                             integer * isplit, doublereal * z__, integer * ldz,
+                             doublereal * work, integer * iwork,
+                             integer * ifail, integer * info)
 {
-    /* System generated locals */
-    integer z_dim1, z_offset, i__1, i__2, i__3;
-    doublereal d__1, d__2, d__3, d__4, d__5;
+        /* System generated locals */
+        integer z_dim1, z_offset, i__1, i__2, i__3;
+        doublereal d__1, d__2, d__3, d__4, d__5;
 
-    /* Builtin functions */
-    double sqrt(doublereal);
+        /* Builtin functions */
+        double sqrt(doublereal);
 
-    /* Local variables */
-    static integer jblk, nblk;
-    extern doublereal ddot_(integer *, doublereal *, integer *, doublereal *, 
-	    integer *);
-    static integer jmax;
-    extern doublereal dnrm2_(integer *, doublereal *, integer *);
-    static integer i__, j;
-    extern /* Subroutine */ int dscal_(integer *, doublereal *, doublereal *, 
-	    integer *);
-    static integer iseed[4], gpind, iinfo;
-    extern doublereal dasum_(integer *, doublereal *, integer *);
-    extern /* Subroutine */ int dcopy_(integer *, doublereal *, integer *, 
-	    doublereal *, integer *);
-    static integer b1;
-    extern /* Subroutine */ int daxpy_(integer *, doublereal *, doublereal *, 
-	    integer *, doublereal *, integer *);
-    static integer j1;
-    static doublereal ortol;
-    static integer indrv1, indrv2, indrv3, indrv4, indrv5, bn;
-    extern doublereal dlamch_(char *);
-    extern /* Subroutine */ int dlagtf_(integer *, doublereal *, doublereal *,
-	     doublereal *, doublereal *, doublereal *, doublereal *, integer *
-	    , integer *);
-    static doublereal xj;
-    extern integer idamax_(integer *, doublereal *, integer *);
-    extern /* Subroutine */ int xerbla_(char *, integer *), dlagts_(
-	    integer *, integer *, doublereal *, doublereal *, doublereal *, 
-	    doublereal *, integer *, doublereal *, doublereal *, integer *);
-    static integer nrmchk;
-    extern /* Subroutine */ int dlarnv_(integer *, integer *, integer *, 
-	    doublereal *);
-    static integer blksiz;
-    static doublereal onenrm, dtpcrt, pertol, scl, eps, sep, nrm, tol;
-    static integer its;
-    static doublereal xjm, ztr, eps1;
-
+        /* Local variables */
+        static integer jblk, nblk;
+        extern doublereal ddot_(integer *, doublereal *, integer *,
+                                doublereal *, integer *);
+        static integer jmax;
+        extern doublereal dnrm2_(integer *, doublereal *, integer *);
+        static integer i__, j;
+        extern /* Subroutine */ int dscal_(integer *, doublereal *,
+                                           doublereal *,
+                                           integer *);
+        static integer iseed[4], gpind, iinfo;
+        extern doublereal dasum_(integer *, doublereal *, integer *);
+        extern /* Subroutine */ int dcopy_(integer *, doublereal *, integer *,
+                                           doublereal *, integer *);
+        static integer b1;
+        extern /* Subroutine */ int daxpy_(integer *, doublereal *,
+                                           doublereal *,
+                                           integer *, doublereal *, integer *);
+        static integer j1;
+        static doublereal ortol;
+        static integer indrv1, indrv2, indrv3, indrv4, indrv5, bn;
+        extern doublereal dlamch_(char *);
+        extern /* Subroutine */ int dlagtf_(integer *, doublereal *,
+                                            doublereal *,
+                                            doublereal *, doublereal *,
+                                            doublereal *, doublereal *,
+                                            integer *, integer *);
+        static doublereal xj;
+        extern integer idamax_(integer *, doublereal *, integer *);
+        extern /* Subroutine */ int xerbla_(char *, integer *), dlagts_(
+                                                                               integer
+                                                                               *,
+                                                                               integer
+                                                                               *,
+                                                                               doublereal
+                                                                               *,
+                                                                               doublereal
+                                                                               *,
+                                                                               doublereal
+                                                                               *,
+                                                                               doublereal
+                                                                               *,
+                                                                               integer
+                                                                               *,
+                                                                               doublereal
+                                                                               *,
+                                                                               doublereal
+                                                                               *,
+                                                                               integer
+                                                                               *);
+        static integer nrmchk;
+        extern /* Subroutine */ int dlarnv_(integer *, integer *, integer *,
+                                            doublereal *);
+        static integer blksiz;
+        static doublereal onenrm, dtpcrt, pertol, scl, eps, sep, nrm, tol;
+        static integer its;
+        static doublereal xjm, ztr, eps1;
 
 #define z___ref(a_1,a_2) z__[(a_2)*z_dim1 + a_1]
-
 
 /*  -- LAPACK routine (instrumented to count operations, version 3.0) --   
        Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,   
@@ -165,318 +186,332 @@ static integer c_n1 = -1;
 
     =====================================================================   
 
-
        Test the input parameters.   
 
        Parameter adjustments */
-    --d__;
-    --e;
-    --w;
-    --iblock;
-    --isplit;
-    z_dim1 = *ldz;
-    z_offset = 1 + z_dim1 * 1;
-    z__ -= z_offset;
-    --work;
-    --iwork;
-    --ifail;
+        --d__;
+        --e;
+        --w;
+        --iblock;
+        --isplit;
+        z_dim1 = *ldz;
+        z_offset = 1 + z_dim1 * 1;
+        z__ -= z_offset;
+        --work;
+        --iwork;
+        --ifail;
 
-    /* Function Body */
-    *info = 0;
-    i__1 = *m;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	ifail[i__] = 0;
+        /* Function Body */
+        *info = 0;
+        i__1 = *m;
+        for (i__ = 1; i__ <= i__1; ++i__) {
+                ifail[i__] = 0;
 /* L10: */
-    }
+        }
 
-    if (*n < 0) {
-	*info = -1;
-    } else if (*m < 0 || *m > *n) {
-	*info = -4;
-    } else if (*ldz < max(1,*n)) {
-	*info = -9;
-    } else {
-	i__1 = *m;
-	for (j = 2; j <= i__1; ++j) {
-	    if (iblock[j] < iblock[j - 1]) {
-		*info = -6;
-		goto L30;
-	    }
-	    if (iblock[j] == iblock[j - 1] && w[j] < w[j - 1]) {
-		*info = -5;
-		goto L30;
-	    }
+        if (*n < 0) {
+                *info = -1;
+        } else if (*m < 0 || *m > *n) {
+                *info = -4;
+        } else if (*ldz < max(1, *n)) {
+                *info = -9;
+        } else {
+                i__1 = *m;
+                for (j = 2; j <= i__1; ++j) {
+                        if (iblock[j] < iblock[j - 1]) {
+                                *info = -6;
+                                goto L30;
+                        }
+                        if (iblock[j] == iblock[j - 1] && w[j] < w[j - 1]) {
+                                *info = -5;
+                                goto L30;
+                        }
 /* L20: */
-	}
-L30:
-	;
-    }
+                }
+ L30:
+                ;
+        }
 
-    if (*info != 0) {
-	i__1 = -(*info);
-	xerbla_("DSTEIN", &i__1);
-	return 0;
-    }
+        if (*info != 0) {
+                i__1 = -(*info);
+                xerbla_("DSTEIN", &i__1);
+                return 0;
+        }
 
 /*     Initialize iteration count. */
 
-    latime_1.itcnt = 0.;
+        latime_1.itcnt = 0.;
 
 /*     Quick return if possible */
 
-    if (*n == 0 || *m == 0) {
-	return 0;
-    } else if (*n == 1) {
-	z___ref(1, 1) = 1.;
-	return 0;
-    }
+        if (*n == 0 || *m == 0) {
+                return 0;
+        } else if (*n == 1) {
+                z___ref(1, 1) = 1.;
+                return 0;
+        }
 
 /*     Get machine constants. */
 
-    eps = dlamch_("Precision");
+        eps = dlamch_("Precision");
 
 /*     Initialize seed for random number generator DLARNV. */
 
-    for (i__ = 1; i__ <= 4; ++i__) {
-	iseed[i__ - 1] = 1;
+        for (i__ = 1; i__ <= 4; ++i__) {
+                iseed[i__ - 1] = 1;
 /* L40: */
-    }
+        }
 
 /*     Initialize pointers. */
 
-    indrv1 = 0;
-    indrv2 = indrv1 + *n;
-    indrv3 = indrv2 + *n;
-    indrv4 = indrv3 + *n;
-    indrv5 = indrv4 + *n;
+        indrv1 = 0;
+        indrv2 = indrv1 + *n;
+        indrv3 = indrv2 + *n;
+        indrv4 = indrv3 + *n;
+        indrv5 = indrv4 + *n;
 
 /*     Compute eigenvectors of matrix blocks. */
 
-    j1 = 1;
-    i__1 = iblock[*m];
-    for (nblk = 1; nblk <= i__1; ++nblk) {
+        j1 = 1;
+        i__1 = iblock[*m];
+        for (nblk = 1; nblk <= i__1; ++nblk) {
 
 /*        Find starting and ending indices of block nblk. */
 
-	if (nblk == 1) {
-	    b1 = 1;
-	} else {
-	    b1 = isplit[nblk - 1] + 1;
-	}
-	bn = isplit[nblk];
-	blksiz = bn - b1 + 1;
-	if (blksiz == 1) {
-	    goto L60;
-	}
-	gpind = b1;
+                if (nblk == 1) {
+                        b1 = 1;
+                } else {
+                        b1 = isplit[nblk - 1] + 1;
+                }
+                bn = isplit[nblk];
+                blksiz = bn - b1 + 1;
+                if (blksiz == 1) {
+                        goto L60;
+                }
+                gpind = b1;
 
 /*        Compute reorthogonalization criterion and stopping criterion. */
 
-	onenrm = (d__1 = d__[b1], abs(d__1)) + (d__2 = e[b1], abs(d__2));
+                onenrm = (d__1 = d__[b1], abs(d__1)) + (d__2 =
+                                                        e[b1], abs(d__2));
 /* Computing MAX */
-	d__3 = onenrm, d__4 = (d__1 = d__[bn], abs(d__1)) + (d__2 = e[bn - 1],
-		 abs(d__2));
-	onenrm = max(d__3,d__4);
-	i__2 = bn - 1;
-	for (i__ = b1 + 1; i__ <= i__2; ++i__) {
+                d__3 = onenrm, d__4 = (d__1 = d__[bn], abs(d__1)) + (d__2 =
+                                                                     e[bn - 1],
+                                                                     abs(d__2));
+                onenrm = max(d__3, d__4);
+                i__2 = bn - 1;
+                for (i__ = b1 + 1; i__ <= i__2; ++i__) {
 /* Computing MAX */
-	    d__4 = onenrm, d__5 = (d__1 = d__[i__], abs(d__1)) + (d__2 = e[
-		    i__ - 1], abs(d__2)) + (d__3 = e[i__], abs(d__3));
-	    onenrm = max(d__4,d__5);
+                        d__4 = onenrm, d__5 = (d__1 =
+                                               d__[i__], abs(d__1)) + (d__2 =
+                                                                       e[i__ -
+                                                                         1],
+                                                                       abs
+                                                                       (d__2)) +
+                            (d__3 = e[i__], abs(d__3));
+                        onenrm = max(d__4, d__5);
 /* L50: */
-	}
-	ortol = onenrm * .001;
+                }
+                ortol = onenrm * .001;
 
-	dtpcrt = sqrt(.1 / blksiz);
+                dtpcrt = sqrt(.1 / blksiz);
 
 /*        Increment opcount for computing criteria. */
 
-	latime_1.ops = latime_1.ops + ((bn - b1) << 1) + 3;
+                latime_1.ops = latime_1.ops + ((bn - b1) << 1) + 3;
 
 /*        Loop through eigenvalues of block nblk. */
 
-L60:
-	jblk = 0;
-	i__2 = *m;
-	for (j = j1; j <= i__2; ++j) {
-	    if (iblock[j] != nblk) {
-		j1 = j;
-		goto L160;
-	    }
-	    ++jblk;
-	    xj = w[j];
+ L60:
+                jblk = 0;
+                i__2 = *m;
+                for (j = j1; j <= i__2; ++j) {
+                        if (iblock[j] != nblk) {
+                                j1 = j;
+                                goto L160;
+                        }
+                        ++jblk;
+                        xj = w[j];
 
 /*           Skip all the work if the block size is one. */
 
-	    if (blksiz == 1) {
-		work[indrv1 + 1] = 1.;
-		goto L120;
-	    }
+                        if (blksiz == 1) {
+                                work[indrv1 + 1] = 1.;
+                                goto L120;
+                        }
 
 /*           If eigenvalues j and j-1 are too close, add a relatively   
              small perturbation. */
 
-	    if (jblk > 1) {
-		eps1 = (d__1 = eps * xj, abs(d__1));
-		pertol = eps1 * 10.;
-		sep = xj - xjm;
-		if (sep < pertol) {
-		    xj = xjm + pertol;
-		}
-	    }
+                        if (jblk > 1) {
+                                eps1 = (d__1 = eps * xj, abs(d__1));
+                                pertol = eps1 * 10.;
+                                sep = xj - xjm;
+                                if (sep < pertol) {
+                                        xj = xjm + pertol;
+                                }
+                        }
 
-	    its = 0;
-	    nrmchk = 0;
+                        its = 0;
+                        nrmchk = 0;
 
 /*           Get random starting vector. */
 
-	    dlarnv_(&c__2, iseed, &blksiz, &work[indrv1 + 1]);
+                        dlarnv_(&c__2, iseed, &blksiz, &work[indrv1 + 1]);
 
 /*           Increment opcount for getting random starting vector.   
              ( DLARND(2,.) requires 9 flops. ) */
 
-	    latime_1.ops += blksiz * 9;
+                        latime_1.ops += blksiz * 9;
 
 /*           Copy the matrix T so it won't be destroyed in factorization. */
 
-	    dcopy_(&blksiz, &d__[b1], &c__1, &work[indrv4 + 1], &c__1);
-	    i__3 = blksiz - 1;
-	    dcopy_(&i__3, &e[b1], &c__1, &work[indrv2 + 2], &c__1);
-	    i__3 = blksiz - 1;
-	    dcopy_(&i__3, &e[b1], &c__1, &work[indrv3 + 1], &c__1);
+                        dcopy_(&blksiz, &d__[b1], &c__1, &work[indrv4 + 1],
+                               &c__1);
+                        i__3 = blksiz - 1;
+                        dcopy_(&i__3, &e[b1], &c__1, &work[indrv2 + 2], &c__1);
+                        i__3 = blksiz - 1;
+                        dcopy_(&i__3, &e[b1], &c__1, &work[indrv3 + 1], &c__1);
 
 /*           Compute LU factors with partial pivoting  ( PT = LU ) */
 
-	    tol = 0.;
-	    dlagtf_(&blksiz, &work[indrv4 + 1], &xj, &work[indrv2 + 2], &work[
-		    indrv3 + 1], &tol, &work[indrv5 + 1], &iwork[1], &iinfo);
+                        tol = 0.;
+                        dlagtf_(&blksiz, &work[indrv4 + 1], &xj,
+                                &work[indrv2 + 2], &work[indrv3 + 1], &tol,
+                                &work[indrv5 + 1], &iwork[1], &iinfo);
 
 /*           Increment opcount for computing LU factors.   
              ( DLAGTF(BLKSIZ,...) requires about 8*BLKSIZ flops. ) */
 
-	    latime_1.ops += blksiz << 3;
+                        latime_1.ops += blksiz << 3;
 
 /*           Update iteration count. */
 
-L70:
-	    ++its;
-	    if (its > 5) {
-		goto L100;
-	    }
+ L70:
+                        ++its;
+                        if (its > 5) {
+                                goto L100;
+                        }
 
 /*           Normalize and scale the righthand side vector Pb.   
 
    Computing MAX */
-	    d__2 = eps, d__3 = (d__1 = work[indrv4 + blksiz], abs(d__1));
-	    scl = blksiz * onenrm * max(d__2,d__3) / dasum_(&blksiz, &work[
-		    indrv1 + 1], &c__1);
-	    dscal_(&blksiz, &scl, &work[indrv1 + 1], &c__1);
+                        d__2 = eps, d__3 = (d__1 =
+                                            work[indrv4 + blksiz], abs(d__1));
+                        scl =
+                            blksiz * onenrm * max(d__2, d__3) / dasum_(&blksiz,
+                                                                       &work
+                                                                       [indrv1 +
+                                                                        1],
+                                                                       &c__1);
+                        dscal_(&blksiz, &scl, &work[indrv1 + 1], &c__1);
 
 /*           Solve the system LU = Pb. */
 
-	    dlagts_(&c_n1, &blksiz, &work[indrv4 + 1], &work[indrv2 + 2], &
-		    work[indrv3 + 1], &work[indrv5 + 1], &iwork[1], &work[
-		    indrv1 + 1], &tol, &iinfo);
+                        dlagts_(&c_n1, &blksiz, &work[indrv4 + 1],
+                                &work[indrv2 + 2], &work[indrv3 + 1],
+                                &work[indrv5 + 1], &iwork[1], &work[indrv1 + 1],
+                                &tol, &iinfo);
 
 /*           Increment opcount for scaling and solving linear system.   
              ( DLAGTS(-1,BLKSIZ,...) requires about 8*BLKSIZ flops. ) */
 
-	    latime_1.ops = latime_1.ops + 3 + blksiz * 10;
+                        latime_1.ops = latime_1.ops + 3 + blksiz * 10;
 
 /*           Reorthogonalize by modified Gram-Schmidt if eigenvalues are   
              close enough. */
 
-	    if (jblk == 1) {
-		goto L90;
-	    }
-	    if ((d__1 = xj - xjm, abs(d__1)) > ortol) {
-		gpind = j;
-	    }
-	    if (gpind != j) {
-		i__3 = j - 1;
-		for (i__ = gpind; i__ <= i__3; ++i__) {
-		    ztr = -ddot_(&blksiz, &work[indrv1 + 1], &c__1, &z___ref(
-			    b1, i__), &c__1);
-		    daxpy_(&blksiz, &ztr, &z___ref(b1, i__), &c__1, &work[
-			    indrv1 + 1], &c__1);
+                        if (jblk == 1) {
+                                goto L90;
+                        }
+                        if ((d__1 = xj - xjm, abs(d__1)) > ortol) {
+                                gpind = j;
+                        }
+                        if (gpind != j) {
+                                i__3 = j - 1;
+                                for (i__ = gpind; i__ <= i__3; ++i__) {
+                                        ztr =
+                                            -ddot_(&blksiz, &work[indrv1 + 1],
+                                                   &c__1, &z___ref(b1, i__),
+                                                   &c__1);
+                                        daxpy_(&blksiz, &ztr, &z___ref(b1, i__),
+                                               &c__1, &work[indrv1 + 1], &c__1);
 /* L80: */
-		}
+                                }
 
 /*              Increment opcount for reorthogonalizing. */
 
-		latime_1.ops += (j - gpind) * blksiz << 2;
+                                latime_1.ops += (j - gpind) * blksiz << 2;
 
-	    }
+                        }
 
 /*           Check the infinity norm of the iterate. */
 
-L90:
-	    jmax = idamax_(&blksiz, &work[indrv1 + 1], &c__1);
-	    nrm = (d__1 = work[indrv1 + jmax], abs(d__1));
+ L90:
+                        jmax = idamax_(&blksiz, &work[indrv1 + 1], &c__1);
+                        nrm = (d__1 = work[indrv1 + jmax], abs(d__1));
 
 /*           Continue for additional iterations after norm reaches   
              stopping criterion. */
 
-	    if (nrm < dtpcrt) {
-		goto L70;
-	    }
-	    ++nrmchk;
-	    if (nrmchk < 3) {
-		goto L70;
-	    }
+                        if (nrm < dtpcrt) {
+                                goto L70;
+                        }
+                        ++nrmchk;
+                        if (nrmchk < 3) {
+                                goto L70;
+                        }
 
-	    goto L110;
+                        goto L110;
 
 /*           If stopping criterion was not satisfied, update info and   
              store eigenvector number in array ifail. */
 
-L100:
-	    ++(*info);
-	    ifail[*info] = j;
+ L100:
+                        ++(*info);
+                        ifail[*info] = j;
 
 /*           Accept iterate as jth eigenvector. */
 
-L110:
-	    scl = 1. / dnrm2_(&blksiz, &work[indrv1 + 1], &c__1);
-	    jmax = idamax_(&blksiz, &work[indrv1 + 1], &c__1);
-	    if (work[indrv1 + jmax] < 0.) {
-		scl = -scl;
-	    }
-	    dscal_(&blksiz, &scl, &work[indrv1 + 1], &c__1);
+ L110:
+                        scl = 1. / dnrm2_(&blksiz, &work[indrv1 + 1], &c__1);
+                        jmax = idamax_(&blksiz, &work[indrv1 + 1], &c__1);
+                        if (work[indrv1 + jmax] < 0.) {
+                                scl = -scl;
+                        }
+                        dscal_(&blksiz, &scl, &work[indrv1 + 1], &c__1);
 
 /*           Increment opcount for scaling. */
 
-	    latime_1.ops += blksiz * 3;
+                        latime_1.ops += blksiz * 3;
 
-L120:
-	    i__3 = *n;
-	    for (i__ = 1; i__ <= i__3; ++i__) {
-		z___ref(i__, j) = 0.;
+ L120:
+                        i__3 = *n;
+                        for (i__ = 1; i__ <= i__3; ++i__) {
+                                z___ref(i__, j) = 0.;
 /* L130: */
-	    }
-	    i__3 = blksiz;
-	    for (i__ = 1; i__ <= i__3; ++i__) {
-		z___ref(b1 + i__ - 1, j) = work[indrv1 + i__];
+                        }
+                        i__3 = blksiz;
+                        for (i__ = 1; i__ <= i__3; ++i__) {
+                                z___ref(b1 + i__ - 1, j) = work[indrv1 + i__];
 /* L140: */
-	    }
+                        }
 
 /*           Save the shift to check eigenvalue spacing at next   
              iteration. */
 
-	    xjm = xj;
+                        xjm = xj;
 
 /* L150: */
-	}
-L160:
-	;
-    }
+                }
+ L160:
+                ;
+        }
 
-    return 0;
+        return 0;
 
 /*     End of DSTEIN */
 
-} /* dstein_ */
+}                               /* dstein_ */
 
 #undef z___ref
-
-

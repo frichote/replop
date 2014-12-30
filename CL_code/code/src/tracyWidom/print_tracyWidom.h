@@ -7,7 +7,6 @@
  * @brief functions to print help and a summary of the parameters
  */
 
-
 #ifndef PRINT_TRACYWIDOM_H
 #define PRINT_TRACYWIDOM_H
 
@@ -16,7 +15,6 @@
  */
 void print_help_tracyWidom();
 
-
 /**
  * print summary of the parameters
  *
@@ -24,8 +22,8 @@ void print_help_tracyWidom();
  * @param input         	input eigenvalues file
  * @param output 	  	output file
  */
-void print_summary_tracyWidom( int M, char *input, char *output);
+void print_summary_tracyWidom(int M, char *input, char *output);
 
-#endif // PRINT_TRACYWIDOM_H
+#endif                          // PRINT_TRACYWIDOM_H
 
 /** @} */

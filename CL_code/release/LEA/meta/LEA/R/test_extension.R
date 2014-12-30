@@ -5,7 +5,8 @@ test_extension <- function(name, extension)
 
     # if not the correct extension, stop
     if (ext != extension) {
-        p = paste("'input_file' format and extension have to be \".", extension, "\" (not \".",ext,"\").", sep="")
+        p = paste("'input_file' format and extension have to be \".", 
+            extension, "\" (not \".",ext,"\").", sep="")
         stop(p)
     } 
 

@@ -25,19 +25,19 @@
 
 void cholesky(double *A, int n, double *L)
 {
-	double s;
-	int i, j, k;
+        double s;
+        int i, j, k;
 
-	if (L == NULL)
-		print_error_global("interne", NULL, 0);
+        if (L == NULL)
+                print_error_global("interne", NULL, 0);
 
-	for (i = 0; i < n; i++)
-		for (j = 0; j < (i + 1); j++) {
-			s = 0;
-			for (k = 0; k < j; k++)
-				s += L[i * n + k] * L[j * n + k];
-			L[i * n + j] = (i == j) ?
-			    sqrt(A[i * n + i] - s) :
-			    (1.0 / L[j * n + j] * (A[i * n + j] - s));
-		}
+        for (i = 0; i < n; i++)
+                for (j = 0; j < (i + 1); j++) {
+                        s = 0;
+                        for (k = 0; k < j; k++)
+                                s += L[i * n + k] * L[j * n + k];
+                        L[i * n + j] = (i == j) ?
+                            sqrt(A[i * n + i] - s) :
+                            (1.0 / L[j * n + j] * (A[i * n + j] - s));
+                }
 }

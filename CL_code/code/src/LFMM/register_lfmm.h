@@ -35,6 +35,6 @@ void analyse_param_lfmm(int argc, char *argv[], LFMM_param param);
  */
 void free_param_lfmm(LFMM_param param);
 
-#endif // REGISTER_LFMM_H
+#endif                          // REGISTER_LFMM_H
 
 /** @} */

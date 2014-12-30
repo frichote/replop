@@ -24,93 +24,96 @@
 #include "data.h"
 
 #ifndef WIN32
-	#include "slice_matrix.h"
-	#include "thread_matrix.h"
+#include "slice_matrix.h"
+#include "thread_matrix.h"
 #endif
 // variance
 
 double variance(double *x, int n)
 {
-	int i;
-	double mean, var;
+        int i;
+        double mean, var;
 
-	// mean
-	mean = 0.0;
-	for (i = 0; i < n; i++)
-		mean += x[i];
-	mean /= n;
+        // mean
+        mean = 0.0;
+        for (i = 0; i < n; i++)
+                mean += x[i];
+        mean /= n;
 
-	// variance
-	var = 0.0;
-	for (i = 0; i < n; i++)
-		var += (x[i]-mean) * (x[i] - mean);
-	var /= n - 1;
+        // variance
+        var = 0.0;
+        for (i = 0; i < n; i++)
+                var += (x[i] - mean) * (x[i] - mean);
+        var /= n - 1;
 
-	return var;
+        return var;
 }
 
 // compare
 
-int compare (const void* a, const void* b) 
+int compare(const void *a, const void *b)
 {
-	// headack pointer style
-	double *pa = *(double**)a;	
-	double *pb = *(double **)b;	
-	int res;
+        // headack pointer style
+        double *pa = *(double **)a;
+        double *pb = *(double **)b;
+        int res;
 
-	if (*pa < *pb) res = -1;
-	if (*pa == *pb) res = 0;
-	if (*pa > *pb) res = 1;
+        if (*pa < *pb)
+                res = -1;
+        if (*pa == *pb)
+                res = 0;
+        if (*pa > *pb)
+                res = 1;
 
-	return res;
+        return res;
 }
 
 // sort_index
 
-void sort_index(double *data, int* index, int n)
+void sort_index(double *data, int *index, int n)
 {
-	double** pointers = (double **) calloc(n, sizeof(double *));
-	int i;
+        double **pointers = (double **)calloc(n, sizeof(double *));
+        int i;
 
-	// create a table of pointers 
-	for (i = 0; i < n; i++)
-		pointers[i] = &(data[i]);
+        // create a table of pointers 
+        for (i = 0; i < n; i++)
+                pointers[i] = &(data[i]);
 
-	// sort
-	qsort(pointers, n, sizeof(pointers[0]), compare);
+        // sort
+        qsort(pointers, n, sizeof(pointers[0]), compare);
 
-	// save index
-	for (i = 0; i < n; i++)
-		index[i] = pointers[i] - data;
+        // save index
+        for (i = 0; i < n; i++)
+                index[i] = pointers[i] - data;
 
-	free(pointers);
+        free(pointers);
 }
 
 // imin
 
 int imin(int a, int b)
 {
-	return (a < b ? a : b);
+        return (a < b ? a : b);
 }
 
 // imax
 
 int imax(int a, int b)
 {
-	return (a > b ? a : b);
+        return (a > b ? a : b);
 }
 
 // dble_sum2
 
 void dble_sum2(double *A, int K, int M, double *res, double epsilon)
 {
-	int k, j;
-	for (k = 0; k < K; k++) {
-		res[k] = 0;
-		for (j = 0; j < M; j++)
-			res[k] += A[k * M + j] * A[k * M + j];
-		res[k] = res[k] / 2 + epsilon;
-	}
+        int k, j;
+        for (k = 0; k < K; k++) {
+                res[k] = 0;
+                for (j = 0; j < M; j++)
+                        res[k] += A[k * M + j] * A[k * M + j];
+                res[k] = res[k] / 2 + epsilon;
+        }
 }
 
 // dble_sum
@@ -118,71 +121,75 @@ void dble_sum2(double *A, int K, int M, double *res, double epsilon)
 double dble_sum(double *A, int size)
 {
 
-	double res = 0;
-	int i;
-	for (i = 0; i < size; i++)
-		res += A[i] * A[i];
+        double res = 0;
+        int i;
+        for (i = 0; i < size; i++)
+                res += A[i] * A[i];
 
-	return res;
+        return res;
 }
 
 // copy_vect
 
 void copy_vect(double *in, double *out, int size)
 {
-	int i;
-	for (i = 0; i < size; i++)
-		out[i] = in[i];
+        int i;
+        for (i = 0; i < size; i++)
+                out[i] = in[i];
 }
 
 // transpose_double
 
 // from Rosetta Code
-void transpose_double (double *m, int w, int h)
+void transpose_double(double *m, int w, int h)
 {
-	int start, next, i;
-	double tmp;
+        int start, next, i;
+        double tmp;
 
-	for (start = 0; start <= w * h - 1; start++) {
-		next = start;
-		i = 0;
-		do {	i++;
-			next = (next % h) * w + next / h;
-		} while (next > start);
-		if (next < start || i == 1) continue;
+        for (start = 0; start <= w * h - 1; start++) {
+                next = start;
+                i = 0;
+                do {
+                        i++;
+                        next = (next % h) * w + next / h;
+                } while (next > start);
+                if (next < start || i == 1)
+                        continue;
 
-		tmp = m[next = start];
-		do {
-			i = (next % h) * w + next / h;
-			m[next] = (i == start) ? tmp : m[i];
-			next = i;
-		} while (next > start);
-	}
+                tmp = m[next = start];
+                do {
+                        i = (next % h) * w + next / h;
+                        m[next] = (i == start) ? tmp : m[i];
+                        next = i;
+                } while (next > start);
+        }
 }
 
 // transpose_float
 
 // from Rosetta Code
-void transpose_float (float *m, int w, int h)
+void transpose_float(float *m, int w, int h)
 {
-	int start, next, i;
-	float tmp;
+        int start, next, i;
+        float tmp;
 
-	for (start = 0; start <= w * h - 1; start++) {
-		next = start;
-		i = 0;
-		do {	i++;
-			next = (next % h) * w + next / h;
-		} while (next > start);
-		if (next < start || i == 1) continue;
+        for (start = 0; start <= w * h - 1; start++) {
+                next = start;
+                i = 0;
+                do {
+                        i++;
+                        next = (next % h) * w + next / h;
+                } while (next > start);
+                if (next < start || i == 1)
+                        continue;
 
-		tmp = m[next = start];
-		do {
-			i = (next % h) * w + next / h;
-			m[next] = (i == start) ? tmp : m[i];
-			next = i;
-		} while (next > start);
-	}
+                tmp = m[next = start];
+                do {
+                        i = (next % h) * w + next / h;
+                        m[next] = (i == start) ? tmp : m[i];
+                        next = i;
+                } while (next > start);
+        }
 }
 
 // transpose_int
@@ -190,64 +197,68 @@ void transpose_float (float *m, int w, int h)
 // from Rosetta Code
 void transpose_int(int *m, int w, int h)
 {
-	int start, next, i;
-	int tmp;
+        int start, next, i;
+        int tmp;
 
-	for (start = 0; start <= w * h - 1; start++) {
-		next = start;
-		i = 0;
-		do {	i++;
-			next = (next % h) * w + next / h;
-		} while (next > start);
-		if (next < start || i == 1) continue;
+        for (start = 0; start <= w * h - 1; start++) {
+                next = start;
+                i = 0;
+                do {
+                        i++;
+                        next = (next % h) * w + next / h;
+                } while (next > start);
+                if (next < start || i == 1)
+                        continue;
 
-		tmp = m[next = start];
-		do {
-			i = (next % h) * w + next / h;
-			m[next] = (i == start) ? tmp : m[i];
-			next = i;
-		} while (next > start);
-	}
+                tmp = m[next = start];
+                do {
+                        i = (next % h) * w + next / h;
+                        m[next] = (i == start) ? tmp : m[i];
+                        next = i;
+                } while (next > start);
+        }
 }
 
 // tBB
 
 void tBB_alpha(double *A, double *B, double alpha, int N, int K, int num_thrd)
 {
-	int k1, k2, i;	
+        int k1, k2, i;
 
-	// init A
-	zeros(A,K*K);
+        // init A
+        zeros(A, K * K);
 
 #ifndef WIN32
         // multi-threaded non windows version
-	if (num_thrd > 1) {
-		thread_fct_matrix(A, B, NULL, K, N, 0, 0.0, num_thrd, slice_tBB);
-	} else {
+        if (num_thrd > 1) {
+                thread_fct_matrix(A, B, NULL, K, N, 0, 0.0, num_thrd,
+                                  slice_tBB);
+        } else {
 #endif
-        	// multi-threaded non windows version
-		// calculate the lower triangular values of A
-		for (i = 0; i < N; i++) {
-			for (k1 = 0; k1 < K; k1++) {
-				for (k2 = 0; k2 <= k1; k2++) {
-					A[k1 * K + k2] += B[i * K + k1] * B[i * K + k2];
-				}
-			}
-		}
+                // multi-threaded non windows version
+                // calculate the lower triangular values of A
+                for (i = 0; i < N; i++) {
+                        for (k1 = 0; k1 < K; k1++) {
+                                for (k2 = 0; k2 <= k1; k2++) {
+                                        A[k1 * K + k2] +=
+                                            B[i * K + k1] * B[i * K + k2];
+                                }
+                        }
+                }
 #ifndef WIN32
-	}
+        }
 #endif
-	// copy the lower triangular values into the upper triangular values
-	// by symetry.
-	for (k1 = 0; k1 < K; k1++)
-		for (k2 = 0; k2 < k1; k2++)
-			A[k2 * K + k1] = A[k1 * K + k2];
+        // copy the lower triangular values into the upper triangular values
+        // by symetry.
+        for (k1 = 0; k1 < K; k1++)
+                for (k2 = 0; k2 < k1; k2++)
+                        A[k2 * K + k1] = A[k1 * K + k2];
 
-	// add alpha
+        // add alpha
         if (alpha) {
                 for (k1 = 0; k1 < K; k1++) {
                         for (k2 = 0; k2 < K; k2++) {
-                                A[k1*K+k2] += alpha;
+                                A[k1 * K + k2] += alpha;
                         }
                 }
         }

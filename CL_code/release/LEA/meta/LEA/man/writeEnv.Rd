@@ -6,20 +6,27 @@
 Write a file in the \code{\link{env}} format.
 }
 \usage{
-write.env(R, output.file)
+    write.env(R, output.file)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{R}{
-        A matrix containing the environmental variables with one line for each individual
-        and one column for each environmental variable. The missing genotypes have to be
-	encoded with the value 9.
+    A matrix containing the environmental variables with one line for each 
+    individual and one column for each environmental variable. The missing 
+    genotypes have to be encoded with the value 9.
 }
 \item{output.file}{
-A character string containing a path to the output file,
-an environmental data matrix in the \code{env} formt.
+    A character string containing a path to the output file,
+    an environmental data matrix in the \code{env} formt.
 }
 }
+\value{
+\item{output.file}{
+    A character string containing a path to the output file,
+    an environmental data matrix in the \code{env} formt.
+}
+}
+
 \author{
     Eric Frichot
 }
@@ -35,7 +42,7 @@ an environmental data matrix in the \code{env} formt.
 C = matrix(runif(6), ncol=2, nrow=3)
 
 # Write C in a file called "tuto.env".
-# Create file:	"tuto.env".
+# Create file:    "tuto.env".
 write.env(C,"tuto.env")
 
 # Read the file "tuto.env".

@@ -15,131 +15,128 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Fitting Latent Factor Mixed Models}
 \description{
-\code{\link{LFMM}} is used to fit Latent Factor Mixed Models. The goal of \code{LFMM} 
-is to identify genetic polymorphisms that exhibit high correlation with some environmental 
-gradient or with the variables used as proxies for ecological pressures.
+\code{\link{LFMM}} is used to fit Latent Factor Mixed Models. The goal of 
+\code{LFMM} is to identify genetic polymorphisms that exhibit high correlation
+with some environmental gradient or with the variables used as proxies for 
+ecological pressures.
 }
 \usage{
 LFMM(input.file, environment.file, K, 
-        project = "continue", 
-        d = 0, all = FALSE, 
-        missing.data = FALSE, CPU = 1, 
-        iterations = 10000, burnin = 5000, 
-        seed = -1, repetitions = 1, 
-        epsilon.noise = 1e-3, epsilon.b = 1000, 
-        random.init = TRUE)
+    project = "continue", 
+    d = 0, all = FALSE, 
+    missing.data = FALSE, CPU = 1, 
+    iterations = 10000, burnin = 5000, 
+    seed = -1, repetitions = 1, 
+    epsilon.noise = 1e-3, epsilon.b = 1000, 
+    random.init = TRUE)
 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{input.file}{
-A character string containing a path to the input file,
-a genotypic matrix in the \code{\link{lfmm}} format.
+    A character string containing a path to the input file,
+    a genotypic matrix in the \code{\link{lfmm}} format.
 }
 \item{environment.file}{
-A character string containing a path to the environmental file,
-an environmental data matrix in the \code{\link{env}} format.
+    A character string containing a path to the environmental file,
+    an environmental data matrix in the \code{\link{env}} format.
 }
 \item{K}{
-        An integer corresponding to the number of latent factors. 
+    An integer corresponding to the number of latent factors. 
 }
 \item{project}{
-        A character string among "continue", "new", and "force". If "continue",
-        the results are stored in the current project. If "new", the current project
-        is removed and a new one is created to store the result. If "force", the results
-        are stored in the current project even if the input file has been modified since
-        the creation of the project.
+    A character string among "continue", "new", and "force". If "continue",
+    the results are stored in the current project. If "new", the current project
+    is removed and a new one is created to store the result. If "force", the 
+    results are stored in the current project even if the input file has been 
+    modified since the creation of the project.
 }
 \item{d}{
-        An integer corresponding to the fit of \code{LFMM} model with the \code{d}-th variable only from \code{environment.file}. By default (if NULL and all is FALSE), fit \code{LFMM} with each variable from \code{environment.file} sequentially and independently.
+    An integer corresponding to the fit of \code{LFMM} model with the 
+    \code{d}-th variable only from \code{environment.file}. By default (if NULL
+    and all is FALSE), fit \code{LFMM} with each variable from 
+    \code{environment.file} sequentially and independently.
 }
 \item{all}{
-        A boolean option. If true, fit \code{LFMM} with all variables from \code{environment.file} at the same time. This option is not compatible with the \code{d} option. 
+    A boolean option. If true, fit \code{LFMM} with all variables from 
+    \code{environment.file} at the same time. This option is not compatible 
+    with the \code{d} option. 
 }
 \item{missing.data}{
-        A boolean option. If true, the \code{input.file} contains missing genotypes.
+    A boolean option. If true, the \code{input.file} contains missing genotypes.
 }
 #ifndef windows
 \item{CPU}{
-	A number of CPUs to run the parallel version of the algorithm.
-	By default, the number of CPUs is 1.
+    A number of CPUs to run the parallel version of the algorithm.
+    By default, the number of CPUs is 1.
 }
 #endif
 #ifdef windows
 \item{CPU}{
-        The windows version is not parallelized. By consequence, CPU is always set to 1.
+    The windows version is not parallelized. By consequence, CPU is always set
+    to 1.
 }
 #endif
 \item{iterations}{
-        The total number of iterations in the Gibbs Sampling algorithm.
+    The total number of iterations in the Gibbs Sampling algorithm.
 }
 \item{burnin}{
-        The burnin number of iterations in the Gibbs Sampling algorithm.
+    The burnin number of iterations in the Gibbs Sampling algorithm.
 }
 \item{seed}{
-        A seed to initialize the random number generator. By default, the seed is randomly chosen.
+    A seed to initialize the random number generator. By default, the seed is 
+    randomly chosen.
 }
 \item{repetitions}{
-        The number of repetitions of each run.
+    The number of repetitions of each run.
 }
 \item{epsilon.noise}{
-        Prior on the different variances.
+    Prior on the different variances.
 }
 \item{epsilon.b}{
-        Prior on the variance of the correlation coefficients.
+    Prior on the variance of the correlation coefficients.
 }
 \item{random.init}{
-        A boolean option. If true, the Gibbs Sampler is initiliazed randomly. Otherwise, it is initialized with zeros.
+    A boolean option. If true, the Gibbs Sampler is initiliazed randomly. 
+    Otherwise, it is initialized with zeros.
 }
 }
 \value{
 \code{LFMM} returns an object of class \code{lfmmProject}.
 
 The following methods can be applied to the object of class \code{lfmmProject}:
-\item{plot}{
-        Plot the mean inflation factor in function of K for each variable. 
-}
+%\item{plot}{
+%    Plot the mean inflation factor in function of K for each variable. 
+%}
 \item{show}{
-        Display information about the analyses.
+    Display information about the analyses.
 }
 \item{summary}{
-        Summarize the analyses.
+    Summarize the analyses.
 }
 \item{\code{\link{z.scores}}}{
-        Return the \code{LFMM} output vector of zscores for the chosen runs with K
-        latent factors, the d-th variable and the all option.
+    Return the \code{LFMM} output vector of zscores for the chosen runs with K
+    latent factors, the d-th variable and the all option.
 }
 \item{\code{\link{p.values}}}{
-        Return the \code{LFMM} output vector of p-values for the chosen runs with K
-        latent factors, the d-th variable and the all option.
+    Return the \code{LFMM} output vector of p-values for the chosen runs with K
+    latent factors, the d-th variable and the all option.
 }
 \item{\code{\link{mlog10p.values}}}{
-        Return the \code{LFMM} output vector of -log10(p-values) for the chosen runs with K
-        latent factors, the d-th variable and the all option.
+    Return the \code{LFMM} output vector of -log10(p-values) for the chosen 
+    runs with K latent factors, the d-th variable and the all option.
 }
-%\item{inflationFactor}{\code{signature(object = "lfmmProjec", run = "integer", 
-%        K = "integer", d = "integer", all = "logical")}}{
-%        return the inflation factors for all runs with K
-%        latent factors for the variable d and the all option.
-%}
-%\item{cFDR}{\code{signature(object = "lfmmProjec", percentage = "numeric", 
-%        K = "integer", d = "integer", all = "logical", cutoff = "integer")}}{
-%        return a list of indices ... TODO
-%
-%}
-%\item{save.lfmmProject}{\code{signature(object = "lfmmProject", file = "character")}}{
-%        save a lfmmProject object into a file.
-%}
 \item{load.lfmmProject (file = "character") }{
-        Load the file containing an lfmmProject objet and return the lfmmProject object.
+    Load the file containing an lfmmProject objet and return the lfmmProject 
+    object.
 }
 \item{remove.lfmmProject (file = "character")}{
-        Erase a \code{lfmmProject} object. Caution: All the files associated with the
-        object will be removed.
+    Erase a \code{lfmmProject} object. Caution: All the files associated with 
+    the object will be removed.
 }
 }
 \author{
-        Eric Frichot
+    Eric Frichot
 }
 \seealso{
 \code{\link{lfmm}}
@@ -151,29 +148,35 @@ The following methods can be applied to the object of class \code{lfmmProject}:
 \link{tutorial}
 }
 \references{
-Frichot E, Schoville SD, Bouchard G, Francois O. (2013). \emph{Testing for associations between loci and environmental gradients using latent factor mixed models}. Molecular biology and evolution, 30(7), 1687-1699.
+Frichot E, Schoville SD, Bouchard G, Francois O. (2013). \emph{Testing for 
+associations between loci and environmental gradients using latent factor mixed
+models}. Molecular biology and evolution, 30(7), 1687-1699.
 }
 \examples{
 ### Example of analyses using LFMM ###
 
-data("example")
+data("tutorial")
 # creation of the genotype file, genotypes.lfmm.
-# It contains 500 SNPs for 83 individuals.
-write.lfmm(example.R, "genotypes.lfmm")
+# It contains 400 SNPs for 50 individuals.
+write.lfmm(tutorial.R, "genotypes.lfmm")
 # creation of the environment file, gradient.env.
-# It contains 1 environmental variable for 165 individuals.
-write.env(example.C, "gradients.env")
+# It contains 1 environmental variable for 40 individuals.
+write.env(tutorial.C, "gradients.env")
 
 ################
 # runs of LFMM #
 ################
 
 # main options, K: (the number of latent factors), 
-#               CPU: the number of CPUs.
+#           CPU: the number of CPUs.
 
 # Runs with K = 9 and 5 repetitions.
-# around 2/3 minutes per run.
-project = LFMM("genotypes.lfmm", "gradients.env", K = 9, repetitions = 5)
+# The runs are composed of 6000 iterations including 3000 iterations
+# for burnin.
+# around 30 seconds per run.
+project = NULL
+project = LFMM("genotypes.lfmm", "gradients.env", K = 9, repetitions = 5, 
+        iterations = 6000, burnin = 3000, project = "new")
 
 # get the zscores of each run for K = 9
 zs = z.scores(project, K = 9)
@@ -188,17 +191,17 @@ lambda = median(zs.stouffer^2)/.456
 cp.values = pchisq(zs.stouffer^2/lambda, df = 1, lower = FALSE)
 
 for (alpha in c(.05,.1,.15,.2)) {
-  # expected FDR
-  print(paste("expected FDR:", alpha))
-  L = length(cp.values)
-  # return a list of candidates with an expected FDR of alpha = 0.1.
-  w = which(sort(cp.values) < alpha * (1:L) / L)
-  candidates = order(cp.values)[w]
+    # expected FDR
+    print(paste("expected FDR:", alpha))
+    L = length(cp.values)
+    # return a list of candidates with an expected FDR of alpha.
+    w = which(sort(cp.values) < alpha * (1:L) / L)
+    candidates = order(cp.values)[w]
 
-  # estimated FDR and True Positif
-  estimated.FDR = length(which(candidates <= 450))/length(candidates)
-  estimated.TP = length(which(candidates > 450))/50
-  print(paste("FDR:", estimated.FDR, "True Positive:", estimated.TP))
+    # estimated FDR and True Positif
+    estimated.FDR = length(which(candidates <= 350))/length(candidates)
+    estimated.TP = length(which(candidates > 350))/50
+    print(paste("FDR:", estimated.FDR, "True Positive:", estimated.TP))
 }
 
 ###################

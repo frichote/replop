@@ -9,14 +9,16 @@ setClass("lfmmProject",
 
 # addRun
 
-setGeneric("addRun.lfmmProject", function(project="lfmmProject", run="lfmmClass") attributes("lfmmProject"));
-setMethod("addRun.lfmmProject", signature(project="lfmmProject", run="lfmmClass"),
-    function(project, run) {
+setGeneric("addRun.lfmmProject", function(project="lfmmProject", 
+    run="lfmmClass") attributes("lfmmProject"));
+setMethod("addRun.lfmmProject", signature(project="lfmmProject", 
+    run="lfmmClass"), function(project, run) {
         project@runs[[length(project@runs) + 1]] = run
         project@K = c(project@K, run@K)
         project@d = c(project@d, run@d)
         project@all = c(project@all, run@all)
-        project@lfmmClass.files = c(project@lfmmClass.files, run@lfmmClass.file);
+        project@lfmmClass.files = c(project@lfmmClass.files, 
+            run@lfmmClass.file);
 
         return(project)
     }
@@ -33,7 +35,8 @@ setMethod("addRun.lfmmProject", signature(project="lfmmProject", run="lfmmClass"
 
 #listSlots_lfmmProject <- function()
 #{
-#c(    "snmfProject_file", "input_file", "runs", "K", "d", "all", "lfmmClass_files")
+#c(    "snmfProject_file", "input_file", "runs", "K", "d", "all", 
+# "lfmmClass_files")
 #}
 
 #.DollarNames.lfmmProject <- function(x, pattern) c(listSlots_lfmmProject(),
@@ -43,7 +46,8 @@ setMethod("addRun.lfmmProject", signature(project="lfmmProject", run="lfmmClass"
 
 #setMethod("$", "lfmmProject",
 #           function(x, name) {
-#             if (!(name %in% listMethods_lfmmProject() || name %in% listSlots_lfmmProject())) {
+#             if (!(name %in% listMethods_lfmmProject() || name %in% 
+#               listSlots_lfmmProject())) {
 #               stop("no $ method for object without attributes")
 #         } else if (name %in% listMethods_lfmmProject()) {
 #        do.call(name, list(x));
@@ -55,7 +59,8 @@ setMethod("addRun.lfmmProject", signature(project="lfmmProject", run="lfmmClass"
 
 # getRuns
 
-setGeneric("getRuns.lfmmProject", function(object, k, d, all) standardGeneric("getRuns.lfmmProject"));
+setGeneric("getRuns.lfmmProject", function(object, k, d, all) 
+    standardGeneric("getRuns.lfmmProject"));
 setMethod("getRuns.lfmmProject", "lfmmProject",
     function(object, k, d, all) {
         
@@ -105,22 +110,25 @@ setMethod("getRuns.lfmmProject", "lfmmProject",
 setMethod("show", "lfmmProject",
     function(object) {
         cat("lfmm Project\n\n")
-        cat("lfmmProject file:                     ", object@lfmmProject.file, "\n")
-                cat("directory:                            ", object@directory, "\n")
+        cat("lfmmProject file:                     ", object@lfmmProject.file,
+            "\n")
+        cat("directory:                            ", object@directory,
+            "\n")
         cat("input file:                           ", object@input.file, "\n")
-        cat("variable file:                        ", object@environment.file, "\n")
+        cat("variable file:                        ", object@environment.file,
+            "\n")
         cat("number of individuals:                ", object@n, "\n")
         cat("number of loci:                       ", object@L, "\n")
         cat("number of environmental variables:    ", object@D, "\n")
         cat("run for the latent factors:           ", object@K, "\n")
         cat("run for the environmental variables:  ", object@d, "\n")
         cat("variables separately or together:     ", object@all, "\n")
-                if (length(object@runs)) {
-        for (i in 1:length(object@runs)) {
-            cat("\n")
-                        cat("****** run *******\n");
-            show(object@runs[[i]])
-        }
+        if (length(object@runs)) {
+            for (i in 1:length(object@runs)) {
+                cat("\n")
+                cat("****** run *******\n");
+                show(object@runs[[i]])
+            }
         }
     }
 )
@@ -181,7 +189,7 @@ setMethod("summary", "lfmmProject",
 #            if (length(d_separately) > 0) { 
 #                for(d in 1:length(d_separately)) {
 #                    inter = intersect(r,
-#                                                which(object@d[separately] == d_separately[d]));
+#                     which(object@d[separately] == d_separately[d]));
 #                    l = NULL
 #                    for (it in inter)
 #                        l = c(l, object@runs[[it]]@inflationFactor)
@@ -192,7 +200,7 @@ setMethod("summary", "lfmmProject",
 #            if (length(d_together) > 0) { 
 #                for(d in 1:length(d_together)) {
 #                    inter = intersect(r,
-#                                                which(object@d[together] == d_together[d]));
+#                       which(object@d[together] == d_together[d]));
 #                    l = NULL
 #                    for (it in inter)
 #                        l = c(l, object@runs[[it]]@inflationFactor)
@@ -260,7 +268,8 @@ setMethod("summary", "lfmmProject",
 #        s = summary(x)  
 #        par(mfrow=c(1,dim(s@inflationFactor)[1]))
 #        for (i in 1:dim(s$inflationFactor[1])) {
-#                plot(s$inflationFactor[i,], ylab="Cross-Entropy", xlab="Number of ancestral populations", ...)
+#           plot(s$inflationFactor[i,], ylab="Cross-Entropy", 
+#           xlab="Number of ancestral populations", ...)
 #        }
 #          }
 #)
@@ -270,61 +279,63 @@ setMethod("summary", "lfmmProject",
 setGeneric("mlog10p.values", function(object, K, d, all, run) vector)
 setMethod("mlog10p.values", "lfmmProject",
     function(object, K, d, all, run) {
-               # check of k
-                if (missing(K)) {
+        # check of k
+        if (missing(K)) {
             if (length(unique(object@K)) == 1) {
-                            K = unique(object@K)
+                K = unique(object@K)
             } else {
-                                stop(paste("Please, choose a value of K among: ", paste(unique(object@K), 
-                    collapse=" "), sep=""))
+                stop(paste("Please, choose a value of K among: ", 
+                    paste(unique(object@K), collapse=" "), sep=""))
             }
-                } else if (!(K %in% object@K)) {
-                        stop(paste("No run exists for K = ",K,". Please, choose a value of K among:", 
-                paste(unique(object@K), collapse=" "), sep = ""))
-                }
-                runk = which(object@K == K)
+        } else if (!(K %in% object@K)) {
+            stop(paste("No run exists for K = ",K,
+                ". Please, choose a value of K among:", paste(unique(object@K),
+                collapse=" "), sep = ""))
+        }
+        runk = which(object@K == K)
 
-                # check d
-                if (missing(d)) {
+        # check d
+        if (missing(d)) {
             if(length(unique(object@d[runk])) == 1) {
-                            d = unique(object@d[runk])
+                d = unique(object@d[runk])
             } else {
-                                stop(paste("Please, choose a value of d among: ", 
+                stop(paste("Please, choose a value of d among: ", 
                 paste(unique(object@d[runk]), collapse=" "), sep=""))
             }
-                } else if (!(d %in% object@d[runk])) {
-                        stop(paste("Please, choose a value of d among: ", paste(unique(object@d[runk]), 
-                collapse=" "), sep=""))
-                }
+        } else if (!(d %in% object@d[runk])) {
+            stop(paste("Please, choose a value of d among: ", 
+                paste(unique(object@d[runk]), collapse=" "), sep=""))
+        }
         rund = intersect(which(object@d == d), runk)
 
         # check all  
         if(missing(all)) {
             if(length(unique(object@all[rund])) == 1) {
-                 all = unique(object@all[rund])
+                all = unique(object@all[rund])
             } else {
-                                stop(paste("Please, choose a value of the all parameter among:", 
+                stop(paste("Please, choose a value of the all parameter among:",
                 paste(unique(object@all[rund]), collapse=" "), sep=""))
             }
         }
 
-                # check run 
-                r = intersect(which(object@all == all), rund)
-                if (missing(run))
-                        run = 1:length(r)
+        # check run 
+        r = intersect(which(object@all == all), rund)
+        if (missing(run))
+            run = 1:length(r)
 
-                colnames = paste("run", run)
-                rownames = NULL
-                res = matrix(NA, ncol=length(run), nrow = object@L, dimnames = list(rownames, colnames))
+        colnames = paste("run", run)
+        rownames = NULL
+        res = matrix(NA, ncol=length(run), nrow = object@L, 
+            dimnames = list(rownames, colnames))
         for (i in 1:length(run)) {
-                        if (run[i] > length(r)) {
-                                stop(paste("You chose run number ", run[i],". But only ",
-                                length(r)," run(s) have been performed.", sep=""))
-                        }
+            if (run[i] > length(r)) {
+                stop(paste("You chose run number ", run[i],". But only ",
+                    length(r)," run(s) have been performed.", sep=""))
+            }
             res[,i] = mlog10pvalues(object@runs[[r[run[i]]]])        
         }
 
-                return(res)
+        return(res)
     }
 )
 
@@ -333,58 +344,60 @@ setMethod("mlog10p.values", "lfmmProject",
 setGeneric("p.values", function(object, K, d, all, run) vector)
 setMethod("p.values", "lfmmProject",
     function(object, K, d, all, run) {
-               # check of k
-                if (missing(K)) {
+        # check of k
+        if (missing(K)) {
             if (length(unique(object@K)) == 1) {
-                            K = unique(object@K)
+                K = unique(object@K)
             } else {
-                                stop(paste("Please, choose a value of K among: ", paste(unique(object@K), 
-                    collapse=" "), sep=""))
+                stop(paste("Please, choose a value of K among: ", 
+                    paste(unique(object@K), collapse=" "), sep=""))
             }
-                } else if (!(K %in% object@K)) {
-                        stop(paste("No run exists for K = ",K,". Please, choose a value of K among:", 
+        } else if (!(K %in% object@K)) {
+            stop(paste("No run exists for K = ",K,
+                ". Please, choose a value of K among:", 
                 paste(unique(object@K), collapse=" "), sep = ""))
-                }
-                runk = which(object@K == K)
+        }
+        runk = which(object@K == K)
 
-                # check d
-                if (missing(d)) {
+        # check d
+        if (missing(d)) {
             if(length(unique(object@d[runk])) == 1) {
-                            d = unique(object@d[runk])
+                d = unique(object@d[runk])
             } else {
-                                stop(paste("Please, choose a value of d among: ", 
-                paste(unique(object@d[runk]), collapse=" "), sep=""))
+                stop(paste("Please, choose a value of d among: ", 
+                    paste(unique(object@d[runk]), collapse=" "), sep=""))
             }
-                } else if (!(d %in% object@d[runk])) {
-                        stop(paste("Please, choose a value of d among: ", paste(unique(object@d[runk]), 
+        } else if (!(d %in% object@d[runk])) {
+            stop(paste("Please, choose a value of d among: ", 
+                paste(unique(object@d[runk]), 
                 collapse=" "), sep=""))
                 }
         rund = intersect(which(object@d == d), runk)
-    
 
         # check all  
         if(missing(all)) {
             if(length(unique(object@all[rund])) == 1) {
-                 all = unique(object@all[rund])
+                all = unique(object@all[rund])
             } else {
-                                stop(paste("Please, choose a value of the all parameter among:", 
-                paste(unique(object@all[rund]), collapse=" "), sep=""))
+                stop(paste("Please, choose a value of the all parameter among:",
+                    paste(unique(object@all[rund]), collapse=" "), sep=""))
             }
         }
 
-                # check run 
-                r = intersect(which(object@all == all), rund)
-                if (missing(run))
-                        run = 1:length(r)
+        # check run 
+        r = intersect(which(object@all == all), rund)
+        if (missing(run))
+            run = 1:length(r)
 
-                colnames = paste("run", run)
-                rownames = NULL
-                res = matrix(NA, ncol=length(run), nrow = object@L, dimnames = list(rownames, colnames))
+        colnames = paste("run", run)
+        rownames = NULL
+        res = matrix(NA, ncol=length(run), nrow = object@L, 
+            dimnames = list(rownames, colnames))
         for (i in 1:length(run)) {
-                        if (run[i] > length(r)) {
-                                stop(paste("You chose run number ", run[i],". But only ",
-                                length(r)," run(s) have been performed.", sep=""))
-                        }
+            if (run[i] > length(r)) {
+                stop(paste("You chose run number ", run[i],". But only ",
+                    length(r)," run(s) have been performed.", sep=""))
+            }
             res[,i] = pvalues(object@runs[[r[run[i]]]])        
         }
 
@@ -397,58 +410,59 @@ setMethod("p.values", "lfmmProject",
 setGeneric("z.scores", function(object, K, d, all, run) vector)
 setMethod("z.scores", "lfmmProject",
     function(object, K, d, all, run) {
-               # check of k
-                if (missing(K)) {
+        # check of k
+        if (missing(K)) {
             if (length(unique(object@K)) == 1) {
-                            K = unique(object@K)
+                K = unique(object@K)
             } else {
-                                stop(paste("Please, choose a value of K among: ", paste(unique(object@K), 
-                    collapse=" "), sep=""))
+                stop(paste("Please, choose a value of K among: ", 
+                    paste(unique(object@K), collapse=" "), sep=""))
             }
-                } else if (!(K %in% object@K)) {
-                        stop(paste("No run exists for K = ",K,". Please, choose a value of K among:", 
+        } else if (!(K %in% object@K)) {
+            stop(paste("No run exists for K = ",K,
+                ". Please, choose a value of K among:", 
                 paste(unique(object@K), collapse=" "), sep = ""))
-                }
-                runk = which(object@K == K)
+        }
+        runk = which(object@K == K)
 
-                # check d
-                if (missing(d)) {
+        # check d
+        if (missing(d)) {
             if(length(unique(object@d[runk])) == 1) {
-                            d = unique(object@d[runk])
+                d = unique(object@d[runk])
             } else {
-                                stop(paste("Please, choose a value of d among: ", 
-                paste(unique(object@d[runk]), collapse=" "), sep=""))
+                stop(paste("Please, choose a value of d among: ", 
+                    paste(unique(object@d[runk]), collapse=" "), sep=""))
             }
-                } else if (!(d %in% object@d[runk])) {
-                        stop(paste("Please, choose a value of d among: ", paste(unique(object@d[runk]), 
-                collapse=" "), sep=""))
-                }
+        } else if (!(d %in% object@d[runk])) {
+            stop(paste("Please, choose a value of d among: ", 
+                paste(unique(object@d[runk]), collapse=" "), sep=""))
+        }
         rund = intersect(which(object@d == d), runk)
     
-
         # check all  
         if(missing(all)) {
             if(length(unique(object@all[rund])) == 1) {
-                 all = unique(object@all[rund])
+                all = unique(object@all[rund])
             } else {
-                                stop(paste("Please, choose a value of the all parameter among:", 
+                stop(paste("Please, choose a value of the all parameter among:",
                 paste(unique(object@all[rund]), collapse=" "), sep=""))
             }
         }
 
         # check run 
-                 r = intersect(which(object@all == all), rund)
+        r = intersect(which(object@all == all), rund)
         if (missing(run))
             run = 1:length(r)
 
-                colnames = paste("run", run)
-                rownames = NULL
-        res = matrix(NA, ncol=length(run), nrow = object@L, dimnames = list(rownames, colnames))
+        colnames = paste("run", run)
+        rownames = NULL
+        res = matrix(NA, ncol=length(run), nrow = object@L, 
+            dimnames = list(rownames, colnames))
         for (i in 1:length(run)) {
-                        if (run[i] > length(r)) {
-                                stop(paste("You chose run number ", run[i],". But only ",
-                                length(r)," run(s) have been performed.", sep=""))
-                        }
+            if (run[i] > length(r)) {
+                stop(paste("You chose run number ", run[i],". But only ",
+                    length(r)," run(s) have been performed.", sep=""))
+            }
             res[,i] = zscores(object@runs[[r[run[i]]]])        
         }
 
@@ -458,16 +472,19 @@ setMethod("z.scores", "lfmmProject",
 
 # load
 
-setGeneric("load.lfmmProject", function(file="character") attributes("lfmmProject"))
+setGeneric("load.lfmmProject", function(file="character") 
+    attributes("lfmmProject"))
 setMethod("load.lfmmProject", "character",
     function(file) {
         # file 
         test_character("file", file, NULL);
         # load the project
-                res = dget(file);
-                for (r in 1:length(res@lfmmClass.files)) {
-                        res@runs[[r]] = load.lfmmClass(res@lfmmClass.files[r])
-                }
+        res = dget(file);
+        if (length(res@lfmmClass.files) > 0) {
+            for (r in 1:length(res@lfmmClass.files)) {
+                res@runs[[r]] = load.lfmmClass(res@lfmmClass.files[r])
+            }
+        }
         return(res);
     }
 )
@@ -478,17 +495,17 @@ setMethod("save.lfmmProject", signature(object="lfmmProject"),
     function(object) {
         file = object@lfmmProject.file;
         if (length(object@runs) > 0) {
-                    for (r in 1:length(object@runs)) {
-                            save.lfmmClass(object@runs[[r]], object@lfmmClass.files[r])
-                    }
+            for (r in 1:length(object@runs)) {
+                save.lfmmClass(object@runs[[r]], object@lfmmClass.files[r])
+            }
         }
-                object@runs = list()
+        object@runs = list()
         dput(object, file) 
-            cat("The project is saved into :\n",currentDir(file),"\n\n");
-                cat("To load the project, use:\n project = load.lfmmProject(\"",
+        cat("The project is saved into :\n",currentDir(file),"\n\n");
+        cat("To load the project, use:\n project = load.lfmmProject(\"",
             currentDir(file),"\")\n\n",sep="");
-                cat("To remove the project, use:\n remove.lfmmProject(\"",currentDir(file),
-            "\")\n\n", sep="")
+        cat("To remove the project, use:\n remove.lfmmProject(\"",
+            currentDir(file), "\")\n\n", sep="")
 
         object@lfmmProject.file;
     }
@@ -498,15 +515,15 @@ setMethod("save.lfmmProject", signature(object="lfmmProject"),
 
 setGeneric("remove.lfmmProject", function(file="character") NULL)
 setMethod("remove.lfmmProject", "character",
-        function(file) {
+    function(file) {
         # file
         test_character("file", file, NULL);
 
         # load and remove
         res = dget(file);
         unlink(res@directory, recursive = TRUE)
-                file.remove(file)
-        }
+        file.remove(file)
+    }
 )
 
 #setGeneric("inflationFactorEstimation", function(object, ...) vector)

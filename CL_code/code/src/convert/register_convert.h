@@ -19,7 +19,8 @@
  * @param output	the output file
  * @param type	type format of the output file
  */
-void analyse_param_convert (int argc, char *argv[], char *input, char *output, char* type);
+void analyse_param_convert(int argc, char *argv[], char *input, char *output,
+                           char *type);
 
 /**
  * output print of the number of individuals and the number of loci
@@ -29,6 +30,6 @@ void analyse_param_convert (int argc, char *argv[], char *input, char *output, c
  */
 void print_convert(int N, int M);
 
-#endif // REGISTER_CONVERT_H
+#endif                          // REGISTER_CONVERT_H
 
 /** @} */

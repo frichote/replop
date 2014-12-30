@@ -17,6 +17,6 @@
  */
 void lfmm_k0(LFMM_param param);
 
-#endif // lfmm_K0_H
+#endif                          // lfmm_K0_H
 
 /** @} */

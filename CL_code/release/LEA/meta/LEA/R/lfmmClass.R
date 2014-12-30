@@ -34,14 +34,15 @@ setClass("lfmmClass",
 #    "random.init", "deviance", "DIC")
 #}
 
-# .DollarNames.lfmmClass <- function(x, pattern) c(listSlots_LFMM(),listMethods_LFMM())
+# .DollarNames.lfmmClass <- function(x, pattern) 
+# c(listSlots_LFMM(),listMethods_LFMM())
 
 # $ 
 
 #setMethod("$", "lfmmClass",
-#           function(x, name) {
-#             if (!(name %in% listMethods_LFMM() || name %in% listSlots_LFMM())) {
-#               stop("no $ method for object without attributes")
+#    function(x, name) {
+#        if (!(name %in% listMethods_LFMM() || name %in% listSlots_LFMM())) {
+#            stop("no $ method for object without attributes")
 #         } else if (name %in% listMethods_LFMM()) {
 #        do.call(name, list(x));
 #         } else {
@@ -107,7 +108,8 @@ setMethod("zscores", "lfmmClass",
 #        #zs.0 = zscores(object)
 #        #p.0 = 1 - pchisq( zs.0^2  , df = 1)
 #        print("inflation factor TODO")
-#        inflationFactor = 1; #median(quantile(zs.0^2, prob = pp)/qchisq(pp, df = 1))
+#        inflationFactor = 1; #median(quantile(zs.0^2, prob = pp)/qchisq(pp, 
+#        df = 1))
 #
 #        return(inflationFactor)
 #    }
@@ -115,7 +117,8 @@ setMethod("zscores", "lfmmClass",
 
 # cFDR
 #setGeneric("cFDR.lfmmClass",function(object, percentage) vector)
-#setMethod("cFDR.lfmmClass", signature=signature(object="lfmmClass", percentage="numeric"),
+#setMethod("cFDR.lfmmClass", signature=signature(object="lfmmClass", 
+#    percentage="numeric"),
 #    function(object, percentage) {
 #        zs.0 = zscores(object)
 #        #inflationFactor = object@inflationFactor
@@ -131,8 +134,10 @@ setMethod("show", "lfmmClass",
     function(object) {
         cat("* lfmm class *\n\n")
         cat("file directory:                 ", object@directory, "\n")
-        cat("lfmmClass file:                 ", basename(object@lfmmClass.file), "\n")
-        cat("zscore file:                    ", basename(object@zscore.file), "\n")
+        cat("lfmmClass file:                 ", 
+            basename(object@lfmmClass.file), "\n")
+        cat("zscore file:                    ", basename(object@zscore.file),
+            "\n")
         cat("number of latent factors:       ", object@K, "\n")
         cat("run number:                     ", object@run, "\n")
         cat("number of total iterations:     ", object@Niter, "\n")
@@ -147,7 +152,6 @@ setMethod("show", "lfmmClass",
         if (object@d) 
             cat("Run for variable:               ", object@d, "\n")
         #cat("DIC file:                       ", object@dic.file, "\n")
-
     }
 )
 
@@ -160,7 +164,8 @@ setMethod("show", "lfmmClass",
 #        percentage = c(.9,.8,.7,.6,.5,.4,.3,.2,.1,.05,.02,.01)
 #        colnames = paste(percentage *100, "%")    
 #        rownames = "proportion of correlations"
-#        res = matrix(NA,ncol=length(percentage), nrow=1, dimnames= list(rownames, colnames)) 
+#        res = matrix(NA,ncol=length(percentage), nrow=1, 
+#            dimnames= list(rownames, colnames)) 
 #        for (p in 1:length(percentage))
 #            res[p] = length(cFDR.lfmmClass(object, percentage[p]))/object@L
 #        return(list(cFDR=res));
@@ -189,10 +194,10 @@ setMethod("save.lfmmClass", signature(x="lfmmClass", file="character"),
 
 setGeneric("remove.lfmmClass", function(file="character")NULL)
 setMethod("remove.lfmmClass", signature(file="character"),
-        function(file) {
-                cl = load.lfmmClass(file)
-                file.remove(cl@zscore.file)
-                file.remove(file)
-        }
+    function(file) {
+        cl = load.lfmmClass(file)
+        file.remove(cl@zscore.file)
+        file.remove(file)
+    }
 )
 

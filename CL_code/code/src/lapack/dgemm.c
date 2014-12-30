@@ -6,25 +6,23 @@
 
 #include "f2c.h"
 
-/* Subroutine */ int dgemm_(char *transa, char *transb, integer *m, integer *
-	n, integer *k, doublereal *alpha, doublereal *a, integer *lda, 
-	doublereal *b, integer *ldb, doublereal *beta, doublereal *c, integer 
-	*ldc)
+/* Subroutine */ int dgemm_(char *transa, char *transb, integer * m, integer *
+                            n, integer * k, doublereal * alpha, doublereal * a,
+                            integer * lda, doublereal * b, integer * ldb,
+                            doublereal * beta, doublereal * c, integer * ldc)
 {
 
+        /* System generated locals */
+        //integer a_dim1, a_offset, b_dim1, b_offset, c_dim1, c_offset;//, i__1, i__2, i__3;
 
-    /* System generated locals */
-    //integer a_dim1, a_offset, b_dim1, b_offset, c_dim1, c_offset;//, i__1, i__2, i__3;
-
-    /* Local variables */
-    static integer info;
-    static logical nota, notb;
-    static doublereal temp;
-    static integer i, j, l;
-    extern logical lsame_(char *, char *);
-    static integer nrowa, nrowb;
-    extern /* Subroutine */ int xerbla_(char *, integer *);
-
+        /* Local variables */
+        static integer info;
+        static logical nota, notb;
+        static doublereal temp;
+        static integer i, j, l;
+        extern logical lsame_(char *, char *);
+        static integer nrowa, nrowb;
+        extern /* Subroutine */ int xerbla_(char *, integer *);
 
 /*  Purpose   
     =======   
@@ -166,7 +164,6 @@
              max( 1, m ).   
              Unchanged on exit.   
 
-
     Level 3 Blas routine.   
 
     -- Written on 8-February-1989.   
@@ -174,8 +171,6 @@
        Iain Duff, AERE Harwell.   
        Jeremy Du Croz, Numerical Algorithms Group Ltd.   
        Sven Hammarling, Numerical Algorithms Group Ltd.   
-
-
 
        Set  NOTA  and  NOTB  as  true if  A  and  B  respectively are not 
   
@@ -192,204 +187,207 @@
 #define B(I,J) b[(I)-1 + ((J)-1)* ( *ldb)]
 #define C(I,J) c[(I)-1 + ((J)-1)* ( *ldc)]
 
-    nota = lsame_(transa, "N");
-    notb = lsame_(transb, "N");
-    if (nota) {
-	nrowa = *m;
-//	ncola = *k;
-    } else {
-	nrowa = *k;
-//	ncola = *m;
-    }
-    if (notb) {
-	nrowb = *k;
-    } else {
-	nrowb = *n;
-    }
+        nota = lsame_(transa, "N");
+        notb = lsame_(transb, "N");
+        if (nota) {
+                nrowa = *m;
+//      ncola = *k;
+        } else {
+                nrowa = *k;
+//      ncola = *m;
+        }
+        if (notb) {
+                nrowb = *k;
+        } else {
+                nrowb = *n;
+        }
 
 /*     Test the input parameters. */
 
-    info = 0;
-    if (! nota && ! lsame_(transa, "C") && ! lsame_(transa, "T")) {
-	info = 1;
-    } else if (! notb && ! lsame_(transb, "C") && ! lsame_(transb, 
-	    "T")) {
-	info = 2;
-    } else if (*m < 0) {
-	info = 3;
-    } else if (*n < 0) {
-	info = 4;
-    } else if (*k < 0) {
-	info = 5;
-    } else if (*lda < max(1,nrowa)) {
-	info = 8;
-    } else if (*ldb < max(1,nrowb)) {
-	info = 10;
-    } else if (*ldc < max(1,*m)) {
-	info = 13;
-    }
-    if (info != 0) {
-	xerbla_("DGEMM ", &info);
-	return 0;
-    }
+        info = 0;
+        if (!nota && !lsame_(transa, "C") && !lsame_(transa, "T")) {
+                info = 1;
+        } else if (!notb && !lsame_(transb, "C") && !lsame_(transb, "T")) {
+                info = 2;
+        } else if (*m < 0) {
+                info = 3;
+        } else if (*n < 0) {
+                info = 4;
+        } else if (*k < 0) {
+                info = 5;
+        } else if (*lda < max(1, nrowa)) {
+                info = 8;
+        } else if (*ldb < max(1, nrowb)) {
+                info = 10;
+        } else if (*ldc < max(1, *m)) {
+                info = 13;
+        }
+        if (info != 0) {
+                xerbla_("DGEMM ", &info);
+                return 0;
+        }
 
 /*     Quick return if possible. */
 
-    if (*m == 0 || *n == 0 || ((*alpha == 0. || *k == 0) && *beta == 1.)) {
-	return 0;
-    }
+        if (*m == 0 || *n == 0 || ((*alpha == 0. || *k == 0) && *beta == 1.)) {
+                return 0;
+        }
 
 /*     And if  alpha.eq.zero. */
 
-    if (*alpha == 0.) {
-	if (*beta == 0.) {
-	    //i__1 = *n;
-	    for (j = 1; j <= *n; ++j) {
-		//i__2 = *m;
-		for (i = 1; i <= *m; ++i) {
-		    C(i,j) = 0.;
+        if (*alpha == 0.) {
+                if (*beta == 0.) {
+                        //i__1 = *n;
+                        for (j = 1; j <= *n; ++j) {
+                                //i__2 = *m;
+                                for (i = 1; i <= *m; ++i) {
+                                        C(i, j) = 0.;
 /* L10: */
-		}
+                                }
 /* L20: */
-	    }
-	} else {
-	    //i__1 = *n;
-	    for (j = 1; j <= *n; ++j) {
-		//i__2 = *m;
-		for (i = 1; i <= *m; ++i) {
-		    C(i,j) = *beta * C(i,j);
+                        }
+                } else {
+                        //i__1 = *n;
+                        for (j = 1; j <= *n; ++j) {
+                                //i__2 = *m;
+                                for (i = 1; i <= *m; ++i) {
+                                        C(i, j) = *beta * C(i, j);
 /* L30: */
-		}
+                                }
 /* L40: */
-	    }
-	}
-	return 0;
-    }
+                        }
+                }
+                return 0;
+        }
 
 /*     Start the operations. */
 
-    if (notb) {
-	if (nota) {
+        if (notb) {
+                if (nota) {
 
 /*           Form  C := alpha*A*B + beta*C. */
 
-	    //i__1 = *n;
-	    for (j = 1; j <= *n; ++j) {
-		if (*beta == 0.) {
-		    //i__2 = *m;
-		    for (i = 1; i <= *m; ++i) {
-			C(i,j) = 0.;
+                        //i__1 = *n;
+                        for (j = 1; j <= *n; ++j) {
+                                if (*beta == 0.) {
+                                        //i__2 = *m;
+                                        for (i = 1; i <= *m; ++i) {
+                                                C(i, j) = 0.;
 /* L50: */
-		    }
-		} else if (*beta != 1.) {
-		    //i__2 = *m;
-		    for (i = 1; i <= *m; ++i) {
-			C(i,j) = *beta * C(i,j);
+                                        }
+                                } else if (*beta != 1.) {
+                                        //i__2 = *m;
+                                        for (i = 1; i <= *m; ++i) {
+                                                C(i, j) = *beta * C(i, j);
 /* L60: */
-		    }
-		}
-		//i__2 = *k;
-		for (l = 1; l <= *k; ++l) {
-		    if (B(l,j) != 0.) {
-			temp = *alpha * B(l,j);
-			//i__3 = *m;
-			for (i = 1; i <= *m; ++i) {
-			    C(i,j) += temp * A(i,l);
+                                        }
+                                }
+                                //i__2 = *k;
+                                for (l = 1; l <= *k; ++l) {
+                                        if (B(l, j) != 0.) {
+                                                temp = *alpha * B(l, j);
+                                                //i__3 = *m;
+                                                for (i = 1; i <= *m; ++i) {
+                                                        C(i, j) +=
+                                                            temp * A(i, l);
 /* L70: */
-			}
-		    }
+                                                }
+                                        }
 /* L80: */
-		}
+                                }
 /* L90: */
-	    }
-	} else {
+                        }
+                } else {
 
 /*           Form  C := alpha*A'*B + beta*C */
 
-	    //i__1 = *n;
-	    for (j = 1; j <= *n; ++j) {
-		//i__2 = *m;
-		for (i = 1; i <= *m; ++i) {
-		    temp = 0.;
-		    //i__3 = *k;
-		    for (l = 1; l <= *k; ++l) {
-			temp += A(l,i) * B(l,j);
+                        //i__1 = *n;
+                        for (j = 1; j <= *n; ++j) {
+                                //i__2 = *m;
+                                for (i = 1; i <= *m; ++i) {
+                                        temp = 0.;
+                                        //i__3 = *k;
+                                        for (l = 1; l <= *k; ++l) {
+                                                temp += A(l, i) * B(l, j);
 /* L100: */
-		    }
-		    if (*beta == 0.) {
-			C(i,j) = *alpha * temp;
-		    } else {
-			C(i,j) = *alpha * temp + *beta * C(i,j);
-		    }
+                                        }
+                                        if (*beta == 0.) {
+                                                C(i, j) = *alpha * temp;
+                                        } else {
+                                                C(i, j) =
+                                                    *alpha * temp + *beta * C(i,
+                                                                              j);
+                                        }
 /* L110: */
-		}
+                                }
 /* L120: */
-	    }
-	}
-    } else {
-	if (nota) {
+                        }
+                }
+        } else {
+                if (nota) {
 
 /*           Form  C := alpha*A*B' + beta*C */
 
-	    //i__1 = *n;
-	    for (j = 1; j <= *n; ++j) {
-		if (*beta == 0.) {
-		    //i__2 = *m;
-		    for (i = 1; i <= *m; ++i) {
-			C(i,j) = 0.;
+                        //i__1 = *n;
+                        for (j = 1; j <= *n; ++j) {
+                                if (*beta == 0.) {
+                                        //i__2 = *m;
+                                        for (i = 1; i <= *m; ++i) {
+                                                C(i, j) = 0.;
 /* L130: */
-		    }
-		} else if (*beta != 1.) {
-		    //i__2 = *m;
-		    for (i = 1; i <= *m; ++i) {
-			C(i,j) = *beta * C(i,j);
+                                        }
+                                } else if (*beta != 1.) {
+                                        //i__2 = *m;
+                                        for (i = 1; i <= *m; ++i) {
+                                                C(i, j) = *beta * C(i, j);
 /* L140: */
-		    }
-		}
-		//i__2 = *k;
-		for (l = 1; l <= *k; ++l) {
-		    if (B(j,l) != 0.) {
-			temp = *alpha * B(j,l);
-			//i__3 = *m;
-			for (i = 1; i <= *m; ++i) {
-			    C(i,j) += temp * A(i,l);
+                                        }
+                                }
+                                //i__2 = *k;
+                                for (l = 1; l <= *k; ++l) {
+                                        if (B(j, l) != 0.) {
+                                                temp = *alpha * B(j, l);
+                                                //i__3 = *m;
+                                                for (i = 1; i <= *m; ++i) {
+                                                        C(i, j) +=
+                                                            temp * A(i, l);
 /* L150: */
-			}
-		    }
+                                                }
+                                        }
 /* L160: */
-		}
+                                }
 /* L170: */
-	    }
-	} else {
+                        }
+                } else {
 
 /*           Form  C := alpha*A'*B' + beta*C */
 
-	    //i__1 = *n;
-	    for (j = 1; j <= *n; ++j) {
-		//i__2 = *m;
-		for (i = 1; i <= *m; ++i) {
-		    temp = 0.;
-		    //i__3 = *k;
-		    for (l = 1; l <= *k; ++l) {
-			temp += A(l,i) * B(j,l);
+                        //i__1 = *n;
+                        for (j = 1; j <= *n; ++j) {
+                                //i__2 = *m;
+                                for (i = 1; i <= *m; ++i) {
+                                        temp = 0.;
+                                        //i__3 = *k;
+                                        for (l = 1; l <= *k; ++l) {
+                                                temp += A(l, i) * B(j, l);
 /* L180: */
-		    }
-		    if (*beta == 0.) {
-			C(i,j) = *alpha * temp;
-		    } else {
-			C(i,j) = *alpha * temp + *beta * C(i,j);
-		    }
+                                        }
+                                        if (*beta == 0.) {
+                                                C(i, j) = *alpha * temp;
+                                        } else {
+                                                C(i, j) =
+                                                    *alpha * temp + *beta * C(i,
+                                                                              j);
+                                        }
 /* L190: */
-		}
+                                }
 /* L200: */
-	    }
-	}
-    }
+                        }
+                }
+        }
 
-    return 0;
+        return 0;
 
 /*     End of DGEMM . */
 
-} /* dgemm_ */
-
-
+}                               /* dgemm_ */

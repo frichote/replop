@@ -76,7 +76,7 @@ int rand_int(int size);
  * @param k	number of integer to sample
  * @param n	size of the interval
  */
-void rand_k_among_n(int* vect, int k, int n);
+void rand_k_among_n(int *vect, int k, int n);
 
 /**
  * compute a uniform random float, (min,max]
@@ -207,6 +207,6 @@ long double zscore2pvalue(long double z);
  */
 double zscore2pvalue_student(double z, int df);
 
-#endif // RAND_H
+#endif                          // RAND_H
 
 /** @} */

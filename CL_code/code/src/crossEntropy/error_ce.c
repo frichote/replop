@@ -16,7 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "error_ce.h"
 #include "print_ce.h"
 #include <stdio.h>
@@ -25,31 +24,33 @@
 
 // print_error_nmf
 
-void print_error_ce(char* msg, char*file) 
+void print_error_ce(char *msg, char *file)
 {
-	printf("\n");
+        printf("\n");
 
-	// error message depends on the error type
-	if (!strcmp(msg,"cmd")) {
-	        printf("ERROR: no value for %s.\n\n",file);
-		print_help_ce();
-	} else if (!strcmp(msg,"option")) {
-	        printf("ERROR: the following option is mandatory: %s.\n\n",file);
-		print_help_ce();
-	} else if (!strcmp(msg,"missing")) {
-	        printf("ERROR: one of the following options is missing or not positive: -K, -m  \n\n");
-		print_help_ce();
-	} else if (!strcmp(msg,"basic")) {
-	        printf("ERROR: the command is not written correctly.\n\n");
-		print_help_ce();
-	} else if (!strcmp(msg,"specific")) {
-	        printf("ERROR: %s.\n\n",file);
-		print_help_ce();
-	} else {
-		printf("ERROR: Internal error.\n");
-	}
+        // error message depends on the error type
+        if (!strcmp(msg, "cmd")) {
+                printf("ERROR: no value for %s.\n\n", file);
+                print_help_ce();
+        } else if (!strcmp(msg, "option")) {
+                printf("ERROR: the following option is mandatory: %s.\n\n",
+                       file);
+                print_help_ce();
+        } else if (!strcmp(msg, "missing")) {
+                printf
+                    ("ERROR: one of the following options is missing or not positive: -K, -m  \n\n");
+                print_help_ce();
+        } else if (!strcmp(msg, "basic")) {
+                printf("ERROR: the command is not written correctly.\n\n");
+                print_help_ce();
+        } else if (!strcmp(msg, "specific")) {
+                printf("ERROR: %s.\n\n", file);
+                print_help_ce();
+        } else {
+                printf("ERROR: Internal error.\n");
+        }
 
-	printf("\n");
-	exit(1); 
+        printf("\n");
+        exit(1);
 
 }

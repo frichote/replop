@@ -25,17 +25,16 @@
 #include "../tracyWidom/tracyWidom.h"
 #include "../tracyWidom/register_tracyWidom.h"
 
-int main (int argc, char *argv[]) 
+int main(int argc, char *argv[])
 {
-	char input_file[512];		// input file
-	char output_file[512] = "";	// output file
+        char input_file[512];   // input file
+        char output_file[512] = "";     // output file
 
-	// register parameters
-	analyse_param_tracyWidom(argc, argv, input_file, output_file);
+        // register parameters
+        analyse_param_tracyWidom(argc, argv, input_file, output_file);
 
-	// run function
-	tracyWidom(input_file, output_file);
+        // run function
+        tracyWidom(input_file, output_file);
 
-	return 0;
+        return 0;
 }
-

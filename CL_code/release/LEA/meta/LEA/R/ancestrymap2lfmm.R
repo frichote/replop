@@ -1,4 +1,5 @@
-ancestrymap2lfmm <- function(input.file = NULL, output.file = NULL, force = TRUE)
+ancestrymap2lfmm <- function(input.file = NULL, output.file = NULL, 
+    force = TRUE)
 {
     # test arguments and init
     # input file

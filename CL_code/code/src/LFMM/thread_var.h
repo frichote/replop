@@ -26,20 +26,20 @@ typedef struct _multithreading_lfmm_var *Multithreading_lfmm_var;
  *	calculation in LFMM functions. 
  */
 typedef struct _multithreading_lfmm_var {
-	float *R;
-	double *U;
-	double *V;
-	double *C;
-	double *beta;
-	int D;
-	int N;
-	int M;
-	int K;
-	double mean;
-	double res;
-	double res2;
-	int slice;
-	int num_thrd;
+        float *R;
+        double *U;
+        double *V;
+        double *C;
+        double *beta;
+        int D;
+        int N;
+        int M;
+        int K;
+        double mean;
+        double res;
+        double res2;
+        int slice;
+        int num_thrd;
 } multithreading_lfmm_var;
 
 /**
@@ -51,8 +51,8 @@ typedef struct _multithreading_lfmm_var {
  * @param res	the first res
  * @param res2	the second res
  */
-void thrd_var(LFMM_param param, LFMM_GS_param GS_param, 
-	      void (*fct) (), double *res, double *res2);
+void thrd_var(LFMM_param param, LFMM_GS_param GS_param,
+              void (*fct) (), double *res, double *res2);
 
 /**
  * compute a slice of the mean
@@ -68,7 +68,7 @@ void slice_mean(void *G);
  */
 void slice_var(void *G);
 
-#endif // THREAD_VAR_H
+#endif                          // THREAD_VAR_H
 
 /** @} */
 

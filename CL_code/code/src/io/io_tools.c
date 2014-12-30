@@ -31,16 +31,16 @@ void change_ext(char *input, char *output, char *ext)
         char *tmp_file;
 
         if (!strcmp(output, "")) {
-        	tmp_file = remove_ext(input,'.','/');
+                tmp_file = remove_ext(input, '.', '/');
                 strcpy(output, tmp_file);
                 strcat(output, ext);
-        	free(tmp_file);
+                free(tmp_file);
         }
 }
 
 // remove_ext (from stackoverflow)
 
-char* remove_ext (char* mystr, char dot, char sep) 
+char *remove_ext(char *mystr, char dot, char sep)
 {
         char *retstr, *lastdot, *lastsep;
 
@@ -48,13 +48,13 @@ char* remove_ext (char* mystr, char dot, char sep)
         if (mystr == NULL)
                 return NULL;
 
-        if ((retstr = malloc (strlen (mystr) + 1 * 1)) == NULL)
+        if ((retstr = malloc(strlen(mystr) + 1 * 1)) == NULL)
                 return NULL;
 
         // Make a copy and find the relevant characters.
-        strcpy (retstr, mystr);
-        lastdot = strrchr (retstr, dot);
-        lastsep = (sep == 0) ? NULL : strrchr (retstr, sep);
+        strcpy(retstr, mystr);
+        lastdot = strrchr(retstr, dot);
+        lastsep = (sep == 0) ? NULL : strrchr(retstr, sep);
 
         // If it has an extension separator.
         if (lastdot != NULL) {
@@ -70,20 +70,19 @@ char* remove_ext (char* mystr, char dot, char sep)
                         *lastdot = '\0';
                 }
         }
-
         // Return the modified string.
         return retstr;
 }
 
 // nb_cols_geno
 
-int nb_cols_geno (char *file)
+int nb_cols_geno(char *file)
 {
         FILE *fp = fopen_read(file);
         int cols = 0;
         int c;
 
-	// count the number of elements until EOF or "\n"
+        // count the number of elements until EOF or "\n"
         c = fgetc(fp);
         while ((c != EOF) && (c != 10)) {
                 cols++;
@@ -97,55 +96,55 @@ int nb_cols_geno (char *file)
 
 // nb_cols_lfmm
 
-int nb_cols_lfmm (char *file)
+int nb_cols_lfmm(char *file)
 {
         FILE *fp = fopen_read(file);
         int cols = 0;
         int c;
-        char* szbuff; 
-        char* token;
+        char *szbuff;
+        char *token;
 
         c = fgetc(fp);
         while ((c != EOF) && (c != 10)) {
-		// count only columns (no space or tab)
-        	c = fgetc(fp);
+                // count only columns (no space or tab)
+                c = fgetc(fp);
                 cols++;
         }
 
         fclose(fp);
 
-	// open file
-	fp = fopen_read(file);
-        szbuff = (char *) calloc(2* cols, sizeof(char));
-	// read first line
-        token = fgets(szbuff,2 * cols, fp);
-	cols = 0;
-	// count for first line
-	token = strtok(szbuff, SEP);
-	while (token) {
-		cols++;
-		token = strtok(NULL, SEP);
-	}
-	
-	fclose(fp);
-	free(szbuff);
+        // open file
+        fp = fopen_read(file);
+        szbuff = (char *)calloc(2 * cols, sizeof(char));
+        // read first line
+        token = fgets(szbuff, 2 * cols, fp);
+        cols = 0;
+        // count for first line
+        token = strtok(szbuff, SEP);
+        while (token) {
+                cols++;
+                token = strtok(NULL, SEP);
+        }
+
+        fclose(fp);
+        free(szbuff);
 
         return cols;
 }
 
 // nb_lines
 
-int nb_lines (char *file, int M)
+int nb_lines(char *file, int M)
 {
         FILE *fp = fopen_read(file);
         int lines = 0;
         int max_char_per_line = 20 * M + 10;
-        char* szbuff = (char *) calloc(max_char_per_line, sizeof(char));
+        char *szbuff = (char *)calloc(max_char_per_line, sizeof(char));
 
-	// while not end of file
-	while (fgets(szbuff,max_char_per_line,fp))
-		// count
-		lines++;
+        // while not end of file
+        while (fgets(szbuff, max_char_per_line, fp))
+                // count
+                lines++;
 
         fclose(fp);
         free(szbuff);
@@ -155,34 +154,35 @@ int nb_lines (char *file, int M)
 
 // fopen_read
 
-FILE* fopen_read (char *file_data)
+FILE *fopen_read(char *file_data)
 {
         FILE *m_File = fopen(file_data, "r");
         if (!m_File)
                 print_error_global("open", file_data, 0);
 
-	return m_File;
+        return m_File;
 }
 
 // fopen_write
 
-FILE* fopen_write (char *file_data)
+FILE *fopen_write(char *file_data)
 {
         FILE *m_File = fopen(file_data, "w");
         if (!m_File)
                 print_error_global("open", file_data, 0);
 
-	return m_File;
+        return m_File;
 }
 
 // print_options
 
-void print_options(int argc, char *argv[]) {
+void print_options(int argc, char *argv[])
+{
 
         int i;
 
-        for (i=0;i<argc;i++)
-                printf("%s ",argv[i]);
+        for (i = 0; i < argc; i++)
+                printf("%s ", argv[i]);
 
         printf("\n");
 }

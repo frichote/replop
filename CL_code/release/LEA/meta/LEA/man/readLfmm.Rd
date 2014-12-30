@@ -17,7 +17,8 @@ a genotypic matrix in the \code{lfmm} format.
 }
 \value{
 \item{R}{
-A matrix containing the genotypes with one line per individual and one column per SNP.
+A matrix containing the genotypes with one line per individual and one column 
+per SNP.
 }
 }
 
@@ -39,7 +40,7 @@ A matrix containing the genotypes with one line per individual and one column pe
 data("tutorial")
 
 # write R in a file called "genotypes.lfmm"
-# Create file:	"genotypes.lfmm".
+# Create file:    "genotypes.lfmm".
 write.lfmm(tutorial.R,"genotypes.lfmm")
 
 # read the file "genotypes.lfmm".

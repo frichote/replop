@@ -56,6 +56,6 @@ void print_options_lfmm(int argc, char *argv[]);
  */
 void print_perc(double *perc, int K, int D);
 
-#endif // PRINT_H
+#endif                          // PRINT_H
 
 /** @} */

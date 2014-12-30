@@ -20,6 +20,6 @@
  */
 void print_error_lfmm(char *msg, char *file, int n);
 
-#endif // ERROR_LFMM_H
+#endif                          // ERROR_LFMM_H
 
 /** @} */

@@ -9,7 +9,6 @@
  * value. The input and ouput formats are the geno format.
  */
 
-
 #ifndef CREATEDATASET_H
 #define CREATEDATASET_H
 
@@ -24,9 +23,9 @@
  * @param[in] e 		percentage of masked data in [0,1]
  * @param[in] output_file	output file name
  */
-void createDataSet(char* input_file, long long seed, double e,
-	char* output_file); 
+void createDataSet(char *input_file, long long seed, double e,
+                   char *output_file);
 
-#endif // CREATEDATASET_H
+#endif                          // CREATEDATASET_H
 
 /** @} */

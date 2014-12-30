@@ -48,6 +48,6 @@ void cofact(double *num, int f, double *inv);
  */
 void trans(double *num, double *fac, int r, double *inv);
 
-#endif // INVERSE_H
+#endif                          // INVERSE_H
 
 /** @} */

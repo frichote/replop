@@ -26,70 +26,70 @@
 
 void create_rp(double *X, int M, int Mp)
 {
-	int j;
+        int j;
 
-	for (j = 0; j < M * Mp; j++)
-		X[j] = rand_normal_r();	
+        for (j = 0; j < M * Mp; j++)
+                X[j] = rand_normal_r();
 }
 
 // create_srp (sparse random projection)
 
 void create_srp(double *X, int M, int Mp)
 {
-	int j;
+        int j;
 
-	for (j = 0; j < M * Mp; j++)
-		X[j] = rand_srp();	
+        for (j = 0; j < M * Mp; j++)
+                X[j] = rand_srp();
 }
 
 // create_vsrp (very sparse random projection)
 
 void create_vsrp(double *X, int M, int Mp)
 {
-	int j;
-	double r;
-	double tmp1 = 1.0 / (2.0 * sqrt(M));
+        int j;
+        double r;
+        double tmp1 = 1.0 / (2.0 * sqrt(M));
 
-	for (j = 0; j < M * Mp; j++) {
-		r = drand();
-		if (r < tmp1)
-			X[j] = -1;
-		else if (r >= tmp1)
-			X[j] = 1;
-		else 
-			X[j] = 0;
-	}
+        for (j = 0; j < M * Mp; j++) {
+                r = drand();
+                if (r < tmp1)
+                        X[j] = -1;
+                else if (r >= tmp1)
+                        X[j] = 1;
+                else
+                        X[j] = 0;
+        }
 }
 
 // project
 
 void project(double *X, double *P, double *Xp, int N, int M, int Mp)
 {
-	int i, j, jp;
-	double min, max;
+        int i, j, jp;
+        double min, max;
 
-	for (i = 0; i < N; i++) {
-		for (jp = 0; jp < Mp; jp++) {
-			Xp[i * Mp + jp] = 0; 
-			for (j = 0; j < M; j++) {
-				Xp[i * Mp + jp] += X[i * M + j] * P[j * Mp + jp]; 
-			}
-			Xp[i * Mp + jp] /= sqrt(Mp); 
-		}
-	}
-	for (jp = 0; jp < Mp; jp++) {
-		min = Xp[jp];
-		max = Xp[jp];
-		for (i = 1; i < N; i++) {
-			if (Xp[i * Mp + jp] > max)
-				max = Xp[i * Mp + jp];
-			if (Xp[i * Mp + jp] < min)
-				min = Xp[i * Mp + jp];
-		}
-		for (i = 0; i < N; i++) {
-			Xp[i * Mp + jp] = (Xp[i * Mp + jp] - min) / (max - min);
-		}	
-	}
+        for (i = 0; i < N; i++) {
+                for (jp = 0; jp < Mp; jp++) {
+                        Xp[i * Mp + jp] = 0;
+                        for (j = 0; j < M; j++) {
+                                Xp[i * Mp + jp] +=
+                                    X[i * M + j] * P[j * Mp + jp];
+                        }
+                        Xp[i * Mp + jp] /= sqrt(Mp);
+                }
+        }
+        for (jp = 0; jp < Mp; jp++) {
+                min = Xp[jp];
+                max = Xp[jp];
+                for (i = 1; i < N; i++) {
+                        if (Xp[i * Mp + jp] > max)
+                                max = Xp[i * Mp + jp];
+                        if (Xp[i * Mp + jp] < min)
+                                min = Xp[i * Mp + jp];
+                }
+                for (i = 0; i < N; i++) {
+                        Xp[i * Mp + jp] = (Xp[i * Mp + jp] - min) / (max - min);
+                }
+        }
 
 }
-

@@ -16,7 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,82 +28,86 @@
 
 // analyse_param_cds
 
-void analyse_param_cds(	int argc, char *argv[], long long* s,
-			double *e, char *input, char *output_file) 
+void analyse_param_cds(int argc, char *argv[], long long *s,
+                       double *e, char *input, char *output_file)
 {
         int i;
-	int g_data = -1;
-	int g_e = 0;
-	int g_s = 0;
+        int g_data = -1;
+        int g_e = 0;
+        int g_s = 0;
 
-	for (i = 1; i < argc; i++) {
+        for (i = 1; i < argc; i++) {
                 if (argv[i][0] == '-') {
                         switch (argv[i][1]) {
-			// seed
+                                // seed
                         case 's':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-					print_error_cds("cmd","s (seed number)");
+                                        print_error_cds("cmd",
+                                                        "s (seed number)");
                                 *s = atoi(argv[i]);
-				g_s = 1;
+                                g_s = 1;
                                 break;
-			// percentage of masked genotype
-			case 'r':
+                                // percentage of masked genotype
+                        case 'r':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-					print_error_cds("cmd","r (percentage of masked data)");
-                                *e = (double) atof(argv[i]);
-				if (*e < 0) 
-					*e =  0;
-				if (*e > 1) 
-					*e =  1;
-				g_e = 1;
+                                        print_error_cds("cmd",
+                                                        "r (percentage of masked data)");
+                                *e = (double)atof(argv[i]);
+                                if (*e < 0)
+                                        *e = 0;
+                                if (*e > 1)
+                                        *e = 1;
+                                g_e = 1;
                                 break;
-			// help
-                        case 'h': 
+                                // help
+                        case 'h':
                                 print_help_cds();
                                 exit(1);
                                 break;
-			// licence 
-                        case 'l':  
+                                // licence 
+                        case 'l':
                                 print_licence_snmf();
                                 exit(1);
                                 break;
-			// input file
+                                // input file
                         case 'x':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-					print_error_cds("cmd","x (genotype file)");
+                                        print_error_cds("cmd",
+                                                        "x (genotype file)");
                                 g_data = 0;
-                                strcpy(input,argv[i]);
+                                strcpy(input, argv[i]);
                                 break;
-			// output file
+                                // output file
                         case 'o':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-                                        print_error_cds("cmd","o (genotype file with masked genotypes)");
-                                strcpy(output_file,argv[i]);
+                                        print_error_cds("cmd",
+                                                        "o (genotype file with masked genotypes)");
+                                strcpy(output_file, argv[i]);
                                 break;
-                        default:    print_error_cds("basic",NULL);
+                        default:
+                                print_error_cds("basic", NULL);
                         }
                 } else {
-                        print_error_cds("basic",NULL);
-		}
+                        print_error_cds("basic", NULL);
+                }
         }
 
-	// no data file
+        // no data file
         if (g_data == -1)
-		print_error_cds("option","-x genotype_file");
+                print_error_cds("option", "-x genotype_file");
 
-	// no seed
-	if (g_s && *s <= 0)
-		*s = -1;
+        // no seed
+        if (g_s && *s <= 0)
+                *s = -1;
 
-	// percentage not in [0,1]
-	if (g_e && (*e <= 0 || *e >= 1))
-		print_error_cds("missing","");
+        // percentage not in [0,1]
+        if (g_e && (*e <= 0 || *e >= 1))
+                print_error_cds("missing", "");
 
         // write output file name
-	change_ext(input, output_file, "_I.geno");
+        change_ext(input, output_file, "_I.geno");
 }
-

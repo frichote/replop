@@ -27,17 +27,20 @@ setClass("snmfClass",
 #{
 #c(    "directory", "K", "CPU", "seed", "alpha", "missing.data",
 #    "snmfClass.file", "percentage ", "I", "iterations", 
-#    "entropy", "error", "crossEntropy", "ploidy", "Q.input.file", "Q.output.file", 
+#    "entropy", "error", "crossEntropy", "ploidy", "Q.input.file", 
+#   "Q.output.file", 
 #    "G.output.file")
 #}
 
-# .DollarNames.snmfClass <- function(x, pattern) c(listSlots_snmfClass(),listMethods_snmfClass())
+# .DollarNames.snmfClass <- function(x, pattern) c(listSlots_snmfClass(),
+# listMethods_snmfClass())
 
 # $
 
 #setMethod("$", "snmfClass",
 #           function(x, name) {
-#             if (!(name %in% listMethods_snmfClass() || name %in% listSlots_snmfClass())) {
+#             if (!(name %in% listMethods_snmfClass() || 
+#                name %in% listSlots_snmfClass())) {
 #               stop("no $ method for object without attributes")
 #         } else if (name %in% listMethods_snmfClass()) {
 #        do.call(name, list(x));
@@ -52,7 +55,7 @@ setClass("snmfClass",
 setGeneric("Qvalues", function(object) matrix);
 setMethod("Qvalues", "snmfClass",
     function(object) {
-               R = as.matrix(read.table(object@Q.output.file));
+        R = as.matrix(read.table(object@Q.output.file));
     }
 )
 
@@ -61,7 +64,7 @@ setMethod("Qvalues", "snmfClass",
 setGeneric("Gvalues", function(object) matrix);
 setMethod("Gvalues", "snmfClass",
     function(object) {
-               R = as.matrix(read.table(object@G.output.file));
+        R = as.matrix(read.table(object@G.output.file));
     }
 )
 
@@ -90,9 +93,12 @@ setMethod("show", "snmfClass",
     function(object) {
         cat("snmf class\n\n")
         cat("file directory:                  ", object@directory, "\n")
-        cat("Q output file:                   ", basename(object@Q.output.file), "\n")
-        cat("G output file:                   ", basename(object@G.output.file), "\n")
-        cat("snmfClass file:                  ", basename(object@snmfClass.file), "\n")
+        cat("Q output file:                   ", 
+            basename(object@Q.output.file), "\n")
+        cat("G output file:                   ", 
+            basename(object@G.output.file), "\n")
+        cat("snmfClass file:                  ", 
+            basename(object@snmfClass.file), "\n")
         cat("number of ancestral populations: ", object@K, "\n")
         cat("run number:                      ", object@run, "\n")
         cat("regularization parameter:        ", object@alpha, "\n")

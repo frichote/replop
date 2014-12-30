@@ -24,32 +24,13 @@
 #include "convert/ancestrymap.h"
 #include "convert/register_convert.h"
 
-#include "R_ancestrymap2geno.h" 
+#include "R_ancestrymap2geno.h"
 
-void R_ancestrymap2geno (char** R_input_file, char **R_output_file, int *N, int *M) 
+void R_ancestrymap2geno(char **R_input_file, char **R_output_file, int *N,
+                        int *M)
 {
-	ancestrymap2geno(	*R_input_file,
-			*R_output_file,
-			N,
-			M);
+        ancestrymap2geno(*R_input_file, *R_output_file, N, M);
 
         print_convert(*N, *M);
 
 }
-	/*
-	// parameter initialization
-	char input_file[512];		// input file "without" missing data
-	char output_file[512];		// output file with missing data
-	double e = 0.05;		// output percentage of missing data
-	long long seed = -1;
-	int m = 0;
-
-        print_head_snmf();
-
-	if (R_input_file)
-		strcpy(input_file, *R_input_file);
-	else 
-                print_error_cds("option","-g ancestrymaptype_file");
-
-	createDataSet(input_file, m, (long long) seed, percentage, output_file);
-*/

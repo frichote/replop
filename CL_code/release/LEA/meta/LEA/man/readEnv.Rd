@@ -16,8 +16,8 @@ an environmental data matrix in the \code{\link{env}} format.
 }
 \value{
 \item{R}{
-        A matrix containing the environmental variables with one line for each individual 
-	and one column for each environmental variable.
+    A matrix containing the environmental variables with one line for each 
+    individual and one column for each environmental variable.
 }
 }
 
@@ -36,7 +36,7 @@ an environmental data matrix in the \code{\link{env}} format.
 C = matrix(runif(6), ncol=2, nrow=3)
 
 # Write C in a file called "example.env".
-# Create file:	"example.env".
+# Create file:    "example.env".
 write.env(C,"example.env")
 
 # Read the file "example.env".

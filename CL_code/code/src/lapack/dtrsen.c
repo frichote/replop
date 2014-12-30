@@ -1,16 +1,16 @@
 #include "blaswrap.h"
 #include "f2c.h"
 
-/* Subroutine */ int dtrsen_(char *job, char *compq, logical *select, integer 
-	*n, doublereal *t, integer *ldt, doublereal *q, integer *ldq, 
-	doublereal *wr, doublereal *wi, integer *m, doublereal *s, doublereal 
-	*sep, doublereal *work, integer *lwork, integer *iwork, integer *
-	liwork, integer *info)
+/* Subroutine */ int dtrsen_(char *job, char *compq, logical * select, integer
+                             * n, doublereal * t, integer * ldt, doublereal * q,
+                             integer * ldq, doublereal * wr, doublereal * wi,
+                             integer * m, doublereal * s, doublereal * sep,
+                             doublereal * work, integer * lwork,
+                             integer * iwork, integer * liwork, integer * info)
 {
 /*  -- LAPACK routine (version 3.1) --   
        Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..   
        November 2006   
-
 
     Purpose   
     =======   
@@ -216,284 +216,297 @@
 
     =====================================================================   
 
-
        Decode and test the input parameters   
 
        Parameter adjustments */
-    /* Table of constant values */
-    static integer c_n1 = -1;
-    
-    /* System generated locals */
-    integer q_dim1, q_offset, t_dim1, t_offset, i__1, i__2;
-    doublereal d__1, d__2;
-    /* Builtin functions */
-    double sqrt(doublereal);
-    /* Local variables */
-    static integer k, n1, n2, kk, nn, ks;
-    static doublereal est;
-    static integer kase;
-    static logical pair;
-    static integer ierr;
-    static logical swap;
-    static doublereal scale;
-    extern logical lsame_(char *, char *);
-    static integer isave[3], lwmin;
-    static logical wantq, wants;
-    static doublereal rnorm;
-    extern /* Subroutine */ int dlacn2_(integer *, doublereal *, doublereal *,
-	     integer *, doublereal *, integer *, integer *);
-    extern doublereal dlange_(char *, integer *, integer *, doublereal *, 
-	    integer *, doublereal *);
-    extern /* Subroutine */ int dlacpy_(char *, integer *, integer *, 
-	    doublereal *, integer *, doublereal *, integer *), 
-	    xerbla_(char *, integer *);
-    static logical wantbh;
-    extern /* Subroutine */ int dtrexc_(char *, integer *, doublereal *, 
-	    integer *, doublereal *, integer *, integer *, integer *, 
-	    doublereal *, integer *);
-    static integer liwmin;
-    static logical wantsp, lquery;
-    extern /* Subroutine */ int dtrsyl_(char *, char *, integer *, integer *, 
-	    integer *, doublereal *, integer *, doublereal *, integer *, 
-	    doublereal *, integer *, doublereal *, integer *);
+        /* Table of constant values */
+        static integer c_n1 = -1;
 
+        /* System generated locals */
+        integer q_dim1, q_offset, t_dim1, t_offset, i__1, i__2;
+        doublereal d__1, d__2;
+        /* Builtin functions */
+        double sqrt(doublereal);
+        /* Local variables */
+        static integer k, n1, n2, kk, nn, ks;
+        static doublereal est;
+        static integer kase;
+        static logical pair;
+        static integer ierr;
+        static logical swap;
+        static doublereal scale;
+        extern logical lsame_(char *, char *);
+        static integer isave[3], lwmin;
+        static logical wantq, wants;
+        static doublereal rnorm;
+        extern /* Subroutine */ int dlacn2_(integer *, doublereal *,
+                                            doublereal *,
+                                            integer *, doublereal *, integer *,
+                                            integer *);
+        extern doublereal dlange_(char *, integer *, integer *, doublereal *,
+                                  integer *, doublereal *);
+        extern /* Subroutine */ int dlacpy_(char *, integer *, integer *,
+                                            doublereal *, integer *,
+                                            doublereal *, integer *),
+            xerbla_(char *, integer *);
+        static logical wantbh;
+        extern /* Subroutine */ int dtrexc_(char *, integer *, doublereal *,
+                                            integer *, doublereal *, integer *,
+                                            integer *, integer *, doublereal *,
+                                            integer *);
+        static integer liwmin;
+        static logical wantsp, lquery;
+        extern /* Subroutine */ int dtrsyl_(char *, char *, integer *,
+                                            integer *,
+                                            integer *, doublereal *, integer *,
+                                            doublereal *, integer *,
+                                            doublereal *, integer *,
+                                            doublereal *, integer *);
 
-    --select;
-    t_dim1 = *ldt;
-    t_offset = 1 + t_dim1;
-    t -= t_offset;
-    q_dim1 = *ldq;
-    q_offset = 1 + q_dim1;
-    q -= q_offset;
-    --wr;
-    --wi;
-    --work;
-    --iwork;
+        --select;
+        t_dim1 = *ldt;
+        t_offset = 1 + t_dim1;
+        t -= t_offset;
+        q_dim1 = *ldq;
+        q_offset = 1 + q_dim1;
+        q -= q_offset;
+        --wr;
+        --wi;
+        --work;
+        --iwork;
 
-    /* Function Body */
-    wantbh = lsame_(job, "B");
-    wants = lsame_(job, "E") || wantbh;
-    wantsp = lsame_(job, "V") || wantbh;
-    wantq = lsame_(compq, "V");
+        /* Function Body */
+        wantbh = lsame_(job, "B");
+        wants = lsame_(job, "E") || wantbh;
+        wantsp = lsame_(job, "V") || wantbh;
+        wantq = lsame_(compq, "V");
 
-    *info = 0;
-    lquery = *lwork == -1;
-    if (! lsame_(job, "N") && ! wants && ! wantsp) {
-	*info = -1;
-    } else if (! lsame_(compq, "N") && ! wantq) {
-	*info = -2;
-    } else if (*n < 0) {
-	*info = -4;
-    } else if (*ldt < max(1,*n)) {
-	*info = -6;
-    } else if (*ldq < 1 || (wantq && *ldq < *n)) {
-	*info = -8;
-    } else {
+        *info = 0;
+        lquery = *lwork == -1;
+        if (!lsame_(job, "N") && !wants && !wantsp) {
+                *info = -1;
+        } else if (!lsame_(compq, "N") && !wantq) {
+                *info = -2;
+        } else if (*n < 0) {
+                *info = -4;
+        } else if (*ldt < max(1, *n)) {
+                *info = -6;
+        } else if (*ldq < 1 || (wantq && *ldq < *n)) {
+                *info = -8;
+        } else {
 
 /*        Set M to the dimension of the specified invariant subspace,   
           and test LWORK and LIWORK. */
 
-	*m = 0;
-	pair = FALSE_;
-	i__1 = *n;
-	for (k = 1; k <= i__1; ++k) {
-	    if (pair) {
-		pair = FALSE_;
-	    } else {
-		if (k < *n) {
-		    if (t[k + 1 + k * t_dim1] == 0.) {
-			if (select[k]) {
-			    ++(*m);
-			}
-		    } else {
-			pair = TRUE_;
-			if (select[k] || select[k + 1]) {
-			    *m += 2;
-			}
-		    }
-		} else {
-		    if (select[*n]) {
-			++(*m);
-		    }
-		}
-	    }
+                *m = 0;
+                pair = FALSE_;
+                i__1 = *n;
+                for (k = 1; k <= i__1; ++k) {
+                        if (pair) {
+                                pair = FALSE_;
+                        } else {
+                                if (k < *n) {
+                                        if (t[k + 1 + k * t_dim1] == 0.) {
+                                                if (select[k]) {
+                                                        ++(*m);
+                                                }
+                                        } else {
+                                                pair = TRUE_;
+                                                if (select[k] || select[k + 1]) {
+                                                        *m += 2;
+                                                }
+                                        }
+                                } else {
+                                        if (select[*n]) {
+                                                ++(*m);
+                                        }
+                                }
+                        }
 /* L10: */
-	}
+                }
 
-	n1 = *m;
-	n2 = *n - *m;
-	nn = n1 * n2;
+                n1 = *m;
+                n2 = *n - *m;
+                nn = n1 * n2;
 
-	if (wantsp) {
+                if (wantsp) {
 /* Computing MAX */
-	    i__1 = 1, i__2 = nn << 1;
-	    lwmin = max(i__1,i__2);
-	    liwmin = max(1,nn);
-	} else if (lsame_(job, "N")) {
-	    lwmin = max(1,*n);
-	    liwmin = 1;
-	} else if (lsame_(job, "E")) {
-	    lwmin = max(1,nn);
-	    liwmin = 1;
-	}
+                        i__1 = 1, i__2 = nn << 1;
+                        lwmin = max(i__1, i__2);
+                        liwmin = max(1, nn);
+                } else if (lsame_(job, "N")) {
+                        lwmin = max(1, *n);
+                        liwmin = 1;
+                } else if (lsame_(job, "E")) {
+                        lwmin = max(1, nn);
+                        liwmin = 1;
+                }
 
-	if (*lwork < lwmin && ! lquery) {
-	    *info = -15;
-	} else if (*liwork < liwmin && ! lquery) {
-	    *info = -17;
-	}
-    }
+                if (*lwork < lwmin && !lquery) {
+                        *info = -15;
+                } else if (*liwork < liwmin && !lquery) {
+                        *info = -17;
+                }
+        }
 
-    if (*info == 0) {
-	work[1] = (doublereal) lwmin;
-	iwork[1] = liwmin;
-    }
+        if (*info == 0) {
+                work[1] = (doublereal) lwmin;
+                iwork[1] = liwmin;
+        }
 
-    if (*info != 0) {
-	i__1 = -(*info);
-	xerbla_("DTRSEN", &i__1);
-	return 0;
-    } else if (lquery) {
-	return 0;
-    }
+        if (*info != 0) {
+                i__1 = -(*info);
+                xerbla_("DTRSEN", &i__1);
+                return 0;
+        } else if (lquery) {
+                return 0;
+        }
 
 /*     Quick return if possible. */
 
-    if (*m == *n || *m == 0) {
-	if (wants) {
-	    *s = 1.;
-	}
-	if (wantsp) {
-	    *sep = dlange_("1", n, n, &t[t_offset], ldt, &work[1]);
-	}
-	goto L40;
-    }
+        if (*m == *n || *m == 0) {
+                if (wants) {
+                        *s = 1.;
+                }
+                if (wantsp) {
+                        *sep = dlange_("1", n, n, &t[t_offset], ldt, &work[1]);
+                }
+                goto L40;
+        }
 
 /*     Collect the selected blocks at the top-left corner of T. */
 
-    ks = 0;
-    pair = FALSE_;
-    i__1 = *n;
-    for (k = 1; k <= i__1; ++k) {
-	if (pair) {
-	    pair = FALSE_;
-	} else {
-	    swap = select[k];
-	    if (k < *n) {
-		if (t[k + 1 + k * t_dim1] != 0.) {
-		    pair = TRUE_;
-		    swap = swap || select[k + 1];
-		}
-	    }
-	    if (swap) {
-		++ks;
+        ks = 0;
+        pair = FALSE_;
+        i__1 = *n;
+        for (k = 1; k <= i__1; ++k) {
+                if (pair) {
+                        pair = FALSE_;
+                } else {
+                        swap = select[k];
+                        if (k < *n) {
+                                if (t[k + 1 + k * t_dim1] != 0.) {
+                                        pair = TRUE_;
+                                        swap = swap || select[k + 1];
+                                }
+                        }
+                        if (swap) {
+                                ++ks;
 
 /*              Swap the K-th block to position KS. */
 
-		ierr = 0;
-		kk = k;
-		if (k != ks) {
-		    dtrexc_(compq, n, &t[t_offset], ldt, &q[q_offset], ldq, &
-			    kk, &ks, &work[1], &ierr);
-		}
-		if (ierr == 1 || ierr == 2) {
+                                ierr = 0;
+                                kk = k;
+                                if (k != ks) {
+                                        dtrexc_(compq, n, &t[t_offset], ldt,
+                                                &q[q_offset], ldq, &kk, &ks,
+                                                &work[1], &ierr);
+                                }
+                                if (ierr == 1 || ierr == 2) {
 
 /*                 Blocks too close to swap: exit. */
 
-		    *info = 1;
-		    if (wants) {
-			*s = 0.;
-		    }
-		    if (wantsp) {
-			*sep = 0.;
-		    }
-		    goto L40;
-		}
-		if (pair) {
-		    ++ks;
-		}
-	    }
-	}
+                                        *info = 1;
+                                        if (wants) {
+                                                *s = 0.;
+                                        }
+                                        if (wantsp) {
+                                                *sep = 0.;
+                                        }
+                                        goto L40;
+                                }
+                                if (pair) {
+                                        ++ks;
+                                }
+                        }
+                }
 /* L20: */
-    }
+        }
 
-    if (wants) {
+        if (wants) {
 
 /*        Solve Sylvester equation for R:   
 
              T11*R - R*T22 = scale*T12 */
 
-	dlacpy_("F", &n1, &n2, &t[(n1 + 1) * t_dim1 + 1], ldt, &work[1], &n1);
-	dtrsyl_("N", "N", &c_n1, &n1, &n2, &t[t_offset], ldt, &t[n1 + 1 + (n1 
-		+ 1) * t_dim1], ldt, &work[1], &n1, &scale, &ierr);
+                dlacpy_("F", &n1, &n2, &t[(n1 + 1) * t_dim1 + 1], ldt, &work[1],
+                        &n1);
+                dtrsyl_("N", "N", &c_n1, &n1, &n2, &t[t_offset], ldt,
+                        &t[n1 + 1 + (n1 + 1) * t_dim1], ldt, &work[1], &n1,
+                        &scale, &ierr);
 
 /*        Estimate the reciprocal of the condition number of the cluster   
           of eigenvalues. */
 
-	rnorm = dlange_("F", &n1, &n2, &work[1], &n1, &work[1]);
-	if (rnorm == 0.) {
-	    *s = 1.;
-	} else {
-	    *s = scale / (sqrt(scale * scale / rnorm + rnorm) * sqrt(rnorm));
-	}
-    }
+                rnorm = dlange_("F", &n1, &n2, &work[1], &n1, &work[1]);
+                if (rnorm == 0.) {
+                        *s = 1.;
+                } else {
+                        *s = scale / (sqrt(scale * scale / rnorm + rnorm) *
+                                      sqrt(rnorm));
+                }
+        }
 
-    if (wantsp) {
+        if (wantsp) {
 
 /*        Estimate sep(T11,T22). */
 
-	est = 0.;
-	kase = 0;
-L30:
-	dlacn2_(&nn, &work[nn + 1], &work[1], &iwork[1], &est, &kase, isave);
-	if (kase != 0) {
-	    if (kase == 1) {
+                est = 0.;
+                kase = 0;
+ L30:
+                dlacn2_(&nn, &work[nn + 1], &work[1], &iwork[1], &est, &kase,
+                        isave);
+                if (kase != 0) {
+                        if (kase == 1) {
 
 /*              Solve  T11*R - R*T22 = scale*X. */
 
-		dtrsyl_("N", "N", &c_n1, &n1, &n2, &t[t_offset], ldt, &t[n1 + 
-			1 + (n1 + 1) * t_dim1], ldt, &work[1], &n1, &scale, &
-			ierr);
-	    } else {
+                                dtrsyl_("N", "N", &c_n1, &n1, &n2, &t[t_offset],
+                                        ldt, &t[n1 + 1 + (n1 + 1) * t_dim1],
+                                        ldt, &work[1], &n1, &scale, &ierr);
+                        } else {
 
 /*              Solve  T11'*R - R*T22' = scale*X. */
 
-		dtrsyl_("T", "T", &c_n1, &n1, &n2, &t[t_offset], ldt, &t[n1 + 
-			1 + (n1 + 1) * t_dim1], ldt, &work[1], &n1, &scale, &
-			ierr);
-	    }
-	    goto L30;
-	}
+                                dtrsyl_("T", "T", &c_n1, &n1, &n2, &t[t_offset],
+                                        ldt, &t[n1 + 1 + (n1 + 1) * t_dim1],
+                                        ldt, &work[1], &n1, &scale, &ierr);
+                        }
+                        goto L30;
+                }
 
-	*sep = scale / est;
-    }
+                *sep = scale / est;
+        }
 
-L40:
+ L40:
 
 /*     Store the output eigenvalues in WR and WI. */
 
-    i__1 = *n;
-    for (k = 1; k <= i__1; ++k) {
-	wr[k] = t[k + k * t_dim1];
-	wi[k] = 0.;
+        i__1 = *n;
+        for (k = 1; k <= i__1; ++k) {
+                wr[k] = t[k + k * t_dim1];
+                wi[k] = 0.;
 /* L50: */
-    }
-    i__1 = *n - 1;
-    for (k = 1; k <= i__1; ++k) {
-	if (t[k + 1 + k * t_dim1] != 0.) {
-	    wi[k] = sqrt((d__1 = t[k + (k + 1) * t_dim1], abs(d__1))) * sqrt((
-		    d__2 = t[k + 1 + k * t_dim1], abs(d__2)));
-	    wi[k + 1] = -wi[k];
-	}
+        }
+        i__1 = *n - 1;
+        for (k = 1; k <= i__1; ++k) {
+                if (t[k + 1 + k * t_dim1] != 0.) {
+                        wi[k] =
+                            sqrt((d__1 =
+                                  t[k + (k + 1) * t_dim1],
+                                  abs(d__1))) * sqrt((d__2 =
+                                                      t[k + 1 + k * t_dim1],
+                                                      abs(d__2)));
+                        wi[k + 1] = -wi[k];
+                }
 /* L60: */
-    }
+        }
 
-    work[1] = (doublereal) lwmin;
-    iwork[1] = liwmin;
+        work[1] = (doublereal) lwmin;
+        iwork[1] = liwmin;
 
-    return 0;
+        return 0;
 
 /*     End of DTRSEN */
 
-} /* dtrsen_ */
-
+}                               /* dtrsen_ */

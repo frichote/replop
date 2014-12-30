@@ -7,7 +7,6 @@
  * @brief function to manage error types
  */
 
-
 #ifndef ERROR_TRACYWIDOM_H
 #define ERROR_TRACYWIDOM_H
 
@@ -19,8 +18,8 @@
 		"specific" or internal otherwise.
  * @param file  the name of a file (for "option" and "specific" error)
  */
-void print_error_tracyWidom(char* msg, char* file);
+void print_error_tracyWidom(char *msg, char *file);
 
-#endif // ERROR_TRACYWIDOM_H
+#endif                          // ERROR_TRACYWIDOM_H
 
 /** @} */

@@ -11,13 +11,15 @@ test_input_file <- function(name, extension)
     # check if the exstension is known
     if (!(ext %in% l)) {
         p = paste("The extension (.", ext,") is unknown (file \"",name,"\").\n",
-              "Please, use one of the following format extension: .geno, .lfmm, .vcf, .ancestrymap, .ped.", sep="")
+            "Please, use one of the following format extension: .geno,", 
+            " .lfmm, .vcf, .ancestrymap, .ped.", sep="")
         stop(p);
     # if not the correct format, convert
     } else if (ext != extension) {
         input_file = setExtension(name, paste(".", extension, sep=""))
         print("*********************************************************");
-        print(paste(" Conversion from the ", ext," format to the ", extension," format", sep = ""));
+        print(paste(" Conversion from the ", ext," format to the ", extension,
+            " format", sep = ""));
         print("*********************************************************");
     
         if (extension == "lfmm") {    

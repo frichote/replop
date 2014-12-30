@@ -25,28 +25,27 @@
 #include "../pca/pca.h"
 #include "../pca/register_pca.h"
 
-int main (int argc, char *argv[]) 
+int main(int argc, char *argv[])
 {
-	int n = 0;			// number of individuals
-	int L = 0;			// number of loci
-	int K = 0;			// number of PCs
-	int s = 0;			// scale parameter
-	int c = 0;			// center parameter
-	char input_file[512];		// input file
-	char output_eva_file[512] = "";	// output eigenvalues file
-	char output_eve_file[512] = "";	// output eigenvectors file
-	char output_sdev_file[512] = "";// output sdev file
-	char output_x_file[512] = "";	// output x file
+        int n = 0;              // number of individuals
+        int L = 0;              // number of loci
+        int K = 0;              // number of PCs
+        int s = 0;              // scale parameter
+        int c = 0;              // center parameter
+        char input_file[512];   // input file
+        char output_eva_file[512] = ""; // output eigenvalues file
+        char output_eve_file[512] = ""; // output eigenvectors file
+        char output_sdev_file[512] = "";        // output sdev file
+        char output_x_file[512] = "";   // output x file
 
-	// analyze command-line
-	analyse_param_pca(argc, argv, input_file, output_eva_file, 
-		output_eve_file, output_sdev_file, output_x_file,
-		&K, &c, &s);
+        // analyze command-line
+        analyse_param_pca(argc, argv, input_file, output_eva_file,
+                          output_eve_file, output_sdev_file, output_x_file,
+                          &K, &c, &s);
 
-	// run function
-	pca(input_file, output_eva_file, output_eve_file, 
-		output_sdev_file, output_x_file, &n, &L, &K, c, s);
+        // run function
+        pca(input_file, output_eva_file, output_eve_file,
+            output_sdev_file, output_x_file, &n, &L, &K, c, s);
 
-	return 0;
+        return 0;
 }
-

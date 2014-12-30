@@ -27,26 +27,26 @@
 
 int main(int argc, char *argv[])
 {
-	// parameters allocation
-	lfmm_param *param = (lfmm_param *) calloc(1, sizeof(lfmm_param));
+        // parameters allocation
+        lfmm_param *param = (lfmm_param *) calloc(1, sizeof(lfmm_param));
 
-	// Parameters initialization
-	init_param_lfmm(param);
+        // Parameters initialization
+        init_param_lfmm(param);
 
-	// print
-	print_head_lfmm();
-	print_options(argc, argv);
+        // print
+        print_head_lfmm();
+        print_options(argc, argv);
 
-	// analyse the command line and fill param
-	analyse_param_lfmm(argc, argv, param);
+        // analyse the command line and fill param
+        analyse_param_lfmm(argc, argv, param);
 
-	// run function
-	LFMM(param); 
+        // run function
+        LFMM(param);
 
-	// free memory 
-	free_param_lfmm(param);
-	free(param);
+        // free memory 
+        free_param_lfmm(param);
+        free(param);
 
-	return 0;
+        return 0;
 
 }

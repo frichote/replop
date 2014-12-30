@@ -19,6 +19,6 @@
  */
 void print_error_global(char *msg, char *file, int n);
 
-#endif // ERROR_MATRIX_H
+#endif                          // ERROR_MATRIX_H
 
 /** @} */

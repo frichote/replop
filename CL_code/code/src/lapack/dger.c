@@ -6,21 +6,19 @@
 
 #include "f2c.h"
 
-/* Subroutine */ int dger_(integer *m, integer *n, doublereal *alpha, 
-	doublereal *x, integer *incx, doublereal *y, integer *incy, 
-	doublereal *a, integer *lda)
+/* Subroutine */ int dger_(integer * m, integer * n, doublereal * alpha,
+                           doublereal * x, integer * incx, doublereal * y,
+                           integer * incy, doublereal * a, integer * lda)
 {
 
-
-    /* System generated locals */
+        /* System generated locals */
 //    integer a_dim1, a_offset, i__1, i__2;
 
-    /* Local variables */
-    static integer info;
-    static doublereal temp;
-    static integer i, j, ix, jy, kx;
-    extern /* Subroutine */ int xerbla_(char *, integer *);
-
+        /* Local variables */
+        static integer info;
+        static doublereal temp;
+        static integer i, j, ix, jy, kx;
+        extern /* Subroutine */ int xerbla_(char *, integer *);
 
 /*  Purpose   
     =======   
@@ -85,7 +83,6 @@
              max( 1, m ).   
              Unchanged on exit.   
 
-
     Level 2 Blas routine.   
 
     -- Written on 22-October-1986.   
@@ -93,8 +90,6 @@
        Jeremy Du Croz, Nag Central Office.   
        Sven Hammarling, Nag Central Office.   
        Richard Hanson, Sandia National Labs.   
-
-
 
        Test the input parameters.   
 
@@ -106,78 +101,76 @@
 
 #define A(I,J) a[(I)-1 + ((J)-1)* ( *lda)]
 
-    info = 0;
-    if (*m < 0) {
-	info = 1;
-    } else if (*n < 0) {
-	info = 2;
-    } else if (*incx == 0) {
-	info = 5;
-    } else if (*incy == 0) {
-	info = 7;
-    } else if (*lda < max(1,*m)) {
-	info = 9;
-    }
-    if (info != 0) {
-	xerbla_("DGER  ", &info);
-	return 0;
-    }
+        info = 0;
+        if (*m < 0) {
+                info = 1;
+        } else if (*n < 0) {
+                info = 2;
+        } else if (*incx == 0) {
+                info = 5;
+        } else if (*incy == 0) {
+                info = 7;
+        } else if (*lda < max(1, *m)) {
+                info = 9;
+        }
+        if (info != 0) {
+                xerbla_("DGER  ", &info);
+                return 0;
+        }
 
 /*     Quick return if possible. */
 
-    if (*m == 0 || *n == 0 || *alpha == 0.) {
-	return 0;
-    }
+        if (*m == 0 || *n == 0 || *alpha == 0.) {
+                return 0;
+        }
 
 /*     Start the operations. In this version the elements of A are   
        accessed sequentially with one pass through A. */
 
-    if (*incy > 0) {
-	jy = 1;
-    } else {
-	jy = 1 - (*n - 1) * *incy;
-    }
-    if (*incx == 1) {
-	//i__1 = *n;
-	for (j = 1; j <= *n; ++j) {
-	    if (Y(jy) != 0.) {
-		temp = *alpha * Y(jy);
-		//i__2 = *m;
-		for (i = 1; i <= *m; ++i) {
-		    A(i,j) += X(i) * temp;
+        if (*incy > 0) {
+                jy = 1;
+        } else {
+                jy = 1 - (*n - 1) * *incy;
+        }
+        if (*incx == 1) {
+                //i__1 = *n;
+                for (j = 1; j <= *n; ++j) {
+                        if (Y(jy) != 0.) {
+                                temp = *alpha * Y(jy);
+                                //i__2 = *m;
+                                for (i = 1; i <= *m; ++i) {
+                                        A(i, j) += X(i) * temp;
 /* L10: */
-		}
-	    }
-	    jy += *incy;
+                                }
+                        }
+                        jy += *incy;
 /* L20: */
-	}
-    } else {
-	if (*incx > 0) {
-	    kx = 1;
-	} else {
-	    kx = 1 - (*m - 1) * *incx;
-	}
-	//i__1 = *n;
-	for (j = 1; j <= *n; ++j) {
-	    if (Y(jy) != 0.) {
-		temp = *alpha * Y(jy);
-		ix = kx;
-		//i__2 = *m;
-		for (i = 1; i <= *m; ++i) {
-		    A(i,j) += X(ix) * temp;
-		    ix += *incx;
+                }
+        } else {
+                if (*incx > 0) {
+                        kx = 1;
+                } else {
+                        kx = 1 - (*m - 1) * *incx;
+                }
+                //i__1 = *n;
+                for (j = 1; j <= *n; ++j) {
+                        if (Y(jy) != 0.) {
+                                temp = *alpha * Y(jy);
+                                ix = kx;
+                                //i__2 = *m;
+                                for (i = 1; i <= *m; ++i) {
+                                        A(i, j) += X(ix) * temp;
+                                        ix += *incx;
 /* L30: */
-		}
-	    }
-	    jy += *incy;
+                                }
+                        }
+                        jy += *incy;
 /* L40: */
-	}
-    }
+                }
+        }
 
-    return 0;
+        return 0;
 
 /*     End of DGER  . */
 
-} /* dger_ */
-
-
+}                               /* dger_ */

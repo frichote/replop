@@ -1,10 +1,9 @@
 pca <- function(input.file, 
-        K, 
-        center = TRUE, 
-        scale  = FALSE) 
+    K, 
+    center = TRUE, 
+    scale  = FALSE) 
 {
-
-        # test arguments and init
+    # test arguments and init
     # input file
     input.file = test_character("input.file", input.file, NULL)
     # check extension and convert if necessary
@@ -12,27 +11,27 @@ pca <- function(input.file,
     input.file = normalizePath(input.file)
     #K
     K = test_integer("K", K, 0);
-        if (K < 0)
-                stop("'K positive.")
+    if (K < 0)
+        stop("'K positive.")
     # center
     center = test_logical("center", center, 1);
     # scaled
     scale = test_logical("scale", scale, 0);
     # dir 
-        dir = setExtension(paste(dirname(normalizePath(input.file)), "/",
-          basename(input.file), sep=""), ".pca/")
+    dir = setExtension(paste(dirname(normalizePath(input.file)), "/",
+        basename(input.file), sep=""), ".pca/")
     dir.create(dir, showWarnings = FALSE, recursive = TRUE)
     dir = normalizePath(dir)
 
     tmp = basename(setExtension(basename(input.file), ""))
     # eigenvalues file 
-        eigenvalue.file = paste(dir, "/", tmp, ".eigenvalues", sep="")
+    eigenvalue.file = paste(dir, "/", tmp, ".eigenvalues", sep="")
     # eigenvectors file 
-        eigenvector.file = paste(dir, "/", tmp, ".eigenvectors", sep="")
+    eigenvector.file = paste(dir, "/", tmp, ".eigenvectors", sep="")
     # standard deviation file 
-        sdev.file = paste(dir, "/", tmp, ".sdev", sep="")
+    sdev.file = paste(dir, "/", tmp, ".sdev", sep="")
     # x file 
-        projection.file = paste(dir, "/", tmp, ".projections", sep="")
+    projection.file = paste(dir, "/", tmp, ".projections", sep="")
 
     print("******************************");
     print(" Principal Component Analysis ");
@@ -67,8 +66,8 @@ pca <- function(input.file,
     res@sdev.file = normalizePath(sdev.file);
     res@projection.file = normalizePath(projection.file);
 
-        res@pcaProject.file = setExtension(paste(dirname(normalizePath(input.file)), "/",
-                basename(input.file), sep=""), ".pcaProject")
+    res@pcaProject.file = setExtension(paste(dirname(normalizePath(input.file)),
+        "/", basename(input.file), sep=""), ".pcaProject")
     save.pcaProject(res, res@pcaProject.file); 
 
     res

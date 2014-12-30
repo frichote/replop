@@ -22,7 +22,7 @@
  * @param[out]	N     		the number of columns (in geno format)
  * @param[out] 	M     		the number of lines (in geno format)
  */
-void geno2lfmm (char *input_file, char* output_file, int *N, int *M);
+void geno2lfmm(char *input_file, char *output_file, int *N, int *M);
 
-#endif // GENO2LFMM_H
+#endif                          // GENO2LFMM_H
 /** @}*/

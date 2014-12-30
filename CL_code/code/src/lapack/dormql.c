@@ -20,39 +20,45 @@ static integer c_n1 = -1;
 static integer c__2 = 2;
 static integer c__65 = 65;
 
-/* Subroutine */ int dormql_(char *side, char *trans, integer *m, integer *n, 
-	integer *k, doublereal *a, integer *lda, doublereal *tau, doublereal *
-	c__, integer *ldc, doublereal *work, integer *lwork, integer *info)
+/* Subroutine */ int dormql_(char *side, char *trans, integer * m, integer * n,
+                             integer * k, doublereal * a, integer * lda,
+                             doublereal * tau, doublereal * c__, integer * ldc,
+                             doublereal * work, integer * lwork, integer * info)
 {
-    /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2], i__4, 
-	    i__5;
-    char ch__1[2];
+        /* System generated locals */
+        address a__1[2];
+        integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2], i__4,
+            i__5;
+        char ch__1[2];
 
-    /* Builtin functions */
-    /* Subroutine */ int s_cat(char *, char **, integer *, integer *, ftnlen);
+        /* Builtin functions */
+        /* Subroutine */ int s_cat(char *, char **, integer *, integer *,
+                                   ftnlen);
 
-    /* Local variables */
-    integer i__;
-    doublereal t[4160]	/* was [65][64] */;
-    integer i1, i2, i3, ib, nb, mi, ni, nq, nw, iws;
-    logical left;
-    extern logical lsame_(char *, char *);
-    integer nbmin, iinfo;
-    extern /* Subroutine */ int dorm2l_(char *, char *, integer *, integer *, 
-	    integer *, doublereal *, integer *, doublereal *, doublereal *, 
-	    integer *, doublereal *, integer *), dlarfb_(char 
-	    *, char *, char *, char *, integer *, integer *, integer *, 
-	    doublereal *, integer *, doublereal *, integer *, doublereal *, 
-	    integer *, doublereal *, integer *), dlarft_(char *, char *, integer *, integer *, doublereal 
-	    *, integer *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
-    extern integer ilaenv_(integer *, char *, char *, integer *, integer *, 
-	    integer *, integer *);
-    logical notran;
-    integer ldwork, lwkopt;
-    logical lquery;
-
+        /* Local variables */
+        integer i__;
+        doublereal t[4160] /* was [65][64] */ ;
+        integer i1, i2, i3, ib, nb, mi, ni, nq, nw, iws;
+        logical left;
+        extern logical lsame_(char *, char *);
+        integer nbmin, iinfo;
+        extern /* Subroutine */ int dorm2l_(char *, char *, integer *,
+                                            integer *,
+                                            integer *, doublereal *, integer *,
+                                            doublereal *, doublereal *,
+                                            integer *, doublereal *, integer *),
+            dlarfb_(char
+                    *, char *, char *, char *, integer *, integer *, integer *,
+                    doublereal *, integer *, doublereal *, integer *,
+                    doublereal *, integer *, doublereal *, integer *),
+            dlarft_(char *, char *, integer *, integer *, doublereal *,
+                    integer *, doublereal *, doublereal *, integer *),
+            xerbla_(char *, integer *);
+        extern integer ilaenv_(integer *, char *, char *, integer *, integer *,
+                               integer *, integer *);
+        logical notran;
+        integer ldwork, lwkopt;
+        logical lquery;
 
 /*  -- LAPACK routine (version 3.2) -- */
 /*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. */
@@ -163,165 +169,169 @@ static integer c__65 = 65;
 
 /*     Test the input arguments */
 
-    /* Parameter adjustments */
-    a_dim1 = *lda;
-    a_offset = 1 + a_dim1;
-    a -= a_offset;
-    --tau;
-    c_dim1 = *ldc;
-    c_offset = 1 + c_dim1;
-    c__ -= c_offset;
-    --work;
+        /* Parameter adjustments */
+        a_dim1 = *lda;
+        a_offset = 1 + a_dim1;
+        a -= a_offset;
+        --tau;
+        c_dim1 = *ldc;
+        c_offset = 1 + c_dim1;
+        c__ -= c_offset;
+        --work;
 
-    /* Function Body */
-    *info = 0;
-    left = lsame_(side, "L");
-    notran = lsame_(trans, "N");
-    lquery = *lwork == -1;
+        /* Function Body */
+        *info = 0;
+        left = lsame_(side, "L");
+        notran = lsame_(trans, "N");
+        lquery = *lwork == -1;
 
 /*     NQ is the order of Q and NW is the minimum dimension of WORK */
 
-    if (left) {
-	nq = *m;
-	nw = max(1,*n);
-    } else {
-	nq = *n;
-	nw = max(1,*m);
-    }
-    if (! left && ! lsame_(side, "R")) {
-	*info = -1;
-    } else if (! notran && ! lsame_(trans, "T")) {
-	*info = -2;
-    } else if (*m < 0) {
-	*info = -3;
-    } else if (*n < 0) {
-	*info = -4;
-    } else if (*k < 0 || *k > nq) {
-	*info = -5;
-    } else if (*lda < max(1,nq)) {
-	*info = -7;
-    } else if (*ldc < max(1,*m)) {
-	*info = -10;
-    }
+        if (left) {
+                nq = *m;
+                nw = max(1, *n);
+        } else {
+                nq = *n;
+                nw = max(1, *m);
+        }
+        if (!left && !lsame_(side, "R")) {
+                *info = -1;
+        } else if (!notran && !lsame_(trans, "T")) {
+                *info = -2;
+        } else if (*m < 0) {
+                *info = -3;
+        } else if (*n < 0) {
+                *info = -4;
+        } else if (*k < 0 || *k > nq) {
+                *info = -5;
+        } else if (*lda < max(1, nq)) {
+                *info = -7;
+        } else if (*ldc < max(1, *m)) {
+                *info = -10;
+        }
 
-    if (*info == 0) {
-	if (*m == 0 || *n == 0) {
-	    lwkopt = 1;
-	} else {
+        if (*info == 0) {
+                if (*m == 0 || *n == 0) {
+                        lwkopt = 1;
+                } else {
 
 /*           Determine the block size.  NB may be at most NBMAX, where */
 /*           NBMAX is used to define the local array T. */
 
 /* Computing MIN */
 /* Writing concatenation */
-	    i__3[0] = 1, a__1[0] = side;
-	    i__3[1] = 1, a__1[1] = trans;
-	    s_cat(ch__1, a__1, i__3, &c__2, (ftnlen)2);
-	    i__1 = 64, i__2 = ilaenv_(&c__1, "DORMQL", ch__1, m, n, k, &c_n1);
-	    nb = min(i__1,i__2);
-	    lwkopt = nw * nb;
-	}
-	work[1] = (doublereal) lwkopt;
+                        i__3[0] = 1, a__1[0] = side;
+                        i__3[1] = 1, a__1[1] = trans;
+                        s_cat(ch__1, a__1, i__3, &c__2, (ftnlen) 2);
+                        i__1 = 64, i__2 =
+                            ilaenv_(&c__1, "DORMQL", ch__1, m, n, k, &c_n1);
+                        nb = min(i__1, i__2);
+                        lwkopt = nw * nb;
+                }
+                work[1] = (doublereal) lwkopt;
 
-	if (*lwork < nw && ! lquery) {
-	    *info = -12;
-	}
-    }
+                if (*lwork < nw && !lquery) {
+                        *info = -12;
+                }
+        }
 
-    if (*info != 0) {
-	i__1 = -(*info);
-	xerbla_("DORMQL", &i__1);
-	return 0;
-    } else if (lquery) {
-	return 0;
-    }
+        if (*info != 0) {
+                i__1 = -(*info);
+                xerbla_("DORMQL", &i__1);
+                return 0;
+        } else if (lquery) {
+                return 0;
+        }
 
 /*     Quick return if possible */
 
-    if (*m == 0 || *n == 0) {
-	return 0;
-    }
+        if (*m == 0 || *n == 0) {
+                return 0;
+        }
 
-    nbmin = 2;
-    ldwork = nw;
-    if (nb > 1 && nb < *k) {
-	iws = nw * nb;
-	if (*lwork < iws) {
-	    nb = *lwork / ldwork;
+        nbmin = 2;
+        ldwork = nw;
+        if (nb > 1 && nb < *k) {
+                iws = nw * nb;
+                if (*lwork < iws) {
+                        nb = *lwork / ldwork;
 /* Computing MAX */
 /* Writing concatenation */
-	    i__3[0] = 1, a__1[0] = side;
-	    i__3[1] = 1, a__1[1] = trans;
-	    s_cat(ch__1, a__1, i__3, &c__2, (ftnlen)2);
-	    i__1 = 2, i__2 = ilaenv_(&c__2, "DORMQL", ch__1, m, n, k, &c_n1);
-	    nbmin = max(i__1,i__2);
-	}
-    } else {
-	iws = nw;
-    }
+                        i__3[0] = 1, a__1[0] = side;
+                        i__3[1] = 1, a__1[1] = trans;
+                        s_cat(ch__1, a__1, i__3, &c__2, (ftnlen) 2);
+                        i__1 = 2, i__2 =
+                            ilaenv_(&c__2, "DORMQL", ch__1, m, n, k, &c_n1);
+                        nbmin = max(i__1, i__2);
+                }
+        } else {
+                iws = nw;
+        }
 
-    if (nb < nbmin || nb >= *k) {
+        if (nb < nbmin || nb >= *k) {
 
 /*        Use unblocked code */
 
-	dorm2l_(side, trans, m, n, k, &a[a_offset], lda, &tau[1], &c__[
-		c_offset], ldc, &work[1], &iinfo);
-    } else {
+                dorm2l_(side, trans, m, n, k, &a[a_offset], lda, &tau[1],
+                        &c__[c_offset], ldc, &work[1], &iinfo);
+        } else {
 
 /*        Use blocked code */
 
-	if ((left && notran) || (! left && ! notran)) {
-	    i1 = 1;
-	    i2 = *k;
-	    i3 = nb;
-	} else {
-	    i1 = (*k - 1) / nb * nb + 1;
-	    i2 = 1;
-	    i3 = -nb;
-	}
+                if ((left && notran) || (!left && !notran)) {
+                        i1 = 1;
+                        i2 = *k;
+                        i3 = nb;
+                } else {
+                        i1 = (*k - 1) / nb * nb + 1;
+                        i2 = 1;
+                        i3 = -nb;
+                }
 
-	if (left) {
-	    ni = *n;
-	} else {
-	    mi = *m;
-	}
+                if (left) {
+                        ni = *n;
+                } else {
+                        mi = *m;
+                }
 
-	i__1 = i2;
-	i__2 = i3;
-	for (i__ = i1; i__2 < 0 ? i__ >= i__1 : i__ <= i__1; i__ += i__2) {
+                i__1 = i2;
+                i__2 = i3;
+                for (i__ = i1; i__2 < 0 ? i__ >= i__1 : i__ <= i__1;
+                     i__ += i__2) {
 /* Computing MIN */
-	    i__4 = nb, i__5 = *k - i__ + 1;
-	    ib = min(i__4,i__5);
+                        i__4 = nb, i__5 = *k - i__ + 1;
+                        ib = min(i__4, i__5);
 
 /*           Form the triangular factor of the block reflector */
 /*           H = H(i+ib-1) . . . H(i+1) H(i) */
 
-	    i__4 = nq - *k + i__ + ib - 1;
-	    dlarft_("Backward", "Columnwise", &i__4, &ib, &a[i__ * a_dim1 + 1]
-, lda, &tau[i__], t, &c__65);
-	    if (left) {
+                        i__4 = nq - *k + i__ + ib - 1;
+                        dlarft_("Backward", "Columnwise", &i__4, &ib,
+                                &a[i__ * a_dim1 + 1]
+                                , lda, &tau[i__], t, &c__65);
+                        if (left) {
 
 /*              H or H' is applied to C(1:m-k+i+ib-1,1:n) */
 
-		mi = *m - *k + i__ + ib - 1;
-	    } else {
+                                mi = *m - *k + i__ + ib - 1;
+                        } else {
 
 /*              H or H' is applied to C(1:m,1:n-k+i+ib-1) */
 
-		ni = *n - *k + i__ + ib - 1;
-	    }
+                                ni = *n - *k + i__ + ib - 1;
+                        }
 
 /*           Apply H or H' */
 
-	    dlarfb_(side, trans, "Backward", "Columnwise", &mi, &ni, &ib, &a[
-		    i__ * a_dim1 + 1], lda, t, &c__65, &c__[c_offset], ldc, &
-		    work[1], &ldwork);
+                        dlarfb_(side, trans, "Backward", "Columnwise", &mi, &ni,
+                                &ib, &a[i__ * a_dim1 + 1], lda, t, &c__65,
+                                &c__[c_offset], ldc, &work[1], &ldwork);
 /* L10: */
-	}
-    }
-    work[1] = (doublereal) lwkopt;
-    return 0;
+                }
+        }
+        work[1] = (doublereal) lwkopt;
+        return 0;
 
 /*     End of DORMQL */
 
-} /* dormql_ */
+}                               /* dormql_ */

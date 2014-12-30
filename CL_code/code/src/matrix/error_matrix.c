@@ -25,33 +25,35 @@
 
 void print_error_global(char *msg, char *file, int n)
 {
-	printf("\n");
-	// open
-	if (!strcmp(msg, "open")) {
-		printf("ERROR: unable to open file %s. Please, check that the name"
-		     " of the file you provided is correct.\n", file);
-	// read
-	} else if (!strcmp(msg, "read")) {
-		printf("ERROR: unable to read file %s. Please, check that the"
-		     " format is correct (refer to the documentation).\n",
-		     file);
-	// interne
-	} else if (!strcmp(msg, "interne")) {
-		printf("ERROR: internal error. Please run the program again. If"
-		       " the error is repeated, contact us.\n");
-	// constant
-	} else if (!strcmp(msg, "constant")) {
-		printf("ERROR: %d SNPs are invariant. Please, remove these SNPs"
-		       " before the analysis.\n", n);
-	// nan
-	} else if (!strcmp(msg, "nan")) {
-		printf("ERROR: internal error. Please, run the program again. If"
-		     " the error is still present, contact us.\n");
-	// else 
-	} else {
-		printf("ERROR: internal error.\n");
-	}
+        printf("\n");
+        // open
+        if (!strcmp(msg, "open")) {
+                printf
+                    ("ERROR: unable to open file %s. Please, check that the name"
+                     " of the file you provided is correct.\n", file);
+                // read
+        } else if (!strcmp(msg, "read")) {
+                printf("ERROR: unable to read file %s. Please, check that the"
+                       " format is correct (refer to the documentation).\n",
+                       file);
+                // interne
+        } else if (!strcmp(msg, "interne")) {
+                printf("ERROR: internal error. Please run the program again. If"
+                       " the error is repeated, contact us.\n");
+                // constant
+        } else if (!strcmp(msg, "constant")) {
+                printf("ERROR: %d SNPs are invariant. Please, remove these SNPs"
+                       " before the analysis.\n", n);
+                // nan
+        } else if (!strcmp(msg, "nan")) {
+                printf
+                    ("ERROR: internal error. Please, run the program again. If"
+                     " the error is still present, contact us.\n");
+                // else 
+        } else {
+                printf("ERROR: internal error.\n");
+        }
 
-	printf("\n");
-	exit(1);
+        printf("\n");
+        exit(1);
 }

@@ -42,6 +42,6 @@ void write_data_double(char *file_data, int N, int M, double *dat);
  */
 void print_data_double(double *dat, int N, int M);
 
-#endif // IO_DATA_DOUBLE_H
+#endif                          // IO_DATA_DOUBLE_H
 
 /** @} */

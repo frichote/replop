@@ -36,224 +36,224 @@
 
 void lfmm_emcmc(LFMM_param param)
 {
-	// GS structure allocation
-	LFMM_GS_param GS_param = (LFMM_GS_param) calloc(1, sizeof(lfmm_GS_param));
-	
-	// temporary parameters
-	int i, j, n;
-	double deviance = 0;
-	double dp = 0;
-	GS_param->thrd_m2 = 0;
-	int N = param->n;
-	int M = param->L;
-	int D = param->mD;
-	int K = param->K;
+        // GS structure allocation
+        LFMM_GS_param GS_param =
+            (LFMM_GS_param) calloc(1, sizeof(lfmm_GS_param));
 
-	printf("D mD %d %d \n", D, param->mD);
-	// allocate memory
-	allocate_all(GS_param, N, M, K, D);
+        // temporary parameters
+        int i, j, n;
+        double deviance = 0;
+        double dp = 0;
+        GS_param->thrd_m2 = 0;
+        int N = param->n;
+        int M = param->L;
+        int D = param->mD;
+        int K = param->K;
 
-	printf("\t\tStart of the Gibbs Sampler algorithm.\n\n");
+        // allocate memory
+        allocate_all(GS_param, N, M, K, D);
 
-	// init U, V and beta
-	if (param->init) {
-		rand_matrix_double(param->beta, D, M);
-		rand_matrix_double(param->U, K, N);
-		rand_matrix_double(param->V, K, M);
-	} else {
-		zeros(param->beta, D*M);
-		zeros(param->U, K*N);
-		zeros(param->V, K*M);
-	}
+        printf("\t\tStart of the Gibbs Sampler algorithm.\n\n");
+
+        // init U, V and beta
+        if (param->init) {
+                rand_matrix_double(param->beta, D, M);
+                rand_matrix_double(param->U, K, N);
+                rand_matrix_double(param->V, K, M);
+        } else {
+                zeros(param->beta, D * M);
+                zeros(param->U, K * N);
+                zeros(param->V, K * M);
+        }
 #ifdef DEBUG
-	print_debug_NaN(param->beta, D, M, "beta");
-	print_debug_NaN(param->U, K, N, "U");
-	print_debug_NaN(param->V, K, M, "V");
+        print_debug_NaN(param->beta, D, M, "beta");
+        print_debug_NaN(param->U, K, N, "U");
+        print_debug_NaN(param->V, K, M, "V");
 #endif
-	// update alpha_R
-	param->alpha_R = update_alpha_R (param, GS_param);
+        // update alpha_R
+        param->alpha_R = update_alpha_R(param, GS_param);
 #ifdef DEBUG
-	print_debug_NaN_negative(&(param->alpha_R), 1, 1, "alpha_R");
-	print_data_double(&(param->alpha_R), 1, 1);
+        print_debug_NaN_negative(&(param->alpha_R), 1, 1, "alpha_R");
+        print_data_double(&(param->alpha_R), 1, 1);
 #endif
 
 #ifndef DEBUG
-	// shell print
-	init_bar(&i, &j);
+        // shell print
+        init_bar(&i, &j);
 #endif
 
-	n = 0;
-	while (n < param->Niter) {
+        n = 0;
+        while (n < param->Niter) {
 
 #ifdef USING_R
-		// tout est dans le titre de la fonction,
-		// check si l'utilisateur a essayé d'interrompre le programme 
-		R_CheckUserInterrupt();
+                // tout est dans le titre de la fonction,
+                // check si l'utilisateur a essayé d'interrompre le programme 
+                R_CheckUserInterrupt();
 #endif
 
 #ifndef DEBUG
-		// print shell
-		print_bar(&i, &j, param->Niter);
-#else 
-		printf("iteration %d\n", n);	
+                // print shell
+                print_bar(&i, &j, param->Niter);
+#else
+                printf("iteration %d\n", n);
 #endif
-		// update_alpha_U
-		update_alpha_U(param);
+                // update_alpha_U
+                update_alpha_U(param);
 #ifdef DEBUG
-		print_debug_NaN_negative(param->alpha_U, K, 1, "alpha_U");
-		print_data_double(param->alpha_U, K, 1);
+                print_debug_NaN_negative(param->alpha_U, K, 1, "alpha_U");
+                print_data_double(param->alpha_U, K, 1);
 #endif
-		// update_alpha_beta
-		update_alpha_beta(param);
+                // update_alpha_beta
+                update_alpha_beta(param);
 #ifdef DEBUG
-		print_debug_NaN_negative(param->alpha_beta, D, 1, "alpha_beta");
-		print_data_double(param->alpha_beta, D, 1);
+                print_debug_NaN_negative(param->alpha_beta, D, 1, "alpha_beta");
+                print_data_double(param->alpha_beta, D, 1);
 #endif
 
-		// update_beta
-		update_beta(param, GS_param); 
+                // update_beta
+                update_beta(param, GS_param);
 
-		// update U
-		update_U(param, GS_param);
+                // update U
+                update_U(param, GS_param);
 
-		// update V
-		update_V(param, GS_param);
+                // update V
+                update_V(param, GS_param);
 
-		// update alpha_R
-		param->alpha_R = update_alpha_R (param, GS_param);
+                // update alpha_R
+                param->alpha_R = update_alpha_R(param, GS_param);
 #ifdef DEBUG
-		print_debug_NaN_negative(&(param->alpha_R), 1, 1, "alpha_R");
-		print_data_double(&(param->alpha_R), 1, 1);
+                print_debug_NaN_negative(&(param->alpha_R), 1, 1, "alpha_R");
+                print_data_double(&(param->alpha_R), 1, 1);
 #endif
 
-		// update sums
-		if (n >= param->burn) 
-			update_sums(param, GS_param);
-		n++;
-	}
-	final_bar();
-	printf("\n");
-	printf("\t\tEnd of the Gibbs Sampler algorithm.\n\n");
+                // update sums
+                if (n >= param->burn)
+                        update_sums(param, GS_param);
+                n++;
+        }
+        final_bar();
+        printf("\n");
+        printf("\t\tEnd of the Gibbs Sampler algorithm.\n\n");
 
-	// calculate zscore
-	zscore_calc(param->zscore, GS_param->sum, GS_param->sum2, param->L, 
-		param->Niter - param->burn, param->mD);
+        // calculate zscore
+        zscore_calc(param->zscore, GS_param->sum, GS_param->sum2, param->L,
+                    param->Niter - param->burn, param->mD);
 
-	// check zscore
-	if (check_mat(param->zscore, param->L, 0, 1))
-		print_error_global("nan", NULL, 0);
+        // check zscore
+        if (check_mat(param->zscore, param->L, 0, 1))
+                print_error_global("nan", NULL, 0);
 
-	// calculate dp and deviance
-	calc_dp_deviance(param, GS_param, &deviance, &dp);
+        // calculate dp and deviance
+        calc_dp_deviance(param, GS_param, &deviance, &dp);
 
-	// save ED and DIC
-	param->dev = deviance;
-	param->DIC = 2 * deviance - dp;
-	printf("\tED:%10.10G\t DIC: %10.10G \n\n", deviance, 2 * deviance - dp);
+        // save ED and DIC
+        param->dev = deviance;
+        param->DIC = 2 * deviance - dp;
+        printf("\tED:%10.10G\t DIC: %10.10G \n\n", deviance, 2 * deviance - dp);
 
-	// free memory
-	free_all(GS_param);
-	free(GS_param);
+        // free memory
+        free_all(GS_param);
+        free(GS_param);
 }
 
 // update_sums
 
 void update_sums(LFMM_param param, LFMM_GS_param GS_param)
 {
-	double dv;
-	int D = param->mD;
-	int M = param->L;
-	int N = param->n;
-	int K = param->K;
+        double dv;
+        int D = param->mD;
+        int M = param->L;
+        int N = param->n;
+        int K = param->K;
 
-	// sum beta
-	update_sum(param->beta, GS_param->sum, D * M);
-	// sum squares beta
-	update_sum2(param->beta, GS_param->sum2, D * M);
-	// sum U
-	update_sum(param->U, GS_param->mean_U, K * N);
-	// sum V
-	update_sum(param->V, GS_param->mean_V, K * M);
-	dv = GS_param->thrd_m2 * param->alpha_R;
-	// sum devince
-	update_sum(&dv, &(param->dev), 1);
+        // sum beta
+        update_sum(param->beta, GS_param->sum, D * M);
+        // sum squares beta
+        update_sum2(param->beta, GS_param->sum2, D * M);
+        // sum U
+        update_sum(param->U, GS_param->mean_U, K * N);
+        // sum V
+        update_sum(param->V, GS_param->mean_V, K * M);
+        dv = GS_param->thrd_m2 * param->alpha_R;
+        // sum devince
+        update_sum(&dv, &(param->dev), 1);
 }
 
 // calc_dp_deviance
 
-void calc_dp_deviance(LFMM_param param, LFMM_GS_param GS_param, 
-		      double *deviance, double *dp) 
+void calc_dp_deviance(LFMM_param param, LFMM_GS_param GS_param,
+                      double *deviance, double *dp)
 {
-	double tmp;
-	double size = param->Niter - param->burn;
-	int D = param->mD;
-	int M = param->L;
-	int N = param->n;
-	int K = param->K;
-	double *beta, *U, *V;
+        double tmp;
+        double size = param->Niter - param->burn;
+        int D = param->mD;
+        int M = param->L;
+        int N = param->n;
+        int K = param->K;
+        double *beta, *U, *V;
 
-	update_m(GS_param->sum, D * M, size);
-	update_m(GS_param->mean_U, K * N, size);
-	update_m(GS_param->mean_V, K * M, size);
-	param->dev /= size;
+        update_m(GS_param->sum, D * M, size);
+        update_m(GS_param->mean_U, K * N, size);
+        update_m(GS_param->mean_V, K * M, size);
+        param->dev /= size;
 
-	// temporary update of U, V, beta by mean_U, mean_V, sum;
-	V = param->V;
-	U = param->U;
-	beta = param->beta;
-	param->V = GS_param->mean_V; 
-	param->U = GS_param->mean_U; 
-	param->beta = GS_param->sum; 
-	tmp = var_data(param, GS_param);
-	param->V = V; 
-	param->U = U; 
-	param->beta = beta; 
+        // temporary update of U, V, beta by mean_U, mean_V, sum;
+        V = param->V;
+        U = param->U;
+        beta = param->beta;
+        param->V = GS_param->mean_V;
+        param->U = GS_param->mean_U;
+        param->beta = GS_param->sum;
+        tmp = var_data(param, GS_param);
+        param->V = V;
+        param->U = U;
+        param->beta = beta;
 
-	*dp = GS_param->thrd_m2 / tmp;
-	*deviance = param->dev;
+        *dp = GS_param->thrd_m2 / tmp;
+        *deviance = param->dev;
 }
 
 // allocate_all
 
-void allocate_all(LFMM_GS_param GS_param, int N, int M, int K, int D) 
+void allocate_all(LFMM_GS_param GS_param, int N, int M, int K, int D)
 {
-	GS_param->m_beta = (double *) malloc(D * M * sizeof(double));
-	GS_param->inv_cov_beta = (double *) malloc(D * D * sizeof(double));
-	GS_param->m_U = (double *) malloc(K * N * sizeof(double));
-	GS_param->inv_cov_U = (double *) malloc(K * K * sizeof(double));
-	GS_param->m_V = (double *) malloc(K * M * sizeof(double));
-	GS_param->inv_cov_V = (double *) malloc(K * K * sizeof(double));
+        GS_param->m_beta = (double *)malloc(D * M * sizeof(double));
+        GS_param->inv_cov_beta = (double *)malloc(D * D * sizeof(double));
+        GS_param->m_U = (double *)malloc(K * N * sizeof(double));
+        GS_param->inv_cov_U = (double *)malloc(K * K * sizeof(double));
+        GS_param->m_V = (double *)malloc(K * M * sizeof(double));
+        GS_param->inv_cov_V = (double *)malloc(K * K * sizeof(double));
 
-	GS_param->mean_U = (double *)calloc(K * N, sizeof(double));
-	GS_param->mean_V = (double *)calloc(K * M, sizeof(double));
-	GS_param->sum = (double *)calloc(D * M, sizeof(double));
-	GS_param->sum2 = (double *)calloc(D * M, sizeof(double));
+        GS_param->mean_U = (double *)calloc(K * N, sizeof(double));
+        GS_param->mean_V = (double *)calloc(K * M, sizeof(double));
+        GS_param->sum = (double *)calloc(D * M, sizeof(double));
+        GS_param->sum2 = (double *)calloc(D * M, sizeof(double));
 }
 
 // free_all
 
 void free_all(LFMM_GS_param GS_param)
 {
-	free(GS_param->m_beta);
-	free(GS_param->inv_cov_beta);
-	free(GS_param->m_U);
-	free(GS_param->inv_cov_U);
-	free(GS_param->m_V);
-	free(GS_param->inv_cov_V);
-	free(GS_param->mean_U);
-	free(GS_param->mean_V);
-	free(GS_param->sum2);
-	free(GS_param->sum);
+        free(GS_param->m_beta);
+        free(GS_param->inv_cov_beta);
+        free(GS_param->m_U);
+        free(GS_param->inv_cov_U);
+        free(GS_param->m_V);
+        free(GS_param->inv_cov_V);
+        free(GS_param->mean_U);
+        free(GS_param->mean_V);
+        free(GS_param->sum2);
+        free(GS_param->sum);
 }
 
 // update_alpha_R
 
 double update_alpha_R(LFMM_param param, LFMM_GS_param GS_param)
 {
-	/*
-	if(param->missing_data)
-		return 1.0 / var_data_inputation(param, GS_param);
-	else 
-	*/
-	return 1.0 / var_data(param, GS_param);
+        /*
+           if(param->missing_data)
+           return 1.0 / var_data_inputation(param, GS_param);
+           else 
+         */
+        return 1.0 / var_data(param, GS_param);
 }

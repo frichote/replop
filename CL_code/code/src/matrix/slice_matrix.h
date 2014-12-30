@@ -22,6 +22,6 @@ void slice_tBB(void *G);
 
 #endif
 
-#endif // SLICE_MATRIX_H
+#endif                          // SLICE_MATRIX_H
 
 /** @} */

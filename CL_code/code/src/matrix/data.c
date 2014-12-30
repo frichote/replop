@@ -29,92 +29,91 @@
 
 void print_debug_NaN_negative(double *A, int n, int L, char *name)
 {
-	printf("%s\n", name); 
-	write_data_double(name, n, L, A); 
+        printf("%s\n", name);
+        write_data_double(name, n, L, A);
         if (any_NaN(A, n, L) || any_negative(A, n, L))
-               exit(1);
-} 
+                exit(1);
+}
 
 // print_debug_NaN
 
 void print_debug_NaN(double *A, int n, int L, char *name)
 {
-	printf("%s\n", name); 
-	write_data_double(name, n, L, A); 
+        printf("%s\n", name);
+        write_data_double(name, n, L, A);
         if (any_NaN(A, n, L))
-               exit(1);
-} 
+                exit(1);
+}
 
 // zeros
 
 void zeros(double *A, int n)
 {
-	int i;
+        int i;
 
-	for (i = 0; i < n; i++)
-		A[i] = 0;
+        for (i = 0; i < n; i++)
+                A[i] = 0;
 }
 
 // any_negative
 
 int any_negative(double *A, int n, int L)
 {
-	int i;
+        int i;
 
-	for (i = 0; i < n * L; i++) {
-		if (A[i] <= 0.0)
-			return 1;
-	}
-	return 0;
+        for (i = 0; i < n * L; i++) {
+                if (A[i] <= 0.0)
+                        return 1;
+        }
+        return 0;
 }
 
 // any_NaN
 
 int any_NaN(double *A, int n, int L)
 {
-	int i;
+        int i;
 
-	for (i = 0; i < n * L; i++) {
-		if (isnan(A[i]))
-			return 1;
-	}
-	return 0;
+        for (i = 0; i < n * L; i++) {
+                if (isnan(A[i]))
+                        return 1;
+        }
+        return 0;
 }
 
 // check_mat
 
 int check_mat(double *A, int n, int nd, int nD)
 {
-	int i;
+        int i;
 
-	for (i = 0; i < n; i++) {
-		if (isnan(A[i * nD + nd]))
-			return 1;
-	}
-	return 0;
+        for (i = 0; i < n; i++) {
+                if (isnan(A[i * nD + nd]))
+                        return 1;
+        }
+        return 0;
 }
 
 // update_m
 
 void update_m(double *beta, int n, int nb)
 {
-	int i;
+        int i;
 
-	for (i = 0; i < n; i++)
-		beta[i] /= nb;
+        for (i = 0; i < n; i++)
+                beta[i] /= nb;
 }
 
 // create_I
 
 void create_I(float *dat, int *I, int N, int M)
 {
-	int i;
+        int i;
 
-	for (i = 0; i < N * M; i++) {
-		if (dat[i] == 9 || dat[i] == -9)
-			I[i] = 0;
-		else
-			I[i] = 1;
-	}
+        for (i = 0; i < N * M; i++) {
+                if (dat[i] == 9 || dat[i] == -9)
+                        I[i] = 0;
+                else
+                        I[i] = 1;
+        }
 }
-

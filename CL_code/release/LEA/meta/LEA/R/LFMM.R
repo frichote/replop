@@ -1,22 +1,22 @@
 LFMM <- function(input.file, 
-        environment.file, 
-        K,
-        project = "continue", 
-        d = 0,
-        all = FALSE,
-        missing.data = FALSE,
-        CPU = 1,
-        iterations = 10000,
-        burnin = 5000,
-        seed = -1, 
-        repetitions = 1,
-        epsilon.noise = 1e-3,
-        epsilon.b = 1000,
-        random.init = TRUE)
+    environment.file, 
+    K,
+    project = "continue", 
+    d = 0,
+    all = FALSE,
+    missing.data = FALSE,
+    CPU = 1,
+    iterations = 10000,
+    burnin = 5000,
+    seed = -1, 
+    repetitions = 1,
+    epsilon.noise = 1e-3,
+    epsilon.b = 1000,
+    random.init = TRUE)
 {
 
     ###########################
-        # test arguments and init #
+    # test arguments and init #
     ###########################
 
     # input file
@@ -24,14 +24,15 @@ LFMM <- function(input.file,
     input.file = test_input_file(input.file, "lfmm")
     input.file = normalizePath(input.file)
     # cov file
-    environment.file = test_character("environment.file", environment.file, NULL)
+    environment.file = test_character("environment.file", 
+        environment.file, NULL)
     environment.file = normalizePath(environment.file)
     # check extension
     test_extension(environment.file, "env")
     # K
     for (k in 1:length(K)) {
         K[k] = test_integer("K", K[k], NULL)
-         if (K[k] < 0)
+        if (K[k] < 0)
             stop("'K' argument has to be not negative.")
     }
     # nd
@@ -68,32 +69,29 @@ LFMM <- function(input.file,
         stop("'burnin' argument has to be positive.")
     if (burnin >= iterations) {
         stop("the number of iterations for burnin (burnin) is greater",
-             "than the number total of iterations (iterations)")
+            "than the number total of iterations (iterations)")
     }
-    # seed
-    seed = test_integer("seed", seed, as.integer(runif(1)*.Machine$integer.max))
-    set.seed(seed) # init seed
-        # repetitions
-        repetitions = test_integer("repetitions", repetitions, 1)
-        # epsilon.noise
-        epsilon.noise = test_double("epsilon.noise", epsilon.noise, 1e-3)
-        if (epsilon.noise < 0)
-                epsilon.noise = 1e-3;
-        # b.epsilon
-        epsilon.b = test_double("epsilon.b", epsilon.b, 1000)
-        if (epsilon.b < 0)
-                epsilon.b = 1000;
+    # repetitions
+    repetitions = test_integer("repetitions", repetitions, 1)
+    # epsilon.noise
+    epsilon.noise = test_double("epsilon.noise", epsilon.noise, 1e-3)
+    if (epsilon.noise < 0)
+        epsilon.noise = 1e-3;
+    # b.epsilon
+    epsilon.b = test_double("epsilon.b", epsilon.b, 1000)
+    if (epsilon.b < 0)
+        epsilon.b = 1000;
     # random.init 
     random.init = test_logical("random.init", random.init, TRUE)
-        # project
-        if (missing(project)) 
-                project = "continue"
-        else if (!(project %in% c("continue", "new", "force"))) 
-                stop("A project argument can be 'continue', 'new' or 'force'.");
+    # project
+    if (missing(project)) 
+        project = "continue"
+    else if (!(project %in% c("continue", "new", "force"))) 
+        stop("A project argument can be 'continue', 'new' or 'force'.");
 
 
     ####################
-        # call the project #
+    # call the project #
     ####################
 
     proj = projectLfmmLoad(input.file, environment.file, project)
@@ -103,32 +101,42 @@ LFMM <- function(input.file,
     ################################
 
     for (r in 1:repetitions) {
+        # set the seed
+        if (is.na(seed[r])
+            s = -1
+        s = test_integer("seed", s, as.integer(runif(1)*.Machine$integer.max))
+        if (s == -1) 
+            s = as.integer(runif(1)*.Machine$integer.max)
+        set.seed(s) # init seed
+
         for (k in K) {
+
             if (all) {
-                            print("*************************************");
-                            p = paste("* LFMM K =",k," repetition",r," all     *");
-                            print(p);
-                            print("*************************************");
+                print("*************************************");
+                p = paste("* LFMM K =",k," repetition",r," all     *");
+                print(p);
+                print("*************************************");
 
                 # find the number of the run
                 if (length(proj@K) > 0)
-                                re = length(which(proj@K == k & proj@all == all)) + 1
+                    re = length(which(proj@K == k & proj@all == all)) + 1
                 else 
                     re = 1
 
-                            # create a directory for the run
-                            tmp  = setExtension(basename(proj@lfmmProject.file), ".lfmm/")
-                            dir = paste(proj@directory, "K", k, "/run", re, "/", sep="")
-                            dir.create(dir, showWarnings = FALSE, recursive = TRUE)
+                # create a directory for the run
+                tmp  = setExtension(basename(proj@lfmmProject.file), ".lfmm/")
+                dir = paste(proj@directory, "K", k, "/run", re, "/", sep="")
+                dir.create(dir, showWarnings = FALSE, recursive = TRUE)
 
-                output.prefix = paste(dir, basename(output.file),"_r", re, sep="")
+                output.prefix = paste(dir, basename(output.file),"_r", re, 
+                    sep="")
 
                 dic = 0
                 dev = 0
                 L = 0
                 n = 0
                 D = 0
-                resC =     .C("R_LFMM", 
+                resC = .C("R_LFMM", 
                     as.character(currentDir(input.file)),
                     as.character(currentDir(output.prefix)),
                     as.character(currentDir(environment.file)),
@@ -160,13 +168,13 @@ LFMM <- function(input.file,
                         "_a",nd,".",k,".lfmmClass",sep="");
                     res@K = as.integer(k);
                     res@run = as.integer(re);
-                                res@d = as.integer(nd);
-                                res@Niter = as.integer(iterations);
-                                res@burn = as.integer(burnin);
-                                res@CPU = as.integer(CPU);
-                                res@seed = as.integer(seed);
-                                res@missing.data = missing.data;
-                                res@all = all;
+                    res@d = as.integer(nd);
+                    res@Niter = as.integer(iterations);
+                    res@burn = as.integer(burnin);
+                    res@CPU = as.integer(CPU);
+                    res@seed = as.integer(seed);
+                    res@missing.data = missing.data;
+                    res@all = all;
                     res@epsilon.noise = epsilon.noise;
                     res@epsilon.b = epsilon.b;
                     res@random.init = random.init;
@@ -175,7 +183,7 @@ LFMM <- function(input.file,
                     res@deviance = resC$dev;
                     res@DIC = resC$dic;
                     seed = resC$seed
-                                save.lfmmClass(res, res@lfmmClass.file)
+                    save.lfmmClass(res, res@lfmmClass.file)
 
                     proj@n = as.integer(resC$n);
                     proj@L = as.integer(resC$L);
@@ -184,28 +192,30 @@ LFMM <- function(input.file,
                 }
             } else {
                 for (nd in d) {
-                                print("********************************");
-                                p = paste("* K =",k," repetition",r," d =",nd,"  *");
-                                print(p);
-                                print("********************************");
+                    print("********************************");
+                    p = paste("* K =",k," repetition",r," d =",nd,"  *");
+                    print(p);
+                    print("********************************");
             
                     # find the number of the run
                     if (length(proj@K) > 0)
-                                    re = length(which(proj@K == k & proj@d == nd & proj@all == all)) + 1
+                        re = length(which(proj@K == k & proj@d == nd 
+                            & proj@all == all)) + 1
                     else 
                         re = 1
 
-                                # create a directory for the run
-                                tmp  = setExtension(basename(proj@lfmmProject.file), ".lfmm/")
-                                dir = paste(proj@directory, "K", k, "/run", re, "/", sep="")
-                                dir.create(dir, showWarnings = FALSE, recursive = TRUE)
+                    # create a directory for the run
+                    tmp  = setExtension(basename(proj@lfmmProject.file), 
+                        ".lfmm/")
+                    dir = paste(proj@directory, "K", k, "/run", re, "/", sep="")
+                    dir.create(dir, showWarnings = FALSE, recursive = TRUE)
 
-                                    output.prefix = paste(dir, basename(output.file),"_r", re, sep="")
-
+                    output.prefix = paste(dir, basename(output.file),"_r", re, 
+                        sep="")
     
                     dic = 0; dev = 0; L = 0;
                     n = 0; D = 0;
-                    resC =     .C("R_LFMM", 
+                    resC =  .C("R_LFMM", 
                         as.character(currentDir(input.file)),
                         as.character(currentDir(output.prefix)),
                         as.character(currentDir(environment.file)),
@@ -236,13 +246,13 @@ LFMM <- function(input.file,
                     res@directory = getwd();
                     res@K = as.integer(k);
                     res@run = as.integer(re);
-                                res@d = as.integer(nd);
-                                res@Niter = as.integer(iterations);
-                                res@burn = as.integer(burnin);
-                                res@CPU = as.integer(CPU);
-                                res@seed = as.integer(seed);
-                                res@missing.data = missing.data;
-                                res@all = all;
+                    res@d = as.integer(nd);
+                    res@Niter = as.integer(iterations);
+                    res@burn = as.integer(burnin);
+                    res@CPU = as.integer(CPU);
+                    res@seed = as.integer(seed);
+                    res@missing.data = missing.data;
+                    res@all = all;
                     res@epsilon.noise = epsilon.noise;
                     res@epsilon.b = epsilon.b;
                     res@random.init = random.init;
@@ -257,7 +267,7 @@ LFMM <- function(input.file,
                     proj@L = as.integer(resC$L);
                     proj@D = as.integer(resC$D);
                     proj = addRun.lfmmProject(proj, res);
-                        save.lfmmProject(proj)
+                    save.lfmmProject(proj)
                 } 
             }
         }    

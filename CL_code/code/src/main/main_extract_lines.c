@@ -26,28 +26,28 @@
 #include "../convert/geno.h"
 #include "../io/io_tools.h"
 
-int main (int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 
-	int i, j;
-	int *lines = (int *) malloc(20000 * 1092 * sizeof(int));
-	int N  = 1092;
-	int M = 20000;
+        int i, j;
+        int *lines = (int *)malloc(20000 * 1092 * sizeof(int));
+        int N = 1092;
+        int M = 20000;
 
-	read_geno(argv[1], lines, 1092, 20000);
+        read_geno(argv[1], lines, 1092, 20000);
 
-	for (i = 0; i < N; i++) {
-		printf("%d 1 0 0 1 2", i);
-		for (j = 0; j < M; j++) {
-			if (lines[i * M + j] == 0) 
-				printf(" 0 0");
-			else if (lines[i * M + j] == 1)
-				printf(" 0 1");
-			else 
-				printf(" 1 1");
-		}
-		printf("\n");
-	}
-	
-	return 0;
+        for (i = 0; i < N; i++) {
+                printf("%d 1 0 0 1 2", i);
+                for (j = 0; j < M; j++) {
+                        if (lines[i * M + j] == 0)
+                                printf(" 0 0");
+                        else if (lines[i * M + j] == 1)
+                                printf(" 0 1");
+                        else
+                                printf(" 1 1");
+                }
+                printf("\n");
+        }
+
+        return 0;
 }
-

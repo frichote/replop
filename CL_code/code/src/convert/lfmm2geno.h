@@ -20,8 +20,8 @@
  * @param N		number of lines of the input file
  * @param M		number of columns of the input file
  */
-void lfmm2geno (char *input_file, char* output_file, int *N, int *M);
+void lfmm2geno(char *input_file, char *output_file, int *N, int *M);
 
-#endif // LFMM2GENO_H
+#endif                          // LFMM2GENO_H
 
 /** @} */

@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "lfmm2geno.h" 
+#include "lfmm2geno.h"
 #include "geno.h"
 #include "../io/io_tools.h"
 #include "../io/io_data_int.h"
@@ -28,24 +28,23 @@
 
 // lfmm2geno
 
-void lfmm2geno (char *input_file, char* output_file, int *N, int *M)
+void lfmm2geno(char *input_file, char *output_file, int *N, int *M)
 {
-	int *data;
+        int *data;
 
         // number of lines and columns
-	*M = nb_cols_lfmm(input_file);
-	*N = nb_lines(input_file, *M);
+        *M = nb_cols_lfmm(input_file);
+        *N = nb_lines(input_file, *M);
 
-	// memory allocation
-        data = (int *) malloc((*N)*(*M) * sizeof(int));
+        // memory allocation
+        data = (int *)malloc((*N) * (*M) * sizeof(int));
 
-	// read in lfmm format
-	read_data_int(input_file, *N, *M, data);
+        // read in lfmm format
+        read_data_int(input_file, *N, *M, data);
 
-	// write in geno format
-	write_geno(output_file, *N, *M, data);
+        // write in geno format
+        write_geno(output_file, *N, *M, data);
 
-	// free memory
-	free(data);
+        // free memory
+        free(data);
 }
-

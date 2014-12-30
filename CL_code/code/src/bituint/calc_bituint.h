@@ -28,9 +28,8 @@
  * @param num_thrd 	number of CPUs used for the calculation (windows version
 			not multithreaded) 
  */
-void tBtX(double *A, bituint *X, double *B, int K, int Mp, int Mc, int N, 
-	int num_thrd);
-
+void tBtX(double *A, bituint * X, double *B, int K, int Mp, int Mc, int N,
+          int num_thrd);
 
 /**
  * calculate t(A) = B X
@@ -46,9 +45,9 @@ void tBtX(double *A, bituint *X, double *B, int K, int Mp, int Mc, int N,
  * @param num_thrd 	number of CPUs used for the calculation (windows version
 			not multithreaded) 
  */
-void BX(double *A, bituint *X, double *B, int K, int Mp, int Mc, int N,
-	int num_thrd); 
+void BX(double *A, bituint * X, double *B, int K, int Mp, int Mc, int N,
+        int num_thrd);
 
-#endif // CALC_BITUINT_H
+#endif                          // CALC_BITUINT_H
 
 /** @} */

@@ -26,6 +26,6 @@ void update_U(LFMM_param param, LFMM_GS_param GS_param);
  */
 void update_alpha_U(LFMM_param param);
 
-#endif // U_H
+#endif                          // U_H
 
 /** @} */

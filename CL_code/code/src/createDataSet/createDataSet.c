@@ -33,28 +33,29 @@
 
 // createDataSet
 
-void createDataSet(char* input_file, long long seed, double e, char* output_file) 
+void createDataSet(char *input_file, long long seed, double e,
+                   char *output_file)
 {
-	int N = 0;			// number of individuals
-	int M = 0;			// number of SNPs
-	int X;				// genotype 
-	
-	// local parameters
-	int i, j;
+        int N = 0;              // number of individuals
+        int M = 0;              // number of SNPs
+        int X;                  // genotype 
+
+        // local parameters
+        int i, j;
 
         // local parameters to read files
         FILE *in_File = NULL;
         FILE *out_File = NULL;
         char token;
 
-	init_random(&seed);
+        init_random(&seed);
 
         // count the number of lines and columns
         N = nb_cols_geno(input_file);
         M = nb_lines(input_file, N);
 
-	// write command line summary
-	print_summary_cds(N, M, seed, e, input_file, output_file);
+        // write command line summary
+        print_summary_cds(N, M, seed, e, input_file, output_file);
 
         // open files 
         in_File = fopen(input_file, "r");
@@ -65,42 +66,42 @@ void createDataSet(char* input_file, long long seed, double e, char* output_file
         if (!out_File)
                 print_error_global("open", output_file, 0);
 
-	// read and write at the same time
+        // read and write at the same time
         j = 0;
-      	while (!feof(in_File) & (j < M)) {
-#ifdef USING_R 
-	        // tout est dans le titre de la fonction,
-        	// check si l'utilisateur a essayé d'interrompre le programme 
-	        R_CheckUserInterrupt();
+        while (!feof(in_File) & (j < M)) {
+#ifdef USING_R
+                // tout est dans le titre de la fonction,
+                // check si l'utilisateur a essayé d'interrompre le programme 
+                R_CheckUserInterrupt();
 #endif
                 // read a line
                 i = 0;
-	        token = (char)fgetc(in_File);
+                token = (char)fgetc(in_File);
 
-		// for each column of the line
-	        while(token != EOF && token != '\n' && i<N) {
+                // for each column of the line
+                while (token != EOF && token != '\n' && i < N) {
 
-	                X = (int)(token - '0');
-			//  write the new genotype	
-                	if (frand() < e) 
-				fprintf(out_File,"9");
-			else 
-				fprintf(out_File,"%d",X);
+                        X = (int)(token - '0');
+                        //  write the new genotype      
+                        if (frand() < e)
+                                fprintf(out_File, "9");
+                        else
+                                fprintf(out_File, "%d", X);
 
-                         i++;
-	        	 token = (char)fgetc(in_File);
+                        i++;
+                        token = (char)fgetc(in_File);
                 }
-		fprintf(out_File,"\n");
+                fprintf(out_File, "\n");
 
-		// test the number of columns
-		test_column(input_file, in_File, i, j, N, &token);
+                // test the number of columns
+                test_column(input_file, in_File, i, j, N, &token);
                 j++;
-	}
+        }
 
-	// close file
-	fclose(in_File);	
-	fclose(out_File);
+        // close file
+        fclose(in_File);
+        fclose(out_File);
 
-        printf("\n Write genotype file with masked data, %s:\t\tOK.\n\n",output_file);
+        printf("\n Write genotype file with masked data, %s:\t\tOK.\n\n",
+               output_file);
 }
-

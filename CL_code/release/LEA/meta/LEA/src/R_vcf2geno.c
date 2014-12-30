@@ -26,49 +26,52 @@
 #include "io/io_tools.h"
 #include "convert/register_convert.h"
 
-#include "R_vcf2geno.h" 
+#include "R_vcf2geno.h"
 
-void R_vcf2geno (char** R_input_file, char **R_output_file, int *N, int *M) 
+void R_vcf2geno(char **R_input_file, char **R_output_file, int *N, int *M)
 {
-        int removed;                    // number of removed CNVs
-        char snp_bp_file[512];          // snp file
+        int removed;            // number of removed CNVs
+        char snp_bp_file[512];  // snp file
         char removed_bp_file[512];      // removed snp file
         char *tmp;
 
-        tmp = remove_ext(*R_output_file,'.','/');
+        tmp = remove_ext(*R_output_file, '.', '/');
         strcpy(snp_bp_file, tmp);
         strcat(snp_bp_file, ".vcfsnp");
 
         strcpy(removed_bp_file, tmp);
         strcat(removed_bp_file, ".removed");
 
-        vcf2geno(*R_input_file, *R_output_file, N, M, snp_bp_file, removed_bp_file, &removed);
+        vcf2geno(*R_input_file, *R_output_file, N, M, snp_bp_file,
+                 removed_bp_file, &removed);
 
         print_convert(*N, *M);
 
-        Rprintf("For SNP info, please check %s.\n\n",snp_bp_file);
+        Rprintf("For SNP info, please check %s.\n\n", snp_bp_file);
 
-        Rprintf("%d line(s) were removed because these are not SNPs.\n", removed);
-        Rprintf("Please, check %s file, for more informations.\n\n",removed_bp_file);
+        Rprintf("%d line(s) were removed because these are not SNPs.\n",
+                removed);
+        Rprintf("Please, check %s file, for more informations.\n\n",
+                removed_bp_file);
 
         free(tmp);
 
-
 }
-	/*
-	// parameter initialization
-	char input_file[512];		// input file "without" missing data
-	char output_file[512];		// output file with missing data
-	double e = 0.05;		// output percentage of missing data
-	long long seed = -1;
-	int m = 0;
 
-        print_head_snmf();
+        /*
+           // parameter initialization
+           char input_file[512];                // input file "without" missing data
+           char output_file[512];                // output file with missing data
+           double e = 0.05;                // output percentage of missing data
+           long long seed = -1;
+           int m = 0;
 
-	if (R_input_file)
-		strcpy(input_file, *R_input_file);
-	else 
-                print_error_cds("option","-g vcftype_file");
+           print_head_snmf();
 
-	createDataSet(input_file, m, (long long) seed, percentage, output_file);
-*/
+           if (R_input_file)
+           strcpy(input_file, *R_input_file);
+           else 
+           print_error_cds("option","-g vcftype_file");
+
+           createDataSet(input_file, m, (long long) seed, percentage, output_file);
+         */

@@ -32,16 +32,33 @@ projectLfmmLoad <- function(input.file, environment.file, project)
     if (!project == "new" && file.exists(projectName)) {
         proj = load.lfmmProject(projectName)
         if (file.info(projectName)$ctime < file.info(input.file)$mtime) {
-                        stop("The input file has been modified since the creation of the project.\nIf the input file is different, the results concatenating all runs can be false.\nTo remove the current project and start a new one, add the option 'project = new'.\nTo continue with the same project, add the option 'project = force'.")
+            stop("The input file has been modified since the creation of the",
+                " project.\nIf the input file is different, the results ",
+                "concatenating all runs can be false.\nTo remove the current",
+                " project and start a new one, add the option 'project = ",
+                "new'.\nTo continue with the same project, add the option ",
+                "'project = force'.")
         }
         if (proj@environment.file != environment.file) {
-            stop(paste("A project with the same variable ('",var,"') and a different path ('", proj@environment.file, "'and '", environment.file, " already exists. Please, set a different name for the variable file.", sep=""))
+            stop(paste("A project with the same variable ('",var,"') and a",
+                "different path ('", proj@environment.file, "'and '", 
+                environment.file, " already exists. Please, set a different",
+                " name for the variable file.", sep=""))
         }
         if (file.info(projectName)$ctime < file.info(environment.file)$mtime) {
-                        stop("The variable file has been modified since the creation of the project.\nIf the variable file is different, the results concatenating all runs can be false.\nTo remove the current project and start a new one, add the option 'project = new'.\nTo continue with the same project, add the option 'project = force'. To create a new project and keep the previous one, change the name of the variable file.")
+            stop("The variable file has been modified since the creation of ",
+                "the project.\nIf the variable file is different, the results",
+                " concatenating all runs can be false.\nTo remove the current",
+                " project and start a new one, add the option 'project = ", 
+                "new'.\nTo continue with the same project, add the option ",
+                "'project = force'. To create a new project and keep the ",
+                "previous one, change the name of the variable file.")
         }
     # create a new project
     } else {
+        if (file.exists(projectName)) {
+            remove.lfmmProject(projectName);
+        }
         proj = new("lfmmProject")
         #files 
         proj@input.file = normalizePath(input.file)
@@ -66,10 +83,16 @@ projectSnmfLoad <- function(input.file, project)
     # load the project
     if (!project == "new" && file.exists(projectName)) {
         # file input file not modified since the start of the project
-        if (file.info(projectName)$ctime >= file.info(input.file)$mtime || project == "force") {
+        if (file.info(projectName)$ctime >= file.info(input.file)$mtime 
+            || project == "force") {
             return(load.snmfProject(projectName))
         } else {
-            stop("The input file has been modified since the creation of the project.\nIf the input file is different, the results concatenating all runs can be false.\nTo remove the current project and start a new one, add the option 'project = new'.\nTo continue with the same project, add the option 'project = force'.")
+            stop("The input file has been modified since the creation of the",
+                " project.\nIf the input file is different, the results ",
+                "concatenating all runs can be false.\nTo remove the current",
+                " project and start a new one, add the option 'project = ",
+                "new'.\nTo continue with the same project, add the option ",
+                "'project = force'.")
         }
     # create a new project
     } else {
@@ -77,15 +100,16 @@ projectSnmfLoad <- function(input.file, project)
         # files
         proj@input.file = normalizePath(input.file)
         # directory    
-        proj@directory = setExtension(paste(dirname(normalizePath(input.file)), "/", 
-            basename(input.file), sep=""), ".snmf/")
+        proj@directory = setExtension(paste(dirname(normalizePath(input.file)), 
+            "/", basename(input.file), sep=""), ".snmf/")
         unlink(proj@directory, recursive = TRUE)
         dir.create(proj@directory, showWarnings = FALSE)
         # snmfProject.file
         proj@snmfProject.file = projectName
         # masked
-        dir.create(paste(proj@directory, "masked/", sep=""), showWarnings = FALSE) 
-            save.snmfProject(proj)
+        dir.create(paste(proj@directory, "masked/", sep=""), 
+            showWarnings = FALSE) 
+        save.snmfProject(proj)
 
         return(proj)
     }
@@ -99,22 +123,23 @@ getExtension <- function(file)
 
 setExtension <- function(file, ext)
 {
-  out = dirname(file)
-  l = strsplit(basename(file), "\\.")[[1]]
-  if (length(l) >= 2) {
-    out = paste(out, l[1], sep="/")
-    if (length(l) >= 3) {
-      for (i in 2:(length(l)-1)) 
-        out = paste(out, l[i], sep=".")
-      }
-      out = paste(out, ext, sep="")
-  } else if (length(l) == 1) {
-    out = paste(out, l[1], sep="/")
-    out = paste(out, ext, sep="")
-  } else {
-    out = NULL
-  }
-  return(out)     
+    out = dirname(file)
+    l = strsplit(basename(file), "\\.")[[1]]
+    if (length(l) >= 2) {
+        out = paste(out, l[1], sep="/")
+        if (length(l) >= 3) {
+            for (i in 2:(length(l)-1)) 
+                out = paste(out, l[i], sep=".")
+            }
+            out = paste(out, ext, sep="")
+        } else if (length(l) == 1) {
+            out = paste(out, l[1], sep="/")
+            out = paste(out, ext, sep="")
+        } else {
+        out = NULL
+    }
+
+    return(out)     
 }
 
 currentDir <- function(file)

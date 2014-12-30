@@ -16,7 +16,7 @@
 /* Common Block Declarations */
 
 struct {
-    integer iparms[100];
+        integer iparms[100];
 } claenv_;
 
 #define claenv_1 claenv_
@@ -28,21 +28,20 @@ static real c_b3 = 0.f;
 static real c_b4 = 1.f;
 static integer c__1 = 1;
 
-integer ilaenv_(integer *ispec, char *name__, char *opts, integer *n1, 
-	integer *n2, integer *n3, integer *n4, ftnlen name_len, ftnlen 
-	opts_len)
+integer ilaenv_(integer * ispec, char *name__, char *opts, integer * n1,
+                integer * n2, integer * n3, integer * n4, ftnlen name_len,
+                ftnlen opts_len)
 {
 
-    /* System generated locals */
-    integer ret_val;
+        /* System generated locals */
+        integer ret_val;
 
-    /* Local variables */
-    extern integer ieeeck_(integer *, real *, real *);
+        /* Local variables */
+        extern integer ieeeck_(integer *, real *, real *);
 
 /*  -- LAPACK auxiliary routine (version 3.1) --   
        Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..   
        November 2006   
-
 
     Purpose   
     =======   
@@ -129,55 +128,53 @@ integer ilaenv_(integer *ispec, char *name__, char *opts, integer *n1,
 
     ===================================================================== */
 
-
-    if (*ispec >= 1 && *ispec <= 5) {
+        if (*ispec >= 1 && *ispec <= 5) {
 
 /*        Return a value from the common block. */
 
-	ret_val = claenv_1.iparms[*ispec - 1];
+                ret_val = claenv_1.iparms[*ispec - 1];
 
-    } else if (*ispec == 6) {
+        } else if (*ispec == 6) {
 
 /*        Compute SVD crossover point. */
 
-	ret_val = (integer) ((real) min(*n1,*n2) * 1.6f);
+                ret_val = (integer) ((real) min(*n1, *n2) * 1.6f);
 
-    } else if (*ispec >= 7 && *ispec <= 9) {
+        } else if (*ispec >= 7 && *ispec <= 9) {
 
 /*        Return a value from the common block. */
 
-	ret_val = claenv_1.iparms[*ispec - 1];
+                ret_val = claenv_1.iparms[*ispec - 1];
 
-    } else if (*ispec == 10) {
+        } else if (*ispec == 10) {
 
 /*        IEEE NaN arithmetic can be trusted not to trap   
 
           ILAENV = 0 */
-	ret_val = 1;
-	if (ret_val == 1) {
-	    ret_val = ieeeck_(&c__0, &c_b3, &c_b4);
-	}
+                ret_val = 1;
+                if (ret_val == 1) {
+                        ret_val = ieeeck_(&c__0, &c_b3, &c_b4);
+                }
 
-    } else if (*ispec == 11) {
+        } else if (*ispec == 11) {
 
 /*        Infinity arithmetic can be trusted not to trap   
 
           ILAENV = 0 */
-	ret_val = 1;
-	if (ret_val == 1) {
-	    ret_val = ieeeck_(&c__1, &c_b3, &c_b4);
-	}
+                ret_val = 1;
+                if (ret_val == 1) {
+                        ret_val = ieeeck_(&c__1, &c_b3, &c_b4);
+                }
 
-    } else {
+        } else {
 
 /*        Invalid value for ISPEC */
 
-	ret_val = -1;
-    }
+                ret_val = -1;
+        }
 
-    return ret_val;
+        return ret_val;
 
 /*     End of ILAENV */
 
-} /* ilaenv_ */
-
+}                               /* ilaenv_ */

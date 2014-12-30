@@ -23,15 +23,15 @@ typedef struct _multithreading_matrix *Multithreading_matrix;
  * 	in matrix functions.
  */
 typedef struct _multithreading_matrix {
-	double *A;
-	double *B;
-	double *C;
-	int K;
-	int N;
-	int M;
-	double alpha;
-	int slice;
-	int num_thrd;
+        double *A;
+        double *B;
+        double *C;
+        int K;
+        int N;
+        int M;
+        double alpha;
+        int slice;
+        int num_thrd;
 } multithreading_matrix;
 
 /** 
@@ -48,10 +48,10 @@ typedef struct _multithreading_matrix {
  * @param fct	the specific slice function
  */
 void thread_fct_matrix(double *A, double *B, double *C, int K, int M,
-	int N, double alpha, int num_thrd, void (*fct) ());
+                       int N, double alpha, int num_thrd, void (*fct) ());
 
 #endif
 
-#endif // THREAD_H
+#endif                          // THREAD_H
 
 /** @} */

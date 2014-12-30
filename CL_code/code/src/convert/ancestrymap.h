@@ -46,7 +46,7 @@ int nb_ind_ancestrymap(char *input_file);
  * @param data		output data set (of size NxM)
  *
  */
-void read_ancestrymap (char* input_file, int N, int M, int* data);
+void read_ancestrymap(char *input_file, int N, int M, int *data);
 
 /**
  * read a line from an ancestrymap file (with elements separated by spaces,tabs)
@@ -63,8 +63,8 @@ void read_ancestrymap (char* input_file, int N, int M, int* data);
  * @param warning       Boolean: true if a warning has already been diplayed.
  *                               false otherwise
  */
-void read_line_ancestrymap(char *szbuff, int *allele, char *name, int i, int j, 
-	char *input, int *warning);
+void read_line_ancestrymap(char *szbuff, int *allele, char *name, int i, int j,
+                           char *input, int *warning);
 
 /**
  * read a file of N individuals and M SNPs in the ancestrymap format
@@ -74,7 +74,7 @@ void read_line_ancestrymap(char *szbuff, int *allele, char *name, int i, int j,
  * @param N		output number of individuals 
  * @param M		output number of SNPs
  */
-void ancestrymap2geno (char *input_file, char* output_file, int *N, int *M);
+void ancestrymap2geno(char *input_file, char *output_file, int *N, int *M);
 
 /**
  * read a file of N individuals and M SNPs in the ancestrymap format
@@ -84,9 +84,8 @@ void ancestrymap2geno (char *input_file, char* output_file, int *N, int *M);
  * @param N		output number of individuals 
  * @param M		output number of SNPs
  */
-void ancestrymap2lfmm (char *input_file, char* output_file, int *N, int *M);
+void ancestrymap2lfmm(char *input_file, char *output_file, int *N, int *M);
 
-
-#endif // ANCESTRYMAP_H
+#endif                          // ANCESTRYMAP_H
 
 /** @}*/

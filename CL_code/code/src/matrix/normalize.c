@@ -25,129 +25,138 @@
 
 void check_constant_column(float *C, int N, int K)
 {
-	double mean, cov;
-	int i, k, count;
+        double mean, cov;
+        int i, k, count;
 
-	for (k = 0; k < K; k++) {
-		// calculate mean
-		mean = 0;
-		count = 0;
-		for (i = 0; i < N; i++) {
-			if (fabs(C[i * K + k]) != 9) {
-				mean += C[i * K + k];
-				count++;
-			}	
-		}
-		if (count)
-			mean /= count;
-		else {
-			printf("Error: SNP '%d' contains only missing data.\n\n", k+1);
-			exit(1);
-		}
-		// calculate cov
-		cov = 0;
-		for (i = 0; i < N; i++) {
-			if (fabs(C[i * K + k]) != 9)
-				cov += (C[i * K + k] - mean) * (C[i * K + k] - mean);
-		}
-		cov /= (count - 1);
-		// error if constant column
-		if (!cov) {
-		        printf("Warning: SNP %d is constant " 
-				"among individuals.\n\n",k+1);
-		}
-	}
+        for (k = 0; k < K; k++) {
+                // calculate mean
+                mean = 0;
+                count = 0;
+                for (i = 0; i < N; i++) {
+                        if (fabs(C[i * K + k]) != 9) {
+                                mean += C[i * K + k];
+                                count++;
+                        }
+                }
+                if (count)
+                        mean /= count;
+                else {
+                        printf
+                            ("Error: SNP '%d' contains only missing data.\n\n",
+                             k + 1);
+                        exit(1);
+                }
+                // calculate cov
+                cov = 0;
+                for (i = 0; i < N; i++) {
+                        if (fabs(C[i * K + k]) != 9)
+                                cov +=
+                                    (C[i * K + k] - mean) * (C[i * K + k] -
+                                                             mean);
+                }
+                cov /= (count - 1);
+                // error if constant column
+                if (!cov) {
+                        printf("Warning: SNP %d is constant "
+                               "among individuals.\n\n", k + 1);
+                }
+        }
 }
 
 // normalize_cov
 
 void normalize_cov(double *C, int N, int K)
 {
-	double mean, cov;
-	int i, k;
+        double mean, cov;
+        int i, k;
 
-	for (k = 0; k < K; k++) {
-		// calculate mean
-		mean = 0;
-		for (i = 0; i < N; i++)
-			mean += C[i * K + k];
-		mean /= N;
-		// calculate cov
-		cov = 0;
-		for (i = 0; i < N; i++)
-			cov += (C[i * K + k] - mean) * (C[i * K + k] - mean);
-		cov /= (N - 1);
-		// error if constant column
-		if (!cov) {
-		        printf("SNP %d is constant " 
-				"among individuals.\n\n",k+1);
-			exit(1);
-		}
-		// normalize
-		for (i = 0; i < N; i++)
-			C[i * K + k] = (C[i * K + k] - mean) / sqrt(cov);
-	}
+        for (k = 0; k < K; k++) {
+                // calculate mean
+                mean = 0;
+                for (i = 0; i < N; i++)
+                        mean += C[i * K + k];
+                mean /= N;
+                // calculate cov
+                cov = 0;
+                for (i = 0; i < N; i++)
+                        cov += (C[i * K + k] - mean) * (C[i * K + k] - mean);
+                cov /= (N - 1);
+                // error if constant column
+                if (!cov) {
+                        printf("SNP %d is constant "
+                               "among individuals.\n\n", k + 1);
+                        exit(1);
+                }
+                // normalize
+                for (i = 0; i < N; i++)
+                        C[i * K + k] = (C[i * K + k] - mean) / sqrt(cov);
+        }
 }
 
 // normalize_cov_I
 
 void normalize_cov_I(double *C, int N, int K)
 {
-	double mean, cov;
-	int i, k, count;
+        double mean, cov;
+        int i, k, count;
 
-	for (k = 0; k < K; k++) {
-		// calculate mean
-		mean = 0;
-		count = 0;
-		for (i = 0; i < N; i++) {
-			if (fabs(C[i * K + k]) != 9) {
-				mean += C[i * K + k];
-				count++;
-			}	
-		}
-		if (count)
-			mean /= count;
-		else 
-			printf("Error: SNP '%d' contains only missing data.\n\n", k+1);
-		// calculate cov
-		cov = 0;
-		for (i = 0; i < N; i++) {
-			if (fabs(C[i * K + k]) != 9)
-				cov += (C[i * K + k] - mean) * (C[i * K + k] - mean);
-		}
-		cov /= (count - 1);
-		// error if constant column
-		if (!cov) {
-		        printf("Error: SNP %d is constant " 
-				"among individuals.\n\n",k+1);
-			exit(1);
-		}
-		// normalize
-		for (i = 0; i < N; i++) {
-			if (fabs(C[i * K + k]) != 9)
-				C[i * K + k] = (C[i * K + k] - mean) / sqrt(cov);
-		}
-	}
+        for (k = 0; k < K; k++) {
+                // calculate mean
+                mean = 0;
+                count = 0;
+                for (i = 0; i < N; i++) {
+                        if (fabs(C[i * K + k]) != 9) {
+                                mean += C[i * K + k];
+                                count++;
+                        }
+                }
+                if (count)
+                        mean /= count;
+                else
+                        printf
+                            ("Error: SNP '%d' contains only missing data.\n\n",
+                             k + 1);
+                // calculate cov
+                cov = 0;
+                for (i = 0; i < N; i++) {
+                        if (fabs(C[i * K + k]) != 9)
+                                cov +=
+                                    (C[i * K + k] - mean) * (C[i * K + k] -
+                                                             mean);
+                }
+                cov /= (count - 1);
+                // error if constant column
+                if (!cov) {
+                        printf("Error: SNP %d is constant "
+                               "among individuals.\n\n", k + 1);
+                        exit(1);
+                }
+                // normalize
+                for (i = 0; i < N; i++) {
+                        if (fabs(C[i * K + k]) != 9)
+                                C[i * K + k] =
+                                    (C[i * K + k] - mean) / sqrt(cov);
+                }
+        }
 }
 
 // normalize_lines
 
 void normalize_lines(double *A, int N, int M)
 {
-	int i, j;
-	double sum;
-	for (i = 0; i < N; i++) {
-		// sum
-		sum = 0.0;
-		for (j = 0; j < M; j++) {
-			sum += A[i * M + j];
-		}
-		// normalize
-		for (j = 0; j < M; j++) {
-			A[i * M + j] /= sum;
-		}
-	}
+        int i, j;
+        double sum;
+        for (i = 0; i < N; i++) {
+                // sum
+                sum = 0.0;
+                for (j = 0; j < M; j++) {
+                        sum += A[i * M + j];
+                }
+                // normalize
+                for (j = 0; j < M; j++) {
+                        A[i * M + j] /= sum;
+                }
+        }
 
 }
 
@@ -155,50 +164,50 @@ void normalize_lines(double *A, int N, int M)
 
 void normalize_mean_I(double *C, int N, int K)
 {
-	double mean;
-	int i, k, count;
+        double mean;
+        int i, k, count;
 
-	for (k = 0; k < K; k++) {
-		// calculate mean
-		mean = 0;
-		count = 0;
-		for (i = 0; i < N; i++) {
-			if (fabs(C[i * K + k]) != 9) {
-				mean += C[i * K + k];
-				count++;
-			}	
-		}
-		mean /= count;
-		// normalize
-		for (i = 0; i < N; i++) {
-			if (fabs(C[i * K + k]) != 9)
-				C[i * K + k] -= mean;
-		}
-	}
+        for (k = 0; k < K; k++) {
+                // calculate mean
+                mean = 0;
+                count = 0;
+                for (i = 0; i < N; i++) {
+                        if (fabs(C[i * K + k]) != 9) {
+                                mean += C[i * K + k];
+                                count++;
+                        }
+                }
+                mean /= count;
+                // normalize
+                for (i = 0; i < N; i++) {
+                        if (fabs(C[i * K + k]) != 9)
+                                C[i * K + k] -= mean;
+                }
+        }
 }
 
 // normalize_mean_I_float
 
 void normalize_mean_I_float(float *C, int N, int K)
 {
-	float mean;
-	int i, k, count;
+        float mean;
+        int i, k, count;
 
-	for (k = 0; k < K; k++) {
-		// calculate mean
-		mean = 0;
-		count = 0;
-		for (i = 0; i < N; i++) {
-			if (fabs(C[i * K + k]) != 9) {
-				mean += C[i * K + k];
-				count++;
-			}	
-		}
-		mean /= count;
-		// normalize
-		for (i = 0; i < N; i++) {
-			if (fabs(C[i * K + k]) != 9)
-				C[i * K + k] -= mean;
-		}
-	}
+        for (k = 0; k < K; k++) {
+                // calculate mean
+                mean = 0;
+                count = 0;
+                for (i = 0; i < N; i++) {
+                        if (fabs(C[i * K + k]) != 9) {
+                                mean += C[i * K + k];
+                                count++;
+                        }
+                }
+                mean /= count;
+                // normalize
+                for (i = 0; i < N; i++) {
+                        if (fabs(C[i * K + k]) != 9)
+                                C[i * K + k] -= mean;
+                }
+        }
 }

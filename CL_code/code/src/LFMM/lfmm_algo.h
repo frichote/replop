@@ -22,22 +22,22 @@ typedef struct _lfmm_GS_param *LFMM_GS_param;
  * @brief structure containing paramaters for the LFMM Gibbs Sampler
  */
 typedef struct _lfmm_GS_param {
-	// beta
-	double *m_beta;		/**< @brief conditional mean for beta (DxL)*/	
-	double *inv_cov_beta;	/**< @brief conditional inverse covariance matrix for beta */ 
-	double *sum;		/**< @brief sum value for b*/
-	double *sum2;		/**< @brief sum of square values of b*/
-	// U
-	double *m_U;		/**< @brief conditional mean for U (Kxn)*/	
-	double *mean_U;		/**< @brief mean value for U*/
-	double *inv_cov_U;	/**< @brief conditional inverse covariance matrix for U */ 
-	// V
-	double *m_V;		/**< @brief conditional mean for V (KxL)*/	
-	double *mean_V;		/**< @brief mean value for V*/
-	double *inv_cov_V;	/**< @brief conditional inverse covariance matrix for V */ 
+        // beta
+        double *m_beta;         /**< @brief conditional mean for beta (DxL)*/
+        double *inv_cov_beta;   /**< @brief conditional inverse covariance matrix for beta */
+        double *sum;            /**< @brief sum value for b*/
+        double *sum2;           /**< @brief sum of square values of b*/
+        // U
+        double *m_U;            /**< @brief conditional mean for U (Kxn)*/
+        double *mean_U;         /**< @brief mean value for U*/
+        double *inv_cov_U;      /**< @brief conditional inverse covariance matrix for U */
+        // V
+        double *m_V;            /**< @brief conditional mean for V (KxL)*/
+        double *mean_V;         /**< @brief mean value for V*/
+        double *inv_cov_V;      /**< @brief conditional inverse covariance matrix for V */
 
-	// ?
-	double thrd_m2; 	/**< @brief It contains ||G-UV^T -XB^T||_F^2. It is updated at each
+        // ?
+        double thrd_m2;         /**< @brief It contains ||G-UV^T -XB^T||_F^2. It is updated at each
 				 * iteration in var_data through update_alpha_R.
 				 * It is used to calculate the deviance and the DIC criterion */
 
@@ -56,7 +56,7 @@ void lfmm_emcmc(LFMM_param param);
  * @param param		parameters structure 
  * @param GS_param	GS parameters structure 
  */
-void update_sums(LFMM_param param, LFMM_GS_param GS_param); 
+void update_sums(LFMM_param param, LFMM_GS_param GS_param);
 
 /**
  * update dp and deviance
@@ -66,8 +66,8 @@ void update_sums(LFMM_param param, LFMM_GS_param GS_param);
  * @param deviance	deviance
  * @param dp		temporary calc
  */
-void calc_dp_deviance(LFMM_param param, LFMM_GS_param GS_param, 
-		      double *deviance, double *dp);
+void calc_dp_deviance(LFMM_param param, LFMM_GS_param GS_param,
+                      double *deviance, double *dp);
 
 /**
  * allocate all temporary memory
@@ -85,7 +85,7 @@ void allocate_all(LFMM_GS_param GS_param, int N, int M, int K, int D);
  *
  * @param GS_param	GS parameters structure 
  */
-void free_all(LFMM_GS_param GS_param); 
+void free_all(LFMM_GS_param GS_param);
 
 /** 
  * update alpha_R parameter 
@@ -95,6 +95,6 @@ void free_all(LFMM_GS_param GS_param);
  */
 double update_alpha_R(LFMM_param param, LFMM_GS_param GS_param);
 
-#endif // lfmm_algo_H
+#endif                          // lfmm_algo_H
 
 /** @} */

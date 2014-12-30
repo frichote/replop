@@ -35,7 +35,7 @@ void change_ext(char *input, char *output, char *ext);
  *   If you pass in NULL or the new string can't be allocated,
  *   it returns NULL.
  */
-char* remove_ext(char* mystr, char dot, char sep);
+char *remove_ext(char *mystr, char dot, char sep);
 
 /**
  * count the number of lines of a file
@@ -45,7 +45,7 @@ char* remove_ext(char* mystr, char dot, char sep);
  *
  * @return number of lines
  */
-int nb_lines (char *file, int M);
+int nb_lines(char *file, int M);
 
 /**
  * count the number of elements of the first line of a file (in geno format)
@@ -72,7 +72,7 @@ int nb_cols_lfmm(char *file);
  *
  * return opened file
  */
-FILE* fopen_read (char *file_data);
+FILE *fopen_read(char *file_data);
 
 /**
  * open a file to write and raise an error in necessary
@@ -81,7 +81,7 @@ FILE* fopen_read (char *file_data);
  *
  * return opened file
  */
-FILE* fopen_write (char *file_data);
+FILE *fopen_write(char *file_data);
 
 /**
  * print command line options
@@ -91,6 +91,6 @@ FILE* fopen_write (char *file_data);
  */
 void print_options(int argc, char *argv[]);
 
-#endif // IO_TOOLS_H
+#endif                          // IO_TOOLS_H
 
 /** @} */

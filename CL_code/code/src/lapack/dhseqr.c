@@ -1,10 +1,11 @@
 #include "blaswrap.h"
 #include "f2c.h"
 
-/* Subroutine */ int dhseqr_(char *job, char *compz, integer *n, integer *ilo,
-	 integer *ihi, doublereal *h__, integer *ldh, doublereal *wr, 
-	doublereal *wi, doublereal *z__, integer *ldz, doublereal *work, 
-	integer *lwork, integer *info)
+/* Subroutine */ int dhseqr_(char *job, char *compz, integer * n, integer * ilo,
+                             integer * ihi, doublereal * h__, integer * ldh,
+                             doublereal * wr, doublereal * wi, doublereal * z__,
+                             integer * ldz, doublereal * work, integer * lwork,
+                             integer * info)
 {
 /*  -- LAPACK driver routine (version 3.1) --   
        Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..   
@@ -114,7 +115,6 @@
              values of N, ILO and IHI.  The estimate is returned   
              in WORK(1).  No error message related to LWORK is   
              issued by XERBLA.  Neither H nor Z are accessed.   
-
 
        INFO  (output) INTEGER   
                =  0:  successful exit   
@@ -231,222 +231,234 @@
        .    allows up to six simultaneous shifts and a 16-by-16   
        .    deflation window.  ====   
 
-
        ==== Decode and check the input parameters. ====   
 
        Parameter adjustments */
-    /* Table of constant values */
-    static doublereal c_b11 = 0.;
-    static doublereal c_b12 = 1.;
-    static integer c__12 = 12;
-    static integer c__2 = 2;
-    static integer c__49 = 49;
-    
-    /* System generated locals */
-    address a__1[2];
-    integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__2[2], i__3;
-    doublereal d__1;
-    char ch__1[2];
-    /* Builtin functions   
-       Subroutine */ int s_cat(char *, char **, integer *, integer *, ftnlen);
-    /* Local variables */
-    static integer i__;
-    static doublereal hl[2401]	/* was [49][49] */;
-    static integer kbot, nmin;
-    extern logical lsame_(char *, char *);
-    static logical initz;
-    static doublereal workl[49];
-    static logical wantt, wantz;
-    extern /* Subroutine */ int dlaqr0_(logical *, logical *, integer *, 
-	    integer *, integer *, doublereal *, integer *, doublereal *, 
-	    doublereal *, integer *, integer *, doublereal *, integer *, 
-	    doublereal *, integer *, integer *), dlahqr_(logical *, logical *,
-	     integer *, integer *, integer *, doublereal *, integer *, 
-	    doublereal *, doublereal *, integer *, integer *, doublereal *, 
-	    integer *, integer *), dlacpy_(char *, integer *, integer *, 
-	    doublereal *, integer *, doublereal *, integer *), 
-	    dlaset_(char *, integer *, integer *, doublereal *, doublereal *, 
-	    doublereal *, integer *);
-    extern integer ilaenv_(integer *, char *, char *, integer *, integer *, 
-	    integer *, integer *, ftnlen, ftnlen);
-    extern /* Subroutine */ int xerbla_(char *, integer *);
-    static logical lquery;
+        /* Table of constant values */
+        static doublereal c_b11 = 0.;
+        static doublereal c_b12 = 1.;
+        static integer c__12 = 12;
+        static integer c__2 = 2;
+        static integer c__49 = 49;
 
+        /* System generated locals */
+        address a__1[2];
+        integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__2[2], i__3;
+        doublereal d__1;
+        char ch__1[2];
+        /* Builtin functions   
+           Subroutine */ int s_cat(char *, char **, integer *, integer *,
+                                   ftnlen);
+        /* Local variables */
+        static integer i__;
+        static doublereal hl[2401] /* was [49][49] */ ;
+        static integer kbot, nmin;
+        extern logical lsame_(char *, char *);
+        static logical initz;
+        static doublereal workl[49];
+        static logical wantt, wantz;
+        extern /* Subroutine */ int dlaqr0_(logical *, logical *, integer *,
+                                            integer *, integer *, doublereal *,
+                                            integer *, doublereal *,
+                                            doublereal *, integer *, integer *,
+                                            doublereal *, integer *,
+                                            doublereal *, integer *, integer *),
+            dlahqr_(logical *, logical *, integer *, integer *, integer *,
+                    doublereal *, integer *, doublereal *, doublereal *,
+                    integer *, integer *, doublereal *, integer *, integer *),
+            dlacpy_(char *, integer *, integer *, doublereal *, integer *,
+                    doublereal *, integer *), dlaset_(char *, integer *,
+                                                      integer *, doublereal *,
+                                                      doublereal *,
+                                                      doublereal *, integer *);
+        extern integer ilaenv_(integer *, char *, char *, integer *, integer *,
+                               integer *, integer *, ftnlen, ftnlen);
+        extern /* Subroutine */ int xerbla_(char *, integer *);
+        static logical lquery;
 
-    h_dim1 = *ldh;
-    h_offset = 1 + h_dim1;
-    h__ -= h_offset;
-    --wr;
-    --wi;
-    z_dim1 = *ldz;
-    z_offset = 1 + z_dim1;
-    z__ -= z_offset;
-    --work;
+        h_dim1 = *ldh;
+        h_offset = 1 + h_dim1;
+        h__ -= h_offset;
+        --wr;
+        --wi;
+        z_dim1 = *ldz;
+        z_offset = 1 + z_dim1;
+        z__ -= z_offset;
+        --work;
 
-    /* Function Body */
-    wantt = lsame_(job, "S");
-    initz = lsame_(compz, "I");
-    wantz = initz || lsame_(compz, "V");
-    work[1] = (doublereal) max(1,*n);
-    lquery = *lwork == -1;
+        /* Function Body */
+        wantt = lsame_(job, "S");
+        initz = lsame_(compz, "I");
+        wantz = initz || lsame_(compz, "V");
+        work[1] = (doublereal) max(1, *n);
+        lquery = *lwork == -1;
 
-    *info = 0;
-    if (! lsame_(job, "E") && ! wantt) {
-	*info = -1;
-    } else if (! lsame_(compz, "N") && ! wantz) {
-	*info = -2;
-    } else if (*n < 0) {
-	*info = -3;
-    } else if (*ilo < 1 || *ilo > max(1,*n)) {
-	*info = -4;
-    } else if (*ihi < min(*ilo,*n) || *ihi > *n) {
-	*info = -5;
-    } else if (*ldh < max(1,*n)) {
-	*info = -7;
-    } else if (*ldz < 1 || (wantz && *ldz < max(1,*n))) {
-	*info = -11;
-    } else if (*lwork < max(1,*n) && ! lquery) {
-	*info = -13;
-    }
+        *info = 0;
+        if (!lsame_(job, "E") && !wantt) {
+                *info = -1;
+        } else if (!lsame_(compz, "N") && !wantz) {
+                *info = -2;
+        } else if (*n < 0) {
+                *info = -3;
+        } else if (*ilo < 1 || *ilo > max(1, *n)) {
+                *info = -4;
+        } else if (*ihi < min(*ilo, *n) || *ihi > *n) {
+                *info = -5;
+        } else if (*ldh < max(1, *n)) {
+                *info = -7;
+        } else if (*ldz < 1 || (wantz && *ldz < max(1, *n))) {
+                *info = -11;
+        } else if (*lwork < max(1, *n) && !lquery) {
+                *info = -13;
+        }
 
-    if (*info != 0) {
+        if (*info != 0) {
 
 /*        ==== Quick return in case of invalid argument. ==== */
 
-	i__1 = -(*info);
-	xerbla_("DHSEQR", &i__1);
-	return 0;
+                i__1 = -(*info);
+                xerbla_("DHSEQR", &i__1);
+                return 0;
 
-    } else if (*n == 0) {
+        } else if (*n == 0) {
 
 /*        ==== Quick return in case N = 0; nothing to do. ==== */
 
-	return 0;
+                return 0;
 
-    } else if (lquery) {
+        } else if (lquery) {
 
 /*        ==== Quick return in case of a workspace query ==== */
 
-	dlaqr0_(&wantt, &wantz, n, ilo, ihi, &h__[h_offset], ldh, &wr[1], &wi[
-		1], ilo, ihi, &z__[z_offset], ldz, &work[1], lwork, info);
+                dlaqr0_(&wantt, &wantz, n, ilo, ihi, &h__[h_offset], ldh,
+                        &wr[1], &wi[1], ilo, ihi, &z__[z_offset], ldz, &work[1],
+                        lwork, info);
 /*        ==== Ensure reported workspace size is backward-compatible with   
           .    previous LAPACK versions. ====   
    Computing MAX */
-	d__1 = (doublereal) max(1,*n);
-	work[1] = max(d__1,work[1]);
-	return 0;
+                d__1 = (doublereal) max(1, *n);
+                work[1] = max(d__1, work[1]);
+                return 0;
 
-    } else {
+        } else {
 
 /*        ==== copy eigenvalues isolated by DGEBAL ==== */
 
-	i__1 = *ilo - 1;
-	for (i__ = 1; i__ <= i__1; ++i__) {
-	    wr[i__] = h__[i__ + i__ * h_dim1];
-	    wi[i__] = 0.;
+                i__1 = *ilo - 1;
+                for (i__ = 1; i__ <= i__1; ++i__) {
+                        wr[i__] = h__[i__ + i__ * h_dim1];
+                        wi[i__] = 0.;
 /* L10: */
-	}
-	i__1 = *n;
-	for (i__ = *ihi + 1; i__ <= i__1; ++i__) {
-	    wr[i__] = h__[i__ + i__ * h_dim1];
-	    wi[i__] = 0.;
+                }
+                i__1 = *n;
+                for (i__ = *ihi + 1; i__ <= i__1; ++i__) {
+                        wr[i__] = h__[i__ + i__ * h_dim1];
+                        wi[i__] = 0.;
 /* L20: */
-	}
+                }
 
 /*        ==== Initialize Z, if requested ==== */
 
-	if (initz) {
-	    dlaset_("A", n, n, &c_b11, &c_b12, &z__[z_offset], ldz)
-		    ;
-	}
+                if (initz) {
+                        dlaset_("A", n, n, &c_b11, &c_b12, &z__[z_offset], ldz);
+                }
 
 /*        ==== Quick return if possible ==== */
 
-	if (*ilo == *ihi) {
-	    wr[*ilo] = h__[*ilo + *ilo * h_dim1];
-	    wi[*ilo] = 0.;
-	    return 0;
-	}
+                if (*ilo == *ihi) {
+                        wr[*ilo] = h__[*ilo + *ilo * h_dim1];
+                        wi[*ilo] = 0.;
+                        return 0;
+                }
 
 /*        ==== DLAHQR/DLAQR0 crossover point ====   
 
    Writing concatenation */
-	i__2[0] = 1, a__1[0] = job;
-	i__2[1] = 1, a__1[1] = compz;
-	s_cat(ch__1, a__1, i__2, &c__2, (ftnlen)2);
-	nmin = ilaenv_(&c__12, "DHSEQR", ch__1, n, ilo, ihi, lwork, (ftnlen)6,
-		 (ftnlen)2);
-	nmin = max(11,nmin);
+                i__2[0] = 1, a__1[0] = job;
+                i__2[1] = 1, a__1[1] = compz;
+                s_cat(ch__1, a__1, i__2, &c__2, (ftnlen) 2);
+                nmin =
+                    ilaenv_(&c__12, "DHSEQR", ch__1, n, ilo, ihi, lwork,
+                            (ftnlen) 6, (ftnlen) 2);
+                nmin = max(11, nmin);
 
 /*        ==== DLAQR0 for big matrices; DLAHQR for small ones ==== */
 
-	if (*n > nmin) {
-	    dlaqr0_(&wantt, &wantz, n, ilo, ihi, &h__[h_offset], ldh, &wr[1], 
-		    &wi[1], ilo, ihi, &z__[z_offset], ldz, &work[1], lwork, 
-		    info);
-	} else {
+                if (*n > nmin) {
+                        dlaqr0_(&wantt, &wantz, n, ilo, ihi, &h__[h_offset],
+                                ldh, &wr[1], &wi[1], ilo, ihi, &z__[z_offset],
+                                ldz, &work[1], lwork, info);
+                } else {
 
 /*           ==== Small matrix ==== */
 
-	    dlahqr_(&wantt, &wantz, n, ilo, ihi, &h__[h_offset], ldh, &wr[1], 
-		    &wi[1], ilo, ihi, &z__[z_offset], ldz, info);
+                        dlahqr_(&wantt, &wantz, n, ilo, ihi, &h__[h_offset],
+                                ldh, &wr[1], &wi[1], ilo, ihi, &z__[z_offset],
+                                ldz, info);
 
-	    if (*info > 0) {
+                        if (*info > 0) {
 
 /*              ==== A rare DLAHQR failure!  DLAQR0 sometimes succeeds   
                 .    when DLAHQR fails. ==== */
 
-		kbot = *info;
+                                kbot = *info;
 
-		if (*n >= 49) {
+                                if (*n >= 49) {
 
 /*                 ==== Larger matrices have enough subdiagonal scratch   
                    .    space to call DLAQR0 directly. ==== */
 
-		    dlaqr0_(&wantt, &wantz, n, ilo, &kbot, &h__[h_offset], 
-			    ldh, &wr[1], &wi[1], ilo, ihi, &z__[z_offset], 
-			    ldz, &work[1], lwork, info);
+                                        dlaqr0_(&wantt, &wantz, n, ilo, &kbot,
+                                                &h__[h_offset], ldh, &wr[1],
+                                                &wi[1], ilo, ihi,
+                                                &z__[z_offset], ldz, &work[1],
+                                                lwork, info);
 
-		} else {
+                                } else {
 
 /*                 ==== Tiny matrices don't have enough subdiagonal   
                    .    scratch space to benefit from DLAQR0.  Hence,   
                    .    tiny matrices must be copied into a larger   
                    .    array before calling DLAQR0. ==== */
 
-		    dlacpy_("A", n, n, &h__[h_offset], ldh, hl, &c__49);
-		    hl[*n + 1 + *n * 49 - 50] = 0.;
-		    i__1 = 49 - *n;
-		    dlaset_("A", &c__49, &i__1, &c_b11, &c_b11, &hl[(*n + 1) *
-			     49 - 49], &c__49);
-		    dlaqr0_(&wantt, &wantz, &c__49, ilo, &kbot, hl, &c__49, &
-			    wr[1], &wi[1], ilo, ihi, &z__[z_offset], ldz, 
-			    workl, &c__49, info);
-		    if (wantt || *info != 0) {
-			dlacpy_("A", n, n, hl, &c__49, &h__[h_offset], ldh);
-		    }
-		}
-	    }
-	}
+                                        dlacpy_("A", n, n, &h__[h_offset], ldh,
+                                                hl, &c__49);
+                                        hl[*n + 1 + *n * 49 - 50] = 0.;
+                                        i__1 = 49 - *n;
+                                        dlaset_("A", &c__49, &i__1, &c_b11,
+                                                &c_b11, &hl[(*n + 1) * 49 - 49],
+                                                &c__49);
+                                        dlaqr0_(&wantt, &wantz, &c__49, ilo,
+                                                &kbot, hl, &c__49, &wr[1],
+                                                &wi[1], ilo, ihi,
+                                                &z__[z_offset], ldz, workl,
+                                                &c__49, info);
+                                        if (wantt || *info != 0) {
+                                                dlacpy_("A", n, n, hl, &c__49,
+                                                        &h__[h_offset], ldh);
+                                        }
+                                }
+                        }
+                }
 
 /*        ==== Clear out the trash, if necessary. ==== */
 
-	if ((wantt || *info != 0) && *n > 2) {
-	    i__1 = *n - 2;
-	    i__3 = *n - 2;
-	    dlaset_("L", &i__1, &i__3, &c_b11, &c_b11, &h__[h_dim1 + 3], ldh);
-	}
+                if ((wantt || *info != 0) && *n > 2) {
+                        i__1 = *n - 2;
+                        i__3 = *n - 2;
+                        dlaset_("L", &i__1, &i__3, &c_b11, &c_b11,
+                                &h__[h_dim1 + 3], ldh);
+                }
 
 /*        ==== Ensure reported workspace size is backward-compatible with   
           .    previous LAPACK versions. ====   
 
    Computing MAX */
-	d__1 = (doublereal) max(1,*n);
-	work[1] = max(d__1,work[1]);
-    }
+                d__1 = (doublereal) max(1, *n);
+                work[1] = max(d__1, work[1]);
+        }
 
 /*     ==== End of DHSEQR ==== */
 
-    return 0;
-} /* dhseqr_ */
-
+        return 0;
+}                               /* dhseqr_ */

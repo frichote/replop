@@ -1,13 +1,12 @@
 #include "blaswrap.h"
 #include "f2c.h"
 
-/* Subroutine */ int dlacpy_(char *uplo, integer *m, integer *n, doublereal *
-	a, integer *lda, doublereal *b, integer *ldb)
+/* Subroutine */ int dlacpy_(char *uplo, integer * m, integer * n, doublereal *
+                             a, integer * lda, doublereal * b, integer * ldb)
 {
 /*  -- LAPACK auxiliary routine (version 3.1) --   
        Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..   
        November 2006   
-
 
     Purpose   
     =======   
@@ -46,56 +45,54 @@
 
     =====================================================================   
 
-
        Parameter adjustments */
-    /* System generated locals */
-    integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
-    /* Local variables */
-    static integer i__, j;
-    extern logical lsame_(char *, char *);
+        /* System generated locals */
+        integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
+        /* Local variables */
+        static integer i__, j;
+        extern logical lsame_(char *, char *);
 
-    a_dim1 = *lda;
-    a_offset = 1 + a_dim1;
-    a -= a_offset;
-    b_dim1 = *ldb;
-    b_offset = 1 + b_dim1;
-    b -= b_offset;
+        a_dim1 = *lda;
+        a_offset = 1 + a_dim1;
+        a -= a_offset;
+        b_dim1 = *ldb;
+        b_offset = 1 + b_dim1;
+        b -= b_offset;
 
-    /* Function Body */
-    if (lsame_(uplo, "U")) {
-	i__1 = *n;
-	for (j = 1; j <= i__1; ++j) {
-	    i__2 = min(j,*m);
-	    for (i__ = 1; i__ <= i__2; ++i__) {
-		b[i__ + j * b_dim1] = a[i__ + j * a_dim1];
+        /* Function Body */
+        if (lsame_(uplo, "U")) {
+                i__1 = *n;
+                for (j = 1; j <= i__1; ++j) {
+                        i__2 = min(j, *m);
+                        for (i__ = 1; i__ <= i__2; ++i__) {
+                                b[i__ + j * b_dim1] = a[i__ + j * a_dim1];
 /* L10: */
-	    }
+                        }
 /* L20: */
-	}
-    } else if (lsame_(uplo, "L")) {
-	i__1 = *n;
-	for (j = 1; j <= i__1; ++j) {
-	    i__2 = *m;
-	    for (i__ = j; i__ <= i__2; ++i__) {
-		b[i__ + j * b_dim1] = a[i__ + j * a_dim1];
+                }
+        } else if (lsame_(uplo, "L")) {
+                i__1 = *n;
+                for (j = 1; j <= i__1; ++j) {
+                        i__2 = *m;
+                        for (i__ = j; i__ <= i__2; ++i__) {
+                                b[i__ + j * b_dim1] = a[i__ + j * a_dim1];
 /* L30: */
-	    }
+                        }
 /* L40: */
-	}
-    } else {
-	i__1 = *n;
-	for (j = 1; j <= i__1; ++j) {
-	    i__2 = *m;
-	    for (i__ = 1; i__ <= i__2; ++i__) {
-		b[i__ + j * b_dim1] = a[i__ + j * a_dim1];
+                }
+        } else {
+                i__1 = *n;
+                for (j = 1; j <= i__1; ++j) {
+                        i__2 = *m;
+                        for (i__ = 1; i__ <= i__2; ++i__) {
+                                b[i__ + j * b_dim1] = a[i__ + j * a_dim1];
 /* L50: */
-	    }
+                        }
 /* L60: */
-	}
-    }
-    return 0;
+                }
+        }
+        return 0;
 
 /*     End of DLACPY */
 
-} /* dlacpy_ */
-
+}                               /* dlacpy_ */

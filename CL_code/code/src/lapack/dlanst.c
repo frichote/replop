@@ -5,23 +5,22 @@
 
 static integer c__1 = 1;
 
-doublereal dlanst_(char *norm, integer *n, doublereal *d__, doublereal *e)
+doublereal dlanst_(char *norm, integer * n, doublereal * d__, doublereal * e)
 {
-    /* System generated locals */
-    integer i__1;
-    doublereal ret_val, d__1, d__2, d__3, d__4, d__5;
+        /* System generated locals */
+        integer i__1;
+        doublereal ret_val, d__1, d__2, d__3, d__4, d__5;
 
-    /* Builtin functions */
-    double sqrt(doublereal);
+        /* Builtin functions */
+        double sqrt(doublereal);
 
-    /* Local variables */
-    integer i__;
-    doublereal sum, scale;
-    extern logical lsame_(char *, char *);
-    doublereal anorm;
-    extern /* Subroutine */ int dlassq_(integer *, doublereal *, integer *, 
-	    doublereal *, doublereal *);
-
+        /* Local variables */
+        integer i__;
+        doublereal sum, scale;
+        extern logical lsame_(char *, char *);
+        doublereal anorm;
+        extern /* Subroutine */ int dlassq_(integer *, doublereal *, integer *,
+                                            doublereal *, doublereal *);
 
 /*  -- LAPACK auxiliary routine (version 3.1) -- */
 /*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. */
@@ -88,67 +87,73 @@ doublereal dlanst_(char *norm, integer *n, doublereal *d__, doublereal *e)
 /*     .. */
 /*     .. Executable Statements .. */
 
-    /* Parameter adjustments */
-    --e;
-    --d__;
+        /* Parameter adjustments */
+        --e;
+        --d__;
 
-    /* Function Body */
-    if (*n <= 0) {
-	anorm = 0.;
-    } else if (lsame_(norm, "M")) {
+        /* Function Body */
+        if (*n <= 0) {
+                anorm = 0.;
+        } else if (lsame_(norm, "M")) {
 
 /*        Find max(abs(A(i,j))). */
 
-	anorm = (d__1 = d__[*n], abs(d__1));
-	i__1 = *n - 1;
-	for (i__ = 1; i__ <= i__1; ++i__) {
+                anorm = (d__1 = d__[*n], abs(d__1));
+                i__1 = *n - 1;
+                for (i__ = 1; i__ <= i__1; ++i__) {
 /* Computing MAX */
-	    d__2 = anorm, d__3 = (d__1 = d__[i__], abs(d__1));
-	    anorm = max(d__2,d__3);
+                        d__2 = anorm, d__3 = (d__1 = d__[i__], abs(d__1));
+                        anorm = max(d__2, d__3);
 /* Computing MAX */
-	    d__2 = anorm, d__3 = (d__1 = e[i__], abs(d__1));
-	    anorm = max(d__2,d__3);
+                        d__2 = anorm, d__3 = (d__1 = e[i__], abs(d__1));
+                        anorm = max(d__2, d__3);
 /* L10: */
-	}
-    } else if (lsame_(norm, "O") || *(unsigned char *)
-	    norm == '1' || lsame_(norm, "I")) {
+                }
+        } else if (lsame_(norm, "O") || *(unsigned char *)
+                   norm == '1' || lsame_(norm, "I")) {
 
 /*        Find norm1(A). */
 
-	if (*n == 1) {
-	    anorm = abs(d__[1]);
-	} else {
+                if (*n == 1) {
+                        anorm = abs(d__[1]);
+                } else {
 /* Computing MAX */
-	    d__3 = abs(d__[1]) + abs(e[1]), d__4 = (d__1 = e[*n - 1], abs(
-		    d__1)) + (d__2 = d__[*n], abs(d__2));
-	    anorm = max(d__3,d__4);
-	    i__1 = *n - 1;
-	    for (i__ = 2; i__ <= i__1; ++i__) {
+                        d__3 = abs(d__[1]) + abs(e[1]), d__4 = (d__1 =
+                                                                e[*n - 1],
+                                                                abs(d__1)) +
+                            (d__2 = d__[*n], abs(d__2));
+                        anorm = max(d__3, d__4);
+                        i__1 = *n - 1;
+                        for (i__ = 2; i__ <= i__1; ++i__) {
 /* Computing MAX */
-		d__4 = anorm, d__5 = (d__1 = d__[i__], abs(d__1)) + (d__2 = e[
-			i__], abs(d__2)) + (d__3 = e[i__ - 1], abs(d__3));
-		anorm = max(d__4,d__5);
+                                d__4 = anorm, d__5 = (d__1 =
+                                                      d__[i__],
+                                                      abs(d__1)) + (d__2 =
+                                                                    e[i__],
+                                                                    abs(d__2)) +
+                                    (d__3 = e[i__ - 1], abs(d__3));
+                                anorm = max(d__4, d__5);
 /* L20: */
-	    }
-	}
-    } else if (lsame_(norm, "F") || lsame_(norm, "E")) {
+                        }
+                }
+        } else if (lsame_(norm, "F") || lsame_(norm, "E")) {
 
 /*        Find normF(A). */
 
-	scale = 0.;
-	sum = 1.;
-	if (*n > 1) {
-	    i__1 = *n - 1;
-	    dlassq_(&i__1, &e[1], &c__1, &scale, &sum);
-	    sum *= 2;
-	}
-	dlassq_(n, &d__[1], &c__1, &scale, &sum);
-	anorm = scale * sqrt(sum);
-    }
+                scale = 0.;
+                sum = 1.;
+                if (*n > 1) {
+                        i__1 = *n - 1;
+                        dlassq_(&i__1, &e[1], &c__1, &scale, &sum);
+                        sum *= 2;
+                }
+                dlassq_(n, &d__[1], &c__1, &scale, &sum);
+                anorm = scale * sqrt(sum);
+        }
 
-    ret_val = anorm;
-    return ret_val;
+        ret_val = anorm;
+        return ret_val;
 
 /*     End of DLANST */
 
-} /* dlanst_ */
+}                               /* dlanst_ */

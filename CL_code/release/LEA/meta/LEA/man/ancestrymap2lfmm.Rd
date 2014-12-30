@@ -3,7 +3,8 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Convert from \code{\link{ancestrymap}} to \code{\link{lfmm}} format}
 \description{
-A function that converts from the \code{\link{ancestrymap}} format to the \code{\link{lfmm}} format.
+A function that converts from the \code{\link{ancestrymap}} format to the 
+\code{\link{lfmm}} format.
 }
 \usage{
 ancestrymap2lfmm(input.file, output.file = NULL, force = TRUE)
@@ -21,8 +22,8 @@ By default, the name of the output file is the same name
 as the input file with a .lfmm extension.
 }
 \item{force}{
-        A boolean option. If FALSE, the input file is converted only if the output
-        file does not exist. If TRUE, convert the file anyway.
+    A boolean option. If FALSE, the input file is converted only if the output
+    file does not exist. If TRUE, convert the file anyway.
 }
 }
 \value{
@@ -54,11 +55,11 @@ data("example_ancestrymap")
 write.table(example_ancestrymap,"example.ancestrymap",
 col.names = FALSE, row.names = FALSE, quote = FALSE)
 
-# Conversion   from the ancestrymap format ("example.ancestrymap") 
-#              to the lfmm format ("example.lfmm").
-# By default,  the name of the output file is the same name
-#              as the input file with a .lfmm extension.
-# Create file: "example.lfmm".
+# Conversion    from the ancestrymap format ("example.ancestrymap") 
+#               to the lfmm format ("example.lfmm").
+# By default,   the name of the output file is the same name
+#               as the input file with a .lfmm extension.
+# Create file:  "example.lfmm".
 output = ancestrymap2lfmm("example.ancestrymap")
 
 # Conversion    from the ancestrymap format (example.ancestrymap) 

@@ -10,12 +10,14 @@ for genotypic matrices in the functions \code{\link{sNMF}},
 \code{\link{LFMM}}, and \code{\link{pca}}. 
 }
 \details{
-The \code{lfmm} format has one row for each individual. Each row contains one value 
-at each loci (separated by spaces or tabulations) corresponding to the number of alleles. 
-The number of alleles corresponds to the number of reference alleles or the number of 
-derived alleles. Missing genotypes are encoded by the value -9 or 9. 
+The \code{lfmm} format has one row for each individual. Each row contains one 
+value at each loci (separated by spaces or tabulations) corresponding to the 
+number of alleles. The number of alleles corresponds to the number of reference
+alleles or the number of derived alleles. Missing genotypes are encoded by the
+value -9 or 9. 
 
-Here is an example of a genotypic matrix using the lfmm format with 3 individuals and 4 loci: 
+Here is an example of a genotypic matrix using the lfmm format with 3 
+individuals and 4 loci: 
 \preformatted{
 1 0 0 1
 1 1 9 2

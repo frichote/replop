@@ -11,12 +11,19 @@ write.geno(R, output.file)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{R}{
-        A matrix containing the genotypes with one line for each individual and one column for each SNP. 
-	The missing genotypes have to be encoded with the value 9.
+    A matrix containing the genotypes with one line for each individual and 
+    one column for each SNP. The missing genotypes have to be encoded with the
+    value 9.
 }
 \item{output.file}{
 A character string containing a path to the output file,
 a genotypic matrix in the \code{geno} format.
+}
+}
+\value{
+\item{output.file}{
+    A character string containing a path to the output file,
+    a genotypic matrix in the \code{geno} format.
 }
 }
 \author{
@@ -38,7 +45,7 @@ a genotypic matrix in the \code{geno} format.
 data("tutorial")
 
 # Write R in a file called "genotypes.geno".
-# Create file:	"genotypes.geno".
+# Create file:    "genotypes.geno".
 write.geno(tutorial.R,"genotypes.geno")
 
 # Read the file "genotypes.geno".

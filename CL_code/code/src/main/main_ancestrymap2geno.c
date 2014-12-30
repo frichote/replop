@@ -26,23 +26,22 @@
 #include "../convert/register_convert.h"
 #include "../io/read.h"
 
-int main (int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 
-	int M;	 			// number of SNPs
-	int N;				// number of individuals
-	char input_file[512];		// input file
-	char output_file[512];	// output genotype file
+        int M;                  // number of SNPs
+        int N;                  // number of individuals
+        char input_file[512];   // input file
+        char output_file[512];  // output genotype file
 
-	// analyze command-line
-	analyse_param_convert(argc, argv, input_file, output_file,"geno");
+        // analyze command-line
+        analyse_param_convert(argc, argv, input_file, output_file, "geno");
 
-	// run the function
-	ancestrymap2geno(input_file, output_file, &N, &M);
+        // run the function
+        ancestrymap2geno(input_file, output_file, &N, &M);
 
-	printf("\n\t- number of individuals detected:\t\t%d\n",N);
-	printf("\t- number of loci detected:\t\t\t%d\n\n",M);
-		
+        printf("\n\t- number of individuals detected:\t\t%d\n", N);
+        printf("\t- number of loci detected:\t\t\t%d\n\n", M);
 
-	return 0;
+        return 0;
 }
-

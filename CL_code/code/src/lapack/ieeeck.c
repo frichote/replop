@@ -1,14 +1,13 @@
 #include "f2c.h"
 #include "blaswrap.h"
 
-integer ieeeck_(integer *ispec, real *zero, real *one)
+integer ieeeck_(integer * ispec, real * zero, real * one)
 {
-    /* System generated locals */
-    integer ret_val;
+        /* System generated locals */
+        integer ret_val;
 
-    /* Local variables */
-    real nan1, nan2, nan3, nan4, nan5, nan6, neginf, posinf, negzro, newzro;
-
+        /* Local variables */
+        real nan1, nan2, nan3, nan4, nan5, nan6, neginf, posinf, negzro, newzro;
 
 /*  -- LAPACK auxiliary routine (version 3.1) -- */
 /*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. */
@@ -49,107 +48,103 @@ integer ieeeck_(integer *ispec, real *zero, real *one)
 /*     .. Local Scalars .. */
 /*     .. */
 /*     .. Executable Statements .. */
-    ret_val = 1;
+        ret_val = 1;
 
-    posinf = *one / *zero;
-    if (posinf <= *one) {
-	ret_val = 0;
-	return ret_val;
-    }
+        posinf = *one / *zero;
+        if (posinf <= *one) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    neginf = -(*one) / *zero;
-    if (neginf >= *zero) {
-	ret_val = 0;
-	return ret_val;
-    }
+        neginf = -(*one) / *zero;
+        if (neginf >= *zero) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    negzro = *one / (neginf + *one);
-    if (negzro != *zero) {
-	ret_val = 0;
-	return ret_val;
-    }
+        negzro = *one / (neginf + *one);
+        if (negzro != *zero) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    neginf = *one / negzro;
-    if (neginf >= *zero) {
-	ret_val = 0;
-	return ret_val;
-    }
+        neginf = *one / negzro;
+        if (neginf >= *zero) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    newzro = negzro + *zero;
-    if (newzro != *zero) {
-	ret_val = 0;
-	return ret_val;
-    }
+        newzro = negzro + *zero;
+        if (newzro != *zero) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    posinf = *one / newzro;
-    if (posinf <= *one) {
-	ret_val = 0;
-	return ret_val;
-    }
+        posinf = *one / newzro;
+        if (posinf <= *one) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    neginf *= posinf;
-    if (neginf >= *zero) {
-	ret_val = 0;
-	return ret_val;
-    }
+        neginf *= posinf;
+        if (neginf >= *zero) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    posinf *= posinf;
-    if (posinf <= *one) {
-	ret_val = 0;
-	return ret_val;
-    }
-
-
-
+        posinf *= posinf;
+        if (posinf <= *one) {
+                ret_val = 0;
+                return ret_val;
+        }
 
 /*     Return if we were only asked to check infinity arithmetic */
 
-    if (*ispec == 0) {
-	return ret_val;
-    }
+        if (*ispec == 0) {
+                return ret_val;
+        }
 
-    nan1 = posinf + neginf;
+        nan1 = posinf + neginf;
 
-    nan2 = posinf / neginf;
+        nan2 = posinf / neginf;
 
-    nan3 = posinf / posinf;
+        nan3 = posinf / posinf;
 
-    nan4 = posinf * *zero;
+        nan4 = posinf * *zero;
 
-    nan5 = neginf * negzro;
+        nan5 = neginf * negzro;
 
-    nan6 = nan5 * 0.f;
+        nan6 = nan5 * 0.f;
 
-    if (nan1 == nan1) {
-	ret_val = 0;
-	return ret_val;
-    }
+        if (nan1 == nan1) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    if (nan2 == nan2) {
-	ret_val = 0;
-	return ret_val;
-    }
+        if (nan2 == nan2) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    if (nan3 == nan3) {
-	ret_val = 0;
-	return ret_val;
-    }
+        if (nan3 == nan3) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    if (nan4 == nan4) {
-	ret_val = 0;
-	return ret_val;
-    }
+        if (nan4 == nan4) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    if (nan5 == nan5) {
-	ret_val = 0;
-	return ret_val;
-    }
+        if (nan5 == nan5) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    if (nan6 == nan6) {
-	ret_val = 0;
-	return ret_val;
-    }
+        if (nan6 == nan6) {
+                ret_val = 0;
+                return ret_val;
+        }
 
-    return ret_val;
-} /* ieeeck_ */
-
+        return ret_val;
+}                               /* ieeeck_ */

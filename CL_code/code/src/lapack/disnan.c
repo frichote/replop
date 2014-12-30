@@ -13,14 +13,13 @@
 #include "f2c.h"
 #include "blaswrap.h"
 
-logical disnan_(doublereal *din)
+logical disnan_(doublereal * din)
 {
-    /* System generated locals */
-    logical ret_val;
+        /* System generated locals */
+        logical ret_val;
 
-    /* Local variables */
-    extern logical dlaisnan_(doublereal *, doublereal *);
-
+        /* Local variables */
+        extern logical dlaisnan_(doublereal *, doublereal *);
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */
 /*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. */
@@ -47,6 +46,6 @@ logical disnan_(doublereal *din)
 /*  .. External Functions .. */
 /*  .. */
 /*  .. Executable Statements .. */
-    ret_val = dlaisnan_(din, din);
-    return ret_val;
-} /* disnan_ */
+        ret_val = dlaisnan_(din, din);
+        return ret_val;
+}                               /* disnan_ */

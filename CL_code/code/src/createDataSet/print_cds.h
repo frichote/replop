@@ -7,7 +7,6 @@
  * @brief functions to print help and a summary of the parameters
  */
 
-
 #ifndef PRINT_CDS_H
 #define PRINT_CDS_H
 
@@ -25,9 +24,9 @@ void print_help_cds();
  * @param[in] e     percentage of missing data
  * @param[in] input         genotype file
  */
-void print_summary_cds (int N, int M, long long seed,
-                        double e, char *input, char *output);
+void print_summary_cds(int N, int M, long long seed,
+                       double e, char *input, char *output);
 
-#endif // PRINT_CDS_H
+#endif                          // PRINT_CDS_H
 
 /** @} */

@@ -13,24 +13,23 @@
 #include "f2c.h"
 #include "blaswrap.h"
 
-integer dlaneg_(integer *n, doublereal *d__, doublereal *lld, doublereal *
-	sigma, doublereal *pivmin, integer *r__)
+integer dlaneg_(integer * n, doublereal * d__, doublereal * lld, doublereal *
+                sigma, doublereal * pivmin, integer * r__)
 {
-    /* System generated locals */
-    integer ret_val, i__1, i__2, i__3, i__4;
+        /* System generated locals */
+        integer ret_val, i__1, i__2, i__3, i__4;
 
-    /* Local variables */
-    integer j;
-    doublereal p, t;
-    integer bj;
-    doublereal tmp;
-    integer neg1, neg2;
-    doublereal bsav, gamma, dplus;
-    extern logical disnan_(doublereal *);
-    integer negcnt;
-    logical sawnan;
-    doublereal dminus;
-
+        /* Local variables */
+        integer j;
+        doublereal p, t;
+        integer bj;
+        doublereal tmp;
+        integer neg1, neg2;
+        doublereal bsav, gamma, dplus;
+        extern logical disnan_(doublereal *);
+        integer negcnt;
+        logical sawnan;
+        doublereal dminus;
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */
 /*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. */
@@ -111,108 +110,108 @@ integer dlaneg_(integer *n, doublereal *d__, doublereal *lld, doublereal *
 /*     .. External Functions .. */
 /*     .. */
 /*     .. Executable Statements .. */
-    /* Parameter adjustments */
-    --lld;
-    --d__;
+        /* Parameter adjustments */
+        --lld;
+        --d__;
 
-    /* Function Body */
-    negcnt = 0;
+        /* Function Body */
+        negcnt = 0;
 /*     I) upper part: L D L^T - SIGMA I = L+ D+ L+^T */
-    t = -(*sigma);
-    i__1 = *r__ - 1;
-    for (bj = 1; bj <= i__1; bj += 128) {
-	neg1 = 0;
-	bsav = t;
+        t = -(*sigma);
+        i__1 = *r__ - 1;
+        for (bj = 1; bj <= i__1; bj += 128) {
+                neg1 = 0;
+                bsav = t;
 /* Computing MIN */
-	i__3 = bj + 127, i__4 = *r__ - 1;
-	i__2 = min(i__3,i__4);
-	for (j = bj; j <= i__2; ++j) {
-	    dplus = d__[j] + t;
-	    if (dplus < 0.) {
-		++neg1;
-	    }
-	    tmp = t / dplus;
-	    t = tmp * lld[j] - *sigma;
+                i__3 = bj + 127, i__4 = *r__ - 1;
+                i__2 = min(i__3, i__4);
+                for (j = bj; j <= i__2; ++j) {
+                        dplus = d__[j] + t;
+                        if (dplus < 0.) {
+                                ++neg1;
+                        }
+                        tmp = t / dplus;
+                        t = tmp * lld[j] - *sigma;
 /* L21: */
-	}
-	sawnan = disnan_(&t);
+                }
+                sawnan = disnan_(&t);
 /*     Run a slower version of the above loop if a NaN is detected. */
 /*     A NaN should occur only with a zero pivot after an infinite */
 /*     pivot.  In that case, substituting 1 for T/DPLUS is the */
 /*     correct limit. */
-	if (sawnan) {
-	    neg1 = 0;
-	    t = bsav;
+                if (sawnan) {
+                        neg1 = 0;
+                        t = bsav;
 /* Computing MIN */
-	    i__3 = bj + 127, i__4 = *r__ - 1;
-	    i__2 = min(i__3,i__4);
-	    for (j = bj; j <= i__2; ++j) {
-		dplus = d__[j] + t;
-		if (dplus < 0.) {
-		    ++neg1;
-		}
-		tmp = t / dplus;
-		if (disnan_(&tmp)) {
-		    tmp = 1.;
-		}
-		t = tmp * lld[j] - *sigma;
+                        i__3 = bj + 127, i__4 = *r__ - 1;
+                        i__2 = min(i__3, i__4);
+                        for (j = bj; j <= i__2; ++j) {
+                                dplus = d__[j] + t;
+                                if (dplus < 0.) {
+                                        ++neg1;
+                                }
+                                tmp = t / dplus;
+                                if (disnan_(&tmp)) {
+                                        tmp = 1.;
+                                }
+                                t = tmp * lld[j] - *sigma;
 /* L22: */
-	    }
-	}
-	negcnt += neg1;
+                        }
+                }
+                negcnt += neg1;
 /* L210: */
-    }
+        }
 
 /*     II) lower part: L D L^T - SIGMA I = U- D- U-^T */
-    p = d__[*n] - *sigma;
-    i__1 = *r__;
-    for (bj = *n - 1; bj >= i__1; bj += -128) {
-	neg2 = 0;
-	bsav = p;
+        p = d__[*n] - *sigma;
+        i__1 = *r__;
+        for (bj = *n - 1; bj >= i__1; bj += -128) {
+                neg2 = 0;
+                bsav = p;
 /* Computing MAX */
-	i__3 = bj - 127;
-	i__2 = max(i__3,*r__);
-	for (j = bj; j >= i__2; --j) {
-	    dminus = lld[j] + p;
-	    if (dminus < 0.) {
-		++neg2;
-	    }
-	    tmp = p / dminus;
-	    p = tmp * d__[j] - *sigma;
+                i__3 = bj - 127;
+                i__2 = max(i__3, *r__);
+                for (j = bj; j >= i__2; --j) {
+                        dminus = lld[j] + p;
+                        if (dminus < 0.) {
+                                ++neg2;
+                        }
+                        tmp = p / dminus;
+                        p = tmp * d__[j] - *sigma;
 /* L23: */
-	}
-	sawnan = disnan_(&p);
+                }
+                sawnan = disnan_(&p);
 /*     As above, run a slower version that substitutes 1 for Inf/Inf. */
 
-	if (sawnan) {
-	    neg2 = 0;
-	    p = bsav;
+                if (sawnan) {
+                        neg2 = 0;
+                        p = bsav;
 /* Computing MAX */
-	    i__3 = bj - 127;
-	    i__2 = max(i__3,*r__);
-	    for (j = bj; j >= i__2; --j) {
-		dminus = lld[j] + p;
-		if (dminus < 0.) {
-		    ++neg2;
-		}
-		tmp = p / dminus;
-		if (disnan_(&tmp)) {
-		    tmp = 1.;
-		}
-		p = tmp * d__[j] - *sigma;
+                        i__3 = bj - 127;
+                        i__2 = max(i__3, *r__);
+                        for (j = bj; j >= i__2; --j) {
+                                dminus = lld[j] + p;
+                                if (dminus < 0.) {
+                                        ++neg2;
+                                }
+                                tmp = p / dminus;
+                                if (disnan_(&tmp)) {
+                                        tmp = 1.;
+                                }
+                                p = tmp * d__[j] - *sigma;
 /* L24: */
-	    }
-	}
-	negcnt += neg2;
+                        }
+                }
+                negcnt += neg2;
 /* L230: */
-    }
+        }
 
 /*     III) Twist index */
 /*       T was shifted by SIGMA initially. */
-    gamma = t + *sigma + p;
-    if (gamma < 0.) {
-	++negcnt;
-    }
-    ret_val = negcnt;
-    return ret_val;
-} /* dlaneg_ */
+        gamma = t + *sigma + p;
+        if (gamma < 0.) {
+                ++negcnt;
+        }
+        ret_val = negcnt;
+        return ret_val;
+}                               /* dlaneg_ */

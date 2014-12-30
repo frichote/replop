@@ -32,24 +32,24 @@
 
 void slice_tBB(void *G)
 {
-	Multithreading_matrix Ma = (Multithreading_matrix) G;
-	double *A = Ma->A;
-	double *B = Ma->B;
-	int K = Ma->K;
-	int M = Ma->M;
+        Multithreading_matrix Ma = (Multithreading_matrix) G;
+        double *A = Ma->A;
+        double *B = Ma->B;
+        int K = Ma->K;
+        int M = Ma->M;
 
-	int nb_data = K;
-	int num_thrd = Ma->num_thrd;
-	int s = Ma->slice;
-	int from = (s * nb_data) / num_thrd;	// note that this 'slicing' works fine
-	int to = ((s + 1) * nb_data) / num_thrd;	// even if SIZE is not divisible by num_thrd
-	int j, k1, k2;
+        int nb_data = K;
+        int num_thrd = Ma->num_thrd;
+        int s = Ma->slice;
+        int from = (s * nb_data) / num_thrd;    // note that this 'slicing' works fine
+        int to = ((s + 1) * nb_data) / num_thrd;        // even if SIZE is not divisible by num_thrd
+        int j, k1, k2;
 
-	// t(B) B
+        // t(B) B
         for (k1 = from; k1 < to; k1++) {
                 for (j = 0; j < M; j++) {
                         for (k2 = 0; k2 < K; k2++) {
-                                A[k1*K+k2] += B[j*K+k1] * B[j*K+k2];
+                                A[k1 * K + k2] += B[j * K + k1] * B[j * K + k2];
                         }
                 }
         }

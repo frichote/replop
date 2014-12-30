@@ -55,10 +55,11 @@ void print_head_licence_lfmm()
 void print_head_lfmm()
 {
         print_head_licence_lfmm();
-        printf("****                         LFMM Version 1.3                                   *****\n"
-               "****           E. Frichot, S. Schoville, G. Bouchard, O. Francois               *****\n"
-               "****                         Please cite our paper !                            *****\n"
-               "****   Information at http://membres-timc.imag.fr/Olivier.Francois/lfmm/        *****\n\n");
+        printf
+            ("****                         LFMM Version 1.3                                   *****\n"
+             "****           E. Frichot, S. Schoville, G. Bouchard, O. Francois               *****\n"
+             "****                         Please cite our paper !                            *****\n"
+             "****   Information at http://membres-timc.imag.fr/Olivier.Francois/lfmm/        *****\n\n");
 }
 
 // print_help
@@ -87,11 +88,11 @@ void print_help_lfmm()
 // print_summary
 
 void print_summary_lfmm(LFMM_param param)
-	/*
-	int N, int M, int K, int D, int d, int Niter, int burn,
-                   int m, char *output, char *input, char *cov_file, 
-                   int num_thrd, long long s, int all)
-	*/
+        /*
+           int N, int M, int K, int D, int d, int Niter, int burn,
+           int m, char *output, char *input, char *cov_file, 
+           int num_thrd, long long s, int all)
+         */
 {
 
         printf("Summary of the options:\n\n"
@@ -106,13 +107,14 @@ void print_summary_lfmm(LFMM_param param)
                "        -x (genotype file)              %s\n"
                "        -v (variable file)              %s\n"
                "        -D (number of covariables)      %d\n",
-               param->n, param->L, param->K, param->output_file, 
-		param->Niter, param->burn, param->seed, param->num_thrd, 
-		param->input_file, param->cov_file, param->D);
+               param->n, param->L, param->K, param->output_file,
+               param->Niter, param->burn, param->seed, param->num_thrd,
+               param->input_file, param->cov_file, param->D);
 
         // if missing data
         if (param->nd)
-                printf("        -d (the dth covariable)         %d\n",param->nd);
+                printf("        -d (the dth covariable)         %d\n",
+                       param->nd);
         if (param->all)
                 printf("        -a (all variable at the same time)\n");
         if (param->missing_data)
@@ -125,14 +127,15 @@ void print_summary_lfmm(LFMM_param param)
 
 void print_perc(double *perc, int K, int D)
 {
-	int k, d;
+        int k, d;
 
-	printf("\tPercentage of variance:\n");
-	for (d = 0; d < D; d++)
-		printf("\t\tvar%d\t\t%3.3G %%\n", d ,perc[1+d] * 100);
-	for (k = 0; k < K; k++)
-		printf("\t\tfactor%d\t\t%3.3G %%\n", k+1,perc[1+D+k] * 100);
-	printf("\t\tresidual\t%3.3G %%\n",perc[0] * 100);
-	printf("\n");
+        printf("\tPercentage of variance:\n");
+        for (d = 0; d < D; d++)
+                printf("\t\tvar%d\t\t%3.3G %%\n", d, perc[1 + d] * 100);
+        for (k = 0; k < K; k++)
+                printf("\t\tfactor%d\t\t%3.3G %%\n", k + 1,
+                       perc[1 + D + k] * 100);
+        printf("\t\tresidual\t%3.3G %%\n", perc[0] * 100);
+        printf("\n");
 
 }

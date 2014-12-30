@@ -8,7 +8,8 @@ test_character <- function(name, param, default)
             return(default);
     } else {
         if(!is.character(param)) {
-            p = paste("'",name,"' argument has to be of type character.", sep="");
+            p = paste("'",name,"' argument has to be of type character.", 
+                sep="");
             stop(p);
         }
     }

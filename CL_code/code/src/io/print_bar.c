@@ -24,34 +24,34 @@
 
 void init_bar(int *i, int *j)
 {
-	int n;
-	*i = 0;
-	*j = 0;
-	printf("\t[");
-	for (n = 0; n < 75; n++)
-		printf(" ");
-	printf("]\n\t[");
-	
+        int n;
+        *i = 0;
+        *j = 0;
+        printf("\t[");
+        for (n = 0; n < 75; n++)
+                printf(" ");
+        printf("]\n\t[");
+
 }
 
 // print_bar
 
 void print_bar(int *i, int *j, int Niter)
 {
-	int shell_size = 75;
-	int nb = (((*j)+1) * shell_size) / Niter;
+        int shell_size = 75;
+        int nb = (((*j) + 1) * shell_size) / Niter;
 
-	(*j) ++;
-	while (*i < nb) { 
-		(*i) ++;
-		printf("=");
-	}
-	fflush(stdout);
+        (*j)++;
+        while (*i < nb) {
+                (*i)++;
+                printf("=");
+        }
+        fflush(stdout);
 }
 
 // final bar
 
 void final_bar()
 {
-	printf("]\n");
+        printf("]\n");
 }

@@ -34,46 +34,46 @@
 
 void lfmm_k0(LFMM_param param)
 {
-	double *var_beta;
-	double *CCt;
+        double *var_beta;
+        double *CCt;
 
-	// temporary parameters
-	int M = param->L;
-	int N = param->n;
-	int D = param->mD;
-	float *dat = param->dat;
-	int *I = param->I;
-	double *C = param->mC;
-	double *zscore = param->zscore;
-	double *beta = param->beta;
-	int missing_data = param->missing_data;
-	double perc_var;
+        // temporary parameters
+        int M = param->L;
+        int N = param->n;
+        int D = param->mD;
+        float *dat = param->dat;
+        int *I = param->I;
+        double *C = param->mC;
+        double *zscore = param->zscore;
+        double *beta = param->beta;
+        int missing_data = param->missing_data;
+        double perc_var;
 
-	// allocate memory
-	var_beta = (double *) malloc(D * M * sizeof(double));
-	CCt = (double *)calloc(D * D, sizeof(double));
+        // allocate memory
+        var_beta = (double *)malloc(D * M * sizeof(double));
+        CCt = (double *)calloc(D * D, sizeof(double));
 
-	// input missing dat
-	if (missing_data)
-		inputation_freq(dat, I, N, M);
+        // input missing dat
+        if (missing_data)
+                inputation_freq(dat, I, N, M);
 
-	// calculate C C^t
-	create_CCt(CCt, C, D, N);
+        // calculate C C^t
+        create_CCt(CCt, C, D, N);
 
-	// calculate E[beta] and var[beta] 
-	calc_beta_k0(C, dat, beta, CCt, var_beta, M, N, D, &perc_var);
+        // calculate E[beta] and var[beta] 
+        calc_beta_k0(C, dat, beta, CCt, var_beta, M, N, D, &perc_var);
 
-	// calculate zscore
-	zscore_calc_k0(zscore, beta, var_beta, D, M);
+        // calculate zscore
+        zscore_calc_k0(zscore, beta, var_beta, D, M);
 
-	// check zscore
-	if (check_mat(zscore, M, 0, 1))
-		print_error_global("nan", NULL, 0);
+        // check zscore
+        if (check_mat(zscore, M, 0, 1))
+                print_error_global("nan", NULL, 0);
 
-	// save ED and DIC
-	printf("\tED: NA\t DIC: NA \n\n");
+        // save ED and DIC
+        printf("\tED: NA\t DIC: NA \n\n");
 
-	// free memory
-	free(var_beta);
-	free(CCt);
+        // free memory
+        free(var_beta);
+        free(CCt);
 }

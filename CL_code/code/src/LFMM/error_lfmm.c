@@ -25,28 +25,29 @@
 void print_error_lfmm(char *msg, char *file, int n)
 {
 
-	printf("\n");
-	if (!strcmp(msg, "cmd")) {
-		printf("ERROR: no value for %s.\n\n", file);
-		print_help_lfmm();
-	} else if (!strcmp(msg, "option")) {
-		printf("ERROR: the following option is mandatory: %s.\n\n",
-		       file);
-		print_help_lfmm();
-	} else if (!strcmp(msg, "missing")) {
-		printf("ERROR: one of the following options is missing or not positive:"
-		     " -K / -b / -i / -p / -d.\n\n");
-		print_help_lfmm();
-	} else if (!strcmp(msg, "basic")) {
-		printf("ERROR: the command is not written correctly.\n\n");
-		print_help_lfmm();
-	} else if (!strcmp(msg, "specific")) {
-		printf("ERROR: %s.\n\n", file);
-		print_help_lfmm();
-	} else {
-		printf("ERROR: Internal error.\n");
-	}
+        printf("\n");
+        if (!strcmp(msg, "cmd")) {
+                printf("ERROR: no value for %s.\n\n", file);
+                print_help_lfmm();
+        } else if (!strcmp(msg, "option")) {
+                printf("ERROR: the following option is mandatory: %s.\n\n",
+                       file);
+                print_help_lfmm();
+        } else if (!strcmp(msg, "missing")) {
+                printf
+                    ("ERROR: one of the following options is missing or not positive:"
+                     " -K / -b / -i / -p / -d.\n\n");
+                print_help_lfmm();
+        } else if (!strcmp(msg, "basic")) {
+                printf("ERROR: the command is not written correctly.\n\n");
+                print_help_lfmm();
+        } else if (!strcmp(msg, "specific")) {
+                printf("ERROR: %s.\n\n", file);
+                print_help_lfmm();
+        } else {
+                printf("ERROR: Internal error.\n");
+        }
 
-	printf("\n");
-	exit(1);
+        printf("\n");
+        exit(1);
 }

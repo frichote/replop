@@ -28,8 +28,7 @@
  * @param num_thrd      the number of processes used
  */
 void rand_matrix(double *A, double *m_A, double *inv_cov_A, double alpha_R,
-        int K, int N, int num_thrd);
-
+                 int K, int N, int num_thrd);
 
 /** 
  * calculate inv_cov = inv(alphaR A %*% t(A) + diag(alpha))
@@ -42,8 +41,8 @@ void rand_matrix(double *A, double *m_A, double *inv_cov_A, double alpha_R,
  * @param M     a size
  * @param num_thrd      the number of processes used
  */
-void create_inv_cov(double *inv_cov, double* alpha, double alpha_R,
-       double *A, int K, int M, int num_thrd);
+void create_inv_cov(double *inv_cov, double *alpha, double alpha_R,
+                    double *A, int K, int M, int num_thrd);
 
 /** calculate m = A * (R - B'*C))' if mode = 1 or m = A * (R - B'*C) if mode = °
  * @param A	matrix (of size KxM)
@@ -59,7 +58,7 @@ void create_inv_cov(double *inv_cov, double* alpha, double alpha_R,
  * @param mode	mode
  */
 void create_m(double *A, float *R, double *B, double *C, double *m,
-                int M, int N, int J, int K, int num_thrd, int mode);
+              int M, int N, int J, int K, int num_thrd, int mode);
 
 /** calculates the quantiles of dist for prob
  *
@@ -101,7 +100,8 @@ void pvalue_qvalue(double *pvalues, double *qvalues, int n);
  * @param cur	the length of the GS chain (without burnin)
  * @param D	number of lines of sum or sum2	
  */
-void zscore_calc(double *zscore, double *sum, double *sum2, int n, int cur, int D);
+void zscore_calc(double *zscore, double *sum, double *sum2, int n, int cur,
+                 int D);
 
 /**
  * add beta to the sum, called sum
@@ -178,8 +178,8 @@ void write_DIC(char *file_data, double deviance, double DIC);
  * @param dev		deviance
  * @param DIC		DIC
  */
-void write_zscore_double(char *output_file, int M, double *zscore, int D, int all, 
-	int nd, int K, int N, double dev, double DIC);
+void write_zscore_double(char *output_file, int M, double *zscore, int D,
+                         int all, int nd, int K, int N, double dev, double DIC);
 
 /**
  * compute the current residual variance
@@ -206,7 +206,7 @@ double var_data(LFMM_param param, LFMM_GS_param GS_param);
  * @param num_thrd	the number of thread used
  */
 //double var_data_inputation(float *R, int *I, double *U, double *V, double *C, 
-//	double *beta, int N, int M, int K, int D, double *thrd_m2, int num_thrd);
+//      double *beta, int N, int M, int K, int D, double *thrd_m2, int num_thrd);
 
 /**
  * input missing values with U'*V+C*beta
@@ -223,8 +223,8 @@ double var_data(LFMM_param param, LFMM_GS_param GS_param);
  * @param D     the number of covariables
  * @param K     the number of latent factors
  */
-void inputation_lfmm(float *R, double *U, double *V, double *C, double *beta, int *I,
-		int N, int M, int K, int D);
+void inputation_lfmm(float *R, double *U, double *V, double *C, double *beta,
+                     int *I, int N, int M, int K, int D);
 
 /**
  * input missing values with empirical frequencies
@@ -237,6 +237,6 @@ void inputation_lfmm(float *R, double *U, double *V, double *C, double *beta, in
  */
 void inputation_freq(float *R, int *I, int N, int M);
 
-#endif // DATA_LFMM_H
+#endif                          // DATA_LFMM_H
 
 /** @} */

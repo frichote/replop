@@ -13,21 +13,21 @@
 #include "f2c.h"
 #include "blaswrap.h"
 
-/* Subroutine */ int dlarrc_(char *jobt, integer *n, doublereal *vl, 
-	doublereal *vu, doublereal *d__, doublereal *e, doublereal *pivmin, 
-	integer *eigcnt, integer *lcnt, integer *rcnt, integer *info)
+/* Subroutine */ int dlarrc_(char *jobt, integer * n, doublereal * vl,
+                             doublereal * vu, doublereal * d__, doublereal * e,
+                             doublereal * pivmin, integer * eigcnt,
+                             integer * lcnt, integer * rcnt, integer * info)
 {
-    /* System generated locals */
-    integer i__1;
-    doublereal d__1;
+        /* System generated locals */
+        integer i__1;
+        doublereal d__1;
 
-    /* Local variables */
-    integer i__;
-    doublereal sl, su, tmp, tmp2;
-    logical matt;
-    extern logical lsame_(char *, char *);
-    doublereal lpivot, rpivot;
-
+        /* Local variables */
+        integer i__;
+        doublereal sl, su, tmp, tmp2;
+        logical matt;
+        extern logical lsame_(char *, char *);
+        doublereal lpivot, rpivot;
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */
 /*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. */
@@ -100,84 +100,84 @@
 /*     .. */
 /*     .. Executable Statements .. */
 
-    /* Parameter adjustments */
-    --e;
-    --d__;
+        /* Parameter adjustments */
+        --e;
+        --d__;
 
-    /* Function Body */
-    *info = 0;
-    *lcnt = 0;
-    *rcnt = 0;
-    *eigcnt = 0;
-    matt = lsame_(jobt, "T");
-    if (matt) {
+        /* Function Body */
+        *info = 0;
+        *lcnt = 0;
+        *rcnt = 0;
+        *eigcnt = 0;
+        matt = lsame_(jobt, "T");
+        if (matt) {
 /*        Sturm sequence count on T */
-	lpivot = d__[1] - *vl;
-	rpivot = d__[1] - *vu;
-	if (lpivot <= 0.) {
-	    ++(*lcnt);
-	}
-	if (rpivot <= 0.) {
-	    ++(*rcnt);
-	}
-	i__1 = *n - 1;
-	for (i__ = 1; i__ <= i__1; ++i__) {
+                lpivot = d__[1] - *vl;
+                rpivot = d__[1] - *vu;
+                if (lpivot <= 0.) {
+                        ++(*lcnt);
+                }
+                if (rpivot <= 0.) {
+                        ++(*rcnt);
+                }
+                i__1 = *n - 1;
+                for (i__ = 1; i__ <= i__1; ++i__) {
 /* Computing 2nd power */
-	    d__1 = e[i__];
-	    tmp = d__1 * d__1;
-	    lpivot = d__[i__ + 1] - *vl - tmp / lpivot;
-	    rpivot = d__[i__ + 1] - *vu - tmp / rpivot;
-	    if (lpivot <= 0.) {
-		++(*lcnt);
-	    }
-	    if (rpivot <= 0.) {
-		++(*rcnt);
-	    }
+                        d__1 = e[i__];
+                        tmp = d__1 * d__1;
+                        lpivot = d__[i__ + 1] - *vl - tmp / lpivot;
+                        rpivot = d__[i__ + 1] - *vu - tmp / rpivot;
+                        if (lpivot <= 0.) {
+                                ++(*lcnt);
+                        }
+                        if (rpivot <= 0.) {
+                                ++(*rcnt);
+                        }
 /* L10: */
-	}
-    } else {
+                }
+        } else {
 /*        Sturm sequence count on L D L^T */
-	sl = -(*vl);
-	su = -(*vu);
-	i__1 = *n - 1;
-	for (i__ = 1; i__ <= i__1; ++i__) {
-	    lpivot = d__[i__] + sl;
-	    rpivot = d__[i__] + su;
-	    if (lpivot <= 0.) {
-		++(*lcnt);
-	    }
-	    if (rpivot <= 0.) {
-		++(*rcnt);
-	    }
-	    tmp = e[i__] * d__[i__] * e[i__];
+                sl = -(*vl);
+                su = -(*vu);
+                i__1 = *n - 1;
+                for (i__ = 1; i__ <= i__1; ++i__) {
+                        lpivot = d__[i__] + sl;
+                        rpivot = d__[i__] + su;
+                        if (lpivot <= 0.) {
+                                ++(*lcnt);
+                        }
+                        if (rpivot <= 0.) {
+                                ++(*rcnt);
+                        }
+                        tmp = e[i__] * d__[i__] * e[i__];
 
-	    tmp2 = tmp / lpivot;
-	    if (tmp2 == 0.) {
-		sl = tmp - *vl;
-	    } else {
-		sl = sl * tmp2 - *vl;
-	    }
+                        tmp2 = tmp / lpivot;
+                        if (tmp2 == 0.) {
+                                sl = tmp - *vl;
+                        } else {
+                                sl = sl * tmp2 - *vl;
+                        }
 
-	    tmp2 = tmp / rpivot;
-	    if (tmp2 == 0.) {
-		su = tmp - *vu;
-	    } else {
-		su = su * tmp2 - *vu;
-	    }
+                        tmp2 = tmp / rpivot;
+                        if (tmp2 == 0.) {
+                                su = tmp - *vu;
+                        } else {
+                                su = su * tmp2 - *vu;
+                        }
 /* L20: */
-	}
-	lpivot = d__[*n] + sl;
-	rpivot = d__[*n] + su;
-	if (lpivot <= 0.) {
-	    ++(*lcnt);
-	}
-	if (rpivot <= 0.) {
-	    ++(*rcnt);
-	}
-    }
-    *eigcnt = *rcnt - *lcnt;
-    return 0;
+                }
+                lpivot = d__[*n] + sl;
+                rpivot = d__[*n] + su;
+                if (lpivot <= 0.) {
+                        ++(*lcnt);
+                }
+                if (rpivot <= 0.) {
+                        ++(*rcnt);
+                }
+        }
+        *eigcnt = *rcnt - *lcnt;
+        return 0;
 
 /*     end of DLARRC */
 
-} /* dlarrc_ */
+}                               /* dlarrc_ */

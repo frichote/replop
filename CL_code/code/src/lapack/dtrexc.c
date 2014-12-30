@@ -1,14 +1,13 @@
 #include "blaswrap.h"
 #include "f2c.h"
 
-/* Subroutine */ int dtrexc_(char *compq, integer *n, doublereal *t, integer *
-	ldt, doublereal *q, integer *ldq, integer *ifst, integer *ilst, 
-	doublereal *work, integer *info)
+/* Subroutine */ int dtrexc_(char *compq, integer * n, doublereal * t, integer *
+                             ldt, doublereal * q, integer * ldq, integer * ifst,
+                             integer * ilst, doublereal * work, integer * info)
 {
 /*  -- LAPACK routine (version 3.1) --   
        Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..   
        November 2006   
-
 
     Purpose   
     =======   
@@ -77,299 +76,307 @@
 
     =====================================================================   
 
-
        Decode and test the input arguments.   
 
        Parameter adjustments */
-    /* Table of constant values */
-    static integer c__1 = 1;
-    static integer c__2 = 2;
-    
-    /* System generated locals */
-    integer q_dim1, q_offset, t_dim1, t_offset, i__1;
-    /* Local variables */
-    static integer nbf, nbl, here;
-    extern logical lsame_(char *, char *);
-    static logical wantq;
-    extern /* Subroutine */ int dlaexc_(logical *, integer *, doublereal *, 
-	    integer *, doublereal *, integer *, integer *, integer *, integer 
-	    *, doublereal *, integer *), xerbla_(char *, integer *);
-    static integer nbnext;
+        /* Table of constant values */
+        static integer c__1 = 1;
+        static integer c__2 = 2;
 
+        /* System generated locals */
+        integer q_dim1, q_offset, t_dim1, t_offset, i__1;
+        /* Local variables */
+        static integer nbf, nbl, here;
+        extern logical lsame_(char *, char *);
+        static logical wantq;
+        extern /* Subroutine */ int dlaexc_(logical *, integer *, doublereal *,
+                                            integer *, doublereal *, integer *,
+                                            integer *, integer *, integer *,
+                                            doublereal *, integer *),
+            xerbla_(char *, integer *);
+        static integer nbnext;
 
-    t_dim1 = *ldt;
-    t_offset = 1 + t_dim1;
-    t -= t_offset;
-    q_dim1 = *ldq;
-    q_offset = 1 + q_dim1;
-    q -= q_offset;
-    --work;
+        t_dim1 = *ldt;
+        t_offset = 1 + t_dim1;
+        t -= t_offset;
+        q_dim1 = *ldq;
+        q_offset = 1 + q_dim1;
+        q -= q_offset;
+        --work;
 
-    /* Function Body */
-    *info = 0;
-    wantq = lsame_(compq, "V");
-    if (! wantq && ! lsame_(compq, "N")) {
-	*info = -1;
-    } else if (*n < 0) {
-	*info = -2;
-    } else if (*ldt < max(1,*n)) {
-	*info = -4;
-    } else if (*ldq < 1 || (wantq && *ldq < max(1,*n))) {
-	*info = -6;
-    } else if (*ifst < 1 || *ifst > *n) {
-	*info = -7;
-    } else if (*ilst < 1 || *ilst > *n) {
-	*info = -8;
-    }
-    if (*info != 0) {
-	i__1 = -(*info);
-	xerbla_("DTREXC", &i__1);
-	return 0;
-    }
+        /* Function Body */
+        *info = 0;
+        wantq = lsame_(compq, "V");
+        if (!wantq && !lsame_(compq, "N")) {
+                *info = -1;
+        } else if (*n < 0) {
+                *info = -2;
+        } else if (*ldt < max(1, *n)) {
+                *info = -4;
+        } else if (*ldq < 1 || (wantq && *ldq < max(1, *n))) {
+                *info = -6;
+        } else if (*ifst < 1 || *ifst > *n) {
+                *info = -7;
+        } else if (*ilst < 1 || *ilst > *n) {
+                *info = -8;
+        }
+        if (*info != 0) {
+                i__1 = -(*info);
+                xerbla_("DTREXC", &i__1);
+                return 0;
+        }
 
 /*     Quick return if possible */
 
-    if (*n <= 1) {
-	return 0;
-    }
+        if (*n <= 1) {
+                return 0;
+        }
 
 /*     Determine the first row of specified block   
        and find out it is 1 by 1 or 2 by 2. */
 
-    if (*ifst > 1) {
-	if (t[*ifst + (*ifst - 1) * t_dim1] != 0.) {
-	    --(*ifst);
-	}
-    }
-    nbf = 1;
-    if (*ifst < *n) {
-	if (t[*ifst + 1 + *ifst * t_dim1] != 0.) {
-	    nbf = 2;
-	}
-    }
+        if (*ifst > 1) {
+                if (t[*ifst + (*ifst - 1) * t_dim1] != 0.) {
+                        --(*ifst);
+                }
+        }
+        nbf = 1;
+        if (*ifst < *n) {
+                if (t[*ifst + 1 + *ifst * t_dim1] != 0.) {
+                        nbf = 2;
+                }
+        }
 
 /*     Determine the first row of the final block   
        and find out it is 1 by 1 or 2 by 2. */
 
-    if (*ilst > 1) {
-	if (t[*ilst + (*ilst - 1) * t_dim1] != 0.) {
-	    --(*ilst);
-	}
-    }
-    nbl = 1;
-    if (*ilst < *n) {
-	if (t[*ilst + 1 + *ilst * t_dim1] != 0.) {
-	    nbl = 2;
-	}
-    }
+        if (*ilst > 1) {
+                if (t[*ilst + (*ilst - 1) * t_dim1] != 0.) {
+                        --(*ilst);
+                }
+        }
+        nbl = 1;
+        if (*ilst < *n) {
+                if (t[*ilst + 1 + *ilst * t_dim1] != 0.) {
+                        nbl = 2;
+                }
+        }
 
-    if (*ifst == *ilst) {
-	return 0;
-    }
+        if (*ifst == *ilst) {
+                return 0;
+        }
 
-    if (*ifst < *ilst) {
+        if (*ifst < *ilst) {
 
 /*        Update ILST */
 
-	if (nbf == 2 && nbl == 1) {
-	    --(*ilst);
-	}
-	if (nbf == 1 && nbl == 2) {
-	    ++(*ilst);
-	}
+                if (nbf == 2 && nbl == 1) {
+                        --(*ilst);
+                }
+                if (nbf == 1 && nbl == 2) {
+                        ++(*ilst);
+                }
 
-	here = *ifst;
+                here = *ifst;
 
-L10:
+ L10:
 
 /*        Swap block with next one below */
 
-	if (nbf == 1 || nbf == 2) {
+                if (nbf == 1 || nbf == 2) {
 
 /*           Current block either 1 by 1 or 2 by 2 */
 
-	    nbnext = 1;
-	    if (here + nbf + 1 <= *n) {
-		if (t[here + nbf + 1 + (here + nbf) * t_dim1] != 0.) {
-		    nbnext = 2;
-		}
-	    }
-	    dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &here, &
-		    nbf, &nbnext, &work[1], info);
-	    if (*info != 0) {
-		*ilst = here;
-		return 0;
-	    }
-	    here += nbnext;
+                        nbnext = 1;
+                        if (here + nbf + 1 <= *n) {
+                                if (t[here + nbf + 1 + (here + nbf) * t_dim1] !=
+                                    0.) {
+                                        nbnext = 2;
+                                }
+                        }
+                        dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq,
+                                &here, &nbf, &nbnext, &work[1], info);
+                        if (*info != 0) {
+                                *ilst = here;
+                                return 0;
+                        }
+                        here += nbnext;
 
 /*           Test if 2 by 2 block breaks into two 1 by 1 blocks */
 
-	    if (nbf == 2) {
-		if (t[here + 1 + here * t_dim1] == 0.) {
-		    nbf = 3;
-		}
-	    }
+                        if (nbf == 2) {
+                                if (t[here + 1 + here * t_dim1] == 0.) {
+                                        nbf = 3;
+                                }
+                        }
 
-	} else {
+                } else {
 
 /*           Current block consists of two 1 by 1 blocks each of which   
              must be swapped individually */
 
-	    nbnext = 1;
-	    if (here + 3 <= *n) {
-		if (t[here + 3 + (here + 2) * t_dim1] != 0.) {
-		    nbnext = 2;
-		}
-	    }
-	    i__1 = here + 1;
-	    dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &i__1, &
-		    c__1, &nbnext, &work[1], info);
-	    if (*info != 0) {
-		*ilst = here;
-		return 0;
-	    }
-	    if (nbnext == 1) {
+                        nbnext = 1;
+                        if (here + 3 <= *n) {
+                                if (t[here + 3 + (here + 2) * t_dim1] != 0.) {
+                                        nbnext = 2;
+                                }
+                        }
+                        i__1 = here + 1;
+                        dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq,
+                                &i__1, &c__1, &nbnext, &work[1], info);
+                        if (*info != 0) {
+                                *ilst = here;
+                                return 0;
+                        }
+                        if (nbnext == 1) {
 
 /*              Swap two 1 by 1 blocks, no problems possible */
 
-		dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &
-			here, &c__1, &nbnext, &work[1], info);
-		++here;
-	    } else {
+                                dlaexc_(&wantq, n, &t[t_offset], ldt,
+                                        &q[q_offset], ldq, &here, &c__1,
+                                        &nbnext, &work[1], info);
+                                ++here;
+                        } else {
 
 /*              Recompute NBNEXT in case 2 by 2 split */
 
-		if (t[here + 2 + (here + 1) * t_dim1] == 0.) {
-		    nbnext = 1;
-		}
-		if (nbnext == 2) {
+                                if (t[here + 2 + (here + 1) * t_dim1] == 0.) {
+                                        nbnext = 1;
+                                }
+                                if (nbnext == 2) {
 
 /*                 2 by 2 Block did not split */
 
-		    dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &
-			    here, &c__1, &nbnext, &work[1], info);
-		    if (*info != 0) {
-			*ilst = here;
-			return 0;
-		    }
-		    here += 2;
-		} else {
+                                        dlaexc_(&wantq, n, &t[t_offset], ldt,
+                                                &q[q_offset], ldq, &here, &c__1,
+                                                &nbnext, &work[1], info);
+                                        if (*info != 0) {
+                                                *ilst = here;
+                                                return 0;
+                                        }
+                                        here += 2;
+                                } else {
 
 /*                 2 by 2 Block did split */
 
-		    dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &
-			    here, &c__1, &c__1, &work[1], info);
-		    i__1 = here + 1;
-		    dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &
-			    i__1, &c__1, &c__1, &work[1], info);
-		    here += 2;
-		}
-	    }
-	}
-	if (here < *ilst) {
-	    goto L10;
-	}
+                                        dlaexc_(&wantq, n, &t[t_offset], ldt,
+                                                &q[q_offset], ldq, &here, &c__1,
+                                                &c__1, &work[1], info);
+                                        i__1 = here + 1;
+                                        dlaexc_(&wantq, n, &t[t_offset], ldt,
+                                                &q[q_offset], ldq, &i__1, &c__1,
+                                                &c__1, &work[1], info);
+                                        here += 2;
+                                }
+                        }
+                }
+                if (here < *ilst) {
+                        goto L10;
+                }
 
-    } else {
+        } else {
 
-	here = *ifst;
-L20:
+                here = *ifst;
+ L20:
 
 /*        Swap block with next one above */
 
-	if (nbf == 1 || nbf == 2) {
+                if (nbf == 1 || nbf == 2) {
 
 /*           Current block either 1 by 1 or 2 by 2 */
 
-	    nbnext = 1;
-	    if (here >= 3) {
-		if (t[here - 1 + (here - 2) * t_dim1] != 0.) {
-		    nbnext = 2;
-		}
-	    }
-	    i__1 = here - nbnext;
-	    dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &i__1, &
-		    nbnext, &nbf, &work[1], info);
-	    if (*info != 0) {
-		*ilst = here;
-		return 0;
-	    }
-	    here -= nbnext;
+                        nbnext = 1;
+                        if (here >= 3) {
+                                if (t[here - 1 + (here - 2) * t_dim1] != 0.) {
+                                        nbnext = 2;
+                                }
+                        }
+                        i__1 = here - nbnext;
+                        dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq,
+                                &i__1, &nbnext, &nbf, &work[1], info);
+                        if (*info != 0) {
+                                *ilst = here;
+                                return 0;
+                        }
+                        here -= nbnext;
 
 /*           Test if 2 by 2 block breaks into two 1 by 1 blocks */
 
-	    if (nbf == 2) {
-		if (t[here + 1 + here * t_dim1] == 0.) {
-		    nbf = 3;
-		}
-	    }
+                        if (nbf == 2) {
+                                if (t[here + 1 + here * t_dim1] == 0.) {
+                                        nbf = 3;
+                                }
+                        }
 
-	} else {
+                } else {
 
 /*           Current block consists of two 1 by 1 blocks each of which   
              must be swapped individually */
 
-	    nbnext = 1;
-	    if (here >= 3) {
-		if (t[here - 1 + (here - 2) * t_dim1] != 0.) {
-		    nbnext = 2;
-		}
-	    }
-	    i__1 = here - nbnext;
-	    dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &i__1, &
-		    nbnext, &c__1, &work[1], info);
-	    if (*info != 0) {
-		*ilst = here;
-		return 0;
-	    }
-	    if (nbnext == 1) {
+                        nbnext = 1;
+                        if (here >= 3) {
+                                if (t[here - 1 + (here - 2) * t_dim1] != 0.) {
+                                        nbnext = 2;
+                                }
+                        }
+                        i__1 = here - nbnext;
+                        dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq,
+                                &i__1, &nbnext, &c__1, &work[1], info);
+                        if (*info != 0) {
+                                *ilst = here;
+                                return 0;
+                        }
+                        if (nbnext == 1) {
 
 /*              Swap two 1 by 1 blocks, no problems possible */
 
-		dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &
-			here, &nbnext, &c__1, &work[1], info);
-		--here;
-	    } else {
+                                dlaexc_(&wantq, n, &t[t_offset], ldt,
+                                        &q[q_offset], ldq, &here, &nbnext,
+                                        &c__1, &work[1], info);
+                                --here;
+                        } else {
 
 /*              Recompute NBNEXT in case 2 by 2 split */
 
-		if (t[here + (here - 1) * t_dim1] == 0.) {
-		    nbnext = 1;
-		}
-		if (nbnext == 2) {
+                                if (t[here + (here - 1) * t_dim1] == 0.) {
+                                        nbnext = 1;
+                                }
+                                if (nbnext == 2) {
 
 /*                 2 by 2 Block did not split */
 
-		    i__1 = here - 1;
-		    dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &
-			    i__1, &c__2, &c__1, &work[1], info);
-		    if (*info != 0) {
-			*ilst = here;
-			return 0;
-		    }
-		    here += -2;
-		} else {
+                                        i__1 = here - 1;
+                                        dlaexc_(&wantq, n, &t[t_offset], ldt,
+                                                &q[q_offset], ldq, &i__1, &c__2,
+                                                &c__1, &work[1], info);
+                                        if (*info != 0) {
+                                                *ilst = here;
+                                                return 0;
+                                        }
+                                        here += -2;
+                                } else {
 
 /*                 2 by 2 Block did split */
 
-		    dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &
-			    here, &c__1, &c__1, &work[1], info);
-		    i__1 = here - 1;
-		    dlaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &
-			    i__1, &c__1, &c__1, &work[1], info);
-		    here += -2;
-		}
-	    }
-	}
-	if (here > *ilst) {
-	    goto L20;
-	}
-    }
-    *ilst = here;
+                                        dlaexc_(&wantq, n, &t[t_offset], ldt,
+                                                &q[q_offset], ldq, &here, &c__1,
+                                                &c__1, &work[1], info);
+                                        i__1 = here - 1;
+                                        dlaexc_(&wantq, n, &t[t_offset], ldt,
+                                                &q[q_offset], ldq, &i__1, &c__1,
+                                                &c__1, &work[1], info);
+                                        here += -2;
+                                }
+                        }
+                }
+                if (here > *ilst) {
+                        goto L20;
+                }
+        }
+        *ilst = here;
 
-    return 0;
+        return 0;
 
 /*     End of DTREXC */
 
-} /* dtrexc_ */
-
+}                               /* dtrexc_ */

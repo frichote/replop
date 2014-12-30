@@ -1,21 +1,20 @@
 #include "f2c.h"
 #include "blaswrap.h"
 
-/* Subroutine */ int dlarnv_(integer *idist, integer *iseed, integer *n, 
-	doublereal *x)
+/* Subroutine */ int dlarnv_(integer * idist, integer * iseed, integer * n,
+                             doublereal * x)
 {
-    /* System generated locals */
-    integer i__1, i__2, i__3;
+        /* System generated locals */
+        integer i__1, i__2, i__3;
 
-    /* Builtin functions */
-    double log(doublereal), sqrt(doublereal), cos(doublereal);
+        /* Builtin functions */
+        double log(doublereal), sqrt(doublereal), cos(doublereal);
 
-    /* Local variables */
-    integer i__;
-    doublereal u[128];
-    integer il, iv, il2;
-    extern /* Subroutine */ int dlaruv_(integer *, integer *, doublereal *);
-
+        /* Local variables */
+        integer i__;
+        doublereal u[128];
+        integer il, iv, il2;
+        extern /* Subroutine */ int dlaruv_(integer *, integer *, doublereal *);
 
 /*  -- LAPACK auxiliary routine (version 3.1) -- */
 /*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. */
@@ -75,60 +74,62 @@
 /*     .. */
 /*     .. Executable Statements .. */
 
-    /* Parameter adjustments */
-    --x;
-    --iseed;
+        /* Parameter adjustments */
+        --x;
+        --iseed;
 
-    /* Function Body */
-    i__1 = *n;
-    for (iv = 1; iv <= i__1; iv += 64) {
+        /* Function Body */
+        i__1 = *n;
+        for (iv = 1; iv <= i__1; iv += 64) {
 /* Computing MIN */
-	i__2 = 64, i__3 = *n - iv + 1;
-	il = min(i__2,i__3);
-	if (*idist == 3) {
-	    il2 = il << 1;
-	} else {
-	    il2 = il;
-	}
+                i__2 = 64, i__3 = *n - iv + 1;
+                il = min(i__2, i__3);
+                if (*idist == 3) {
+                        il2 = il << 1;
+                } else {
+                        il2 = il;
+                }
 
 /*        Call DLARUV to generate IL2 numbers from a uniform (0,1) */
 /*        distribution (IL2 <= LV) */
 
-	dlaruv_(&iseed[1], &il2, u);
+                dlaruv_(&iseed[1], &il2, u);
 
-	if (*idist == 1) {
+                if (*idist == 1) {
 
 /*           Copy generated numbers */
 
-	    i__2 = il;
-	    for (i__ = 1; i__ <= i__2; ++i__) {
-		x[iv + i__ - 1] = u[i__ - 1];
+                        i__2 = il;
+                        for (i__ = 1; i__ <= i__2; ++i__) {
+                                x[iv + i__ - 1] = u[i__ - 1];
 /* L10: */
-	    }
-	} else if (*idist == 2) {
+                        }
+                } else if (*idist == 2) {
 
 /*           Convert generated numbers to uniform (-1,1) distribution */
 
-	    i__2 = il;
-	    for (i__ = 1; i__ <= i__2; ++i__) {
-		x[iv + i__ - 1] = u[i__ - 1] * 2. - 1.;
+                        i__2 = il;
+                        for (i__ = 1; i__ <= i__2; ++i__) {
+                                x[iv + i__ - 1] = u[i__ - 1] * 2. - 1.;
 /* L20: */
-	    }
-	} else if (*idist == 3) {
+                        }
+                } else if (*idist == 3) {
 
 /*           Convert generated numbers to normal (0,1) distribution */
 
-	    i__2 = il;
-	    for (i__ = 1; i__ <= i__2; ++i__) {
-		x[iv + i__ - 1] = sqrt(log(u[(i__ << 1) - 2]) * -2.) * cos(u[(
-			i__ << 1) - 1] * 6.2831853071795864769252867663);
+                        i__2 = il;
+                        for (i__ = 1; i__ <= i__2; ++i__) {
+                                x[iv + i__ - 1] =
+                                    sqrt(log(u[(i__ << 1) - 2]) * -2.) *
+                                    cos(u[(i__ << 1) - 1] *
+                                        6.2831853071795864769252867663);
 /* L30: */
-	    }
-	}
+                        }
+                }
 /* L40: */
-    }
-    return 0;
+        }
+        return 0;
 
 /*     End of DLARNV */
 
-} /* dlarnv_ */
+}                               /* dlarnv_ */

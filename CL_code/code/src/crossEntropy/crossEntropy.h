@@ -25,7 +25,6 @@
  * on not masked data (all_ce). all_ce should always be lower than missing_ce.
  */
 
-
 #ifndef CROSSENTROPY_H
 #define CROSSENTROPY_H
 
@@ -41,9 +40,10 @@
  * @param all_ce	output not masked data cross-entropy
  * @param missing_ce	output masked data cross-entropy
  */
-void crossEntropy(char* input_file, char* input_file_I, char* input_file_Q, char* input_file_F,
-        int K, int m, double *all_ce, double *missing_ce);
+void crossEntropy(char *input_file, char *input_file_I, char *input_file_Q,
+                  char *input_file_F, int K, int m, double *all_ce,
+                  double *missing_ce);
 
-#endif // CROSSENTROPY_H
+#endif                          // CROSSENTROPY_H
 
 /** @} */

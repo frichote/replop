@@ -10,9 +10,11 @@ for genotypic matrices in the functions \code{\link{sNMF}},
 \code{\link{LFMM}}, and \code{\link{pca}}. 
 }
 \details{
-The vcf format is described \href{http://www.1000genomes.org/wiki/Analysis/Variant\%20Call\%20Format/vcf-variant-call-format-version-41}{here}.
+The vcf format is described 
+\href{http://www.1000genomes.org/wiki/Analysis/Variant\%20Call\%20Format/vcf-variant-call-format-version-41}{here}.
 
-Here is an example of a genotypic matrix using the vcf format with 3 individuals and 4 loci: 
+Here is an example of a genotypic matrix using the vcf format with 3 
+individuals and 4 loci: 
 \preformatted{
 ##fileformat=VCFv4.1 
 ##FORMAT=<ID=GM,Number=1,Type=Integer,Description="Genotype meta"> 

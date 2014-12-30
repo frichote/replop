@@ -19,23 +19,23 @@ typedef struct _multithreading_lfmm *Multithreading_lfmm;
  * 	in LFMM functions.
  */
 typedef struct _multithreading_lfmm {
-	float *R;
-	double *A;
-	double *B;
-	double *C;
-	double *m;
-	double *inv_cov;
-	double *L;
-	int J;
-	int N;
-	int M;
-	int K;
-	int mode;
-	double* alpha;
-	double alpha_R;
-	int slice;
-	int c;
-	int num_thrd;
+        float *R;
+        double *A;
+        double *B;
+        double *C;
+        double *m;
+        double *inv_cov;
+        double *L;
+        int J;
+        int N;
+        int M;
+        int K;
+        int mode;
+        double *alpha;
+        double alpha_R;
+        int slice;
+        int c;
+        int num_thrd;
 } multithreading_lfmm;
 
 /**
@@ -43,11 +43,12 @@ typedef struct _multithreading_lfmm {
  *
  */
 void thread_fct_lfmm(float *R, double *A, double *B, double *C, double *m,
-	double *inv_cov, double *L, int J, int K, int N, int M, double *alpha,
-	double alpha_R, int num_thrd, int mode, void (*fct) ());
+                     double *inv_cov, double *L, int J, int K, int N, int M,
+                     double *alpha, double alpha_R, int num_thrd, int mode,
+                     void (*fct) ());
 
 #endif
 
-#endif // THREAD_H
+#endif                          // THREAD_H
 
 /** @} */

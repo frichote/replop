@@ -1,13 +1,12 @@
 #include "blaswrap.h"
 #include "f2c.h"
 
-/* Subroutine */ int dladiv_(doublereal *a, doublereal *b, doublereal *c__, 
-	doublereal *d__, doublereal *p, doublereal *q)
+/* Subroutine */ int dladiv_(doublereal * a, doublereal * b, doublereal * c__,
+                             doublereal * d__, doublereal * p, doublereal * q)
 {
 /*  -- LAPACK auxiliary routine (version 3.1) --   
        Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..   
        November 2006   
-
 
     Purpose   
     =======   
@@ -35,24 +34,22 @@
             The scalars p and q in the above expression.   
 
     ===================================================================== */
-    static doublereal e, f;
+        static doublereal e, f;
 
+        if (abs(*d__) < abs(*c__)) {
+                e = *d__ / *c__;
+                f = *c__ + *d__ * e;
+                *p = (*a + *b * e) / f;
+                *q = (*b - *a * e) / f;
+        } else {
+                e = *c__ / *d__;
+                f = *d__ + *c__ * e;
+                *p = (*b + *a * e) / f;
+                *q = (-(*a) + *b * e) / f;
+        }
 
-
-    if (abs(*d__) < abs(*c__)) {
-	e = *d__ / *c__;
-	f = *c__ + *d__ * e;
-	*p = (*a + *b * e) / f;
-	*q = (*b - *a * e) / f;
-    } else {
-	e = *c__ / *d__;
-	f = *d__ + *c__ * e;
-	*p = (*b + *a * e) / f;
-	*q = (-(*a) + *b * e) / f;
-    }
-
-    return 0;
+        return 0;
 
 /*     End of DLADIV */
 
-} /* dladiv_ */
+}                               /* dladiv_ */

@@ -1,13 +1,13 @@
 #include "blaswrap.h"
 #include "f2c.h"
 
-/* Subroutine */ int dlacn2_(integer *n, doublereal *v, doublereal *x, 
-	integer *isgn, doublereal *est, integer *kase, integer *isave)
+/* Subroutine */ int dlacn2_(integer * n, doublereal * v, doublereal * x,
+                             integer * isgn, doublereal * est, integer * kase,
+                             integer * isave)
 {
 /*  -- LAPACK auxiliary routine (version 3.1) --   
        Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..   
        November 2006   
-
 
     Purpose   
     =======   
@@ -68,171 +68,174 @@
 
     =====================================================================   
 
-
        Parameter adjustments */
-    /* Table of constant values */
-    static integer c__1 = 1;
-    static doublereal c_b11 = 1.;
-    
-    /* System generated locals */
-    integer i__1;
-    doublereal d__1;
-    /* Builtin functions */
-    double d_sign(doublereal *, doublereal *);
-    integer i_dnnt(doublereal *);
-    /* Local variables */
-    static integer i__;
-    static doublereal temp;
-    extern doublereal dasum_(integer *, doublereal *, integer *);
-    static integer jlast;
-    extern /* Subroutine */ int dcopy_(integer *, doublereal *, integer *, 
-	    doublereal *, integer *);
-    extern integer idamax_(integer *, doublereal *, integer *);
-    static doublereal altsgn, estold;
+        /* Table of constant values */
+        static integer c__1 = 1;
+        static doublereal c_b11 = 1.;
 
+        /* System generated locals */
+        integer i__1;
+        doublereal d__1;
+        /* Builtin functions */
+        double d_sign(doublereal *, doublereal *);
+        integer i_dnnt(doublereal *);
+        /* Local variables */
+        static integer i__;
+        static doublereal temp;
+        extern doublereal dasum_(integer *, doublereal *, integer *);
+        static integer jlast;
+        extern /* Subroutine */ int dcopy_(integer *, doublereal *, integer *,
+                                           doublereal *, integer *);
+        extern integer idamax_(integer *, doublereal *, integer *);
+        static doublereal altsgn, estold;
 
-    --isave;
-    --isgn;
-    --x;
-    --v;
+        --isave;
+        --isgn;
+        --x;
+        --v;
 
-    /* Function Body */
-    if (*kase == 0) {
-	i__1 = *n;
-	for (i__ = 1; i__ <= i__1; ++i__) {
-	    x[i__] = 1. / (doublereal) (*n);
+        /* Function Body */
+        if (*kase == 0) {
+                i__1 = *n;
+                for (i__ = 1; i__ <= i__1; ++i__) {
+                        x[i__] = 1. / (doublereal) (*n);
 /* L10: */
-	}
-	*kase = 1;
-	isave[1] = 1;
-	return 0;
-    }
+                }
+                *kase = 1;
+                isave[1] = 1;
+                return 0;
+        }
 
-    switch (isave[1]) {
-	case 1:  goto L20;
-	case 2:  goto L40;
-	case 3:  goto L70;
-	case 4:  goto L110;
-	case 5:  goto L140;
-    }
+        switch (isave[1]) {
+        case 1:
+                goto L20;
+        case 2:
+                goto L40;
+        case 3:
+                goto L70;
+        case 4:
+                goto L110;
+        case 5:
+                goto L140;
+        }
 
 /*     ................ ENTRY   (ISAVE( 1 ) = 1)   
        FIRST ITERATION.  X HAS BEEN OVERWRITTEN BY A*X. */
 
-L20:
-    if (*n == 1) {
-	v[1] = x[1];
-	*est = abs(v[1]);
+ L20:
+        if (*n == 1) {
+                v[1] = x[1];
+                *est = abs(v[1]);
 /*        ... QUIT */
-	goto L150;
-    }
-    *est = dasum_(n, &x[1], &c__1);
+                goto L150;
+        }
+        *est = dasum_(n, &x[1], &c__1);
 
-    i__1 = *n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	x[i__] = d_sign(&c_b11, &x[i__]);
-	isgn[i__] = i_dnnt(&x[i__]);
+        i__1 = *n;
+        for (i__ = 1; i__ <= i__1; ++i__) {
+                x[i__] = d_sign(&c_b11, &x[i__]);
+                isgn[i__] = i_dnnt(&x[i__]);
 /* L30: */
-    }
-    *kase = 2;
-    isave[1] = 2;
-    return 0;
+        }
+        *kase = 2;
+        isave[1] = 2;
+        return 0;
 
 /*     ................ ENTRY   (ISAVE( 1 ) = 2)   
        FIRST ITERATION.  X HAS BEEN OVERWRITTEN BY TRANSPOSE(A)*X. */
 
-L40:
-    isave[2] = idamax_(n, &x[1], &c__1);
-    isave[3] = 2;
+ L40:
+        isave[2] = idamax_(n, &x[1], &c__1);
+        isave[3] = 2;
 
 /*     MAIN LOOP - ITERATIONS 2,3,...,ITMAX. */
 
-L50:
-    i__1 = *n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	x[i__] = 0.;
+ L50:
+        i__1 = *n;
+        for (i__ = 1; i__ <= i__1; ++i__) {
+                x[i__] = 0.;
 /* L60: */
-    }
-    x[isave[2]] = 1.;
-    *kase = 1;
-    isave[1] = 3;
-    return 0;
+        }
+        x[isave[2]] = 1.;
+        *kase = 1;
+        isave[1] = 3;
+        return 0;
 
 /*     ................ ENTRY   (ISAVE( 1 ) = 3)   
        X HAS BEEN OVERWRITTEN BY A*X. */
 
-L70:
-    dcopy_(n, &x[1], &c__1, &v[1], &c__1);
-    estold = *est;
-    *est = dasum_(n, &v[1], &c__1);
-    i__1 = *n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	d__1 = d_sign(&c_b11, &x[i__]);
-	if (i_dnnt(&d__1) != isgn[i__]) {
-	    goto L90;
-	}
+ L70:
+        dcopy_(n, &x[1], &c__1, &v[1], &c__1);
+        estold = *est;
+        *est = dasum_(n, &v[1], &c__1);
+        i__1 = *n;
+        for (i__ = 1; i__ <= i__1; ++i__) {
+                d__1 = d_sign(&c_b11, &x[i__]);
+                if (i_dnnt(&d__1) != isgn[i__]) {
+                        goto L90;
+                }
 /* L80: */
-    }
+        }
 /*     REPEATED SIGN VECTOR DETECTED, HENCE ALGORITHM HAS CONVERGED. */
-    goto L120;
+        goto L120;
 
-L90:
+ L90:
 /*     TEST FOR CYCLING. */
-    if (*est <= estold) {
-	goto L120;
-    }
+        if (*est <= estold) {
+                goto L120;
+        }
 
-    i__1 = *n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	x[i__] = d_sign(&c_b11, &x[i__]);
-	isgn[i__] = i_dnnt(&x[i__]);
+        i__1 = *n;
+        for (i__ = 1; i__ <= i__1; ++i__) {
+                x[i__] = d_sign(&c_b11, &x[i__]);
+                isgn[i__] = i_dnnt(&x[i__]);
 /* L100: */
-    }
-    *kase = 2;
-    isave[1] = 4;
-    return 0;
+        }
+        *kase = 2;
+        isave[1] = 4;
+        return 0;
 
 /*     ................ ENTRY   (ISAVE( 1 ) = 4)   
        X HAS BEEN OVERWRITTEN BY TRANSPOSE(A)*X. */
 
-L110:
-    jlast = isave[2];
-    isave[2] = idamax_(n, &x[1], &c__1);
-    if (x[jlast] != (d__1 = x[isave[2]], abs(d__1)) && isave[3] < 5) {
-	++isave[3];
-	goto L50;
-    }
+ L110:
+        jlast = isave[2];
+        isave[2] = idamax_(n, &x[1], &c__1);
+        if (x[jlast] != (d__1 = x[isave[2]], abs(d__1)) && isave[3] < 5) {
+                ++isave[3];
+                goto L50;
+        }
 
 /*     ITERATION COMPLETE.  FINAL STAGE. */
 
-L120:
-    altsgn = 1.;
-    i__1 = *n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	x[i__] = altsgn * ((doublereal) (i__ - 1) / (doublereal) (*n - 1) + 
-		1.);
-	altsgn = -altsgn;
+ L120:
+        altsgn = 1.;
+        i__1 = *n;
+        for (i__ = 1; i__ <= i__1; ++i__) {
+                x[i__] =
+                    altsgn * ((doublereal) (i__ - 1) / (doublereal) (*n - 1) +
+                              1.);
+                altsgn = -altsgn;
 /* L130: */
-    }
-    *kase = 1;
-    isave[1] = 5;
-    return 0;
+        }
+        *kase = 1;
+        isave[1] = 5;
+        return 0;
 
 /*     ................ ENTRY   (ISAVE( 1 ) = 5)   
        X HAS BEEN OVERWRITTEN BY A*X. */
 
-L140:
-    temp = dasum_(n, &x[1], &c__1) / (doublereal) (*n * 3) * 2.;
-    if (temp > *est) {
-	dcopy_(n, &x[1], &c__1, &v[1], &c__1);
-	*est = temp;
-    }
+ L140:
+        temp = dasum_(n, &x[1], &c__1) / (doublereal) (*n * 3) * 2.;
+        if (temp > *est) {
+                dcopy_(n, &x[1], &c__1, &v[1], &c__1);
+                *est = temp;
+        }
 
-L150:
-    *kase = 0;
-    return 0;
+ L150:
+        *kase = 0;
+        return 0;
 
 /*     End of DLACN2 */
 
-} /* dlacn2_ */
-
+}                               /* dlacn2_ */

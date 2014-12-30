@@ -29,8 +29,8 @@ void update_beta(LFMM_param param, LFMM_GS_param GS_param);
  *
  * @param param 	parameter structure
  */
-void update_alpha_beta(LFMM_param param); 
+void update_alpha_beta(LFMM_param param);
 
-#endif // BETA_H
+#endif                          // BETA_H
 
 /** @} */

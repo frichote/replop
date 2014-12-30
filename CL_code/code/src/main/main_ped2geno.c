@@ -26,21 +26,21 @@
 #include "../convert/register_convert.h"
 #include "../io/read.h"
 
-int main (int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 
-	int M;	 			// number of SNPs
-	int N;				// number of individuals
-	char input_file[512];		// input file
-	char output_file[512];	// output genotype file
+        int M;                  // number of SNPs
+        int N;                  // number of individuals
+        char input_file[512];   // input file
+        char output_file[512];  // output genotype file
 
-	// analyze command-line
-	analyse_param_convert(argc, argv, input_file, output_file, "geno");
+        // analyze command-line
+        analyse_param_convert(argc, argv, input_file, output_file, "geno");
 
-	// run function
-	ped2geno(input_file, output_file, &N, &M);
+        // run function
+        ped2geno(input_file, output_file, &N, &M);
 
-	print_convert(N, M);
+        print_convert(N, M);
 
-	return 0;
+        return 0;
 }
-

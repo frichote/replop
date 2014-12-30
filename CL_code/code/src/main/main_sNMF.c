@@ -16,7 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -25,27 +24,28 @@
 #include "../sNMF/print_snmf.h"
 #include "../io/io_tools.h"
 
-int main (int argc, char *argv[]) {
-	
-	// parameters allocation
-	sNMF_param param = (sNMF_param) calloc(1, sizeof(snmf_param));
+int main(int argc, char *argv[])
+{
 
-	//parameters initialization
-	init_param_snmf(param);
+        // parameters allocation
+        sNMF_param param = (sNMF_param) calloc(1, sizeof(snmf_param));
 
-	// print
-	print_head_snmf();
-	print_options(argc, argv);
+        //parameters initialization
+        init_param_snmf(param);
 
-	// analyse of the command line and fill param
-	analyse_param_snmf(argc,argv, param); 
+        // print
+        print_head_snmf();
+        print_options(argc, argv);
 
-	// run function
-	sNMF(param); 
+        // analyse of the command line and fill param
+        analyse_param_snmf(argc, argv, param);
 
-	// free memory
-	free_param_snmf(param);
-	free(param);
+        // run function
+        sNMF(param);
 
-	return 0;
+        // free memory
+        free_param_snmf(param);
+        free(param);
+
+        return 0;
 }

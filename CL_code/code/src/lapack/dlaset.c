@@ -1,13 +1,13 @@
 #include "blaswrap.h"
 #include "f2c.h"
 
-/* Subroutine */ int dlaset_(char *uplo, integer *m, integer *n, doublereal *
-	alpha, doublereal *beta, doublereal *a, integer *lda)
+/* Subroutine */ int dlaset_(char *uplo, integer * m, integer * n, doublereal *
+                             alpha, doublereal * beta, doublereal * a,
+                             integer * lda)
 {
 /*  -- LAPACK auxiliary routine (version 3.1) --   
        Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..   
        November 2006   
-
 
     Purpose   
     =======   
@@ -52,77 +52,75 @@
 
    =====================================================================   
 
-
        Parameter adjustments */
-    /* System generated locals */
-    integer a_dim1, a_offset, i__1, i__2, i__3;
-    /* Local variables */
-    static integer i__, j;
-    extern logical lsame_(char *, char *);
+        /* System generated locals */
+        integer a_dim1, a_offset, i__1, i__2, i__3;
+        /* Local variables */
+        static integer i__, j;
+        extern logical lsame_(char *, char *);
 
-    a_dim1 = *lda;
-    a_offset = 1 + a_dim1;
-    a -= a_offset;
+        a_dim1 = *lda;
+        a_offset = 1 + a_dim1;
+        a -= a_offset;
 
-    /* Function Body */
-    if (lsame_(uplo, "U")) {
+        /* Function Body */
+        if (lsame_(uplo, "U")) {
 
 /*        Set the strictly upper triangular or trapezoidal part of the   
           array to ALPHA. */
 
-	i__1 = *n;
-	for (j = 2; j <= i__1; ++j) {
+                i__1 = *n;
+                for (j = 2; j <= i__1; ++j) {
 /* Computing MIN */
-	    i__3 = j - 1;
-	    i__2 = min(i__3,*m);
-	    for (i__ = 1; i__ <= i__2; ++i__) {
-		a[i__ + j * a_dim1] = *alpha;
+                        i__3 = j - 1;
+                        i__2 = min(i__3, *m);
+                        for (i__ = 1; i__ <= i__2; ++i__) {
+                                a[i__ + j * a_dim1] = *alpha;
 /* L10: */
-	    }
+                        }
 /* L20: */
-	}
+                }
 
-    } else if (lsame_(uplo, "L")) {
+        } else if (lsame_(uplo, "L")) {
 
 /*        Set the strictly lower triangular or trapezoidal part of the   
           array to ALPHA. */
 
-	i__1 = min(*m,*n);
-	for (j = 1; j <= i__1; ++j) {
-	    i__2 = *m;
-	    for (i__ = j + 1; i__ <= i__2; ++i__) {
-		a[i__ + j * a_dim1] = *alpha;
+                i__1 = min(*m, *n);
+                for (j = 1; j <= i__1; ++j) {
+                        i__2 = *m;
+                        for (i__ = j + 1; i__ <= i__2; ++i__) {
+                                a[i__ + j * a_dim1] = *alpha;
 /* L30: */
-	    }
+                        }
 /* L40: */
-	}
+                }
 
-    } else {
+        } else {
 
 /*        Set the leading m-by-n submatrix to ALPHA. */
 
-	i__1 = *n;
-	for (j = 1; j <= i__1; ++j) {
-	    i__2 = *m;
-	    for (i__ = 1; i__ <= i__2; ++i__) {
-		a[i__ + j * a_dim1] = *alpha;
+                i__1 = *n;
+                for (j = 1; j <= i__1; ++j) {
+                        i__2 = *m;
+                        for (i__ = 1; i__ <= i__2; ++i__) {
+                                a[i__ + j * a_dim1] = *alpha;
 /* L50: */
-	    }
+                        }
 /* L60: */
-	}
-    }
+                }
+        }
 
 /*     Set the first min(M,N) diagonal elements to BETA. */
 
-    i__1 = min(*m,*n);
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	a[i__ + i__ * a_dim1] = *beta;
+        i__1 = min(*m, *n);
+        for (i__ = 1; i__ <= i__1; ++i__) {
+                a[i__ + i__ * a_dim1] = *beta;
 /* L70: */
-    }
+        }
 
-    return 0;
+        return 0;
 
 /*     End of DLASET */
 
-} /* dlaset_ */
-
+}                               /* dlaset_ */

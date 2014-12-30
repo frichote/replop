@@ -25,40 +25,41 @@
 
 // analyse_param_convert
 
-void analyse_param_convert (int argc, char *argv[], char *input, char *output, char *type)
+void analyse_param_convert(int argc, char *argv[], char *input, char *output,
+                           char *type)
 {
-	char* tmp_file;
+        char *tmp_file;
 
-	// test the number of args and save the args
-	if (argc == 2) {
-		// input file
-		strcpy(input, argv[1]);
-		// output file
-	        tmp_file = remove_ext(input,'.','/');
+        // test the number of args and save the args
+        if (argc == 2) {
+                // input file
+                strcpy(input, argv[1]);
+                // output file
+                tmp_file = remove_ext(input, '.', '/');
                 strcpy(output, tmp_file);
-                strcat(output,".");
-                strcat(output,type);
-		free(tmp_file);
-	} else if (argc != 3) {
-		printf("ERROR: commmand line format incorrect.\n\n"
-		"HELP: %s input_file [output_file]\n",argv[0]);
+                strcat(output, ".");
+                strcat(output, type);
+                free(tmp_file);
+        } else if (argc != 3) {
+                printf("ERROR: commmand line format incorrect.\n\n"
+                       "HELP: %s input_file [output_file]\n", argv[0]);
                 exit(1);
-	} else {
-		// input file
-		strcpy(input, argv[1]);
-		// output file
-		strcpy(output, argv[2]);
-	}
+        } else {
+                // input file
+                strcpy(input, argv[1]);
+                // output file
+                strcpy(output, argv[2]);
+        }
 
-	// print command line summary
+        // print command line summary
         printf("Summary of the options:\n\n"
                "        -input file      %s\n"
                "        -output file     %s\n", input, output);
-	
+
 }
 
 void print_convert(int N, int M)
 {
-        printf("\n\t- number of detected individuals:\t%d\n",N);
-        printf("\t- number of detected loci:\t\t%d\n\n",M);
+        printf("\n\t- number of detected individuals:\t%d\n", N);
+        printf("\t- number of detected loci:\t\t%d\n\n", M);
 }

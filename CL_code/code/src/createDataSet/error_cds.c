@@ -16,7 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "error_cds.h"
 #include "print_cds.h"
 #include <stdio.h>
@@ -25,29 +24,31 @@
 
 // print_error_nmf
 
-void print_error_cds(char* msg, char*file) 
+void print_error_cds(char *msg, char *file)
 {
-	printf("\n");
-	// error type
-	if (!strcmp(msg,"cmd")) {
-	        printf("ERROR: no value for %s.\n\n",file);
-		print_help_cds();
-	} else if (!strcmp(msg,"option")) {
-	        printf("ERROR: the following option is mandatory: %s.\n\n",file);
-		print_help_cds();
-	} else if (!strcmp(msg,"missing")) {
-	        printf("ERROR: one of the following options is not positive: -m, -r.\n\n");
-		print_help_cds();
-	} else if (!strcmp(msg,"basic")) {
-	        printf("ERROR: the command is not written correctly.\n\n");
-		print_help_cds();
-	} else if (!strcmp(msg,"specific")) {
-	        printf("ERROR: %s.\n\n",file);
-		print_help_cds();
-	} else {
-		printf("ERROR: Internal error.\n");
-	}
+        printf("\n");
+        // error type
+        if (!strcmp(msg, "cmd")) {
+                printf("ERROR: no value for %s.\n\n", file);
+                print_help_cds();
+        } else if (!strcmp(msg, "option")) {
+                printf("ERROR: the following option is mandatory: %s.\n\n",
+                       file);
+                print_help_cds();
+        } else if (!strcmp(msg, "missing")) {
+                printf
+                    ("ERROR: one of the following options is not positive: -m, -r.\n\n");
+                print_help_cds();
+        } else if (!strcmp(msg, "basic")) {
+                printf("ERROR: the command is not written correctly.\n\n");
+                print_help_cds();
+        } else if (!strcmp(msg, "specific")) {
+                printf("ERROR: %s.\n\n", file);
+                print_help_cds();
+        } else {
+                printf("ERROR: Internal error.\n");
+        }
 
-	printf("\n");
-	exit(1); 
+        printf("\n");
+        exit(1);
 }

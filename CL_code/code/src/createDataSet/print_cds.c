@@ -16,39 +16,36 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "print_cds.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 // print_help
 
-void print_help_cds() 
+void print_help_cds()
 {
-   printf("\nHELP: ./createDataSet options \n\n"
-         "mandatory:\n"
-         "        -x input_file         -- genotype file (in .geno format)\n\n"
-
-         "optional:\n"
-         "        -h                    -- help\n"
-         "        -s seed               -- seed random init             (default: random)\n"
-         "        -r percentage         -- percentage of masked data    (default: 0.05)\n\n"
-         "        -o output_file        -- output file (in .geno format)(default: input_file_I.geno)\n\n"
-        );
+        printf("\nHELP: ./createDataSet options \n\n"
+               "mandatory:\n"
+               "        -x input_file         -- genotype file (in .geno format)\n\n"
+               "optional:\n"
+               "        -h                    -- help\n"
+               "        -s seed               -- seed random init             (default: random)\n"
+               "        -r percentage         -- percentage of masked data    (default: 0.05)\n\n"
+               "        -o output_file        -- output file (in .geno format)(default: input_file_I.geno)\n\n");
 }
 
 // print_summary
 
-void print_summary_cds (int N, int M, long long seed, double e, char *input, char *output) 
+void print_summary_cds(int N, int M, long long seed, double e, char *input,
+                       char *output)
 {
 
-           printf("summary of the options:\n\n"
-                "        -n (number of individuals)                 %d\n"  
-                "        -L (number of loci)                        %d\n"
-                "        -s (seed random init)                      %lu\n"
-                "        -r (percentage of masked data)             %G\n"
-                "        -x (genotype file in .geno format)         %s\n"
-                "        -o (output file in .geno format)           %s\n"
-                , N, M, (unsigned long)seed, e, input, output);
+        printf("summary of the options:\n\n"
+               "        -n (number of individuals)                 %d\n"
+               "        -L (number of loci)                        %d\n"
+               "        -s (seed random init)                      %lu\n"
+               "        -r (percentage of masked data)             %G\n"
+               "        -x (genotype file in .geno format)         %s\n"
+               "        -o (output file in .geno format)           %s\n", N, M,
+               (unsigned long)seed, e, input, output);
 }
-

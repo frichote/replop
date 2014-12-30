@@ -7,7 +7,6 @@
  * @brief general function and structure to manage multithreading
  */
 
-
 #ifndef THREAD_BITUINT_H
 #define THREAD_BITUINT_H
 
@@ -25,15 +24,15 @@ typedef struct _multithreading_bituint *Multithreading_bituint;
  * 	in bituint functions.
  */
 typedef struct _multithreading_bituint {
-	bituint *X;
-	double *A;
-	double *B;
-	int K;
-	int N;
-	int Mc;
-	int Mp;
-	int slice;
-	int num_thrd;
+        bituint *X;
+        double *A;
+        double *B;
+        int K;
+        int N;
+        int Mc;
+        int Mp;
+        int slice;
+        int num_thrd;
 } multithreading_bituint;
 
 /** 
@@ -49,12 +48,11 @@ typedef struct _multithreading_bituint {
  * @param num_thrd	the number of processes used
  * @param fct	the specific slice function
  */
-void thread_fct_bituint(bituint *X, double *A, double *B, int K, int Mc, int Mp,
-	int N, int num_thrd, void (*fct) ());
+void thread_fct_bituint(bituint * X, double *A, double *B, int K, int Mc,
+                        int Mp, int N, int num_thrd, void (*fct) ());
 
 #endif
 
-#endif // THREAD_H
+#endif                          // THREAD_H
 
 /** @} */
-

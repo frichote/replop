@@ -16,7 +16,6 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,57 +31,59 @@
 
 // tBtX
 
-void tBtX(double *A, bituint *X, double *B, int K, int Mp, int Mc,
-		int N, int num_thrd)
+void tBtX(double *A, bituint * X, double *B, int K, int Mp, int Mc,
+          int N, int num_thrd)
 {
-	int Md = Mc / SIZEUINT;
-	int Mm = Mc % SIZEUINT;
-	int i, k1, jd, jm;
-	bituint value;
+        int Md = Mc / SIZEUINT;
+        int Mm = Mc % SIZEUINT;
+        int i, k1, jd, jm;
+        bituint value;
 
-	// B*t(X)                                                       (M N K)
-	zeros(A,K*N);
+        // B*t(X)                                                       (M N K)
+        zeros(A, K * N);
 
 #ifndef WIN32
-	// multi-threaded non windows version
-	if (num_thrd > 1) {
-		thread_fct_bituint(X, A, B, K, Mc, Mp, N, num_thrd, slice_tBtX);
-	} else {
+        // multi-threaded non windows version
+        if (num_thrd > 1) {
+                thread_fct_bituint(X, A, B, K, Mc, Mp, N, num_thrd, slice_tBtX);
+        } else {
 #endif
-		// uni-threaded or windows version
-		for (jd = 0; jd<Md; jd++) {
-			for (i = 0; i < N; i++) {
-				value = X[i*Mp+jd];
-				for (jm = 0; jm<SIZEUINT; jm++) {
-					if (value % 2) {
-						for (k1 = 0; k1 < K; k1++)
-							A[k1*N+i] += B[(jd*SIZEUINT+jm)*K+k1];
-					}
-					value >>= 1;
-				}
-			}
-		}
+                // uni-threaded or windows version
+                for (jd = 0; jd < Md; jd++) {
+                        for (i = 0; i < N; i++) {
+                                value = X[i * Mp + jd];
+                                for (jm = 0; jm < SIZEUINT; jm++) {
+                                        if (value % 2) {
+                                                for (k1 = 0; k1 < K; k1++)
+                                                        A[k1 * N + i] +=
+                                                            B[(jd * SIZEUINT +
+                                                               jm) * K + k1];
+                                        }
+                                        value >>= 1;
+                                }
+                        }
+                }
 #ifndef WIN32
-	}
+        }
 #endif
-	// last columns
-	for (i = 0; i < N; i++) {
-		value = X[i*Mp+Md];
-		for (jm = 0; jm<Mm; jm++) {
-			if (value % 2) {
-				for (k1 = 0; k1 < K; k1++)
-					A[k1*N+i] += B[(Md*SIZEUINT+jm)*K+k1];
-			}
-			value >>= 1;
-		}
-	}
+        // last columns
+        for (i = 0; i < N; i++) {
+                value = X[i * Mp + Md];
+                for (jm = 0; jm < Mm; jm++) {
+                        if (value % 2) {
+                                for (k1 = 0; k1 < K; k1++)
+                                        A[k1 * N + i] +=
+                                            B[(Md * SIZEUINT + jm) * K + k1];
+                        }
+                        value >>= 1;
+                }
+        }
 }
-
 
 // BX
 
-void BX(double *A, bituint *X, double *B, int K, int Mp, int Mc, int N,
-		int num_thrd)
+void BX(double *A, bituint * X, double *B, int K, int Mp, int Mc, int N,
+        int num_thrd)
 {
         int i, k1;
         int Md = Mc / SIZEUINT;
@@ -91,40 +92,42 @@ void BX(double *A, bituint *X, double *B, int K, int Mp, int Mc, int N,
         bituint value;
 
         // A = B*X  
-        zeros(A,K*Mc);
+        zeros(A, K * Mc);
 
 #ifndef WIN32
-	// multi-threaded non windows version
-	if (num_thrd > 1) {
-		thread_fct_bituint(X, A, B, K, Mc, Mp, N, num_thrd, slice_BX);
-	} else {
+        // multi-threaded non windows version
+        if (num_thrd > 1) {
+                thread_fct_bituint(X, A, B, K, Mc, Mp, N, num_thrd, slice_BX);
+        } else {
 #endif
-		// uni-threaded or windows version
-		for (jd = 0; jd<Md; jd++) {
-			for (i = 0; i < N; i++) {
-				value = X[i*Mp+jd];
-				for (jm = 0; jm<SIZEUINT; jm++) {
-					if (value % 2) {
-						for (k1 = 0; k1 < K; k1++)
-							A[(jd*SIZEUINT+jm)*K+k1] += B[k1*N+i];
-					}
-					value >>= 1;
-				}
-			}
-		}
+                // uni-threaded or windows version
+                for (jd = 0; jd < Md; jd++) {
+                        for (i = 0; i < N; i++) {
+                                value = X[i * Mp + jd];
+                                for (jm = 0; jm < SIZEUINT; jm++) {
+                                        if (value % 2) {
+                                                for (k1 = 0; k1 < K; k1++)
+                                                        A[(jd * SIZEUINT +
+                                                           jm) * K + k1] +=
+                                            B[k1 * N + i];
+                                        }
+                                        value >>= 1;
+                                }
+                        }
+                }
 #ifndef WIN32
-	}
+        }
 #endif
-	// last columns
-	for (i = 0; i < N; i++) {
-		value = X[i*Mp+Md];
-		for (jm = 0; jm<Mm; jm++) {
-			if (value % 2) {
-				for (k1 = 0; k1 < K; k1++)
-					A[(Md*SIZEUINT+jm)*K+k1] += B[k1*N+i];
-			}
-			value >>= 1;
-		}
-	}
-} 
-
+        // last columns
+        for (i = 0; i < N; i++) {
+                value = X[i * Mp + Md];
+                for (jm = 0; jm < Mm; jm++) {
+                        if (value % 2) {
+                                for (k1 = 0; k1 < K; k1++)
+                                        A[(Md * SIZEUINT + jm) * K + k1] +=
+                                            B[k1 * N + i];
+                        }
+                        value >>= 1;
+                }
+        }
+}

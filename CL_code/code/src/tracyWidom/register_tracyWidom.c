@@ -16,7 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,53 +27,55 @@
 
 // analyse_param
 
-void analyse_param_tracyWidom(	int argc, char *argv[], char *input, char* output)
+void analyse_param_tracyWidom(int argc, char *argv[], char *input, char *output)
 {
         int i;
-	char *tmp_file;
-	int g_data = -1;
+        char *tmp_file;
+        int g_data = -1;
 
-	for (i = 1; i < argc; i++) {
+        for (i = 1; i < argc; i++) {
                 if (argv[i][0] == '-') {
                         switch (argv[i][1]) {
-			// help
-                        case 'h':   // global
+                                // help
+                        case 'h':      // global
                                 print_help_tracyWidom();
                                 exit(1);
                                 break;
-			// input file
+                                // input file
                         case 'i':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-					print_error_tracyWidom("cmd","i (intput file)");
+                                        print_error_tracyWidom("cmd",
+                                                               "i (intput file)");
                                 g_data = 0;
-                                strcpy(input,argv[i]);
+                                strcpy(input, argv[i]);
                                 break;
-			// output file
+                                // output file
                         case 'o':
                                 i++;
                                 if (argc == i || argv[i][0] == '-')
-					print_error_tracyWidom("cmd","o (output file)");
+                                        print_error_tracyWidom("cmd",
+                                                               "o (output file)");
                                 strcpy(output, argv[i]);
                                 break;
-                        default:    print_error_tracyWidom("basic",NULL);
+                        default:
+                                print_error_tracyWidom("basic", NULL);
                         }
                 } else {
-                        print_error_tracyWidom("basic",NULL);
-		}
+                        print_error_tracyWidom("basic", NULL);
+                }
         }
 
         if (g_data == -1)
-		print_error_tracyWidom("option","-i input_file");
+                print_error_tracyWidom("option", "-i input_file");
 
         // write output file names
-        tmp_file = remove_ext(input,'.','/');
-	
-	if (!strcmp(output, "")) {
-		strcpy(output, tmp_file);
-		strcat(output, ".tracywidom");
-	}
+        tmp_file = remove_ext(input, '.', '/');
 
-	free(tmp_file);
+        if (!strcmp(output, "")) {
+                strcpy(output, tmp_file);
+                strcat(output, ".tracywidom");
+        }
+
+        free(tmp_file);
 }
-

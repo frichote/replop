@@ -6,7 +6,9 @@
 Description of the \code{zscore} output format of \code{\link{LFMM}}. 
 }
 \details{
-The \code{zscore} format has one row for each SNP. Each row contains three values: The first value is the zscore, the second value is the -log10(pvalue), the third value is the p-value (separated by spaces or tabulations).
+The \code{zscore} format has one row for each SNP. Each row contains three 
+values: The first value is the zscore, the second value is the -log10(pvalue),
+the third value is the p-value (separated by spaces or tabulations).
 }
 \author{
     Eric Frichot

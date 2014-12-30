@@ -35,10 +35,10 @@ void read_data_double(char *file_data, int N, int M, double *dat)
         char *szbuff;
         char *token;
 
-	// allocate memory
-	szbuff = (char *) malloc(max_char_per_line * sizeof(char));
+        // allocate memory
+        szbuff = (char *)malloc(max_char_per_line * sizeof(char));
 
-	// open file
+        // open file
         m_File = fopen_read(file_data);
 
         i = 0;
@@ -48,25 +48,25 @@ void read_data_double(char *file_data, int N, int M, double *dat)
                 token = strtok(szbuff, SEP);
                 // read elements and register them in dat
                 while (token && j < M) {
-			// printf("%s\n",token);
+                        // printf("%s\n",token);
                         dat[i * M + j] = (double)atof(token);
-			// next elements
+                        // next elements
                         token = strtok(NULL, SEP);
                         j++;
                 }
                 i++;
-		// test the number of columns
-		test_column(file_data, m_File, j, i, M, token);
+                // test the number of columns
+                test_column(file_data, m_File, j, i, M, token);
         }
 
-	// check the number of lines
-	test_line(file_data, m_File, i, N);
+        // check the number of lines
+        test_line(file_data, m_File, i, N);
 
-	// close file
+        // close file
         fclose(m_File);
 
-	// free memory
-	free(szbuff);
+        // free memory
+        free(szbuff);
 }
 
 // write_data_double
@@ -76,10 +76,10 @@ void write_data_double(char *file_data, int N, int M, double *dat)
         FILE *file = NULL;
         int i, j;
 
-	// open file
+        // open file
         file = fopen_write(file_data);
 
-	// write dat
+        // write dat
         for (i = 0; i < N; i++) {
                 for (j = 0; j < M - 1; j++) {
                         fprintf(file, "%G ", dat[i * M + j]);
@@ -87,7 +87,7 @@ void write_data_double(char *file_data, int N, int M, double *dat)
                 fprintf(file, "%G\n", dat[i * M + (M - 1)]);
         }
 
-	// close file
+        // close file
         fclose(file);
 }
 
@@ -96,7 +96,7 @@ void write_data_double(char *file_data, int N, int M, double *dat)
 void print_data_double(double *dat, int N, int M)
 {
         int i, j;
-	// print dat
+        // print dat
         for (i = 0; i < N; i++) {
                 for (j = 0; j < M - 1; j++) {
                         printf("%G ", dat[i * M + j]);

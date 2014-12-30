@@ -1,5 +1,5 @@
-
-create.dataset <- function(input.file, output.file, seed = -1, percentage = 0.05) 
+create.dataset <- function(input.file, output.file, seed = -1, 
+    percentage = 0.05) 
 {
     # test arguments and init
     # input file
@@ -10,12 +10,17 @@ create.dataset <- function(input.file, output.file, seed = -1, percentage = 0.05
     tmp = sub("([^.]+)\\.[[:alnum:]]+$", "\\1_I.geno",input.file)
     output.file = test_character("output.file", output.file, tmp)
     # seed
-        seed = test_integer("seed", seed, as.integer(runif(1)*.Machine$integer.max))
-        set.seed(seed) # init seed
+    seed = test_integer("seed", seed, 
+        as.integer(runif(1)*.Machine$integer.max))
+    if (seed == -1) 
+        seed = as.integer(runif(1)*.Machine$integer.max)
+    set.seed(seed) # init seed
+    print(seed)
     # percentage
     percentage = test_double("percentage", percentage, 0.05)
     if (percentage <= 0 || percentage >= 1)
-            stop("'percentage' argument has to be of type double and between 0 and 1.")
+        stop(paste("'percentage' argument has to be of type double and ", 
+            "between 0 and 1.", sep=""))
 
     print("*************************************");
     print("*          create.dataset            *");

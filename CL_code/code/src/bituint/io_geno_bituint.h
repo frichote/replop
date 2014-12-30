@@ -25,8 +25,8 @@
  * @param nc	number of different elements of the matrix
  * @param dat  	output data matrix 
  */
-void read_geno_bituint(char *file_data, int N, int M, int Mp, int nc, 
-			bituint* dat);
+void read_geno_bituint(char *file_data, int N, int M, int Mp, int nc,
+                       bituint * dat);
 
 /**
  * read a line of data file with N elements and fill dat
@@ -42,9 +42,9 @@ void read_geno_bituint(char *file_data, int N, int M, int Mp, int nc,
  * @param I	missing data temporary vector
  * @param nb	vector to count the number of occurences of each genotype
  */
-void fill_line_geno_bituint(bituint* dat, int Mp, 
-			int cmax, int j, int nc, char *file_data,  
-			char* szbuff, FILE* m_File, int* I, double *nb);
+void fill_line_geno_bituint(bituint * dat, int Mp,
+                            int cmax, int j, int nc, char *file_data,
+                            char *szbuff, FILE * m_File, int *I, double *nb);
 
 /**
  * print data from bituint format in geno format
@@ -55,7 +55,7 @@ void fill_line_geno_bituint(bituint* dat, int Mp,
  * @param Mp	number of columns of the matrix
  * @param M	number of elements per line in the data file
  */
-void print_geno_bituint(bituint* dat, int N, int nc, int Mp, int M);
+void print_geno_bituint(bituint * dat, int N, int nc, int Mp, int M);
 
 /**
  * write data from bituint format in geno format
@@ -67,7 +67,8 @@ void print_geno_bituint(bituint* dat, int N, int nc, int Mp, int M);
  * @param M	number of elements per line in the data file
  * @param dat  	data matrix (of size NxMc)
  */
-void write_geno_bituint(char *file_data, int N, int nc, int Mp, int M, bituint *dat);
+void write_geno_bituint(char *file_data, int N, int nc, int Mp, int M,
+                        bituint * dat);
 
 /**
  * select from X a subset of Mi columns and copy them into Xi
@@ -81,9 +82,9 @@ void write_geno_bituint(char *file_data, int N, int nc, int Mp, int M, bituint *
  * @param Mp	number of columns of X
  * @param Mpi	number of columns of Xi
 */
-void select_geno_bituint(bituint *X, bituint *Xi, int N, int M, int Mi,
-	int nc, int Mpi, int Mp);
+void select_geno_bituint(bituint * X, bituint * Xi, int N, int M, int Mi,
+                         int nc, int Mpi, int Mp);
 
-#endif // IO_GENO_BITUINT_H
+#endif                          // IO_GENO_BITUINT_H
 
 /** @} */

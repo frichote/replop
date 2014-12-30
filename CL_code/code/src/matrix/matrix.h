@@ -30,7 +30,7 @@ double variance(double *x, int n);
  *
  * return a - b;
  */
-int compare (const void* a, const void* b);
+int compare(const void *a, const void *b);
 
 /**
  * return the indexes of data sorted (increasing order) (using qsort) 
@@ -39,7 +39,7 @@ int compare (const void* a, const void* b);
  * @param index	indices 
  * @param n	size of data, index
  */
- void sort_index(double *data, int *index, int n);
+void sort_index(double *data, int *index, int n);
 
 /**
  * compute min(a, b)
@@ -91,7 +91,6 @@ double dble_sum(double *A, int size);
  */
 void copy_vect(double *in, double *out, int size);
 
-
 /**
  * transpose m (double) of size h x w (from Rosetta code)
  *
@@ -99,7 +98,7 @@ void copy_vect(double *in, double *out, int size);
  * @param w	number of columns
  * @param h	number of lines
  */
-void transpose_double (double *m, int w, int h);
+void transpose_double(double *m, int w, int h);
 
 /**
  * transpose m (float) of size h x w (from Rosetta code)
@@ -108,7 +107,7 @@ void transpose_double (double *m, int w, int h);
  * @param w	number of columns
  * @param h	number of lines
  */
-void transpose_float (float *m, int w, int h);
+void transpose_float(float *m, int w, int h);
 
 /**
  * transpose m (float) of size h x w (from Rosetta code)
@@ -117,7 +116,7 @@ void transpose_float (float *m, int w, int h);
  * @param w	number of columns
  * @param h	number of lines
  */
-void transpose_int (int *m, int w, int h);
+void transpose_int(int *m, int w, int h);
 
 /**
  * compute transpose(B) * B + alpha
@@ -133,6 +132,6 @@ void transpose_int (int *m, int w, int h);
  */
 void tBB_alpha(double *A, double *B, double alpha, int N, int K, int num_thrd);
 
-#endif // MATRIX_H
+#endif                          // MATRIX_H
 
 /** @} */

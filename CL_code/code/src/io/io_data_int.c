@@ -31,14 +31,14 @@ void read_data_int(char *file_data, int N, int M, int *dat)
         FILE *m_File = NULL;
         int i = 0;
         int j = 0;
-        int max_char_per_line =  MAX_LENGTH_NB_INT * M + 20;
+        int max_char_per_line = MAX_LENGTH_NB_INT * M + 20;
         char *szbuff;
         char *token;
 
-	// allocate memory
-	szbuff = (char *) malloc(max_char_per_line * sizeof(char));
+        // allocate memory
+        szbuff = (char *)malloc(max_char_per_line * sizeof(char));
 
-	// open file
+        // open file
         m_File = fopen_read(file_data);
 
         i = 0;
@@ -50,23 +50,23 @@ void read_data_int(char *file_data, int N, int M, int *dat)
                 while (token && j < M) {
                         //printf("%s\n",token);
                         dat[i * M + j] = (int)atof(token);
-			// next elements
+                        // next elements
                         token = strtok(NULL, SEP);
                         j++;
                 }
                 i++;
 
-		// check the number of columns
-		test_column(file_data, m_File, j, i, M, token);
+                // check the number of columns
+                test_column(file_data, m_File, j, i, M, token);
         }
-	// check the number of lines
-	test_line(file_data, m_File, i, N);
+        // check the number of lines
+        test_line(file_data, m_File, i, N);
 
-	// close file
+        // close file
         fclose(m_File);
 
-	// free memory
-	free(szbuff);
+        // free memory
+        free(szbuff);
 }
 
 // write_data_int
@@ -76,10 +76,10 @@ void write_data_int(char *file_data, int N, int M, int *dat)
         FILE *file = NULL;
         int i, j;
 
-	// open file
+        // open file
         file = fopen_write(file_data);
 
-	// write dat
+        // write dat
         for (i = 0; i < N; i++) {
                 for (j = 0; j < M - 1; j++) {
                         fprintf(file, "%d ", dat[i * M + j]);
@@ -88,7 +88,7 @@ void write_data_int(char *file_data, int N, int M, int *dat)
                 fprintf(file, "\n");
         }
 
-	// close file
+        // close file
         fclose(file);
 }
 
@@ -98,7 +98,7 @@ void print_data_int(int *dat, int N, int M)
 {
         int i, j;
 
-	// print dat
+        // print dat
         for (i = 0; i < N; i++) {
                 for (j = 0; j < M - 1; j++) {
                         printf("%d ", dat[i * M + j]);
@@ -107,4 +107,3 @@ void print_data_int(int *dat, int N, int M)
                 printf("\n");
         }
 }
-

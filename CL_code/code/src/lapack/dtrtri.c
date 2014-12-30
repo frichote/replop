@@ -1,13 +1,12 @@
 #include "blaswrap.h"
 #include "f2c.h"
 
-/* Subroutine */ int dtrtri_(char *uplo, char *diag, integer *n, doublereal *
-	a, integer *lda, integer *info)
+/* Subroutine */ int dtrtri_(char *uplo, char *diag, integer * n, doublereal *
+                             a, integer * lda, integer * info)
 {
 /*  -- LAPACK routine (version 3.1) --   
        Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..   
        November 2006   
-
 
     Purpose   
     =======   
@@ -55,160 +54,166 @@
 
     =====================================================================   
 
-
        Test the input parameters.   
 
        Parameter adjustments */
-    /* Table of constant values */
-    static integer c__1 = 1;
-    static integer c_n1 = -1;
-    static integer c__2 = 2;
-    static doublereal c_b18 = 1.;
-    static doublereal c_b22 = -1.;
-    
-    /* System generated locals */
-    address a__1[2];
-    integer a_dim1, a_offset, i__1, i__2[2], i__3, i__4, i__5;
-    char ch__1[2];
-    /* Builtin functions   
-       Subroutine */ int s_cat(char *, char **, integer *, integer *, ftnlen);
-    /* Local variables */
-    static integer j, jb, nb, nn;
-    extern logical lsame_(char *, char *);
-    extern /* Subroutine */ int dtrmm_(char *, char *, char *, char *, 
-	    integer *, integer *, doublereal *, doublereal *, integer *, 
-	    doublereal *, integer *), dtrsm_(
-	    char *, char *, char *, char *, integer *, integer *, doublereal *
-, doublereal *, integer *, doublereal *, integer *);
-    static logical upper;
-    extern /* Subroutine */ int dtrti2_(char *, char *, integer *, doublereal 
-	    *, integer *, integer * ), xerbla_(char *, integer 
-	    *);
-    extern integer ilaenv_(integer *, char *, char *, integer *, integer *, 
-	    integer *, integer *, ftnlen, ftnlen);
-    static logical nounit;
+        /* Table of constant values */
+        static integer c__1 = 1;
+        static integer c_n1 = -1;
+        static integer c__2 = 2;
+        static doublereal c_b18 = 1.;
+        static doublereal c_b22 = -1.;
 
+        /* System generated locals */
+        address a__1[2];
+        integer a_dim1, a_offset, i__1, i__2[2], i__3, i__4, i__5;
+        char ch__1[2];
+        /* Builtin functions   
+           Subroutine */ int s_cat(char *, char **, integer *, integer *,
+                                   ftnlen);
+        /* Local variables */
+        static integer j, jb, nb, nn;
+        extern logical lsame_(char *, char *);
+        extern /* Subroutine */ int dtrmm_(char *, char *, char *, char *,
+                                           integer *, integer *, doublereal *,
+                                           doublereal *, integer *,
+                                           doublereal *, integer *),
+            dtrsm_(char *, char *, char *, char *, integer *, integer *,
+                   doublereal *, doublereal *, integer *, doublereal *,
+                   integer *);
+        static logical upper;
+        extern /* Subroutine */ int dtrti2_(char *, char *, integer *, doublereal
+                                            *, integer *, integer *),
+            xerbla_(char *, integer *);
+        extern integer ilaenv_(integer *, char *, char *, integer *, integer *,
+                               integer *, integer *, ftnlen, ftnlen);
+        static logical nounit;
 
-    a_dim1 = *lda;
-    a_offset = 1 + a_dim1;
-    a -= a_offset;
+        a_dim1 = *lda;
+        a_offset = 1 + a_dim1;
+        a -= a_offset;
 
-    /* Function Body */
-    *info = 0;
-    upper = lsame_(uplo, "U");
-    nounit = lsame_(diag, "N");
-    if (! upper && ! lsame_(uplo, "L")) {
-	*info = -1;
-    } else if (! nounit && ! lsame_(diag, "U")) {
-	*info = -2;
-    } else if (*n < 0) {
-	*info = -3;
-    } else if (*lda < max(1,*n)) {
-	*info = -5;
-    }
-    if (*info != 0) {
-	i__1 = -(*info);
-	xerbla_("DTRTRI", &i__1);
-	return 0;
-    }
+        /* Function Body */
+        *info = 0;
+        upper = lsame_(uplo, "U");
+        nounit = lsame_(diag, "N");
+        if (!upper && !lsame_(uplo, "L")) {
+                *info = -1;
+        } else if (!nounit && !lsame_(diag, "U")) {
+                *info = -2;
+        } else if (*n < 0) {
+                *info = -3;
+        } else if (*lda < max(1, *n)) {
+                *info = -5;
+        }
+        if (*info != 0) {
+                i__1 = -(*info);
+                xerbla_("DTRTRI", &i__1);
+                return 0;
+        }
 
 /*     Quick return if possible */
 
-    if (*n == 0) {
-	return 0;
-    }
+        if (*n == 0) {
+                return 0;
+        }
 
 /*     Check for singularity if non-unit. */
 
-    if (nounit) {
-	i__1 = *n;
-	for (*info = 1; *info <= i__1; ++(*info)) {
-	    if (a[*info + *info * a_dim1] == 0.) {
-		return 0;
-	    }
+        if (nounit) {
+                i__1 = *n;
+                for (*info = 1; *info <= i__1; ++(*info)) {
+                        if (a[*info + *info * a_dim1] == 0.) {
+                                return 0;
+                        }
 /* L10: */
-	}
-	*info = 0;
-    }
+                }
+                *info = 0;
+        }
 
 /*     Determine the block size for this environment.   
 
    Writing concatenation */
-    i__2[0] = 1, a__1[0] = uplo;
-    i__2[1] = 1, a__1[1] = diag;
-    s_cat(ch__1, a__1, i__2, &c__2, (ftnlen)2);
-    nb = ilaenv_(&c__1, "DTRTRI", ch__1, n, &c_n1, &c_n1, &c_n1, (ftnlen)6, (
-	    ftnlen)2);
-    if (nb <= 1 || nb >= *n) {
+        i__2[0] = 1, a__1[0] = uplo;
+        i__2[1] = 1, a__1[1] = diag;
+        s_cat(ch__1, a__1, i__2, &c__2, (ftnlen) 2);
+        nb = ilaenv_(&c__1, "DTRTRI", ch__1, n, &c_n1, &c_n1, &c_n1, (ftnlen) 6,
+                     (ftnlen) 2);
+        if (nb <= 1 || nb >= *n) {
 
 /*        Use unblocked code */
 
-	dtrti2_(uplo, diag, n, &a[a_offset], lda, info);
-    } else {
+                dtrti2_(uplo, diag, n, &a[a_offset], lda, info);
+        } else {
 
 /*        Use blocked code */
 
-	if (upper) {
+                if (upper) {
 
 /*           Compute inverse of upper triangular matrix */
 
-	    i__1 = *n;
-	    i__3 = nb;
-	    for (j = 1; i__3 < 0 ? j >= i__1 : j <= i__1; j += i__3) {
+                        i__1 = *n;
+                        i__3 = nb;
+                        for (j = 1; i__3 < 0 ? j >= i__1 : j <= i__1; j += i__3) {
 /* Computing MIN */
-		i__4 = nb, i__5 = *n - j + 1;
-		jb = min(i__4,i__5);
+                                i__4 = nb, i__5 = *n - j + 1;
+                                jb = min(i__4, i__5);
 
 /*              Compute rows 1:j-1 of current block column */
 
-		i__4 = j - 1;
-		dtrmm_("Left", "Upper", "No transpose", diag, &i__4, &jb, &
-			c_b18, &a[a_offset], lda, &a[j * a_dim1 + 1], lda);
-		i__4 = j - 1;
-		dtrsm_("Right", "Upper", "No transpose", diag, &i__4, &jb, &
-			c_b22, &a[j + j * a_dim1], lda, &a[j * a_dim1 + 1], 
-			lda);
+                                i__4 = j - 1;
+                                dtrmm_("Left", "Upper", "No transpose", diag,
+                                       &i__4, &jb, &c_b18, &a[a_offset], lda,
+                                       &a[j * a_dim1 + 1], lda);
+                                i__4 = j - 1;
+                                dtrsm_("Right", "Upper", "No transpose", diag,
+                                       &i__4, &jb, &c_b22, &a[j + j * a_dim1],
+                                       lda, &a[j * a_dim1 + 1], lda);
 
 /*              Compute inverse of current diagonal block */
 
-		dtrti2_("Upper", diag, &jb, &a[j + j * a_dim1], lda, info);
+                                dtrti2_("Upper", diag, &jb, &a[j + j * a_dim1],
+                                        lda, info);
 /* L20: */
-	    }
-	} else {
+                        }
+                } else {
 
 /*           Compute inverse of lower triangular matrix */
 
-	    nn = (*n - 1) / nb * nb + 1;
-	    i__3 = -nb;
-	    for (j = nn; i__3 < 0 ? j >= 1 : j <= 1; j += i__3) {
+                        nn = (*n - 1) / nb * nb + 1;
+                        i__3 = -nb;
+                        for (j = nn; i__3 < 0 ? j >= 1 : j <= 1; j += i__3) {
 /* Computing MIN */
-		i__1 = nb, i__4 = *n - j + 1;
-		jb = min(i__1,i__4);
-		if (j + jb <= *n) {
+                                i__1 = nb, i__4 = *n - j + 1;
+                                jb = min(i__1, i__4);
+                                if (j + jb <= *n) {
 
 /*                 Compute rows j+jb:n of current block column */
 
-		    i__1 = *n - j - jb + 1;
-		    dtrmm_("Left", "Lower", "No transpose", diag, &i__1, &jb, 
-			    &c_b18, &a[j + jb + (j + jb) * a_dim1], lda, &a[j 
-			    + jb + j * a_dim1], lda);
-		    i__1 = *n - j - jb + 1;
-		    dtrsm_("Right", "Lower", "No transpose", diag, &i__1, &jb, 
-			     &c_b22, &a[j + j * a_dim1], lda, &a[j + jb + j * 
-			    a_dim1], lda);
-		}
+                                        i__1 = *n - j - jb + 1;
+                                        dtrmm_("Left", "Lower", "No transpose",
+                                               diag, &i__1, &jb, &c_b18,
+                                               &a[j + jb + (j + jb) * a_dim1],
+                                               lda, &a[j + jb + j * a_dim1],
+                                               lda);
+                                        i__1 = *n - j - jb + 1;
+                                        dtrsm_("Right", "Lower", "No transpose",
+                                               diag, &i__1, &jb, &c_b22,
+                                               &a[j + j * a_dim1], lda,
+                                               &a[j + jb + j * a_dim1], lda);
+                                }
 
 /*              Compute inverse of current diagonal block */
 
-		dtrti2_("Lower", diag, &jb, &a[j + j * a_dim1], lda, info);
+                                dtrti2_("Lower", diag, &jb, &a[j + j * a_dim1],
+                                        lda, info);
 /* L30: */
-	    }
-	}
-    }
+                        }
+                }
+        }
 
-    return 0;
+        return 0;
 
 /*     End of DTRTRI */
 
-} /* dtrtri_ */
-
+}                               /* dtrtri_ */

@@ -38,53 +38,57 @@ A character string containg the path to the genotype input file,
 a genotypic matrix in the \code{\link{lfmm}} format.
 }
 \item{K}{
-        An integer corresponding to the number of principal components
-        calculated. By default, all principal components are calculated.
+    An integer corresponding to the number of principal components
+    calculated. By default, all principal components are calculated.
 }
 \item{center}{
-        A boolean option. If true, the data matrix is centered (default: TRUE).
+    A boolean option. If true, the data matrix is centered (default: TRUE).
 }
 \item{scale}{
-        A boolean option. If true, the data matrix is centered and scaled (default: FALSE).
+    A boolean option. If true, the data matrix is centered and scaled (default:
+    FALSE).
 }
 }
 \value{
-\code{pca} returns an object of class \code{pcaProject} containing the following components:
+\code{pca} returns an object of class \code{pcaProject} containing the 
+following components:
 \item{eigenvalues}{
-        The vector of eigenvalues.
+    The vector of eigenvalues.
 }
 \item{eigenvectors}{
-        The matrix of eigenvectors (one column for each eigenvector). 
+    The matrix of eigenvectors (one column for each eigenvector). 
 }
 \item{sdev}{
-        The vector of standard deviations. 
+    The vector of standard deviations. 
 }
 \item{projections}{
-        The matrix of projections (one column for each projection).
+    The matrix of projections (one column for each projection).
 }
-The following methods can be applied to the object of class pcaProject returned by \code{pca}: 
+The following methods can be applied to the object of class pcaProject returned
+by \code{pca}: 
 \item{plot}{ 
-        Plot the eigenvalues.
+    Plot the eigenvalues.
 }
 \item{show}{
-        Display information about the analysis.
+    Display information about the analysis.
 }
 \item{summary}{
-        Summarize the analysis.
+    Summarize the analysis.
 }
 \item{tracy.widom}{
-        Perform Tracy-Widom tests on the eigenvalues.
+    Perform Tracy-Widom tests on the eigenvalues.
 }
 \item{load.pcaProject(file.pcaProject)}{
-        Load the file containing a pcaProject object and return the pcaProject object.
+    Load the file containing a pcaProject object and return the pcaProject
+    object.
 }
 \item{remove.pcaProject(file.pcaProject)}{
-        Erase a \code{pcaProject} object. Caution: All the files associated with the 
-        object will be removed.
+    Erase a \code{pcaProject} object. Caution: All the files associated with 
+    the object will be removed.
 }
 }
 \author{
-        Eric Frichot
+    Eric Frichot
 }
 \seealso{
 \code{\link{lfmm}}
@@ -107,7 +111,7 @@ write.lfmm(tutorial.R,"genotypes.lfmm")
 #                    center and scale. 
 # Creation of   genotypes.pcaProject - the pcaProject object.
 #               a directory genotypes.pca containing:
-# Create files: genotypes.eigenvalues - eigenvalues,        
+# Create files: genotypes.eigenvalues - eigenvalues,    
 #               genotypes.eigenvectors - eigenvectors,
 #               genotypes.sdev - standard deviations,
 #               genotypes.projections - projections,
@@ -147,7 +151,7 @@ plot(pc$sdev)
 
 # Perfom Tracy-Widom tests on all eigenvalues.
 # Create file: genotypes.tracyWidom - tracy-widom test information, 
-#              in the directory genotypes.pca/.
+#          in the directory genotypes.pca/.
 tw = tracy.widom(pc)
 
 # Plot the percentage of variance explained by each component.

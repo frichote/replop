@@ -1,10 +1,9 @@
 write.geno <- function(R, output.file) 
 {
-
-        if(missing(R))
-                stop("'R' argument is missing.")
-        else if (!(is.matrix(R) || is.data.frame(R) || is.vector(R)))
-                stop("'R' argument has to be of type matrix, data.frame or vector.")
+    if(missing(R))
+        stop("'R' argument is missing.")
+    else if (!(is.matrix(R) || is.data.frame(R) || is.vector(R)))
+        stop("'R' argument has to be of type matrix, data.frame or vector.")
     else if (is.vector(R))
         R = matrix(R,ncol=1,nrow=length(R))
     else if (is.data.frame(R))
@@ -19,6 +18,5 @@ write.geno <- function(R, output.file)
         stop("'R' matrix can only contains 0, 1, 2 or 9.") 
 
     write.table(t(R), output.file, col.names=FALSE,row.names=FALSE,sep="");
-    
     return(output.file);
 }

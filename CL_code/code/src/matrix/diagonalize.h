@@ -21,6 +21,6 @@
  */
 void diagonalize(double *cov, int N, int K, double *val, double *vect);
 
-#endif // DIAGONALIZE_H
+#endif                          // DIAGONALIZE_H
 
 /** @} */

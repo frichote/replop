@@ -37,6 +37,6 @@ void slice_inv_cov(void *G);
 
 #endif
 
-#endif // SLICE_LFMM_H
+#endif                          // SLICE_LFMM_H
 
 /** @} */

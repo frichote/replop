@@ -33,6 +33,6 @@ void sylvester(double *A, double *B, double *C, double *X, int M, int N);
  */
 void schur(double *A, double *Q, int M);
 
-#endif // SYLVESTER_H
+#endif                          // SYLVESTER_H
 
 /** @} */

@@ -1,14 +1,13 @@
 #include "blaswrap.h"
 #include "f2c.h"
 
-/* Subroutine */ int dgehrd_(integer *n, integer *ilo, integer *ihi, 
-	doublereal *a, integer *lda, doublereal *tau, doublereal *work, 
-	integer *lwork, integer *info)
+/* Subroutine */ int dgehrd_(integer * n, integer * ilo, integer * ihi,
+                             doublereal * a, integer * lda, doublereal * tau,
+                             doublereal * work, integer * lwork, integer * info)
 {
 /*  -- LAPACK routine (version 3.1) --   
        Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..   
        November 2006   
-
 
     Purpose   
     =======   
@@ -102,214 +101,230 @@
 
     =====================================================================   
 
-
        Test the input parameters   
 
        Parameter adjustments */
-    /* Table of constant values */
-    static integer c__1 = 1;
-    static integer c_n1 = -1;
-    static integer c__3 = 3;
-    static integer c__2 = 2;
-    static integer c__65 = 65;
-    static doublereal c_b25 = -1.;
-    static doublereal c_b26 = 1.;
-    
-    /* System generated locals */
-    integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
-    /* Local variables */
-    static integer i__, j;
-    static doublereal t[4160]	/* was [65][64] */;
-    static integer ib;
-    static doublereal ei;
-    static integer nb, nh, nx, iws;
-    extern /* Subroutine */ int dgemm_(char *, char *, integer *, integer *, 
-	    integer *, doublereal *, doublereal *, integer *, doublereal *, 
-	    integer *, doublereal *, doublereal *, integer *);
-    static integer nbmin, iinfo;
-    extern /* Subroutine */ int dtrmm_(char *, char *, char *, char *, 
-	    integer *, integer *, doublereal *, doublereal *, integer *, 
-	    doublereal *, integer *), daxpy_(
-	    integer *, doublereal *, doublereal *, integer *, doublereal *, 
-	    integer *), dgehd2_(integer *, integer *, integer *, doublereal *,
-	     integer *, doublereal *, doublereal *, integer *), dlahr2_(
-	    integer *, integer *, integer *, doublereal *, integer *, 
-	    doublereal *, doublereal *, integer *, doublereal *, integer *), 
-	    dlarfb_(char *, char *, char *, char *, integer *, integer *, 
-	    integer *, doublereal *, integer *, doublereal *, integer *, 
-	    doublereal *, integer *, doublereal *, integer *), xerbla_(char *, integer *);
-    extern integer ilaenv_(integer *, char *, char *, integer *, integer *, 
-	    integer *, integer *, ftnlen, ftnlen);
-    static integer ldwork, lwkopt;
-    static logical lquery;
+        /* Table of constant values */
+        static integer c__1 = 1;
+        static integer c_n1 = -1;
+        static integer c__3 = 3;
+        static integer c__2 = 2;
+        static integer c__65 = 65;
+        static doublereal c_b25 = -1.;
+        static doublereal c_b26 = 1.;
 
+        /* System generated locals */
+        integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
+        /* Local variables */
+        static integer i__, j;
+        static doublereal t[4160] /* was [65][64] */ ;
+        static integer ib;
+        static doublereal ei;
+        static integer nb, nh, nx, iws;
+        extern /* Subroutine */ int dgemm_(char *, char *, integer *, integer *,
+                                           integer *, doublereal *,
+                                           doublereal *, integer *,
+                                           doublereal *, integer *,
+                                           doublereal *, doublereal *,
+                                           integer *);
+        static integer nbmin, iinfo;
+        extern /* Subroutine */ int dtrmm_(char *, char *, char *, char *,
+                                           integer *, integer *, doublereal *,
+                                           doublereal *, integer *,
+                                           doublereal *, integer *),
+            daxpy_(integer *, doublereal *, doublereal *, integer *,
+                   doublereal *, integer *), dgehd2_(integer *, integer *,
+                                                     integer *, doublereal *,
+                                                     integer *, doublereal *,
+                                                     doublereal *, integer *),
+            dlahr2_(integer *, integer *, integer *, doublereal *, integer *,
+                    doublereal *, doublereal *, integer *, doublereal *,
+                    integer *), dlarfb_(char *, char *, char *, char *,
+                                        integer *, integer *, integer *,
+                                        doublereal *, integer *, doublereal *,
+                                        integer *, doublereal *, integer *,
+                                        doublereal *, integer *),
+            xerbla_(char *, integer *);
+        extern integer ilaenv_(integer *, char *, char *, integer *, integer *,
+                               integer *, integer *, ftnlen, ftnlen);
+        static integer ldwork, lwkopt;
+        static logical lquery;
 
-    a_dim1 = *lda;
-    a_offset = 1 + a_dim1;
-    a -= a_offset;
-    --tau;
-    --work;
+        a_dim1 = *lda;
+        a_offset = 1 + a_dim1;
+        a -= a_offset;
+        --tau;
+        --work;
 
-    /* Function Body */
-    *info = 0;
+        /* Function Body */
+        *info = 0;
 /* Computing MIN */
-    i__1 = 64, i__2 = ilaenv_(&c__1, "DGEHRD", " ", n, ilo, ihi, &c_n1, (
-	    ftnlen)6, (ftnlen)1);
-    nb = min(i__1,i__2);
-    lwkopt = *n * nb;
-    work[1] = (doublereal) lwkopt;
-    lquery = *lwork == -1;
-    if (*n < 0) {
-	*info = -1;
-    } else if (*ilo < 1 || *ilo > max(1,*n)) {
-	*info = -2;
-    } else if (*ihi < min(*ilo,*n) || *ihi > *n) {
-	*info = -3;
-    } else if (*lda < max(1,*n)) {
-	*info = -5;
-    } else if (*lwork < max(1,*n) && ! lquery) {
-	*info = -8;
-    }
-    if (*info != 0) {
-	i__1 = -(*info);
-	xerbla_("DGEHRD", &i__1);
-	return 0;
-    } else if (lquery) {
-	return 0;
-    }
+        i__1 = 64, i__2 =
+            ilaenv_(&c__1, "DGEHRD", " ", n, ilo, ihi, &c_n1, (ftnlen) 6,
+                    (ftnlen) 1);
+        nb = min(i__1, i__2);
+        lwkopt = *n * nb;
+        work[1] = (doublereal) lwkopt;
+        lquery = *lwork == -1;
+        if (*n < 0) {
+                *info = -1;
+        } else if (*ilo < 1 || *ilo > max(1, *n)) {
+                *info = -2;
+        } else if (*ihi < min(*ilo, *n) || *ihi > *n) {
+                *info = -3;
+        } else if (*lda < max(1, *n)) {
+                *info = -5;
+        } else if (*lwork < max(1, *n) && !lquery) {
+                *info = -8;
+        }
+        if (*info != 0) {
+                i__1 = -(*info);
+                xerbla_("DGEHRD", &i__1);
+                return 0;
+        } else if (lquery) {
+                return 0;
+        }
 
 /*     Set elements 1:ILO-1 and IHI:N-1 of TAU to zero */
 
-    i__1 = *ilo - 1;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	tau[i__] = 0.;
+        i__1 = *ilo - 1;
+        for (i__ = 1; i__ <= i__1; ++i__) {
+                tau[i__] = 0.;
 /* L10: */
-    }
-    i__1 = *n - 1;
-    for (i__ = max(1,*ihi); i__ <= i__1; ++i__) {
-	tau[i__] = 0.;
+        }
+        i__1 = *n - 1;
+        for (i__ = max(1, *ihi); i__ <= i__1; ++i__) {
+                tau[i__] = 0.;
 /* L20: */
-    }
+        }
 
 /*     Quick return if possible */
 
-    nh = *ihi - *ilo + 1;
-    if (nh <= 1) {
-	work[1] = 1.;
-	return 0;
-    }
+        nh = *ihi - *ilo + 1;
+        if (nh <= 1) {
+                work[1] = 1.;
+                return 0;
+        }
 
 /*     Determine the block size   
 
    Computing MIN */
-    i__1 = 64, i__2 = ilaenv_(&c__1, "DGEHRD", " ", n, ilo, ihi, &c_n1, (
-	    ftnlen)6, (ftnlen)1);
-    nb = min(i__1,i__2);
-    nbmin = 2;
-    iws = 1;
-    if (nb > 1 && nb < nh) {
+        i__1 = 64, i__2 =
+            ilaenv_(&c__1, "DGEHRD", " ", n, ilo, ihi, &c_n1, (ftnlen) 6,
+                    (ftnlen) 1);
+        nb = min(i__1, i__2);
+        nbmin = 2;
+        iws = 1;
+        if (nb > 1 && nb < nh) {
 
 /*        Determine when to cross over from blocked to unblocked code   
           (last block is always handled by unblocked code)   
 
    Computing MAX */
-	i__1 = nb, i__2 = ilaenv_(&c__3, "DGEHRD", " ", n, ilo, ihi, &c_n1, (
-		ftnlen)6, (ftnlen)1);
-	nx = max(i__1,i__2);
-	if (nx < nh) {
+                i__1 = nb, i__2 =
+                    ilaenv_(&c__3, "DGEHRD", " ", n, ilo, ihi, &c_n1,
+                            (ftnlen) 6, (ftnlen) 1);
+                nx = max(i__1, i__2);
+                if (nx < nh) {
 
 /*           Determine if workspace is large enough for blocked code */
 
-	    iws = *n * nb;
-	    if (*lwork < iws) {
+                        iws = *n * nb;
+                        if (*lwork < iws) {
 
 /*              Not enough workspace to use optimal NB:  determine the   
                 minimum value of NB, and reduce NB or force use of   
                 unblocked code   
 
    Computing MAX */
-		i__1 = 2, i__2 = ilaenv_(&c__2, "DGEHRD", " ", n, ilo, ihi, &
-			c_n1, (ftnlen)6, (ftnlen)1);
-		nbmin = max(i__1,i__2);
-		if (*lwork >= *n * nbmin) {
-		    nb = *lwork / *n;
-		} else {
-		    nb = 1;
-		}
-	    }
-	}
-    }
-    ldwork = *n;
+                                i__1 = 2, i__2 =
+                                    ilaenv_(&c__2, "DGEHRD", " ", n, ilo, ihi,
+                                            &c_n1, (ftnlen) 6, (ftnlen) 1);
+                                nbmin = max(i__1, i__2);
+                                if (*lwork >= *n * nbmin) {
+                                        nb = *lwork / *n;
+                                } else {
+                                        nb = 1;
+                                }
+                        }
+                }
+        }
+        ldwork = *n;
 
-    if (nb < nbmin || nb >= nh) {
+        if (nb < nbmin || nb >= nh) {
 
 /*        Use unblocked code below */
 
-	i__ = *ilo;
+                i__ = *ilo;
 
-    } else {
+        } else {
 
 /*        Use blocked code */
 
-	i__1 = *ihi - 1 - nx;
-	i__2 = nb;
-	for (i__ = *ilo; i__2 < 0 ? i__ >= i__1 : i__ <= i__1; i__ += i__2) {
+                i__1 = *ihi - 1 - nx;
+                i__2 = nb;
+                for (i__ = *ilo; i__2 < 0 ? i__ >= i__1 : i__ <= i__1;
+                     i__ += i__2) {
 /* Computing MIN */
-	    i__3 = nb, i__4 = *ihi - i__;
-	    ib = min(i__3,i__4);
+                        i__3 = nb, i__4 = *ihi - i__;
+                        ib = min(i__3, i__4);
 
 /*           Reduce columns i:i+ib-1 to Hessenberg form, returning the   
              matrices V and T of the block reflector H = I - V*T*V'   
              which performs the reduction, and also the matrix Y = A*V*T */
 
-	    dlahr2_(ihi, &i__, &ib, &a[i__ * a_dim1 + 1], lda, &tau[i__], t, &
-		    c__65, &work[1], &ldwork);
+                        dlahr2_(ihi, &i__, &ib, &a[i__ * a_dim1 + 1], lda,
+                                &tau[i__], t, &c__65, &work[1], &ldwork);
 
 /*           Apply the block reflector H to A(1:ihi,i+ib:ihi) from the   
              right, computing  A := A - Y * V'. V(i+ib,ib-1) must be set   
              to 1 */
 
-	    ei = a[i__ + ib + (i__ + ib - 1) * a_dim1];
-	    a[i__ + ib + (i__ + ib - 1) * a_dim1] = 1.;
-	    i__3 = *ihi - i__ - ib + 1;
-	    dgemm_("No transpose", "Transpose", ihi, &i__3, &ib, &c_b25, &
-		    work[1], &ldwork, &a[i__ + ib + i__ * a_dim1], lda, &
-		    c_b26, &a[(i__ + ib) * a_dim1 + 1], lda);
-	    a[i__ + ib + (i__ + ib - 1) * a_dim1] = ei;
+                        ei = a[i__ + ib + (i__ + ib - 1) * a_dim1];
+                        a[i__ + ib + (i__ + ib - 1) * a_dim1] = 1.;
+                        i__3 = *ihi - i__ - ib + 1;
+                        dgemm_("No transpose", "Transpose", ihi, &i__3, &ib,
+                               &c_b25, &work[1], &ldwork,
+                               &a[i__ + ib + i__ * a_dim1], lda, &c_b26,
+                               &a[(i__ + ib) * a_dim1 + 1], lda);
+                        a[i__ + ib + (i__ + ib - 1) * a_dim1] = ei;
 
 /*           Apply the block reflector H to A(1:i,i+1:i+ib-1) from the   
              right */
 
-	    i__3 = ib - 1;
-	    dtrmm_("Right", "Lower", "Transpose", "Unit", &i__, &i__3, &c_b26, 
-		     &a[i__ + 1 + i__ * a_dim1], lda, &work[1], &ldwork);
-	    i__3 = ib - 2;
-	    for (j = 0; j <= i__3; ++j) {
-		daxpy_(&i__, &c_b25, &work[ldwork * j + 1], &c__1, &a[(i__ + 
-			j + 1) * a_dim1 + 1], &c__1);
+                        i__3 = ib - 1;
+                        dtrmm_("Right", "Lower", "Transpose", "Unit", &i__,
+                               &i__3, &c_b26, &a[i__ + 1 + i__ * a_dim1], lda,
+                               &work[1], &ldwork);
+                        i__3 = ib - 2;
+                        for (j = 0; j <= i__3; ++j) {
+                                daxpy_(&i__, &c_b25, &work[ldwork * j + 1],
+                                       &c__1, &a[(i__ + j + 1) * a_dim1 + 1],
+                                       &c__1);
 /* L30: */
-	    }
+                        }
 
 /*           Apply the block reflector H to A(i+1:ihi,i+ib:n) from the   
              left */
 
-	    i__3 = *ihi - i__;
-	    i__4 = *n - i__ - ib + 1;
-	    dlarfb_("Left", "Transpose", "Forward", "Columnwise", &i__3, &
-		    i__4, &ib, &a[i__ + 1 + i__ * a_dim1], lda, t, &c__65, &a[
-		    i__ + 1 + (i__ + ib) * a_dim1], lda, &work[1], &ldwork);
+                        i__3 = *ihi - i__;
+                        i__4 = *n - i__ - ib + 1;
+                        dlarfb_("Left", "Transpose", "Forward", "Columnwise",
+                                &i__3, &i__4, &ib, &a[i__ + 1 + i__ * a_dim1],
+                                lda, t, &c__65,
+                                &a[i__ + 1 + (i__ + ib) * a_dim1], lda,
+                                &work[1], &ldwork);
 /* L40: */
-	}
-    }
+                }
+        }
 
 /*     Use unblocked code to reduce the rest of the matrix */
 
-    dgehd2_(n, &i__, ihi, &a[a_offset], lda, &tau[1], &work[1], &iinfo);
-    work[1] = (doublereal) iws;
+        dgehd2_(n, &i__, ihi, &a[a_offset], lda, &tau[1], &work[1], &iinfo);
+        work[1] = (doublereal) iws;
 
-    return 0;
+        return 0;
 
 /*     End of DGEHRD */
 
-} /* dgehrd_ */
-
+}                               /* dgehrd_ */

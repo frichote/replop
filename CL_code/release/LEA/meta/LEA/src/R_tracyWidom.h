@@ -7,6 +7,6 @@
 #ifndef R_TRACYWIDOM_H
 #define R_TRACYWIDOM_H
 
-void R_tracyWidom (char** R_input_file, char **R_output_file);
+void R_tracyWidom(char **R_input_file, char **R_output_file);
 
-#endif // R_TRACYWIDOM_H
+#endif                          // R_TRACYWIDOM_H

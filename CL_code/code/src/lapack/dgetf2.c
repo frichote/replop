@@ -6,26 +6,25 @@
 static integer c__1 = 1;
 static doublereal c_b8 = -1.;
 
-/* Subroutine */ int dgetf2_(integer *m, integer *n, doublereal *a, integer *
-	lda, integer *ipiv, integer *info)
+/* Subroutine */ int dgetf2_(integer * m, integer * n, doublereal * a, integer *
+                             lda, integer * ipiv, integer * info)
 {
-    /* System generated locals */
-    integer a_dim1, a_offset, i__1, i__2, i__3;
-    doublereal d__1;
+        /* System generated locals */
+        integer a_dim1, a_offset, i__1, i__2, i__3;
+        doublereal d__1;
 
-    /* Local variables */
-    integer i__, j, jp;
-    extern /* Subroutine */ int dger_(integer *, integer *, doublereal *, 
-	    doublereal *, integer *, doublereal *, integer *, doublereal *, 
-	    integer *), dscal_(integer *, doublereal *, doublereal *, integer 
-	    *);
-    doublereal sfmin;
-    extern /* Subroutine */ int dswap_(integer *, doublereal *, integer *, 
-	    doublereal *, integer *);
-    extern doublereal dlamch_(char *);
-    extern integer idamax_(integer *, doublereal *, integer *);
-    extern /* Subroutine */ int xerbla_(char *, integer *);
-
+        /* Local variables */
+        integer i__, j, jp;
+        extern /* Subroutine */ int dger_(integer *, integer *, doublereal *,
+                                          doublereal *, integer *, doublereal *,
+                                          integer *, doublereal *, integer *),
+            dscal_(integer *, doublereal *, doublereal *, integer *);
+        doublereal sfmin;
+        extern /* Subroutine */ int dswap_(integer *, doublereal *, integer *,
+                                           doublereal *, integer *);
+        extern doublereal dlamch_(char *);
+        extern integer idamax_(integer *, doublereal *, integer *);
+        extern /* Subroutine */ int xerbla_(char *, integer *);
 
 /*  -- LAPACK routine (version 3.1) -- */
 /*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. */
@@ -95,88 +94,93 @@ static doublereal c_b8 = -1.;
 
 /*     Test the input parameters. */
 
-    /* Parameter adjustments */
-    a_dim1 = *lda;
-    a_offset = 1 + a_dim1;
-    a -= a_offset;
-    --ipiv;
+        /* Parameter adjustments */
+        a_dim1 = *lda;
+        a_offset = 1 + a_dim1;
+        a -= a_offset;
+        --ipiv;
 
-    /* Function Body */
-    *info = 0;
-    if (*m < 0) {
-	*info = -1;
-    } else if (*n < 0) {
-	*info = -2;
-    } else if (*lda < max(1,*m)) {
-	*info = -4;
-    }
-    if (*info != 0) {
-	i__1 = -(*info);
-	xerbla_("DGETF2", &i__1);
-	return 0;
-    }
+        /* Function Body */
+        *info = 0;
+        if (*m < 0) {
+                *info = -1;
+        } else if (*n < 0) {
+                *info = -2;
+        } else if (*lda < max(1, *m)) {
+                *info = -4;
+        }
+        if (*info != 0) {
+                i__1 = -(*info);
+                xerbla_("DGETF2", &i__1);
+                return 0;
+        }
 
 /*     Quick return if possible */
 
-    if (*m == 0 || *n == 0) {
-	return 0;
-    }
+        if (*m == 0 || *n == 0) {
+                return 0;
+        }
 
 /*     Compute machine safe minimum */
 
-    sfmin = dlamch_("S");
+        sfmin = dlamch_("S");
 
-    i__1 = min(*m,*n);
-    for (j = 1; j <= i__1; ++j) {
+        i__1 = min(*m, *n);
+        for (j = 1; j <= i__1; ++j) {
 
 /*        Find pivot and test for singularity. */
 
-	i__2 = *m - j + 1;
-	jp = j - 1 + idamax_(&i__2, &a[j + j * a_dim1], &c__1);
-	ipiv[j] = jp;
-	if (a[jp + j * a_dim1] != 0.) {
+                i__2 = *m - j + 1;
+                jp = j - 1 + idamax_(&i__2, &a[j + j * a_dim1], &c__1);
+                ipiv[j] = jp;
+                if (a[jp + j * a_dim1] != 0.) {
 
 /*           Apply the interchange to columns 1:N. */
 
-	    if (jp != j) {
-		dswap_(n, &a[j + a_dim1], lda, &a[jp + a_dim1], lda);
-	    }
+                        if (jp != j) {
+                                dswap_(n, &a[j + a_dim1], lda, &a[jp + a_dim1],
+                                       lda);
+                        }
 
 /*           Compute elements J+1:M of J-th column. */
 
-	    if (j < *m) {
-		if ((d__1 = a[j + j * a_dim1], abs(d__1)) >= sfmin) {
-		    i__2 = *m - j;
-		    d__1 = 1. / a[j + j * a_dim1];
-		    dscal_(&i__2, &d__1, &a[j + 1 + j * a_dim1], &c__1);
-		} else {
-		    i__2 = *m - j;
-		    for (i__ = 1; i__ <= i__2; ++i__) {
-			a[j + i__ + j * a_dim1] /= a[j + j * a_dim1];
+                        if (j < *m) {
+                                if ((d__1 =
+                                     a[j + j * a_dim1], abs(d__1)) >= sfmin) {
+                                        i__2 = *m - j;
+                                        d__1 = 1. / a[j + j * a_dim1];
+                                        dscal_(&i__2, &d__1,
+                                               &a[j + 1 + j * a_dim1], &c__1);
+                                } else {
+                                        i__2 = *m - j;
+                                        for (i__ = 1; i__ <= i__2; ++i__) {
+                                                a[j + i__ + j * a_dim1] /= a[j +
+                                                                             j *
+                                                                             a_dim1];
 /* L20: */
-		    }
-		}
-	    }
+                                        }
+                                }
+                        }
 
-	} else if (*info == 0) {
+                } else if (*info == 0) {
 
-	    *info = j;
-	}
+                        *info = j;
+                }
 
-	if (j < min(*m,*n)) {
+                if (j < min(*m, *n)) {
 
 /*           Update trailing submatrix. */
 
-	    i__2 = *m - j;
-	    i__3 = *n - j;
-	    dger_(&i__2, &i__3, &c_b8, &a[j + 1 + j * a_dim1], &c__1, &a[j + (
-		    j + 1) * a_dim1], lda, &a[j + 1 + (j + 1) * a_dim1], lda);
-	}
+                        i__2 = *m - j;
+                        i__3 = *n - j;
+                        dger_(&i__2, &i__3, &c_b8, &a[j + 1 + j * a_dim1],
+                              &c__1, &a[j + (j + 1) * a_dim1], lda,
+                              &a[j + 1 + (j + 1) * a_dim1], lda);
+                }
 /* L10: */
-    }
-    return 0;
+        }
+        return 0;
 
 /*     End of DGETF2 */
 
-} /* dgetf2_ */
-
+}                               /* dgetf2_ */

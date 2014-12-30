@@ -10,36 +10,34 @@ static integer memfailure = 3;
 extern char *malloc();
 extern void exit_();
 
- char *
-F77_aloc(Len, whence) integer Len; char *whence;
+char *F77_aloc(Len, whence)
+integer Len;
+char *whence;
 #else
 #include "stdlib.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
 #ifdef __cplusplus
-extern "C" {
+        extern "C" {
 #endif
-extern void exit_(integer*);
+                extern void exit_(integer *);
 #ifdef __cplusplus
-	}
+        }
 #endif
-
- char *
-F77_aloc(integer Len, char *whence)
+        char *F77_aloc(integer Len, char *whence)
 #endif
-{
-	char *rv;
-	unsigned int uLen = (unsigned int) Len;	/* for K&R C */
+        {
+                char *rv;
+                unsigned int uLen = (unsigned int)Len;  /* for K&R C */
 
-	if (!(rv = (char*)malloc(uLen))) {
-		fprintf(stderr, "malloc(%u) failure in %s\n",
-			uLen, whence);
-		exit((integer)&memfailure);
-		}
-	return rv;
-	}
+                if (!(rv = (char *)malloc(uLen))) {
+                        fprintf(stderr, "malloc(%u) failure in %s\n",
+                                uLen, whence);
+                        exit((integer) & memfailure);
+                }
+                return rv;
+        }
 #ifdef __cplusplus
 }
 #endif
-

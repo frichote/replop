@@ -22,10 +22,10 @@
  * @param input_file_F	the input file for F
  * @param input_file_I	the input file for the genotype file with masked genotypes
  */
-void analyse_param_ce(	int argc, char *argv[], int *m,
-			int* K, char *input, char* input_file_Q,
-			char* input_file_F, char *input_file_I); 
+void analyse_param_ce(int argc, char *argv[], int *m,
+                      int *K, char *input, char *input_file_Q,
+                      char *input_file_F, char *input_file_I);
 
-#endif // REGISTER_CE_H
+#endif                          // REGISTER_CE_H
 
 /** @} */

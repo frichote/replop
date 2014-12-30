@@ -6,7 +6,7 @@
 #define __BLASWRAP_H
 
 #ifndef NO_BLAS_WRAP
- 
+
 /* BLAS1 routines */
 /*
 #define srotg_ f2c_srotg
@@ -54,7 +54,7 @@
 #define icamax_ f2c_icamax
 #define izamax_ f2c_izamax
 */
- 
+
 /* BLAS2 routines */
 /*
 #define sgemv_ f2c_sgemv
@@ -124,7 +124,7 @@
 #define sspr2_ f2c_sspr2
 #define dspr2_ f2c_dspr2
 */
- 
+
 /* BLAS3 routines */
 /*
 #define sgemm_ f2c_sgemm
@@ -158,7 +158,6 @@
 #define ctrsm_ f2c_ctrsm
 #define ztrsm_ f2c_ztrsm
 */
-#endif /* NO_BLAS_WRAP */
+#endif                          /* NO_BLAS_WRAP */
 
-#endif /* __BLASWRAP_H */
-
+#endif                          /* __BLASWRAP_H */

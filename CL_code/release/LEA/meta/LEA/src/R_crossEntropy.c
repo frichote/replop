@@ -25,48 +25,13 @@
 #include <math.h>
 #include "crossEntropy/crossEntropy.h"
 
-#include "R_crossEntropy.h" 
+#include "R_crossEntropy.h"
 
-void R_crossEntropy (char** R_genotype_file, char** R_missing_data_file, char** R_Q_file, 
-	char** R_F_file, int* R_K, int* R_ploidy, double* all_ce, double *masked_ce) 
+void R_crossEntropy(char **R_genotype_file, char **R_missing_data_file,
+                    char **R_Q_file, char **R_F_file, int *R_K, int *R_ploidy,
+                    double *all_ce, double *masked_ce)
 {
-        crossEntropy(	*R_genotype_file, 
-			*R_missing_data_file, 
-			*R_Q_file, 
-			*R_F_file,
-			*R_K,
-			*R_ploidy,
-			all_ce,
-			masked_ce);
+        crossEntropy(*R_genotype_file,
+                     *R_missing_data_file,
+                     *R_Q_file, *R_F_file, *R_K, *R_ploidy, all_ce, masked_ce);
 }
-/*
-        //parameters initialization
-
-	int K = 0;				// number of ancestral populations
-	char input_file_F[512] = "";	 	// input file for ancestral allele frequencies
-	char input_file_Q[512] = "";		// input file for ancestral admixture coefficients
-	char input_file_I[512] = "";		// input file with missing data	
-	char input_file[512] = "";		// input file "without" missing data 
-	double all_ce, missing_ce;
-	int m = 2;
-
-	print_head_snmf();
-
-	// analyse of the command line
-        if (R_K)
-                K = *R_K;
-        if (R_ploidy)
-                m = *R_ploidy;
-
-        if (R_genotype_file)
-                strcpy(input_file, *R_genotype_file);
-        else
-                print_error_cds("option","-g genotype_file");
-
-        strcpy(input_file_I, *R_missing_data_file);
-        strcpy(input_file_F, *R_F_file);
-        strcpy(input_file_Q, *R_Q_file);
-
-        crossEntropy(input_file, input_file_I, input_file_Q, input_file_F, K, m, &all_ce, &missing_ce);
-}
-*/

@@ -13,21 +13,21 @@
 #include "f2c.h"
 #include "blaswrap.h"
 
-/* Subroutine */ int dlarra_(integer *n, doublereal *d__, doublereal *e, 
-	doublereal *e2, doublereal *spltol, doublereal *tnrm, integer *nsplit, 
-	 integer *isplit, integer *info)
+/* Subroutine */ int dlarra_(integer * n, doublereal * d__, doublereal * e,
+                             doublereal * e2, doublereal * spltol,
+                             doublereal * tnrm, integer * nsplit,
+                             integer * isplit, integer * info)
 {
-    /* System generated locals */
-    integer i__1;
-    doublereal d__1, d__2;
+        /* System generated locals */
+        integer i__1;
+        doublereal d__1, d__2;
 
-    /* Builtin functions */
-    double sqrt(doublereal);
+        /* Builtin functions */
+        double sqrt(doublereal);
 
-    /* Local variables */
-    integer i__;
-    doublereal tmp1, eabs;
-
+        /* Local variables */
+        integer i__;
+        doublereal tmp1, eabs;
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */
 /*     Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd.. */
@@ -85,7 +85,6 @@
 /*          etc., and the NSPLIT-th consists of rows/columns */
 /*          ISPLIT(NSPLIT-1)+1 through ISPLIT(NSPLIT)=N. */
 
-
 /*  INFO    (output) INTEGER */
 /*          = 0:  successful exit */
 
@@ -109,48 +108,49 @@
 /*     .. */
 /*     .. Executable Statements .. */
 
-    /* Parameter adjustments */
-    --isplit;
-    --e2;
-    --e;
-    --d__;
+        /* Parameter adjustments */
+        --isplit;
+        --e2;
+        --e;
+        --d__;
 
-    /* Function Body */
-    *info = 0;
+        /* Function Body */
+        *info = 0;
 /*     Compute splitting points */
-    *nsplit = 1;
-    if (*spltol < 0.) {
+        *nsplit = 1;
+        if (*spltol < 0.) {
 /*        Criterion based on absolute off-diagonal value */
-	tmp1 = abs(*spltol) * *tnrm;
-	i__1 = *n - 1;
-	for (i__ = 1; i__ <= i__1; ++i__) {
-	    eabs = (d__1 = e[i__], abs(d__1));
-	    if (eabs <= tmp1) {
-		e[i__] = 0.;
-		e2[i__] = 0.;
-		isplit[*nsplit] = i__;
-		++(*nsplit);
-	    }
+                tmp1 = abs(*spltol) * *tnrm;
+                i__1 = *n - 1;
+                for (i__ = 1; i__ <= i__1; ++i__) {
+                        eabs = (d__1 = e[i__], abs(d__1));
+                        if (eabs <= tmp1) {
+                                e[i__] = 0.;
+                                e2[i__] = 0.;
+                                isplit[*nsplit] = i__;
+                                ++(*nsplit);
+                        }
 /* L9: */
-	}
-    } else {
+                }
+        } else {
 /*        Criterion that guarantees relative accuracy */
-	i__1 = *n - 1;
-	for (i__ = 1; i__ <= i__1; ++i__) {
-	    eabs = (d__1 = e[i__], abs(d__1));
-	    if (eabs <= *spltol * sqrt((d__1 = d__[i__], abs(d__1))) * sqrt((
-		    d__2 = d__[i__ + 1], abs(d__2)))) {
-		e[i__] = 0.;
-		e2[i__] = 0.;
-		isplit[*nsplit] = i__;
-		++(*nsplit);
-	    }
+                i__1 = *n - 1;
+                for (i__ = 1; i__ <= i__1; ++i__) {
+                        eabs = (d__1 = e[i__], abs(d__1));
+                        if (eabs <=
+                            *spltol * sqrt((d__1 = d__[i__], abs(d__1))) *
+                            sqrt((d__2 = d__[i__ + 1], abs(d__2)))) {
+                                e[i__] = 0.;
+                                e2[i__] = 0.;
+                                isplit[*nsplit] = i__;
+                                ++(*nsplit);
+                        }
 /* L10: */
-	}
-    }
-    isplit[*nsplit] = *n;
-    return 0;
+                }
+        }
+        isplit[*nsplit] = *n;
+        return 0;
 
 /*     End of DLARRA */
 
-} /* dlarra_ */
+}                               /* dlarra_ */

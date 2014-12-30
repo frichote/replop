@@ -23,24 +23,25 @@
 #include "../crossEntropy/crossEntropy.h"
 #include "../io/io_tools.h"
 
-int main (int argc, char *argv[]) 
+int main(int argc, char *argv[])
 {
         //parameters initialization
-	char input_file_F[512] = "";	 	// input file for ancestral allele frequencies
-	char input_file_Q[512] = "";		// input file for ancestral admixture coefficients
-	char input_file_I[512] = "";		// input file with missing data	
-	char input_file[512];			// input file "without" missing data 
-	int K = 0;
-	double all_ce, missing_ce;
-	int m = 2;
+        char input_file_F[512] = "";    // input file for ancestral allele frequencies
+        char input_file_Q[512] = "";    // input file for ancestral admixture coefficients
+        char input_file_I[512] = "";    // input file with missing data 
+        char input_file[512];   // input file "without" missing data 
+        int K = 0;
+        double all_ce, missing_ce;
+        int m = 2;
 
-	// analyse of the command line
-	print_head_snmf();
-	analyse_param_ce(argc,argv, &m, &K, input_file, input_file_Q, input_file_F, input_file_I);
+        // analyse of the command line
+        print_head_snmf();
+        analyse_param_ce(argc, argv, &m, &K, input_file, input_file_Q,
+                         input_file_F, input_file_I);
 
-	// run function
-	crossEntropy(input_file, input_file_I, input_file_Q, input_file_F, K, m, &all_ce, &missing_ce);
+        // run function
+        crossEntropy(input_file, input_file_I, input_file_Q, input_file_F, K, m,
+                     &all_ce, &missing_ce);
 
-	return 0;
+        return 0;
 }
-

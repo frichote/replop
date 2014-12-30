@@ -35,8 +35,9 @@ void update_Y(double *AtA, double *AtB, double *X, double *Y, int N, int K);
  * @param N     number of columns of X and Y
  * @param K     number of columns of X and Y
  */
-void opt_param_update(int *PassiveSet, int *NotGood, int *NonOptSet, 
-	int* InfeaSet, double* X, double* Y, int* NotOptCols_nb, int N, int K);
+void opt_param_update(int *PassiveSet, int *NotGood, int *NonOptSet,
+                      int *InfeaSet, double *X, double *Y, int *NotOptCols_nb,
+                      int N, int K);
 
 /* @brief parameters initialization
  *
@@ -50,8 +51,8 @@ void opt_param_update(int *PassiveSet, int *NotGood, int *NonOptSet,
  *
  * @return true if all X are <=0
  */
-int parameter_init(int* PassiveSet, int* NotGood, int* Ninf, int* P,int K, 
-	int N, double *X);
+int parameter_init(int *PassiveSet, int *NotGood, int *Ninf, int *P, int K,
+                   int N, double *X);
 
 /* @brief PassiveSet, P, and Ninf update
  *
@@ -66,8 +67,9 @@ int parameter_init(int* PassiveSet, int* NotGood, int* Ninf, int* P,int K,
  * @param N     number of lines of PassiveSet
  * @param K     number of columns of PassiveSet
  */
-void PassiveSet_update(int *NotGood, int *Ninf, int *P, int pbar, 
-	int *NonOptSet, int* PassiveSet, int *InfeaSet, int N, int K, int *Cols3Ix);
+void PassiveSet_update(int *NotGood, int *Ninf, int *P, int pbar,
+                       int *NonOptSet, int *PassiveSet, int *InfeaSet, int N,
+                       int K, int *Cols3Ix);
 
 /* @brief X and Y update
  *
@@ -83,10 +85,10 @@ void PassiveSet_update(int *NotGood, int *Ninf, int *P, int pbar,
  *
  * @return number of iterations
  */
-int XY_update(double *AtA, double *AtB, int *PassiveSet, int *NotGood, 
-	int NotOptCols_nb, int N, int K, double *X, double *Y, Nnlsm_param param);
+int XY_update(double *AtA, double *AtB, int *PassiveSet, int *NotGood,
+              int NotOptCols_nb, int N, int K, double *X, double *Y,
+              Nnlsm_param param);
 
-#endif // BLOCKPIVOT_H
-
+#endif                          // BLOCKPIVOT_H
 
 /** @} */

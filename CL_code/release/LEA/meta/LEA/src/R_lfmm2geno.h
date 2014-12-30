@@ -7,6 +7,6 @@
 #ifndef R_lfmm2geno_H
 #define R_lfmm2geno_H
 
-void R_lfmm2geno (char** R_input_file, char** R_output_file, int* N, int* M);
+void R_lfmm2geno(char **R_input_file, char **R_output_file, int *N, int *M);
 
-#endif // R_lfmm2geno_H
+#endif                          // R_lfmm2geno_H

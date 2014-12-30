@@ -28,43 +28,45 @@
 
 void diagonalize(double *cov, int N, int K, double *val, double *vect)
 {
-	long int n = (long int)N;
-	long int M = (long int)K;
-	double abstol = 1e-10;
-	long int *supp = (long int *) malloc (2 * N * sizeof(long int));
-	long int lwork = 26*N;
-	double *work = (double *)calloc(lwork, sizeof(double));
-	long int liwork = 10*N;
-	long int *iwork = (long int *)calloc(liwork, sizeof(double));
-	long int info;
-	double vl = 0.0, vu = 0.0;
-	char jobz = 'V', range = 'I', uplo = 'U';
-	long int il =  (long int)N-K+1;
-	long int ul = (long int)N;
-	double *valp = (double *) calloc(N, sizeof(double));
-	double *vectp = (double *) calloc(N * N, sizeof(double));
-	int i, k;
+        long int n = (long int)N;
+        long int M = (long int)K;
+        double abstol = 1e-10;
+        long int *supp = (long int *)malloc(2 * N * sizeof(long int));
+        long int lwork = 26 * N;
+        double *work = (double *)calloc(lwork, sizeof(double));
+        long int liwork = 10 * N;
+        long int *iwork = (long int *)calloc(liwork, sizeof(double));
+        long int info;
+        double vl = 0.0, vu = 0.0;
+        char jobz = 'V', range = 'I', uplo = 'U';
+        long int il = (long int)N - K + 1;
+        long int ul = (long int)N;
+        double *valp = (double *)calloc(N, sizeof(double));
+        double *vectp = (double *)calloc(N * N, sizeof(double));
+        int i, k;
 
-	dsyevr_((char *) (&jobz), (char *) (&range) , (char *) (&uplo), (integer *) (&n), (doublereal *) cov, 
-	(integer *) (&n), (doublereal *) (&vl), (doublereal *) (&vu), (integer *) (&il) , (integer *) (&ul), 
-	(doublereal *) (&abstol), (integer *) (&M), (doublereal *) valp,
-        (doublereal *) vectp, (integer *) (&n), (integer *)supp, (doublereal *)work,
-        (integer *) (&lwork), (integer *)iwork, (integer *) (&liwork), (integer *) (&info));
+        dsyevr_((char *)(&jobz), (char *)(&range), (char *)(&uplo),
+                (integer *) (&n), (doublereal *) cov, (integer *) (&n),
+                (doublereal *) (&vl), (doublereal *) (&vu), (integer *) (&il),
+                (integer *) (&ul), (doublereal *) (&abstol), (integer *) (&M),
+                (doublereal *) valp, (doublereal *) vectp, (integer *) (&n),
+                (integer *) supp, (doublereal *) work, (integer *) (&lwork),
+                (integer *) iwork, (integer *) (&liwork), (integer *) (&info));
 
-	// copy results
-	for (k = 0; k < K; k++) {
-		val[k] = valp[K-(k+1)];
-		if (val[k] < 0 && abs(val[k]) < 1e-10) 
-			val[k] = 0;
-	}
-	
-	for (k = 0; k < K; k++)
-		for (i = 0; i < N; i++)
-			vect[i * K + k] = vectp[(K - (k + 1)) * N + i];
+        // copy results
+        for (k = 0; k < K; k++) {
+                val[k] = valp[K - (k + 1)];
+                if (val[k] < 0 && abs(val[k]) < 1e-10)
+                        val[k] = 0;
+        }
 
-	free(valp);
-	free(vectp);
-	free(supp);
-	free(work);
-	free(iwork);
+        for (k = 0; k < K; k++)
+                for (i = 0; i < N; i++)
+                        vect[i * K + k] = vectp[(K - (k + 1)) * N + i];
+
+        free(valp);
+        free(vectp);
+        free(supp);
+        free(work);
+        free(iwork);
 }

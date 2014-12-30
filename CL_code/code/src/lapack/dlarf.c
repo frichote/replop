@@ -1,14 +1,14 @@
 #include "blaswrap.h"
 #include "f2c.h"
 
-/* Subroutine */ int dlarf_(char *side, integer *m, integer *n, doublereal *v,
-	 integer *incv, doublereal *tau, doublereal *c__, integer *ldc, 
-	doublereal *work)
+/* Subroutine */ int dlarf_(char *side, integer * m, integer * n,
+                            doublereal * v,
+                            integer * incv, doublereal * tau, doublereal * c__,
+                            integer * ldc, doublereal * work)
 {
 /*  -- LAPACK auxiliary routine (version 3.1) --   
        Univ. of Tennessee, Univ. of California Berkeley and NAG Ltd..   
        November 2006   
-
 
     Purpose   
     =======   
@@ -61,71 +61,70 @@
 
     =====================================================================   
 
-
        Parameter adjustments */
-    /* Table of constant values */
-    static doublereal c_b4 = 1.;
-    static doublereal c_b5 = 0.;
-    static integer c__1 = 1;
-    
-    /* System generated locals */
-    integer c_dim1, c_offset;
-    doublereal d__1;
-    /* Local variables */
-    extern /* Subroutine */ int dger_(integer *, integer *, doublereal *, 
-	    doublereal *, integer *, doublereal *, integer *, doublereal *, 
-	    integer *);
-    extern logical lsame_(char *, char *);
-    extern /* Subroutine */ int dgemv_(char *, integer *, integer *, 
-	    doublereal *, doublereal *, integer *, doublereal *, integer *, 
-	    doublereal *, doublereal *, integer *);
+        /* Table of constant values */
+        static doublereal c_b4 = 1.;
+        static doublereal c_b5 = 0.;
+        static integer c__1 = 1;
 
+        /* System generated locals */
+        integer c_dim1, c_offset;
+        doublereal d__1;
+        /* Local variables */
+        extern /* Subroutine */ int dger_(integer *, integer *, doublereal *,
+                                          doublereal *, integer *, doublereal *,
+                                          integer *, doublereal *, integer *);
+        extern logical lsame_(char *, char *);
+        extern /* Subroutine */ int dgemv_(char *, integer *, integer *,
+                                           doublereal *, doublereal *,
+                                           integer *, doublereal *, integer *,
+                                           doublereal *, doublereal *,
+                                           integer *);
 
-    --v;
-    c_dim1 = *ldc;
-    c_offset = 1 + c_dim1;
-    c__ -= c_offset;
-    --work;
+        --v;
+        c_dim1 = *ldc;
+        c_offset = 1 + c_dim1;
+        c__ -= c_offset;
+        --work;
 
-    /* Function Body */
-    if (lsame_(side, "L")) {
+        /* Function Body */
+        if (lsame_(side, "L")) {
 
 /*        Form  H * C */
 
-	if (*tau != 0.) {
+                if (*tau != 0.) {
 
 /*           w := C' * v */
 
-	    dgemv_("Transpose", m, n, &c_b4, &c__[c_offset], ldc, &v[1], incv, 
-		     &c_b5, &work[1], &c__1);
+                        dgemv_("Transpose", m, n, &c_b4, &c__[c_offset], ldc,
+                               &v[1], incv, &c_b5, &work[1], &c__1);
 
 /*           C := C - v * w' */
 
-	    d__1 = -(*tau);
-	    dger_(m, n, &d__1, &v[1], incv, &work[1], &c__1, &c__[c_offset], 
-		    ldc);
-	}
-    } else {
+                        d__1 = -(*tau);
+                        dger_(m, n, &d__1, &v[1], incv, &work[1], &c__1,
+                              &c__[c_offset], ldc);
+                }
+        } else {
 
 /*        Form  C * H */
 
-	if (*tau != 0.) {
+                if (*tau != 0.) {
 
 /*           w := C * v */
 
-	    dgemv_("No transpose", m, n, &c_b4, &c__[c_offset], ldc, &v[1], 
-		    incv, &c_b5, &work[1], &c__1);
+                        dgemv_("No transpose", m, n, &c_b4, &c__[c_offset], ldc,
+                               &v[1], incv, &c_b5, &work[1], &c__1);
 
 /*           C := C - w * v' */
 
-	    d__1 = -(*tau);
-	    dger_(m, n, &d__1, &work[1], &c__1, &v[1], incv, &c__[c_offset], 
-		    ldc);
-	}
-    }
-    return 0;
+                        d__1 = -(*tau);
+                        dger_(m, n, &d__1, &work[1], &c__1, &v[1], incv,
+                              &c__[c_offset], ldc);
+                }
+        }
+        return 0;
 
 /*     End of DLARF */
 
-} /* dlarf_ */
-
+}                               /* dlarf_ */

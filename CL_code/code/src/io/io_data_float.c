@@ -35,10 +35,10 @@ void read_data_float(char *file_data, int N, int M, float *dat)
         char *szbuff;
         char *token;
 
-	// allocate memory
-	szbuff = (char *) malloc(max_char_per_line * sizeof(char));
+        // allocate memory
+        szbuff = (char *)malloc(max_char_per_line * sizeof(char));
 
-	// open file
+        // open file
         m_File = fopen_read(file_data);
 
         i = 0;
@@ -50,22 +50,22 @@ void read_data_float(char *file_data, int N, int M, float *dat)
                 while (token && j < M) {
                         //printf("%s\n",token);
                         dat[i * M + j] = (float)atof(token);
-			// next elements
+                        // next elements
                         token = strtok(NULL, SEP);
                         j++;
                 }
                 i++;
-		// check the number of columns
-		test_column(file_data, m_File, j, i, M, token);
+                // check the number of columns
+                test_column(file_data, m_File, j, i, M, token);
         }
-	// check the number of lines
-	test_line(file_data, m_File, i, N);
+        // check the number of lines
+        test_line(file_data, m_File, i, N);
 
-	// close file
+        // close file
         fclose(m_File);
 
-	// free memory
-	free(szbuff);
+        // free memory
+        free(szbuff);
 }
 
 // write_data_float
@@ -75,11 +75,11 @@ void write_data_float(char *file_data, int N, int M, float *dat)
         FILE *file = NULL;
         int i, j;
 
-	// open file
+        // open file
         file = fopen_write(file_data);
         if (!file)
                 print_error_global("open", file_data, 0);
-	// write dat
+        // write dat
         for (i = 0; i < N; i++) {
                 for (j = 0; j < M - 1; j++) {
                         fprintf(file, "%G ", dat[i * M + j]);
@@ -87,7 +87,7 @@ void write_data_float(char *file_data, int N, int M, float *dat)
                 fprintf(file, "%G", dat[i * M + (M - 1)]);
                 fprintf(file, "\n");
         }
-	// close file
+        // close file
         fclose(file);
 }
 
@@ -96,7 +96,7 @@ void write_data_float(char *file_data, int N, int M, float *dat)
 void print_data_float(float *dat, int N, int M)
 {
         int i, j;
-	// write dat
+        // write dat
         for (i = 0; i < N; i++) {
                 for (j = 0; j < M - 1; j++) {
                         printf("%G ", dat[i * M + j]);

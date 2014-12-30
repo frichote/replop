@@ -9,7 +9,6 @@
  *	  This program is very similar with the one in Eigensoft.
  */
 
-
 #ifndef TRACYWIDOM_H
 #define TRACYWIDOM_H
 
@@ -19,7 +18,7 @@
  * @param input_file	input file name of eigenvalues
  * @param output_file   the output file with p-values
  */
-void tracyWidom(char* input_file, char *output_file);
+void tracyWidom(char *input_file, char *output_file);
 
 /**
  * write data into output file
@@ -33,7 +32,8 @@ void tracyWidom(char* input_file, char *output_file);
  * @param percentage	percentage of variance
 */
 void write_data_tracyWidom(char *output_file, int M, double *values,
-        double *pvalues, double *twstat, double *effectn, double *percentage);
+                           double *pvalues, double *twstat, double *effectn,
+                           double *percentage);
 
 /**
  * calculate tracy widom  (twtable global variable  !!!)
@@ -80,6 +80,6 @@ void clean_zeros(double **values, int *M);
  */
 void clean_sort(double **values, int *M);
 
-#endif // TRACYWIDOM_H
+#endif                          // TRACYWIDOM_H
 
 /** @} */

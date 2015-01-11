@@ -41,7 +41,7 @@ void update_V(LFMM_param param, LFMM_GS_param GS_param)
         // cov_V = alpha .* eye(K) + alpha_R .* U*U';           (K,K)
         create_inv_cov(GS_param->inv_cov_V, param->alpha_V,
                        param->alpha_R, param->U, param->K, param->n,
-                       param->num_thrd);
+                       1);
 #ifdef DEBUG
         print_debug_NaN(GS_param->inv_cov_V, param->K, param->K, "inv_cov_V");
 #endif
@@ -50,7 +50,7 @@ void update_V(LFMM_param param, LFMM_GS_param GS_param)
            V(:,j) = mvnrnd(mu_V(:,j),inv(cov_V));
            end                                                             */
         rand_matrix(param->V, GS_param->m_V, GS_param->inv_cov_V,
-                    param->alpha_R, param->K, param->L, param->num_thrd);
+                    param->alpha_R, param->K, param->L, 1);
 #ifdef DEBUG
         print_debug_NaN(param->V, param->K, param->L, "V");
 #endif

@@ -88,8 +88,10 @@ sNMF <- function(input.file,
 
     for (r in 1:repetitions) {
         # set the seed
-        if (is.na(seed[r])
+        if (is.na(seed[r]))
             s = -1
+        else
+            s = seed[r]
         s = test_integer("seed", s, as.integer(runif(1)*.Machine$integer.max))
         if (s == -1)   
             s = as.integer(runif(1)*.Machine$integer.max)
@@ -99,7 +101,7 @@ sNMF <- function(input.file,
         if (entropy) {
             masked.file = setExtension((paste(proj@directory, "masked/", 
             basename(input.file), sep="")), "_I.geno")
-            masked.file = create.dataset(input.file, masked.file, seed, 
+            masked.file = create.dataset(input.file, masked.file, s, 
                 percentage); 
         } else {
             masked.file = input.file
@@ -138,7 +140,7 @@ sNMF <- function(input.file,
                 as.double(tolerance),
                 as.double(0.0),
                 as.integer(iterations),
-                seed = as.integer(seed),
+                s = as.integer(s),
                 as.integer(ploidy),
                 as.integer(CPU),
                 as.character(Q.input.file),
@@ -168,7 +170,7 @@ sNMF <- function(input.file,
             res@K = as.integer(k);
             res@run = as.integer(re);
             res@CPU = as.integer(CPU);
-            res@seed = resC$seed;
+            res@seed = resC$s;
             res@alpha = alpha;
             res@percentage = percentage;
             res@I = as.integer(I);

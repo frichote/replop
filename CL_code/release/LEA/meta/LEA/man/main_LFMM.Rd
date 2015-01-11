@@ -85,7 +85,8 @@ LFMM(input.file, environment.file, K,
 }
 \item{seed}{
     A seed to initialize the random number generator. By default, the seed is 
-    randomly chosen.
+    randomly chosen. The seed is initialized at each repetition. If you want
+    to set a seed, please provide a seed per repetition.
 }
 \item{repetitions}{
     The number of repetitions of each run.
@@ -175,11 +176,11 @@ write.env(tutorial.C, "gradients.env")
 # for burnin.
 # around 30 seconds per run.
 project = NULL
-project = LFMM("genotypes.lfmm", "gradients.env", K = 9, repetitions = 5, 
-        iterations = 6000, burnin = 3000, project = "new")
+project = LFMM("genotypes.lfmm", "gradients.env", K = 6, repetitions = 5, 
+        project = "new")
 
-# get the zscores of each run for K = 9
-zs = z.scores(project, K = 9)
+# get the zscores of each run for K = 6
+zs = z.scores(project, K = 6)
 
 # Combine the z-scores using the Stouffer method
 zs.stouffer = apply(zs, MARGIN = 1, median)
@@ -214,14 +215,14 @@ show(project)
 # summary of the project
 summary(project)
 
-# get the z-scores for the 2nd run for K = 9
-z = z.scores(project, K = 9, run = 2)
+# get the z-scores for the 2nd run for K = 6
+z = z.scores(project, K = 6, run = 2)
 
-# get the p-values for the 2nd run for K = 9
-p = p.values(project, K = 9, run = 2)
+# get the p-values for the 2nd run for K = 6
+p = p.values(project, K = 6, run = 2)
 
-# get the -log10(p-values) for the 2nd run for K = 9
-mp = mlog10p.values(project, K = 9, run = 2)
+# get the -log10(p-values) for the 2nd run for K = 6
+mp = mlog10p.values(project, K = 6, run = 2)
 
 ##########################
 # Manage an LFMM project #

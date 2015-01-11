@@ -92,7 +92,7 @@ cd ..
 ###########################
 
 echo "$VERT" "creation of the archive" "$NORMAL"
-R CMD build $dir
+time R CMD build $dir
 
 
 # Advise about how to check the package

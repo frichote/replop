@@ -165,20 +165,20 @@ write.geno(tutorial.R, "genotypes.geno")
 
 # Runs with K between 1 and 5 with cross-entropy and 2 repetitions.
 project = NULL
-project = sNMF("genotypes.geno", K=1:10, entropy = TRUE, repetitions = 2,
+project = sNMF("genotypes.geno", K=1:10, entropy = TRUE, repetitions = 10,
     project = "new")
 
 # plot cross-entropy criterion of all runs of the project
 plot(project, lwd = 5, col = "red", pch=1)
 
-# get the cross-entropy of each run for K = 3
-ce = cross.entropy(project, K = 3)
+# get the cross-entropy of each run for K = 4
+ce = cross.entropy(project, K = 4)
 
 # select the run with the lowest cross-entropy
 best = which.min(ce)
 
-# plot the best run for K = 3 (ancestry coefficients).
-barplot(t(Q(project, K = 3, run = best)))
+# plot the best run for K = 4 (ancestry coefficients).
+barplot(t(Q(project, K = 4, run = best)))
 
 ###################
 # Post-treatments #
@@ -190,43 +190,43 @@ show(project)
 # summary of the project
 summary(project)
 
-# get the cross-entropy for all runs for K = 3 
-ce = cross.entropy(project, K = 3)
+# get the cross-entropy for all runs for K = 4
+ce = cross.entropy(project, K = 4)
 
-# get the cross-entropy for the 2nd run for K = 3
-ce = cross.entropy(project, K = 3, run = 2)
+# get the cross-entropy for the 2nd run for K = 4
+ce = cross.entropy(project, K = 4, run = 2)
 
-# get the ancestral genotype frequency matrix, G, for the 2nd run for K = 3. 
-res = G(project, K = 3, run = 2)
+# get the ancestral genotype frequency matrix, G, for the 2nd run for K = 4. 
+res = G(project, K = 4, run = 2)
 
 #############################
 # Advanced sNMF run options #
 #############################
 
 # Q.input.file: init a run with a given ancestry coefficient matrix Q. 
-# Here, it is initialized with the Q matrix from the first run with K=3
-project = sNMF("genotypes.geno", K = 3, 
-    Q.input.file = "./genotypes.snmf/K3/run1/genotypes_r1.3.Q")
+# Here, it is initialized with the Q matrix from the first run with K=4
+project = sNMF("genotypes.geno", K = 4, 
+    Q.input.file = "./genotypes.snmf/K4/run1/genotypes_r1.4.Q")
 
 # I: init the Q matrix of a run from a smaller run with 100 randomly chosen 
 # SNPs. 
-project = sNMF("genotypes.geno", K = 3, I = 100)
+project = sNMF("genotypes.geno", K = 4, I = 100)
 
 # CPU: run sNMF with 2 CPUs. 
-project = sNMF("genotypes.geno", K = 3, CPU=2)
+project = sNMF("genotypes.geno", K = 4, CPU=2)
 
 # percentage: run sNMF and calculate the cross-entropy criterion with 10% of 
 # masked genotypes, instead of 5% of masked genotypes. 
-project = sNMF("genotypes.geno", K = 3, entropy= TRUE, percentage = 0.1)
+project = sNMF("genotypes.geno", K = 4, entropy= TRUE, percentage = 0.1)
 
 # seed: choose the seed to init the randomization.
-project = sNMF("genotypes.geno", K = 3, seed=42)
+project = sNMF("genotypes.geno", K = 4, seed=42)
 
 # alpha: choose the regularization parameter.
-project = sNMF("genotypes.geno", K = 3, alpha = 100)
+project = sNMF("genotypes.geno", K = 4, alpha = 100)
 
 # tolerance: choose the tolerance parameter.
-project = sNMF("genotypes.geno", K = 3, tolerance = 0.0001)
+project = sNMF("genotypes.geno", K = 4, tolerance = 0.0001)
 
 ##########################
 # Manage an sNMF project #

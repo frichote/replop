@@ -110,7 +110,7 @@
 			<div class="box">
 			<pre><code>library(LEA)
 
-# tutorial contains a matrix of genotypes R with 1000 SNPs for 165 individuals.
+# tutorial contains a matrix of genotypes R with 400 SNPs for 50 individuals.
 # and a matrix with an environmental variable C.
 data("tutorial")
 
@@ -127,8 +127,7 @@ Conversion from the lfmm format to the geno format
 <div class="box">
 <pre><code>library(LEA)
 
-# tutorial contains a matrix of genotypes R with 1000 SNPs for 165 individuals.
-# and a matrix with an environmental variable C.
+# tutorial contains a matrix of genotypes R with 400 SNPs for 50 individuals.
 data("tutorial")
 write.lfmm(R, "genotypes.lfmm")
 
@@ -142,7 +141,11 @@ output = lfmm2geno("genotypes.lfmm")
 # Conversion 	from the lfmm format ("genotypes.lfmm") 
 #		to the geno format with the output file called "plop.geno".
 # Create file:	"plop.geno".
-output = lfmm2geno("genotypes.lfmm", "plop.geno")</code></pre></div>
+output = lfmm2geno("genotypes.lfmm", "plop.geno")
+
+# As force = false and the file "genotypes.geno" already exists,
+# nothing happens.
+output = lfmm2geno("genotypes.lfmm", force = FALSE)</code></pre></div>
 </li>
 </ul>
 			</p>
@@ -210,7 +213,7 @@ C = read.env("tuto.env")</code></pre></div>
                         <div class="box">
                         <pre><code>library(LEA)
 
-# tutorial contains a matrix of genotypes R with 1000 SNPs for 165 individuals.
+# tutorial contains a matrix of genotypes R with 400 SNPs for 50 individuals.
 # and a matrix with an environmental variable C.
 data("tutorial")
 
@@ -227,7 +230,7 @@ R = read.geno("genotypes.geno")</code></pre></div>
 			<pre><code>library(LEA)
 
 reation of a file called "genotypes.geno" in the working directory
-# with 1000 SNPs for 165 individuals.
+# with 400 SNPs for 50 individuals.
 data("tutorial")
 write.geno(R, "genotypes.geno")
 
@@ -241,7 +244,11 @@ output = geno2lfmm("genotypes.geno")
 # Conversion   from the geno format ("genotypes.geno") 
 #              to the lfmm format with the output file called "plop.lfmm".
 # Create file: "plop.lfmm".
-output = geno2lfmm("genotypes.geno", "plop.lfmm")</code></pre></div>
+output = geno2lfmm("genotypes.geno", "plop.lfmm")
+
+# As force = false and the file "genotypes.lfmm" already exists,
+# nothing happens.
+output = geno2lfmm("genotypes.geno", force = FALSE)</code></pre></div>
 			</li>
 			</ul>
                         </p>
@@ -303,7 +310,11 @@ output = ped2geno("example.ped")
 # Conversion 	from the ped format ("example.ped") 
 #		to the geno format with the output file called "plop.geno".
 # Create file:	"plop.geno".
-output = ped2geno("example.ped", "plop.geno")</code></pre></div>
+output = ped2geno("example.ped", "plop.geno")
+
+# As force = false and the file "example.geno" already exists,
+# nothing happens.
+output = ped2geno("example.ped", force = FALSE)</code></pre></div>
 			</li>
 			</ul>
                         </p>
@@ -370,7 +381,11 @@ output = ancestrymap2geno("example.ancestrymap")
 # Conversion    from the ancestrymap format ("example.ancestrymap") 
 #               to the geno format with the output file called "plop.geno".
 # Create file:	"plop.geno".
-output = ancestrymap2geno("example.ancestrymap", "plop.geno")</code></pre></div>
+output = ancestrymap2geno("example.ancestrymap", "plop.geno")
+
+# As force = false and the file "example.geno" already exists,
+# nothing happens.
+output = ancestrymap2geno("example.ancestrymap", force = FALSE)</code></pre></div>
 			</li>
 			</ul>
                         </p>
@@ -428,7 +443,11 @@ output = vcf2geno("example.vcf")
 # Create files:	"plop.geno",
 #		"plop.vcfsnp" - SNP information,
 #		"plop.removed" - removed lines. 
-output = vcf2geno("example.vcf", "plop.geno")</code></pre></div>
+output = vcf2geno("example.vcf", "plop.geno")
+
+# As force = false and the file "example.geno" already exists,
+# nothing happens.
+output = vcf2geno("example.vcf", force = FALSE)</code></pre></div>
 			</li>
 			</ul>
                         </p>
@@ -457,7 +476,7 @@ output = vcf2geno("example.vcf", "plop.geno")</code></pre></div>
                         <pre><code>library(LEA)
 
 # Creation of the genotype file "genotypes.lfmm"
-# with 1000 SNPs for 165 individuals.
+# with 400 SNPs for 50 individuals.
 data("tutorial")
 write.lfmm(R, "genotypes.lfmm")
 
@@ -537,7 +556,7 @@ tw$pvalues</code></pre></div>
                         <pre><code>library(LEA)
 
 # creation of the genotype file, genotypes.geno.
-# It contains 1000 SNPs for 165 individuals.
+# It contains 400 SNPs for 50 individuals.
 data("tutorial")
 write.geno(R, "genotypes.geno")
 
@@ -546,23 +565,25 @@ write.geno(R, "genotypes.geno")
 ################
 
 # main options, K: (the number of ancestral populations), 
-#               entropy: calculate the cross-entropy criterion, 
-#               CPU: the number of CPUs.
+#        entropy: calculate the cross-entropy criterion, 
+#        CPU: the number of CPUs.
 
 # Runs with K between 1 and 5 with cross-entropy and 2 repetitions.
-project = sNMF("genotypes.geno", K=1:10, entropy = TRUE, repetitions = 2)
+project = NULL
+project = sNMF("genotypes.geno", K=1:10, entropy = TRUE, repetitions = 10,
+    project = "new")
 
 # plot cross-entropy criterion of all runs of the project
 plot(project, lwd = 5, col = "red", pch=1)
 
-# get the cross-entropy of each run for K = 7
-ce = cross.entropy(project, K = 7)
+# get the cross-entropy of each run for K = 4
+ce = cross.entropy(project, K = 4)
 
 # select the run with the lowest cross-entropy
 best = which.min(ce)
 
-# plot the best run for K = 7 (ancestry coefficients).
-barplot(t(Q(project, K = 7, run = best)))</code></pre></div>
+# plot the best run for K = 4 (ancestry coefficients).
+barplot(t(Q(project, K = 4, run = best)))</code></pre></div>
 			<br/>
                         </li>
                         </li>
@@ -574,41 +595,41 @@ show(project)
 # summary of the project
 summary(project)
 
-# get the cross-entropy for all runs for K = 3 
-ce = cross.entropy(project, K = 3)
+# get the cross-entropy for all runs for K = 4 
+ce = cross.entropy(project, K = 4)
 
-# get the cross-entropy for the 2nd run for K = 3
-ce = cross.entropy(project, K = 3, run = 2)
+# get the cross-entropy for the 2nd run for K = 4
+ce = cross.entropy(project, K = 4, run = 2)
 
-# get the ancestral genotype frequency matrix, G, for the 2nd run for K = 3. 
-res = G(project, K = 3, run = 2)</code></pre></div>
+# get the ancestral genotype frequency matrix, G, for the 2nd run for K = 4. 
+res = G(project, K = 4, run = 2)</code></pre></div>
 			<br/>
 			</li>
 			<li> Advanced sNMF run options
                         <div class="box">
                         <pre><code>
 # Q.input.file: init a run with a given ancestry coefficient matrix Q. 
-# Here, it is initialized with the Q matrix from the first run with K=3
-project = sNMF("genotypes.geno", K = 3, Q.input.file = "./genotypes.snmf/K3/run1/genotypes_r1.3.Q")
+# Here, it is initialized with the Q matrix from the first run with K=4
+project = sNMF("genotypes.geno", K = 4, Q.input.file = "./genotypes.snmf/K4/run1/genotypes_r1.4.Q")
 
 # I: init the Q matrix of a run from a smaller run with 500 randomly chosen SNPs. 
-project = sNMF("genotypes.geno", K = 3, I = 500)
+project = sNMF("genotypes.geno", K = 4, I = 500)
 
 # CPU: run sNMF with 2 CPUs. 
-project = sNMF("genotypes.geno", K = 3, CPU=2)
+project = sNMF("genotypes.geno", K = 4, CPU=2)
 
 # percentage: run sNMF and calculate the cross-entropy criterion with 10% of masked
 # genotypes, instead of 5% of masked genotypes. 
-project = sNMF("genotypes.geno", K = 3, entropy= TRUE, percentage = 0.1)
+project = sNMF("genotypes.geno", K = 4, entropy= TRUE, percentage = 0.1)
 
 # seed: choose the seed to init the randomization.
-project = sNMF("genotypes.geno", K = 3, seed=42)
+project = sNMF("genotypes.geno", K = 4, seed=42)
 
 # alpha: choose the regularization parameter.
-project = sNMF("genotypes.geno", K = 3, alpha = 100)
+project = sNMF("genotypes.geno", K = 4, alpha = 100)
 
 # tolerance: choose the tolerance parameter.
-project = sNMF("genotypes.geno", K = 3, tolerance = 0.0001)</code></pre></div>
+project = sNMF("genotypes.geno", K = 4, tolerance = 0.0001)</code></pre></div>
 			</li>
 			<br/>
 			<li> Manage a snmf project
@@ -658,22 +679,29 @@ remove.snmfProject("genotypes.snmfProject")</code></pre></div>
 
 data("tutorial")
 # creation of the genotype file, genotypes.lfmm.
-# It contains 1000 SNPs for 165 individuals.
+# It contains 400 SNPs for 50 individuals.
 write.lfmm(R, "genotypes.lfmm")
 # creation of the environment file, gradient.env.
-# It contains 1 environmental variable for 165 individuals.
+# It contains 1 environmental variable for 50 individuals.
 write.env(C, "gradients.env")
 
-###  runs of LFMM ####
+################
+# runs of LFMM #
+################
+
 # main options, K: (the number of latent factors), 
-#               CPU: the number of CPUs.
+#           CPU: the number of CPUs.
 
 # Runs with K = 9 and 5 repetitions.
-# around 2/3 minutes per run.
-project = LFMM("genotypes.lfmm", "gradients.env", K = 9, repetitions = 5)
+# The runs are composed of 6000 iterations including 3000 iterations
+# for burnin.
+# around 30 seconds per run.
+project = NULL
+project = LFMM("genotypes.lfmm", "gradients.env", K = 6, repetitions = 5,
+        project = "new")
 
-# get the zscores of each run for K = 9
-zs = z.scores(project, K = 9)
+# get the zscores of each run for K = 6
+zs = z.scores(project, K = 6)
 
 # Combine the z-scores using the Stouffer method
 zs.stouffer = apply(zs, MARGIN = 1, median)
@@ -685,17 +713,17 @@ lambda = median(zs.stouffer^2)/.456
 cp.values = pchisq(zs.stouffer^2/lambda, df = 1, lower = FALSE)
 
 for (alpha in c(.05,.1,.15,.2)) {
-  # expected FDR
-  print(paste("expected FDR:", alpha))
-  L = length(cp.values)
-  # return a list of candidates with an expected FDR of alpha = 0.1.
-  w = which(sort(cp.values) < alpha * (1:L) / L)
-  candidates = order(cp.values)[w]
+    # expected FDR
+    print(paste("expected FDR:", alpha))
+    L = length(cp.values)
+    # return a list of candidates with an expected FDR of alpha.
+    w = which(sort(cp.values) < alpha * (1:L) / L)
+    candidates = order(cp.values)[w]
 
-  # estimated FDR and True Positif
-  estimated.FDR = length(which(candidates <= 900))/length(candidates)
-  estimated.TP = length(which(candidates > 900))/100
-  print(paste("FDR:", estimated.FDR, "True Positive:", estimated.TP))
+    # estimated FDR and True Positif
+    estimated.FDR = length(which(candidates <= 350))/length(candidates)
+    estimated.TP = length(which(candidates > 350))/50
+    print(paste("FDR:", estimated.FDR, "True Positive:", estimated.TP))
 }</code></pre></div>
 			<br/>
 			</li>
@@ -707,14 +735,14 @@ show(project)
 # summary of the project
 summary(project)
 
-# get the z-scores for the 2nd run for K = 9
-z = z.scores(project, K = 9, run = 2)
+# get the z-scores for the 2nd run for K = 6
+z = z.scores(project, K = 6, run = 2)
 
-# get the p-values for the 2nd run for K = 9
-p = p.values(project, K = 9, run = 2)
+# get the p-values for the 2nd run for K = 6
+p = p.values(project, K = 6, run = 2)
 
-# get the -log10(p-values) for the 2nd run for K = 9
-mp = mlog10p.values(project, K = 9, run = 2)</code></pre></div>
+# get the -log10(p-values) for the 2nd run for K = 6
+mp = mlog10p.values(project, K = 6, run = 2)</code></pre></div>
 			<br/>
 			</li>
 			<li> Manage a lfmm project

@@ -52,7 +52,7 @@ void update_beta(LFMM_param param, LFMM_GS_param GS_param)
            beta(:,j) = mvnrnd(mu_beta(:,j),inv(cov_beta));
            end                                                             */
         rand_matrix(param->beta, GS_param->m_beta, GS_param->inv_cov_beta,
-                    param->alpha_R, param->mD, param->L, param->num_thrd);
+                    param->alpha_R, param->mD, param->L, 1);
 #ifdef DEBUG
         print_debug_NaN(param->beta, param->mD, param->L, "beta");
 #endif

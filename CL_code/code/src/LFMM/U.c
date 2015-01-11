@@ -49,7 +49,7 @@ void update_U(LFMM_param param, LFMM_GS_param GS_param)
            U(:,i) = mvnrnd(mu_U(:,i),inv(cov_U));
            end                                                             */
         rand_matrix(param->U, GS_param->m_U, GS_param->inv_cov_U,
-                    param->alpha_R, param->K, param->n, param->num_thrd);
+                    param->alpha_R, param->K, param->n, 1);
 #ifdef DEBUG
         print_debug_NaN(param->U, param->K, param->n, "U");
 #endif

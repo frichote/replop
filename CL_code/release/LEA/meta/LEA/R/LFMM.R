@@ -102,8 +102,10 @@ LFMM <- function(input.file,
 
     for (r in 1:repetitions) {
         # set the seed
-        if (is.na(seed[r])
+        if (is.na(seed[r]))
             s = -1
+        else 
+            s = seed[r]
         s = test_integer("seed", s, as.integer(runif(1)*.Machine$integer.max))
         if (s == -1) 
             s = as.integer(runif(1)*.Machine$integer.max)
@@ -148,7 +150,7 @@ LFMM <- function(input.file,
                     as.integer(iterations),
                     as.integer(burnin),
                     as.integer(CPU),
-                    seed = as.integer(seed),
+                    s = as.integer(s),
                     as.integer(missing.data),
                     as.integer(all),
                     dic = as.double(dic),
@@ -172,17 +174,17 @@ LFMM <- function(input.file,
                     res@Niter = as.integer(iterations);
                     res@burn = as.integer(burnin);
                     res@CPU = as.integer(CPU);
-                    res@seed = as.integer(seed);
+                    res@seed = as.integer(s);
                     res@missing.data = missing.data;
                     res@all = all;
                     res@epsilon.noise = epsilon.noise;
                     res@epsilon.b = epsilon.b;
                     res@random.init = random.init;
-                    res@seed = resC$seed
+                    res@seed = resC$s
                     # res@inflationFactor = inflationFactorEstimation(res)
                     res@deviance = resC$dev;
                     res@DIC = resC$dic;
-                    seed = resC$seed
+                    s = resC$s
                     save.lfmmClass(res, res@lfmmClass.file)
 
                     proj@n = as.integer(resC$n);
@@ -227,7 +229,7 @@ LFMM <- function(input.file,
                         as.integer(iterations),
                         as.integer(burnin),
                         as.integer(CPU),
-                        seed = as.integer(seed),
+                        s = as.integer(s),
                         as.integer(missing.data),
                         as.integer(all),
                         dic = as.double(dic),
@@ -250,17 +252,17 @@ LFMM <- function(input.file,
                     res@Niter = as.integer(iterations);
                     res@burn = as.integer(burnin);
                     res@CPU = as.integer(CPU);
-                    res@seed = as.integer(seed);
+                    res@seed = as.integer(s);
                     res@missing.data = missing.data;
                     res@all = all;
                     res@epsilon.noise = epsilon.noise;
                     res@epsilon.b = epsilon.b;
                     res@random.init = random.init;
-                    res@seed = resC$seed
+                    res@seed = resC$s
                     # res@inflationFactor = inflationFactorEstimation(res)
                     res@deviance = resC$dev;
                     res@DIC = resC$dic;
-                    seed = resC$seed
+                    s = resC$s
                     save.lfmmClass(res, res@lfmmClass.file);
 
                     proj@n = as.integer(resC$n);

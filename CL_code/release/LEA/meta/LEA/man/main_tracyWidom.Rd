@@ -1,6 +1,6 @@
 \name{tracy.widom}
 \alias{tracy.widom}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Tracy-Widom test for eigenvalues}
 \description{
 Perform tracy-widom tests on a set of eigenvalues to determine the number of 
@@ -10,7 +10,7 @@ by each principal component. For an example, see \code{\link{pca}}.
 \usage{
 tracy.widom (object)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{object}{
 a pcaProject object.
@@ -86,6 +86,6 @@ plot(tw$percentage)
 # Display the p-values for the Tracy-Widom tests. 
 tw$pvalues
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{pca}

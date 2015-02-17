@@ -1,7 +1,7 @@
 \name{vcf}
 \alias{vcf}
 \alias{example_vcf}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{\code{vcf} format description}
 \description{
 Description of the \code{vcf} format. 
@@ -41,6 +41,6 @@ individuals and 4 loci:
 \code{\link{ped}}
 \code{\link{ancestrymap}}
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{format}

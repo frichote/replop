@@ -1,6 +1,6 @@
 \name{G}
 \alias{G}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Ancestral allele frequencies from a sNMF run}
 \description{
 Return the \code{sNMF} output matrix of ancestral allele frequency matrix for 
@@ -10,7 +10,7 @@ the chosen run with K ancestral populations. For an example, see
 \usage{
 G(object, K, run)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{object}{
 A snmfProject object.
@@ -60,6 +60,6 @@ project = sNMF("genotypes.geno", K = 3, repetitions = 2, project = "new")
 # get the ancestral genotype frequency matrix, G, for the 2nd run for K = 3. 
 res = G(project, K = 3, run = 2)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{sNMF}

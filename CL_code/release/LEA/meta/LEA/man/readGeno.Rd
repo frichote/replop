@@ -1,6 +1,6 @@
 \name{read.geno}
 \alias{read.geno}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{read a file in the \code{\link{geno}} format}
 \description{
 Read a file in the \code{\link{geno}} format.
@@ -8,7 +8,7 @@ Read a file in the \code{\link{geno}} format.
 \usage{
 read.geno(input.file)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{input.file}{
 A character string containing a path to the input file,
@@ -46,6 +46,6 @@ write.geno(tutorial.R,"genotypes.geno")
 # Read the file "genotypes.geno".
 R = read.geno("genotypes.geno")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{read/write}

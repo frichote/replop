@@ -1,6 +1,6 @@
 \name{lfmm2geno}
 \alias{lfmm2geno}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Convert from \code{\link{lfmm}} to \code{\link{geno}} format}
 \description{
 A function that converts from the \code{\link{lfmm}} format to the 
@@ -9,7 +9,7 @@ A function that converts from the \code{\link{lfmm}} format to the
 \usage{
 lfmm2geno(input.file, output.file = NULL, force = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{input.file}{
     A character string containing a path to the input file,
@@ -67,6 +67,6 @@ output = lfmm2geno("genotypes.lfmm", "plop.geno")
 # nothing happens.
 output = lfmm2geno("genotypes.lfmm", force = FALSE)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{conversion}

@@ -1,7 +1,7 @@
 \name{geno}
 \alias{geno}
 \alias{example_geno}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Input file for \code{\link{sNMF}}}
 \description{
 Description of the \code{geno} format.
@@ -39,6 +39,6 @@ individuals and 4 loci:
 \code{\link{read.geno}}
 \code{\link{write.geno}}
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{format}

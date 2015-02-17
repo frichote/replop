@@ -1,6 +1,6 @@
 \name{cross.entropy.estimation}
 \alias{cross.entropy.estimation}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{compute the cross-entropy criterion}
 \description{
 Calculate the cross-entropy criterion. This is an internal function, 
@@ -25,7 +25,7 @@ The cross-entropy criterion can also be automatically calculated by the
 cross.entropy.estimation (input.file, K, masked.file, Q.file, G.file, 
     ploidy = 2)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{input.file}{
     A character string containing a path to the input file without masked 

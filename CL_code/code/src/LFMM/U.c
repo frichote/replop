@@ -66,7 +66,6 @@ void update_alpha_U(LFMM_param param)
         int K = param->K;
         double epsilon = param->b_epsilon;
         double *U = param->U;
-        double tmp;
         int k;
 
         // int a = (int)epsilon + N * K / 2;

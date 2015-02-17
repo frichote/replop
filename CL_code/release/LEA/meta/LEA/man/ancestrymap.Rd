@@ -1,7 +1,7 @@
 \name{ancestrymap}
 \alias{ancestrymap}
 \alias{example_ancestrymap}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{\code{ancestrymap} format description}
 \description{
 Description of the \code{ancestrymap} format. The \code{ancestrymap} format 
@@ -45,6 +45,6 @@ rs3333    SAMPLE2    1
 \code{\link{ped}}
 \code{\link{vcf}}
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{format}

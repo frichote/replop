@@ -17,7 +17,7 @@
 \alias{plot,pcaProject-method}
 \alias{show,pcaProject-method}
 \alias{summary,pcaProject-method}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Principal Component Analysis}
 \description{
 The function \code{pca} performs a Principal Component Analysis 
@@ -31,7 +31,7 @@ on each component. The function pca returns an object of class
 \usage{
 pca (input.file, K, center = TRUE, scale = FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{input.file}{
 A character string containg the path to the genotype input file,
@@ -160,7 +160,7 @@ plot(tw$percentage)
 # Display the p-values for the Tracy-Widom tests. 
 tw$pvalues
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{pca}
 \keyword{tutorial}

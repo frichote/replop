@@ -1,6 +1,6 @@
 \name{write.lfmm}
 \alias{write.lfmm}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Write files in the \code{\link{lfmm}} format}
 \description{
 Write a file in the \code{\link{lfmm}} format.
@@ -8,7 +8,7 @@ Write a file in the \code{\link{lfmm}} format.
 \usage{
 write.lfmm(R, output.file)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{R}{
     A matrix containing the genotypes with one line for each individual and one
@@ -50,6 +50,6 @@ write.lfmm(tutorial.R,"genotypes.lfmm")
 # read the file "genotypes.lfmm".
 R = read.lfmm("genotypes.lfmm")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{read/write}

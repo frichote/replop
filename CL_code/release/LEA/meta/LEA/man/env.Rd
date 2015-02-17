@@ -1,6 +1,6 @@
 \name{env}
 \alias{env}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Environmental input file format for \code{\link{LFMM}}}
 \description{
 
@@ -28,6 +28,6 @@ Here is an example of an environmental file using the \code{env} format with
 \code{\link{read.env}}
 \code{\link{write.env}}
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{format}

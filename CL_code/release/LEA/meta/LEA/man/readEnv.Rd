@@ -1,6 +1,6 @@
 \name{read.env}
 \alias{read.env}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Read environmental file in the \code{\link{env}}format}
 \description{
 Read a file in the \code{\link{env}} format.
@@ -42,6 +42,6 @@ write.env(C,"example.env")
 # Read the file "example.env".
 C = read.env("example.env")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{read/write}

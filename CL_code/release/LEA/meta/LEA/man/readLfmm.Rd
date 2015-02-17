@@ -1,6 +1,6 @@
 \name{read.lfmm}
 \alias{read.lfmm}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Read files in the \code{\link{lfmm}} format}
 \description{
 Read a file in the \code{\link{lfmm}} format.
@@ -8,7 +8,7 @@ Read a file in the \code{\link{lfmm}} format.
 \usage{
 read.lfmm(input.file)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{input.file}{
 A character string containing a path to the input file,
@@ -46,7 +46,7 @@ write.lfmm(tutorial.R,"genotypes.lfmm")
 # read the file "genotypes.lfmm".
 R = read.lfmm("genotypes.lfmm")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{read/write}
 

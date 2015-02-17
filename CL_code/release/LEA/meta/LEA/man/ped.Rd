@@ -1,7 +1,7 @@
 \name{ped}
 \alias{ped}
 \alias{example_ped}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{\code{ped} format description}
 \description{
 Description of the \code{ped} format. 
@@ -42,6 +42,6 @@ Here is an example with 3 individuals and 4 SNPs:
 \code{\link{ancestrymap}}
 \code{\link{vcf}}
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{format}

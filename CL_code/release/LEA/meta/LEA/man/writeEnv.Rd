@@ -1,6 +1,6 @@
 \name{write.env}
 \alias{write.env}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Write files in the \code{\link{env}} format}
 \description{
 Write a file in the \code{\link{env}} format.
@@ -8,7 +8,7 @@ Write a file in the \code{\link{env}} format.
 \usage{
     write.env(R, output.file)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{R}{
     A matrix containing the environmental variables with one line for each 
@@ -48,6 +48,6 @@ write.env(C,"tuto.env")
 # Read the file "tuto.env".
 C = read.env("tuto.env")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{read/write}

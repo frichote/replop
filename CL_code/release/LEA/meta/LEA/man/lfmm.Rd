@@ -1,7 +1,7 @@
 \name{lfmm}
 \alias{lfmm}
 \alias{example_lfmm}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Input file for \code{\link{LFMM}}}
 \description{
 Description of the \code{lfmm} format.
@@ -36,6 +36,6 @@ individuals and 4 loci:
 \code{\link{read.lfmm}}
 \code{\link{write.lfmm}}
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{format}

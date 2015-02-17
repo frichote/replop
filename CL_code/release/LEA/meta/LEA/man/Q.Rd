@@ -1,6 +1,6 @@
 \name{Q}
 \alias{Q}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Admixture coefficients from a sNMF run}
 \description{
 Return the \code{sNMF} output matrix of admixture coefficients for the chosen 
@@ -9,7 +9,7 @@ run with K ancestral populations. For an example, see \code{\link{sNMF}}.
 \usage{
 Q(object, K, run)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{object}{
 A snmfProject object.
@@ -62,6 +62,6 @@ res = Q(project, K = 3, run = 2)
 # plot the 2nd run for K = 3 (ancestry coefficients).
 barplot(t(Q(project, K = 3, run = 2)))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{sNMF}

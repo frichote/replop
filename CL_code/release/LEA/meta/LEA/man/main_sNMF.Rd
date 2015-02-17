@@ -11,7 +11,7 @@
 \alias{summary,snmfProject-method}
 \alias{Q,snmfProject-method}
 \alias{G,snmfProject-method}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Estimates individual ancestry coefficients and ancestral allele 
 frequencies.}
 \description{
@@ -25,7 +25,7 @@ sNMF (input.file, K,
     alpha = 10, tolerance = 0.00001, entropy = FALSE, percentage = 0.05,
     I, iterations = 200, ploidy = 2, seed = -1, Q.input.file)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{input.file}{
     A character string containing a the path to the input file, a genotypic 
@@ -248,7 +248,7 @@ project = load.snmfProject("genotypes.snmfProject")
 # Caution: All the files associated with the project will be removed.
 remove.snmfProject("genotypes.snmfProject")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{sNMF}
 \keyword{tutorial}

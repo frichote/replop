@@ -1,6 +1,6 @@
 \name{vcf2lfmm}
 \alias{vcf2lfmm}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Convert from \code{\link{vcf}} to \code{\link{lfmm}} format}
 \description{
 A function that converts from the \code{\link{vcf}} format to the 
@@ -9,7 +9,7 @@ A function that converts from the \code{\link{vcf}} format to the
 \usage{
 vcf2lfmm(input.file, output.file = NULL, force = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{input.file}{
     A character string containing a path to the input file,
@@ -73,6 +73,6 @@ output = vcf2lfmm("example.vcf", "plop.lfmm")
 # nothing happens.
 output = vcf2lfmm("example.vcf", force = FALSE)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{conversion}

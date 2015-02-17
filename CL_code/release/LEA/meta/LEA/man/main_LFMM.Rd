@@ -12,7 +12,7 @@
 \alias{mlog10p.values,lfmmProject-method}
 \alias{plot,lfmmProject-method}
 
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Fitting Latent Factor Mixed Models}
 \description{
 \code{\link{LFMM}} is used to fit Latent Factor Mixed Models. The goal of 
@@ -31,7 +31,7 @@ LFMM(input.file, environment.file, K,
     random.init = TRUE)
 
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{input.file}{
     A character string containing a path to the input file,
@@ -106,9 +106,9 @@ LFMM(input.file, environment.file, K,
 \code{LFMM} returns an object of class \code{lfmmProject}.
 
 The following methods can be applied to the object of class \code{lfmmProject}:
-%\item{plot}{
-%    Plot the mean inflation factor in function of K for each variable. 
-%}
+
+
+
 \item{show}{
     Display information about the analyses.
 }
@@ -245,7 +245,7 @@ project = load.lfmmProject("genotypes_gradients.lfmmProject")
 remove.lfmmProject("genotypes_gradients.lfmmProject")
 
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{LFMM}
 \keyword{tutorial}

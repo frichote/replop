@@ -1,6 +1,6 @@
 \name{create.dataset}
 \alias{create.dataset}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{create a data set with masked data}
 \description{
 
@@ -15,7 +15,7 @@ create.dataset (input.file, output.file, seed = -1, percentage = 0.05)
 This is an internal function, automatically called by \code{\link{sNMF}} with 
 the \code{entropy} option.
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{input.file}{
     A character string containing a path to the input file,
@@ -61,4 +61,4 @@ write.geno(tutorial.R,"genotypes.geno")
 # Create file:  "genotypes_I.geno"
 output = create.dataset("genotypes.geno")
 }
-% R documentation directory.
+

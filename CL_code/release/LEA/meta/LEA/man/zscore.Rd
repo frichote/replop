@@ -1,6 +1,6 @@
 \name{zscore}
 \alias{zscore}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Output file format for \code{\link{LFMM}}}
 \description{
 Description of the \code{zscore} output format of \code{\link{LFMM}}. 
@@ -18,6 +18,6 @@ the third value is the p-value (separated by spaces or tabulations).
 \code{\link{lfmm}}
 \code{\link{env}}
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{format}

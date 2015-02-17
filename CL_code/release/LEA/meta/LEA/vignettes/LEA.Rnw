@@ -2,13 +2,12 @@
 
 \usepackage{amssymb}
 \usepackage{verbatim}
-\usepackage[francais,english]{babel}
+\usepackage{english]{babel}
 \usepackage{graphicx}
 \usepackage{graphics}
-\usepackage{lineno}
 \usepackage[latin1]{inputenc}
 \usepackage[table]{xcolor}
-\usepackage[]{natbib}
+\usepackage{natbib}
 \usepackage[]{multirow}
 \usepackage[]{a4wide}
 \usepackage{fancyhdr}
@@ -16,8 +15,9 @@
 \usepackage{ulem}
 
 \begin{document}
+
 \title{{\tt LEA}: An {\tt R} Package for Landscape and Ecological Association Studies}
-\author{Eric Frichot and Olivier Fran\c{c}ois\\
+\author{Eric Frichot and Olivier Fran\c{c}ois \\ 
 Universit\'e Joseph Fourier Grenoble 1,\\Centre National de la Recherche Scientifique, \\
 TIMC-IMAG UMR 5525, Grenoble, 38042, France.
 }
@@ -267,6 +267,12 @@ for (alpha in c(.05,.1,.15,.2)) {
 # Copy of the pdf figures in the previous directory 
 # for the creation of the vignette.
 file.copy(list.files(".", pattern = ".pdf"), "..")
+@
+
+\section{Session info}
+Here is the output of sessionInfo on the system on which this document was compiled:
+<<>>=
+toLatex(sessionInfo())
 @
 
 \bibliographystyle{cse}

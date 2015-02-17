@@ -1,6 +1,6 @@
 \name{write.geno}
 \alias{write.geno}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Write files in the \code{\link{geno}} format}
 \description{
 Write a file in the \code{\link{geno}} format.
@@ -8,7 +8,7 @@ Write a file in the \code{\link{geno}} format.
 \usage{
 write.geno(R, output.file)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{R}{
     A matrix containing the genotypes with one line for each individual and 
@@ -52,6 +52,6 @@ write.geno(tutorial.R,"genotypes.geno")
 R = read.geno("genotypes.geno")
 }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{read/write}

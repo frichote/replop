@@ -1,6 +1,6 @@
 \name{z.scores}
 \alias{z.scores}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{z-scores from a LFMM run}
 \description{
 Return the \code{LFMM} output matrix of zscores for the chosen runs with K
@@ -10,7 +10,7 @@ latent factors, the d-th variable and the all option. For an example, see
 \usage{
 z.scores (object, K, d, all, run)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
 \item{object}{
 A lfmmProject object.
@@ -71,6 +71,6 @@ z = z.scores(project, K = 3)
 # get the z-scores for the 2nd run for K =3
 z = z.scores(project, K = 3, run = 2)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
+
 \keyword{LFMM}

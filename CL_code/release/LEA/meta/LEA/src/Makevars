@@ -11,5 +11,3 @@ all: $(SHLIB)
 clean:
 	@rm -f $(OBJECTS)
 
-CXX=clang++
-CC=clang

@@ -12,7 +12,7 @@ masked data from the original data set. It is used to calculate the
 create.dataset (input.file, output.file, seed = -1, percentage = 0.05)
 }
 \details{
-This is an internal function, automatically called by \code{\link{sNMF}} with 
+This is an internal function, automatically called by \code{\link{snmf}} with 
 the \code{entropy} option.
 }
 
@@ -48,7 +48,7 @@ the \code{entropy} option.
 }
 \seealso{
 \code{\link{geno}}
-\code{\link{sNMF}}
+\code{\link{snmf}}
 \code{\link{cross.entropy}}
 }
 \examples{

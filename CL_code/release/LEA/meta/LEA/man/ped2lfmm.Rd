@@ -37,7 +37,7 @@ ped2lfmm(input.file, output.file = NULL, force = TRUE)
 }
 \seealso{
 \code{\link{ped}}
-\code{\link{lfmm}}
+\code{\link{lfmm.data}}
 \code{\link{ancestrymap2lfmm}}
 \code{\link{ancestrymap2geno}}
 \code{\link{geno2lfmm}}

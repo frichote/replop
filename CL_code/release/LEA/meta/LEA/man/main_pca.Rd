@@ -91,9 +91,9 @@ by \code{pca}:
     Eric Frichot
 }
 \seealso{
+\code{\link{lfmm.data}}
+\code{\link{snmf}}
 \code{\link{lfmm}}
-\code{\link{sNMF}}
-\code{\link{LFMM}}
 \code{\link{tutorial}}
 }
 \examples{

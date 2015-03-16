@@ -38,7 +38,7 @@ a genotypic matric in the \code{\link{lfmm}} format.
 
 \seealso{
 \code{\link{ancestrymap}}
-\code{\link{lfmm}}
+\code{\link{lfmm.data}}
 \code{\link{ancestrymap2geno}}
 \code{\link{geno2lfmm}}
 \code{\link{ped2lfmm}}

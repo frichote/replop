@@ -46,8 +46,8 @@ eigenanalysis}. PLoS Genet. 2 :20.
 }
 \seealso{
 \code{\link{pca}}
+\code{\link{lfmm.data}}
 \code{\link{lfmm}}
-\code{\link{LFMM}}
 }
 \examples{
 # Creation of the genotype file "genotypes.lfmm"

@@ -1,4 +1,4 @@
-LFMM <- function(input.file, 
+lfmm <- function(input.file, 
     environment.file, 
     K,
     project = "continue", 
@@ -115,7 +115,7 @@ LFMM <- function(input.file,
 
             if (all) {
                 print("*************************************");
-                p = paste("* LFMM K =",k," repetition",r," all     *");
+                p = paste("* lfmm K =",k," repetition",r," all     *");
                 print(p);
                 print("*************************************");
 

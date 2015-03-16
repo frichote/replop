@@ -1,8 +1,9 @@
-# create Class sNMF Project
+#create Class sNMF Project
 setClass("snmfProject",
     slots = c(snmfProject.file = "character", directory = "character", 
         input.file = "character", runs = "list", K="integer",
-        snmfClass.files = "vector", n="integer", L="integer")
+        snmfClass.files = "vector", n="integer", L="integer",
+        creationTime = "POSIXct")
 )
 
 # addRun
@@ -221,6 +222,7 @@ setMethod("show", "snmfProject",
         cat("snmf Project\n\n")
         cat("snmfProject file:                ", object@snmfProject.file, "\n")
         cat("directory:                       ", object@directory, "\n")
+        cat("date of creation:                ", object@creationTime, "\n")
         cat("input file:                      ", object@input.file, "\n")
         cat("number of individuals:           ", object@n, "\n")
         cat("number of loci:                  ", object@L, "\n")
@@ -308,7 +310,7 @@ setMethod("save.snmfProject", signature(object="snmfProject"),
             currentDir(file),"\")\n\n",sep="");
         cat("To remove the project, use:\n remove.snmfProject(\"",
             currentDir(file),"\")\n\n",sep="");
-    
+   
         object@snmfProject.file;
     }
 )

@@ -34,11 +34,11 @@ export(ancestrymap2geno)
 
 # main functions
 export(create.dataset)
-export(sNMF)
+export(snmf)
 export(cross.entropy.estimation)
 export(pca)
 # export(tracyWidom) <-- added as a method in pcaProject
-export(LFMM)
+export(lfmm)
 
 # method associated with the classes
 exportMethods(

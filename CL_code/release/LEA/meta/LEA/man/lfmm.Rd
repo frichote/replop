@@ -1,13 +1,13 @@
-\name{lfmm}
-\alias{lfmm}
+\name{lfmm.data}
+\alias{lfmm.data}
 \alias{example_lfmm}
 
-\title{Input file for \code{\link{LFMM}}}
+\title{Input file for \code{\link{lfmm}}}
 \description{
 Description of the \code{lfmm} format.
 The \code{lfmm} format can be used as an input format 
-for genotypic matrices in the functions \code{\link{sNMF}},
-\code{\link{LFMM}}, and \code{\link{pca}}. 
+for genotypic matrices in the functions \code{\link{snmf}},
+\code{\link{lfmm}}, and \code{\link{pca}}. 
 }
 \details{
 The \code{lfmm} format has one row for each individual. Each row contains one 
@@ -28,7 +28,7 @@ individuals and 4 loci:
     Eric Frichot
 }
 \seealso{
-\code{\link{LFMM}}
+\code{\link{lfmm}}
 \code{\link{geno2lfmm}}
 \code{\link{lfmm2geno}}
 \code{\link{ancestrymap2lfmm}}

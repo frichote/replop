@@ -36,7 +36,7 @@ geno2lfmm(input.file, output.file = NULL, force = TRUE)
     Eric Frichot
 }
 \seealso{
-\code{\link{lfmm}}
+\code{\link{lfmm.data}}
 \code{\link{geno}}
 \code{\link{ancestrymap2lfmm}}
 \code{\link{ancestrymap2geno}}

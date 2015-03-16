@@ -20,10 +20,10 @@ TIMC-IMAG UMR 5525, Grenoble, 38042, France.
     ecological association tests. {\tt LEA} can run analyses of population structure
     and genome scans for local adaptation. It includes statistical methods for
     estimating ancestry coefficients from large genotypic matrices and
-    evaluating the number of ancestral populations ({\tt sNMF}, PCA); and identifying
+    evaluating the number of ancestral populations ({\tt snmf}, pca); and identifying
     genetic polymorphisms that exhibit high correlation with some environmental
     gradient or with the variables used as proxies for ecological pressures
-    ({\tt LFMM}), and controlling the false discovery rate. {\tt LEA} is mainly based on
+    ({\tt lfmm}), and controlling the false discovery rate. {\tt LEA} is mainly based on
     optimized C programs that can scale with the dimension of very large data
     sets.
 
@@ -54,7 +54,7 @@ setwd("LEA_analyses")
 @
 
 \subsection{Preparing the data}
-The {\tt R} package {\tt LEA} can handle several classical formats for input files of genotypic matrices. More specifically, the package uses the {\tt lfmm} and {\tt geno} formats, and provides functions  to convert from {\tt ped}, {\tt vcf}, and {\tt ancestrymap} formats. While the {\tt lfmm} and {\tt geno} formats usually encode SNP data, those formats can also be used for coding amplification fragment length polymorphisms and microsatellite markers. In addition to genotypic matrices, {\tt LEA} can also process allele frequency data when they are encoded in the {\tt lfmm} formats. Ecological variables must be formatted in the {\tt env} format used by the computer program {\tt LFMM} \citep{Frichot_2013}.
+The {\tt R} package {\tt LEA} can handle several classical formats for input files of genotypic matrices. More specifically, the package uses the {\tt lfmm} and {\tt geno} formats, and provides functions  to convert from {\tt ped}, {\tt vcf}, and {\tt ancestrymap} formats. While the {\tt lfmm} and {\tt geno} formats usually encode SNP data, those formats can also be used for coding amplification fragment length polymorphisms and microsatellite markers. In addition to genotypic matrices, {\tt LEA} can also process allele frequency data when they are encoded in the {\tt lfmm} formats. Ecological variables must be formatted in the {\tt env} format used by the computer program {\tt lfmm} \citep{Frichot_2013}.
 \newline
 \newline
 The {\tt LEA} package can handle missing data, but the algorithm used 
@@ -90,14 +90,14 @@ write.env(tutorial.C, "gradients.env")
 
 \section{Analysis of population structure}
 
-The {\tt R} package {\tt LEA} implements two classical approaches for the estimation of population genetic structure: principal component analysis (PCA) and admixture analysis \citep{Patterson_2006, Pritchard_2000a}. The algorithms programmed in {\tt LEA} are improved versions of PCA and admixture analysis able to process very large genotypic matrices efficiently.
+The {\tt R} package {\tt LEA} implements two classical approaches for the estimation of population genetic structure: principal component analysis (pca) and admixture analysis \citep{Patterson_2006, Pritchard_2000a}. The algorithms programmed in {\tt LEA} are improved versions of pca and admixture analysis able to process very large genotypic matrices efficiently.
 
 \subsection{Principal Component Analysis}
 
-The {\tt LEA} function {\tt pca} computes the scores of a PCA for a genotypic matrix, and returns a scree-plot for the eigenvalues of the sample covariance matrix. Using {\tt pca}, an object of class {\tt pcaProject} is created. This object contains a path to the files storing eigenvectors, eigenvalues and projections. 
+The {\tt LEA} function {\tt pca} computes the scores of a pca for a genotypic matrix, and returns a scree-plot for the eigenvalues of the sample covariance matrix. Using {\tt pca}, an object of class {\tt pcaProject} is created. This object contains a path to the files storing eigenvectors, eigenvalues and projections. 
 
 <<results=hide>>=
-# run of PCA
+# run of pca
 # Available options, K (the number of PCs calculated), 
 #                    center and scale. 
 # Creation of   genotypes.pcaProject - the pcaProject object.
@@ -135,9 +135,9 @@ plot(tw$percentage)
 
 \newpage
 
-\subsection{Inference of individual admixture coefficients using {\tt sNMF}}
+\subsection{Inference of individual admixture coefficients using {\tt snmf}}
 
-Similar to Bayesian clustering programs, {\tt LEA} includes an {\tt R} function to estimate individual admixture coefficients from the genotypic matrix \citep{Pritchard_2000a, Francois_2010}. Assuming $K$ ancestral populations, the {\tt R} function {\tt sNMF} provides least-squares estimates of ancestry proportions \citep{Frichot_2014}. 
+Similar to Bayesian clustering programs, {\tt LEA} includes an {\tt R} function to estimate individual admixture coefficients from the genotypic matrix \citep{Pritchard_2000a, Francois_2010}. Assuming $K$ ancestral populations, the {\tt R} function {\tt snmf} provides least-squares estimates of ancestry proportions \citep{Frichot_2014}. 
 
 <<results=hide>>=
 # main options, K: (the number of ancestral populations), 
@@ -146,11 +146,11 @@ Similar to Bayesian clustering programs, {\tt LEA} includes an {\tt R} function 
 
 # Runs with K between 1 and 10 with cross-entropy and 10 repetitions.
 project = NULL
-project = sNMF("genotypes.geno", K=1:10, entropy = TRUE, repetitions = 10,
+project = snmf("genotypes.geno", K=1:10, entropy = TRUE, repetitions = 10,
     project = "new")
 @
 \noindent
-The {\tt sNMF} function also estimates an entropy criterion that evaluates the quality of fit of the statistical model to the data using a cross-validation technique (Figure 2). The entropy criterion can help choosing the number of ancestral populations that best explains the genotypic data \citep{Alexander_2011, Frichot_2014}. 
+The {\tt snmf} function also estimates an entropy criterion that evaluates the quality of fit of the statistical model to the data using a cross-validation technique (Figure 2). The entropy criterion can help choosing the number of ancestral populations that best explains the genotypic data \citep{Alexander_2011, Frichot_2014}. 
 
 \begin{figure}[h!]
     \centering
@@ -159,7 +159,7 @@ The {\tt sNMF} function also estimates an entropy criterion that evaluates the q
 plot(project, lwd = 5, col = "red", pch=1)
 @
 \caption{Value of the cross-entropy criterion as a function
-of the number of factors in {\tt sNMF}}
+of the number of factors in {\tt snmf}}
 \end{figure}
 
 <<>>=
@@ -173,7 +173,7 @@ best = which.min(ce)
 \noindent
 The number of ancestral population is closely linked to the number of principal components that explain variation in the genomic data. Both numbers can help determining the number of latent factors when correcting for confounding effects due to population structure in ecological association tests.
 
-\section{Ecological associations tests using LFMM}
+\section{Ecological associations tests using lfmm}
 
 The {\tt R} package {\tt LEA} performs ecological association tests based on latent factor mixed models ({\tt LFMM}, \citealt{Frichot_2013}). Let $G$ denote the genotypic matrix, storing allele frequencies for each individual at each locus, and let $X$ denote a set of $d$ ecological variables. LFMMs consider genotypic matrix entries as response variables in a linear regression model
 \begin{equation}
@@ -183,7 +183,7 @@ where $\mu_\ell$ is a locus specific effect, $\beta_\ell$ is a $d$-dimensional v
  In latent factor models, associations between ecological variables and allele frequencies can be tested while estimating unobserved latent factors that model confounding effects. In principle, the latent factors include levels of population structure due to shared demographic history or background genetic variation. After correction for confounding effects, significant association between allele frequencies and an observed ecological variable is often interpreted as evidence for selection at a particular locus.
 
 
-\paragraph{The run.}  The {\tt LFMM} program is based on a stochastic algorithm (MCMC) which cannot provide exact results. We recommend using large number of cycles (e.g., {\tt -i 10000}) and the burn-in period should set at least to one-half of the total number of cycles ({\tt -b 5000}). We have noticed that the program results are sensitive to the run-length parameter when data sets have relatively small sizes (eg, a few hundreds of individuals, a few thousands of loci). We recommend increasing  the burn-in period and the total number of cycles in this situation.
+\paragraph{The run.}  The {\tt lfmm} program is based on a stochastic algorithm (MCMC) which cannot provide exact results. We recommend using large number of cycles (e.g., {\tt -i 10000}) and the burn-in period should set at least to one-half of the total number of cycles ({\tt -b 5000}). We have noticed that the program results are sensitive to the run-length parameter when data sets have relatively small sizes (eg, a few hundreds of individuals, a few thousands of loci). We recommend increasing  the burn-in period and the total number of cycles in this situation.
 
 
 <<results=hide>>=
@@ -195,21 +195,21 @@ where $\mu_\ell$ is a locus specific effect, $\beta_\ell$ is a $d$-dimensional v
 # for burnin.
 # around 20 seconds per run.
 project = NULL
-project = LFMM("genotypes.lfmm", "gradients.env", K = 6, repetitions = 5, 
+project = lfmm("genotypes.lfmm", "gradients.env", K = 6, repetitions = 5, 
         project = "new")
 @
 
-\paragraph{Deciding the number of latent factors.} Deciding an appropriate value for the number of latent factors in {\tt LFMM} can be based on the analysis of histograms of test $p$-values. Here, the objective is to control the false discovery rate while keeping reasonable power to reject the null hypothesis.  To choose the number of factors, we suggest using the genomic inflation factor. According to Devlin and Roeder (1999), this quantity is defined  as
+\paragraph{Deciding the number of latent factors.} Deciding an appropriate value for the number of latent factors in {\tt lfmm} can be based on the analysis of histograms of test $p$-values. Here, the objective is to control the false discovery rate while keeping reasonable power to reject the null hypothesis.  To choose the number of factors, we suggest using the genomic inflation factor. According to Devlin and Roeder (1999), this quantity is defined  as
 $$
 \lambda = {\rm median}( z^2 ) /0.456 \, . 
 $$
 The inflation factor usually decreases with increasing values of $K$. To compute the genomic inflation factor, we recommend using several runs for each value of $K$ and taking the median or the mean of the  $\lambda$ values obtained from the above formula (use 5 to 10 runs, see our script below).  Choosing values of $K$ for which the estimate of $\lambda$ is close to (or slightly below) 1.0 warrants that the FDR can be controlled efficiently.\\
 \\
 \noindent
-Testing all $K$ values in a large range, from 1 to 20 for example,  is generally useless. A careful analysis of population structure and estimates of the number of ancestral populations contributing to the genetic data indicates the range of values to be explored. If for example the {\tt sNMF} or {\tt ADMIXTURE} programs estimate 5 ancestral populations, then running {\tt LFMM} $K = 4-7$ often provides inflation factors close to 1.0.
+Testing all $K$ values in a large range, from 1 to 20 for example,  is generally useless. A careful analysis of population structure and estimates of the number of ancestral populations contributing to the genetic data indicates the range of values to be explored. If for example the {\tt snmf} or {\tt ADMIXTURE} programs estimate 5 ancestral populations, then running {\tt lfmm} $K = 4-7$ often provides inflation factors close to 1.0.
 
 
-\paragraph{Combining $z$-scores obtained from multiple runs.}  We suggest using the Fisher-Stouffer or a similar method to combine $z$-scores from multiple runs. In practice, we found that using the median $z$-scores of 5-10 runs and re-adjusting the $p$-values afterwards increase the power of {\tt LFMM} tests. This can be done by using the following sequence of {\tt R} commands. We can compute ajusted $p$-values using the the following commands. 
+\paragraph{Combining $z$-scores obtained from multiple runs.}  We suggest using the Fisher-Stouffer or a similar method to combine $z$-scores from multiple runs. In practice, we found that using the median $z$-scores of 5-10 runs and re-adjusting the $p$-values afterwards increase the power of {\tt lfmm} tests. This can be done by using the following sequence of {\tt R} commands. We can compute ajusted $p$-values using the the following commands. 
 
 Using a standard {\tt R} command, $z$-scores were combined using the median value.
 <<>>=

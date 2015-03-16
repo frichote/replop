@@ -37,7 +37,7 @@ vcf2lfmm(input.file, output.file = NULL, force = TRUE)
 }
 \seealso{
 \code{\link{vcf}}
-\code{\link{lfmm}}
+\code{\link{lfmm.data}}
 \code{\link{ancestrymap2lfmm}}
 \code{\link{ancestrymap2geno}}
 \code{\link{ped2lfmm}}

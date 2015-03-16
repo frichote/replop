@@ -27,7 +27,7 @@ column for each SNP.
 \seealso{
 \code{\link{write.geno}}
 \code{\link{geno}}
-\code{\link{sNMF}}
+\code{\link{snmf}}
 \code{\link{geno2lfmm}}
 \code{\link{lfmm2geno}}
 \code{\link{ancestrymap2geno}}

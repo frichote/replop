@@ -1,9 +1,9 @@
 \name{read.zscore}
 \alias{read.zscore}
 
-\title{Read the output files of \code{\link{LFMM}}}
+\title{Read the output files of \code{\link{lfmm}}}
 \description{
-Read the output file from \code{\link{LFMM}}. This is an internal function.
+Read the output file from \code{\link{lfmm}}. This is an internal function.
 Zscores of a run can be accessed using the function \code{\link{z.scores}}.
 }
 \usage{
@@ -12,12 +12,12 @@ read.zscore(input.file)
 
 \arguments{
 \item{input.file}{
-a character string containing a path to the output of \code{\link{LFMM}}.
+a character string containing a path to the output of \code{\link{lfmm}}.
 }
 }
 \value{
 \item{R}{
-    A matrix containing the \code{\link{LFMM}} results with one line per SNP. 
+    A matrix containing the \code{\link{lfmm}} results with one line per SNP. 
     The first column is the zscore. The second column is the -log10(p-value).
     The third column is the p-value.
 }
@@ -27,11 +27,11 @@ a character string containing a path to the output of \code{\link{LFMM}}.
     Eric Frichot
 }
 \seealso{
-\code{\link{zscore}}
-\code{\link{LFMM}}
+\code{\link{zscore.format}}
+\code{\link{lfmm}}
 }
 \examples{
-### Example of analyses using LFMM ###
+### Example of analyses using lfmm ###
 
 data("tutorial")
 # creation of the genotype file, genotypes.lfmm.
@@ -42,7 +42,7 @@ write.lfmm(tutorial.R, "genotypes.lfmm")
 write.env(tutorial.C, "gradients.env")
 
 ################
-# runs of LFMM #
+# runs of lfmm #
 ################
 
 # main options, K: (the number of latent factors), 
@@ -51,7 +51,7 @@ write.env(tutorial.C, "gradients.env")
 # Toy runs with K = 3 and 2 repetitions.
 # around 15 seconds per run.
 project = NULL
-project = LFMM("genotypes.lfmm", "gradients.env", K = 3,
+project = lfmm("genotypes.lfmm", "gradients.env", K = 3,
         iterations = 6000, burnin = 3000, project = "new")
 
 res = read.zscore("./genotypes_gradients.lfmm/K3/run1/genotypes_r1_s1.3.zscore")

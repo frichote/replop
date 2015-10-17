@@ -27,8 +27,8 @@ per SNP.
 }
 \seealso{
 \code{\link{write.lfmm}}
+\code{\link{lfmm.data}}
 \code{\link{lfmm}}
-\code{\link{LFMM}}
 \code{\link{geno2lfmm}}
 \code{\link{lfmm2geno}}
 \code{\link{ancestrymap2lfmm}}

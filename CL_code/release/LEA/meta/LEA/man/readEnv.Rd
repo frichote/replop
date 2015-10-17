@@ -27,7 +27,7 @@ an environmental data matrix in the \code{\link{env}} format.
 \seealso{
 \code{\link{env}}
 \code{\link{write.env}}
-\code{\link{LFMM}}
+\code{\link{lfmm}}
 }
 \examples{
 # Creation of an environmental matrix, C 

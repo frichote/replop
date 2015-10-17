@@ -32,7 +32,7 @@ a genotypic matrix in the \code{geno} format.
 \seealso{
 \code{\link{read.geno}}
 \code{\link{geno}}
-\code{\link{sNMF}}
+\code{\link{snmf}}
 \code{\link{geno2lfmm}}
 \code{\link{lfmm2geno}}
 \code{\link{ancestrymap2geno}}

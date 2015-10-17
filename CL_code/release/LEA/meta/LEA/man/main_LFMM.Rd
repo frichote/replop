@@ -1,5 +1,5 @@
-\name{LFMM}
-\alias{LFMM}
+\name{lfmm}
+\alias{lfmm}
 \alias{load.lfmmProject}
 \alias{remove.lfmmProject}
 \alias{load.lfmmProject,character-method}
@@ -15,13 +15,13 @@
 
 \title{Fitting Latent Factor Mixed Models}
 \description{
-\code{\link{LFMM}} is used to fit Latent Factor Mixed Models. The goal of 
-\code{LFMM} is to identify genetic polymorphisms that exhibit high correlation
+\code{\link{lfmm}} is used to fit Latent Factor Mixed Models. The goal of 
+\code{lfmm} is to identify genetic polymorphisms that exhibit high correlation
 with some environmental gradient or with the variables used as proxies for 
 ecological pressures.
 }
 \usage{
-LFMM(input.file, environment.file, K, 
+lfmm(input.file, environment.file, K, 
     project = "continue", 
     d = 0, all = FALSE, 
     missing.data = FALSE, CPU = 1, 
@@ -35,7 +35,7 @@ LFMM(input.file, environment.file, K,
 \arguments{
 \item{input.file}{
     A character string containing a path to the input file,
-    a genotypic matrix in the \code{\link{lfmm}} format.
+    a genotypic matrix in the \code{\link{lfmm}{lfmm_fomat}} format.
 }
 \item{environment.file}{
     A character string containing a path to the environmental file,
@@ -52,13 +52,13 @@ LFMM(input.file, environment.file, K,
     modified since the creation of the project.
 }
 \item{d}{
-    An integer corresponding to the fit of \code{LFMM} model with the 
+    An integer corresponding to the fit of \code{lfmm} model with the 
     \code{d}-th variable only from \code{environment.file}. By default (if NULL
-    and all is FALSE), fit \code{LFMM} with each variable from 
+    and all is FALSE), fit \code{lfmm} with each variable from 
     \code{environment.file} sequentially and independently.
 }
 \item{all}{
-    A boolean option. If true, fit \code{LFMM} with all variables from 
+    A boolean option. If true, fit \code{lfmm} with all variables from 
     \code{environment.file} at the same time. This option is not compatible 
     with the \code{d} option. 
 }
@@ -103,7 +103,7 @@ LFMM(input.file, environment.file, K,
 }
 }
 \value{
-\code{LFMM} returns an object of class \code{lfmmProject}.
+\code{lfmm} returns an object of class \code{lfmmProject}.
 
 The following methods can be applied to the object of class \code{lfmmProject}:
 
@@ -116,15 +116,15 @@ The following methods can be applied to the object of class \code{lfmmProject}:
     Summarize the analyses.
 }
 \item{\code{\link{z.scores}}}{
-    Return the \code{LFMM} output vector of zscores for the chosen runs with K
+    Return the \code{lfmm} output vector of zscores for the chosen runs with K
     latent factors, the d-th variable and the all option.
 }
 \item{\code{\link{p.values}}}{
-    Return the \code{LFMM} output vector of p-values for the chosen runs with K
+    Return the \code{lfmm} output vector of p-values for the chosen runs with K
     latent factors, the d-th variable and the all option.
 }
 \item{\code{\link{mlog10p.values}}}{
-    Return the \code{LFMM} output vector of -log10(p-values) for the chosen 
+    Return the \code{lfmm} output vector of -log10(p-values) for the chosen 
     runs with K latent factors, the d-th variable and the all option.
 }
 \item{load.lfmmProject (file = "character") }{
@@ -140,12 +140,12 @@ The following methods can be applied to the object of class \code{lfmmProject}:
     Eric Frichot
 }
 \seealso{
-\code{\link{lfmm}}
+\code{\link{lfmm.data}}
 \code{\link{z.scores}}
 \code{\link{p.values}}
 \code{\link{mlog10p.values}}
 \code{\link{pca}}
-\code{\link{sNMF}}
+\code{\link{snmf}}
 \link{tutorial}
 }
 \references{
@@ -154,7 +154,7 @@ associations between loci and environmental gradients using latent factor mixed
 models}. Molecular biology and evolution, 30(7), 1687-1699.
 }
 \examples{
-### Example of analyses using LFMM ###
+### Example of analyses using lfmm ###
 
 data("tutorial")
 # creation of the genotype file, genotypes.lfmm.
@@ -165,7 +165,7 @@ write.lfmm(tutorial.R, "genotypes.lfmm")
 write.env(tutorial.C, "gradients.env")
 
 ################
-# runs of LFMM #
+# runs of lfmm #
 ################
 
 # main options, K: (the number of latent factors), 
@@ -176,7 +176,7 @@ write.env(tutorial.C, "gradients.env")
 # for burnin.
 # around 30 seconds per run.
 project = NULL
-project = LFMM("genotypes.lfmm", "gradients.env", K = 6, repetitions = 5, 
+project = lfmm("genotypes.lfmm", "gradients.env", K = 6, repetitions = 5, 
         project = "new")
 
 # get the zscores of each run for K = 6
@@ -225,10 +225,10 @@ p = p.values(project, K = 6, run = 2)
 mp = mlog10p.values(project, K = 6, run = 2)
 
 ##########################
-# Manage an LFMM project #
+# Manage an lfmm project #
 ##########################
 
-# All the runs of LFMM for a given file are 
+# All the runs of lfmm for a given file are 
 # automatically saved into a lfmm project directory and a file.
 # The name of the lfmmProject file is a combination of 
 # the name of the input file and the environment file 
@@ -247,5 +247,5 @@ remove.lfmmProject("genotypes_gradients.lfmmProject")
 }
 
 
-\keyword{LFMM}
+\keyword{lfmm}
 \keyword{tutorial}

@@ -1,11 +1,11 @@
 \name{z.scores}
 \alias{z.scores}
 
-\title{z-scores from a LFMM run}
+\title{z-scores from a lfmm run}
 \description{
-Return the \code{LFMM} output matrix of zscores for the chosen runs with K
+Return the \code{lfmm} output matrix of zscores for the chosen runs with K
 latent factors, the d-th variable and the all option. For an example, see
-\code{\link{LFMM}}.
+\code{\link{lfmm}}.
 }
 \usage{
 z.scores (object, K, d, all, run)
@@ -39,10 +39,10 @@ A matrix containing a vector of z-scores for the chosen runs per column.
 }
 \seealso{
 \code{\link{lfmm}}
-\code{\link{LFMM}}
+\code{\link{lfmm.data}}
 }
 \examples{
-### Example of analyses using LFMM ###
+### Example of analyses using lfmm ###
 
 data("tutorial")
 # creation of the genotype file, genotypes.lfmm.
@@ -53,7 +53,7 @@ write.lfmm(tutorial.R, "genotypes.lfmm")
 write.env(tutorial.C, "gradients.env")
 
 ################
-# runs of LFMM #
+# runs of lfmm #
 ################
 
 # main options, K: (the number of latent factors), 
@@ -62,7 +62,7 @@ write.env(tutorial.C, "gradients.env")
 # Toy runs with K = 3 and 2 repetitions.
 # around 15 seconds per run.
 project = NULL
-project = LFMM("genotypes.lfmm", "gradients.env", K = 3, repetitions = 2,
+project = lfmm("genotypes.lfmm", "gradients.env", K = 3, repetitions = 2,
     iterations = 6000, burnin = 3000, project = "new")
 
 # get the z-scores for all runs for K = 3
@@ -73,4 +73,4 @@ z = z.scores(project, K = 3, run = 2)
 }
 
 
-\keyword{LFMM}
+\keyword{lfmm}

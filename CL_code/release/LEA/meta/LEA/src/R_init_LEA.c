@@ -69,7 +69,8 @@ static R_CMethodDef cMethods[] = {
                                             INTSXP, REALSXP, REALSXP, INTSXP,
                                             INTSXP}}, 
         {"R_tracyWidom", (DL_FUNC) &R_tracyWidom, 2, 
-                (R_NativePrimitiveArgType[4]){STRSXP, STRSXP}}
+                (R_NativePrimitiveArgType[4]){STRSXP, STRSXP}},
+        {NULL, NULL, 0}
 };
 
 void R_init_LEA(DllInfo * info)

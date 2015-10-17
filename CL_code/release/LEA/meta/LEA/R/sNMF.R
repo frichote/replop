@@ -1,4 +1,4 @@
-sNMF <- function(input.file, 
+snmf <- function(input.file, 
     K, 
     project = "continue",
     repetitions = 1,

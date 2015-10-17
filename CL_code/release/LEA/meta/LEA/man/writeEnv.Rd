@@ -33,7 +33,7 @@ Write a file in the \code{\link{env}} format.
 \seealso{
 \code{\link{read.env}}
 \code{\link{env}}
-\code{\link{LFMM}}
+\code{\link{lfmm}}
 }
 \examples{
 # Creation of an environmental matrix C 

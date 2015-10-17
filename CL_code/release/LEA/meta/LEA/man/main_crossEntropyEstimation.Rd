@@ -4,22 +4,22 @@
 \title{compute the cross-entropy criterion}
 \description{
 Calculate the cross-entropy criterion. This is an internal function, 
-automatically called by \code{\link{sNMF}}.
+automatically called by \code{\link{snmf}}.
 The cross-entropy criterion is a value based on the prediction of masked 
 genotypes to evaluate the error of ancestry estimation. The criterion will help
 to choose the best number of ancestral population (K) and the best run among a
-set of runs in \code{\link{sNMF}}. A smaller value of cross-entropy means a 
+set of runs in \code{\link{snmf}}. A smaller value of cross-entropy means a 
 better run in terms of prediction capacity. 
 The cross.entropy.estimation function displays the cross-entropy criterion 
 estimated on all data and on masked data based on the input file, the masked 
 data file (created by \code{\link{create.dataset}}, the estimation of the 
 ancestry coefficients Q and the estimation of ancestral genotypic frequencies, 
-G (calculated by \code{\link{sNMF}}).  
+G (calculated by \code{\link{snmf}}).  
 The cross-entropy estimation for all data is always lower than the 
 cross-entropy estimation for masked data. The cross-entropy estimation useful
 to compare runs is the cross-entropy estimation for masked data.
 The cross-entropy criterion can also be automatically calculated by the 
-\code{\link{sNMF}} function with the \code{entropy} option. 
+\code{\link{snmf}} function with the \code{entropy} option. 
 }
 \usage{
 cross.entropy.estimation (input.file, K, masked.file, Q.file, G.file, 
@@ -72,7 +72,7 @@ components:
 \seealso{
 \code{\link{geno}}
 \code{\link{create.dataset}}
-\code{\link{sNMF}}
+\code{\link{snmf}}
 }
 \references{
 Frichot E, Mathieu F, Trouillon T, Bouchard G, Francois O. (2014). \emph{Fast 
@@ -87,15 +87,15 @@ data("tutorial")
 write.geno(tutorial.R,"genotypes.geno")
 
 # The following command are equivalent with 
-# project = sNMF("genotypes.geno", entropy = TRUE, K = 3)
+# project = snmf("genotypes.geno", entropy = TRUE, K = 3)
 # cross.entropy(project)
 
 # Creation      of the masked data file
 # Create file:  "genotypes_I.geno"
 output = create.dataset("genotypes.geno")
 
-# run of sNMF with genotypes_I.geno and K = 3
-project = sNMF("genotypes_I.geno", K = 3, project = "new")
+# run of snmf with genotypes_I.geno and K = 3
+project = snmf("genotypes_I.geno", K = 3, project = "new")
 
 # calculate the cross-entropy
 res = cross.entropy.estimation("genotypes.geno", K = 3, "genotypes_I.geno",

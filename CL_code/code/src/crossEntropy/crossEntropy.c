@@ -166,6 +166,11 @@ void crossEntropy(char *input_file, char *input_file_I, char *input_file_Q,
         // check the number of lines
         test_line(input_file, m_File, j, M);
         tok = fgets(szbuffI, max_char_per_line, m_FileI);
+
+        // to avoid the warning, fake condititons
+        if (! tok) 
+          *all_ce = 0;
+
         test_line(input_file_I, m_FileI, j, M);
 
         // calculate ce

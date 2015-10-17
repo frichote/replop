@@ -6,7 +6,7 @@
 \description{
 Description of the \code{ancestrymap} format. The \code{ancestrymap} format 
 can be used as an input format for genotypic matrices in the functions 
-\code{\link{pca}}, \code{\link{LFMM}} and \code{\link{sNMF}}.
+\code{\link{pca}}, \code{\link{lfmm}} and \code{\link{snmf}}.
 }
 \details{
 The \code{ancestrymap} format has one row for each genotype. Each row has 3 
@@ -41,7 +41,7 @@ rs3333    SAMPLE2    1
 \code{\link{ancestrymap2lfmm}}
 \code{\link{ancestrymap2geno}}
 \code{\link{geno}}
-\code{\link{lfmm}}
+\code{\link{lfmm.data}}
 \code{\link{ped}}
 \code{\link{vcf}}
 }

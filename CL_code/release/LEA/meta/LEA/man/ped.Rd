@@ -6,8 +6,8 @@
 \description{
 Description of the \code{ped} format. 
 The \code{ped} format can be used as an input format 
-for genotypic matrices in the functions \code{\link{sNMF}},
-\code{\link{LFMM}}, and \code{\link{pca}}. 
+for genotypic matrices in the functions \code{\link{snmf}},
+\code{\link{lfmm}}, and \code{\link{pca}}. 
 }
 \details{
 The \code{ped} format has one row for each individual. Each row contains 6
@@ -38,7 +38,7 @@ Here is an example with 3 individuals and 4 SNPs:
 \code{\link{ped2lfmm}}
 \code{\link{ped2geno}}
 \code{\link{geno}}
-\code{\link{lfmm}}
+\code{\link{lfmm.data}}
 \code{\link{ancestrymap}}
 \code{\link{vcf}}
 }

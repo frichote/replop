@@ -1,5 +1,5 @@
-\name{sNMF}
-\alias{sNMF}
+\name{snmf}
+\alias{snmf}
 \alias{plot,snmfProject-method}
 \alias{cross.entropy,snmfProject-method}
 \alias{load.snmfProject}
@@ -15,11 +15,11 @@
 \title{Estimates individual ancestry coefficients and ancestral allele 
 frequencies.}
 \description{
-$\code{\link{sNMF}} estimates admixture coefficients using sparse Non-Negative 
+\code{\link{snmf}} estimates admixture coefficients using sparse Non-Negative 
     Matrix Factorization algorithms, and provide STRUCTURE-like outputs.
 }
 \usage{
-sNMF (input.file, K, 
+snmf (input.file, K, 
     project = "continue",
     repetitions = 1, CPU = 1, 
     alpha = 10, tolerance = 0.00001, entropy = FALSE, percentage = 0.05,
@@ -79,10 +79,10 @@ sNMF (input.file, K,
 }
 \item{I}{
     The number of SNPs to initialize the algorithm. It starts the algorithm 
-    with a run of sNMF using a subset of nb.SNPs random SNPs. If this option 
+    with a run of snmf using a subset of nb.SNPs random SNPs. If this option 
     is set with nb.SNPs, the number of randomly chosen SNPs is the minimum 
     between 10000 and 10 \% of all SNPs. This option can considerably speeds 
-    up sNMF estimation for very large data sets.
+    up snmf estimation for very large data sets.
 }
 \item{iterations}{
     An integer for the maximum number of iterations in algorithm. 
@@ -100,7 +100,7 @@ sNMF (input.file, K,
 }
 }
 \value{
-\code{sNMF} returns an object of class \code{snmfProject}.
+\code{snmf} returns an object of class \code{snmfProject}.
 
 The following methods can be applied to the object of class {snmfProject}:
 \item{plot}{
@@ -139,7 +139,7 @@ The following methods can be applied to the object of class {snmfProject}:
 \seealso{
 \code{\link{geno}}
 \code{\link{pca}}
-\code{\link{LFMM}}
+\code{\link{lfmm}}
 \code{\link{tutorial}}
 }
 \references{
@@ -148,7 +148,7 @@ and Efficient Estimation of Individual Ancestry Coefficients}. Genetics,
 194(4): 973--983.
 }
 \examples{
-### Example of analyses using sNMF ###
+### Example of analyses using snmf ###
 
 # creation of the genotype file, genotypes.geno.
 # It contains 400 SNPs for 50 individuals.
@@ -156,7 +156,7 @@ data("tutorial")
 write.geno(tutorial.R, "genotypes.geno")
 
 ################
-# runs of sNMF #
+# runs of snmf #
 ################
 
 # main options, K: (the number of ancestral populations), 
@@ -165,7 +165,7 @@ write.geno(tutorial.R, "genotypes.geno")
 
 # Runs with K between 1 and 5 with cross-entropy and 2 repetitions.
 project = NULL
-project = sNMF("genotypes.geno", K=1:10, entropy = TRUE, repetitions = 10,
+project = snmf("genotypes.geno", K=1:10, entropy = TRUE, repetitions = 10,
     project = "new")
 
 # plot cross-entropy criterion of all runs of the project
@@ -200,39 +200,39 @@ ce = cross.entropy(project, K = 4, run = 2)
 res = G(project, K = 4, run = 2)
 
 #############################
-# Advanced sNMF run options #
+# Advanced snmf run options #
 #############################
 
 # Q.input.file: init a run with a given ancestry coefficient matrix Q. 
 # Here, it is initialized with the Q matrix from the first run with K=4
-project = sNMF("genotypes.geno", K = 4, 
+project = snmf("genotypes.geno", K = 4, 
     Q.input.file = "./genotypes.snmf/K4/run1/genotypes_r1.4.Q")
 
 # I: init the Q matrix of a run from a smaller run with 100 randomly chosen 
 # SNPs. 
-project = sNMF("genotypes.geno", K = 4, I = 100)
+project = snmf("genotypes.geno", K = 4, I = 100)
 
-# CPU: run sNMF with 2 CPUs. 
-project = sNMF("genotypes.geno", K = 4, CPU=2)
+# CPU: run snmf with 2 CPUs. 
+project = snmf("genotypes.geno", K = 4, CPU=2)
 
-# percentage: run sNMF and calculate the cross-entropy criterion with 10% of 
+# percentage: run snmf and calculate the cross-entropy criterion with 10% of 
 # masked genotypes, instead of 5% of masked genotypes. 
-project = sNMF("genotypes.geno", K = 4, entropy= TRUE, percentage = 0.1)
+project = snmf("genotypes.geno", K = 4, entropy= TRUE, percentage = 0.1)
 
 # seed: choose the seed to init the randomization.
-project = sNMF("genotypes.geno", K = 4, seed=42)
+project = snmf("genotypes.geno", K = 4, seed=42)
 
 # alpha: choose the regularization parameter.
-project = sNMF("genotypes.geno", K = 4, alpha = 100)
+project = snmf("genotypes.geno", K = 4, alpha = 100)
 
 # tolerance: choose the tolerance parameter.
-project = sNMF("genotypes.geno", K = 4, tolerance = 0.0001)
+project = snmf("genotypes.geno", K = 4, tolerance = 0.0001)
 
 ##########################
-# Manage an sNMF project #
+# Manage an snmf project #
 ##########################
 
-# All the runs of sNMF for a given file are 
+# All the runs of snmf for a given file are 
 # automatically saved into a snmf project directory and a file.
 # The name of the snmfProject file is the same name as 
 # the name of the input file with a .snmfProject extension 
@@ -250,5 +250,5 @@ remove.snmfProject("genotypes.snmfProject")
 }
 
 
-\keyword{sNMF}
+\keyword{snmf}
 \keyword{tutorial}

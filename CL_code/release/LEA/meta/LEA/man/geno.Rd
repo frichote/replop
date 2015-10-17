@@ -2,12 +2,12 @@
 \alias{geno}
 \alias{example_geno}
 
-\title{Input file for \code{\link{sNMF}}}
+\title{Input file for \code{\link{snmf}}}
 \description{
 Description of the \code{geno} format.
 The \code{geno} format can be used as an input format 
-for genotypic matrices in the functions \code{\link{sNMF}},
-\code{\link{LFMM}}, and \code{\link{pca}}. 
+for genotypic matrices in the functions \code{\link{snmf}},
+\code{\link{lfmm}}, and \code{\link{pca}}. 
 }
 \details{
 The \code{geno} format has one row for each SNP.

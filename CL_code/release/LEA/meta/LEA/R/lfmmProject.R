@@ -4,7 +4,7 @@ setClass("lfmmProject",
         input.file = "character", environment.file = "character", 
         runs = "list", K="integer", d="integer", all = "logical",
         lfmmClass.files = "vector", n="integer", L = "integer",
-        D = "integer")
+        D = "integer", creationTime = "POSIXct")
 )
 
 # addRun
@@ -112,7 +112,8 @@ setMethod("show", "lfmmProject",
         cat("lfmm Project\n\n")
         cat("lfmmProject file:                     ", object@lfmmProject.file,
             "\n")
-        cat("directory:                            ", object@directory,
+        cat("directory:                            ", object@directory, "\n")
+        cat("date of creation:                     ", object@creationTime,
             "\n")
         cat("input file:                           ", object@input.file, "\n")
         cat("variable file:                        ", object@environment.file,

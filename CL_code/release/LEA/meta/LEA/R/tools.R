@@ -31,7 +31,7 @@ projectLfmmLoad <- function(input.file, environment.file, project)
     # load the project
     if (!project == "new" && file.exists(projectName)) {
         proj = load.lfmmProject(projectName)
-        if (file.info(projectName)$ctime < file.info(input.file)$mtime) {
+        if (proj@creationTime < file.info(input.file)$mtime) {
             stop("The input file has been modified since the creation of the",
                 " project.\nIf the input file is different, the results ",
                 "concatenating all runs can be false.\nTo remove the current",
@@ -45,7 +45,7 @@ projectLfmmLoad <- function(input.file, environment.file, project)
                 environment.file, " already exists. Please, set a different",
                 " name for the variable file.", sep=""))
         }
-        if (file.info(projectName)$ctime < file.info(environment.file)$mtime) {
+        if (proj@creationTime < file.info(environment.file)$mtime) {
             stop("The variable file has been modified since the creation of ",
                 "the project.\nIf the variable file is different, the results",
                 " concatenating all runs can be false.\nTo remove the current",
@@ -60,6 +60,7 @@ projectLfmmLoad <- function(input.file, environment.file, project)
             remove.lfmmProject(projectName);
         }
         proj = new("lfmmProject")
+        proj@creationTime = Sys.time()
         #files 
         proj@input.file = normalizePath(input.file)
         proj@environment.file = normalizePath(environment.file)
@@ -82,10 +83,11 @@ projectSnmfLoad <- function(input.file, project)
         basename(input.file), sep=""), ".snmfProject")
     # load the project
     if (!project == "new" && file.exists(projectName)) {
+        proj = load.snmfProject(projectName)
         # file input file not modified since the start of the project
-        if (file.info(projectName)$ctime >= file.info(input.file)$mtime 
+        if (proj@creationTime >= file.info(input.file)$mtime 
             || project == "force") {
-            return(load.snmfProject(projectName))
+            return(proj)
         } else {
             stop("The input file has been modified since the creation of the",
                 " project.\nIf the input file is different, the results ",
@@ -95,8 +97,12 @@ projectSnmfLoad <- function(input.file, project)
                 "'project = force'.")
         }
     # create a new project
-    } else {
+    } else {        
+        if (file.exists(projectName)) {
+          remove.snmfProject(projectName);
+        }
         proj = new("snmfProject")
+        proj@creationTime = Sys.time()
         # files
         proj@input.file = normalizePath(input.file)
         # directory    

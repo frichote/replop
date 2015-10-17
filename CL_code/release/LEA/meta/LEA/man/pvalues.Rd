@@ -1,11 +1,11 @@
 \name{p.values}
 \alias{p.values}
 
-\title{p-values from a LFMM run}
+\title{p-values from a lfmm run}
 \description{
-Return the \code{LFMM} output matrix of p-values for the chosen runs with K
+Return the \code{lfmm} output matrix of p-values for the chosen runs with K
 latent factors, the d-th variable and the all option. For an example, see
-\code{\link{LFMM}}.
+\code{\link{lfmm}}.
 }
 \usage{
 p.values (object, K, d, all, run)
@@ -38,13 +38,13 @@ A matrix containing a vector of p.values for the chosen runs per column.
     Eric Frichot
 }
 \seealso{
+\code{\link{lfmm.data}}
 \code{\link{lfmm}}
-\code{\link{LFMM}}
 \code{\link{mlog10p.values}}
 \code{\link{z.scores}}
 }
 \examples{
-### Example of analyses using LFMM ###
+### Example of analyses using lfmm ###
 
 data("tutorial")
 # creation of the genotype file, genotypes.lfmm.
@@ -55,7 +55,7 @@ write.lfmm(tutorial.R, "genotypes.lfmm")
 write.env(tutorial.C, "gradients.env")
 
 ################
-# runs of LFMM #
+# runs of lfmm #
 ################
 
 # main options, K: (the number of latent factors), 
@@ -64,7 +64,7 @@ write.env(tutorial.C, "gradients.env")
 # Toy runs with K = 3 and 2 repetitions.
 # around 15 seconds per run.
 project = NULL
-project = LFMM("genotypes.lfmm", "gradients.env", K = 3, repetitions = 2,
+project = lfmm("genotypes.lfmm", "gradients.env", K = 3, repetitions = 2,
     iterations = 6000, burnin = 3000, project = "new")
 
 # get the p-values for all runs for K = 3
@@ -75,4 +75,4 @@ p = p.values(project, K = 3, run = 2)
 }
 
 
-\keyword{LFMM}
+\keyword{lfmm}

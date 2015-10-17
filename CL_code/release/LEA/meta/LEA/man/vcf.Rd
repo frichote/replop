@@ -6,8 +6,8 @@
 \description{
 Description of the \code{vcf} format. 
 The \code{vcf} format can be used as an input format 
-for genotypic matrices in the functions \code{\link{sNMF}},
-\code{\link{LFMM}}, and \code{\link{pca}}. 
+for genotypic matrices in the functions \code{\link{snmf}},
+\code{\link{lfmm}}, and \code{\link{pca}}. 
 }
 \details{
 The vcf format is described 

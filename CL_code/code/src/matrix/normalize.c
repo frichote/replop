@@ -83,7 +83,7 @@ void normalize_cov(double *C, int N, int K)
                 cov /= (N - 1);
                 // error if constant column
                 if (!cov) {
-                        printf("SNP %d is constant "
+                        printf("SNPp %d is constant "
                                "among individuals.\n\n", k + 1);
                         exit(1);
                 }

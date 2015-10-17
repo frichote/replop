@@ -35,7 +35,7 @@ void test_column(char *file, FILE * m_File, int i, int j, int N, char *token)
                 exit(1);
         }
         // if too many lines
-        if (token && *token != '\n' && *token != EOF) {
+        if (token && *token != 10 && *token != 13 && *token != EOF) {
                 printf("Error: unable to read file %s. It seems that"
                        " line %d contains more than %d columns"
                        " (number of columns of line 1).\n\n", file, j, N);

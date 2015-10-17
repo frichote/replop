@@ -51,5 +51,5 @@ scans for local adaptation.
 
 The software **webpage** is [here](http://membres-timc.imag.fr/Olivier.Francois/lea.html). 
 
-The **paper** is under review. 
+The **paper** is available [here](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12382/full). 
 
